@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">IOT_project</string>
+
+    <string-array name="citizenship">
+        <item>臺灣</item>
+        <item>香港</item>
+        <item>新加坡</item>
+        <item>澳門</item>
+    </string-array>
+
+</resources>
