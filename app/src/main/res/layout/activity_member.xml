@@ -86,7 +86,7 @@
                 android:id="@+id/relativeLayout_becomeSeller"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="#FFECE8"
                 android:paddingVertical="24dp">
@@ -132,6 +132,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -178,6 +179,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -301,6 +303,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -343,6 +346,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -385,6 +389,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -427,6 +432,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
@@ -469,6 +475,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
             </RelativeLayout>
 
