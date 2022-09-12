@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    tools:context=".RegisterActivity">
+
+    <RelativeLayout
+        android:id="@+id/RelaitiveLayout_bar"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="16dp"
+            app:srcCompat="@drawable/orangebackarrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="56dp"
+            android:text="會員註冊"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/Mycolor_4"
+            android:text="送出"
+            android:textColor="#615D5A"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/RelaitiveLayout_bar"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="使用者帳號"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="密碼"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="姓名"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="生日"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="手機號碼"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="電子信箱"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_register_city"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="縣市"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="1dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="地址"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="87 讚"
+                    android:textColor="#1E1E1E"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginVertical="1dp"
+                android:background="#F1F1F1">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="30dp"
+                    android:backgroundTint="@color/Mycolor_1"
+                    android:paddingVertical="10dp"
+                    android:text="登出"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:backgroundTint="@color/button_color1"
+            android:backgroundTint="@color/Mycolor_1"
             android:paddingVertical="10dp"
             android:text="登入"
             android:textSize="18dp"
