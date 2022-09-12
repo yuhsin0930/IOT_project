@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="font_color">#FF4A4745</color>
 
-    <color name="button_color1">#E6F1322B</color>
-    <color name="button_color2">#F2FBCE43</color>
-    <color name="button_color3">#045F9E</color>
-    <color name="button_color4">#E8EAEDED</color>
+    <color name="Mycolor_1">#E6F1322B</color>
+    <color name="Mycolor_2">#F2FBCE43</color>
+    <color name="Mycolor_3">#045F9E</color>
+    <color name="Mycolor_4">#E8EAEDED</color>
 </resources>
