@@ -16,7 +16,7 @@ public class MemberActivity extends AppCompatActivity {
     private MemberFragment memberFragment;
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
-    private boolean flag_orders = false;
+    private boolean flag_Orders = false;
     private boolean flag_Goods = false;
 
 
@@ -36,51 +36,48 @@ public class MemberActivity extends AppCompatActivity {
         memberGoodsFragment = new MemberGoodsFragment();
         fragmentMgr = getSupportFragmentManager();
         fragmentTrans = fragmentMgr.beginTransaction();
-        fragmentTrans.add(R.id.FrameLayout_member, memberFragment, "registerFragment");
-        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
-        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
-        fragmentTrans.hide(memberOrdersFragment);
-        fragmentTrans.hide(memberGoodsFragment);
-        fragmentTrans.addToBackStack(null);                          // 多寫這行當使用者按上一頁frag1會收到背景作業
+        fragmentTrans.add(R.id.FrameLayout_member, memberFragment, "memberFragment");
         fragmentTrans.commit();
     }
 
-   public void showOrders() {
-        flag_orders = true;
-        fragmentTrans = fragmentMgr.beginTransaction();
-        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(memberOrdersFragment);
-        fragmentTrans.hide(memberFragment);
-        fragmentTrans.hide(memberGoodsFragment);
-        fragmentTrans.commit();
+    public void showOrders() {
+       flag_Orders = true;
+       fragmentTrans = fragmentMgr.beginTransaction();
+       fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+       fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
+       fragmentTrans.commit();
     }
-
     public void showGoods() {
         flag_Goods = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(memberGoodsFragment);
-        fragmentTrans.hide(memberFragment);
-        fragmentTrans.hide(memberOrdersFragment);
+        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
         fragmentTrans.commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (flag_orders || flag_Goods) {
-            flag_orders = false;
-            flag_Goods = false;
-            fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-            fragmentTrans.show(memberFragment);
+        fragmentTrans = fragmentMgr.beginTransaction();
+        fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+        if (flag_Orders) {
+            flag_Orders = false;
             fragmentTrans.hide(memberOrdersFragment);
-            fragmentTrans.hide(memberGoodsFragment);
-            fragmentTrans.commit();
-        } else {
-            for (int i = 0; i < fragmentMgr.getBackStackEntryCount(); ++i) {
-                fragmentMgr.popBackStack();
-            }
-            super.onBackPressed();
         }
+        if (flag_Goods) {
+            flag_Goods = false;
+            fragmentTrans.hide(memberGoodsFragment);
+        }
+        fragmentTrans.show(memberFragment);
+        fragmentTrans.commit();
+        if (!flag_Orders && !flag_Goods) super.onBackPressed();
     }
+
 }
+
+
+
+
+// https://www.twblogs.net/a/5b800a5c2b717767c6b2fd52 Fragment各種操作與生命週期的關聯
+//            for (int i = 0; i < fragmentMgr.getBackStackEntryCount(); ++i) {
+//                fragmentMgr.popBackStack();
+//            }
