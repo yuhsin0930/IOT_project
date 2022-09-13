@@ -26,6 +26,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
     private FragmentManager fm;
     private FragmentTransaction ft;
+    private FragmentManager fragmentMgr;
+    private FragmentTransaction fragmentTrans;
+    private MemberActivity memberActivity;
 
     public static MemberFragment newInstance(String param1, String param2) {
         MemberFragment fragment = new MemberFragment();
@@ -44,8 +47,6 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member, container, false);
-        fm = getParentFragmentManager();
-        ft = fm.beginTransaction();
         imageViewMystore = (ImageView)v.findViewById(R.id.imageView_member_mystore);
         imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
@@ -75,14 +76,12 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         RelativeLayoutCoupon.setOnClickListener(this);
         RelativeLayoutPersonal.setOnClickListener(this);
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.headshot));
+        memberActivity = (MemberActivity)getActivity();
         return v;
     }
 
     @Override
     public void onClick(View view) {
-//        MainActivity mainActivity = (MainActivity)getActivity();
-//        FragmentManager fm = mainActivity.getFragmentManager();
-        
         switch (view.getId()) {
             case R.id.imageView_member_mystore:
                 intent = new Intent(getContext(), MyStoreActivity.class);
@@ -112,16 +111,13 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 Log.d("main", "getContext() = " + getContext());
                 intent = new Intent(getContext(), BecomeSellerActivity.class);
                 startActivity(intent);
-                RelativeLayoutBecomeSeller.setVisibility(View.GONE);
+//                RelativeLayoutBecomeSeller.setVisibility(View.GONE);
                 break;
             case R.id.RelativeLayout_member_orders:
-                MemberOrdersFragment memberOrdersFragment = new MemberOrdersFragment();
-                MemberFragment memberFragment = new MemberFragment();
-                ft.hide(memberFragment);
-                ft.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrders");
+                memberActivity.showOrders();
                 break;
             case R.id.RelativeLayout_member_favorite:
-                Toast.makeText(getContext(), "RelativeLayout_member_favorite", Toast.LENGTH_SHORT).show();
+                memberActivity.showGoods();
                 break;
             case R.id.RelativeLayout_member_bought:
                 Toast.makeText(getContext(), "RelativeLayout_member_bought", Toast.LENGTH_SHORT).show();
@@ -136,8 +132,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(getContext(), "RelativeLayout_member_personal", Toast.LENGTH_SHORT).show();
                 break;
         }
-        ft.commit();
     }
+
+
 
 
 }

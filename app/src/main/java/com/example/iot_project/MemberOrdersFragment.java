@@ -15,8 +15,8 @@ import android.view.ViewGroup;
  */
 public class MemberOrdersFragment extends Fragment {
 
-    public static MemberFragment newInstance(String param1, String param2) {
-        MemberFragment fragment = new MemberFragment();
+    public static MemberOrdersFragment newInstance(String param1, String param2) {
+        MemberOrdersFragment fragment = new MemberOrdersFragment();
         return fragment;
     }
 
@@ -31,7 +31,7 @@ public class MemberOrdersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_member, container, false);
+        View v = inflater.inflate(R.layout.fragment_member_orders, container, false);
 
         return v;
     }
