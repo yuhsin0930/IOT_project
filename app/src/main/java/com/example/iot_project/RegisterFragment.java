@@ -13,12 +13,9 @@ import android.widget.RelativeLayout;
 
 public class RegisterFragment extends Fragment {
 
-    private FragmentManager fm;
-    private FragmentTransaction ft;
+    private RegisterActivity registerActivity;
 
-    public RegisterFragment() {
-
-    }
+    public RegisterFragment() {}
 
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
@@ -28,7 +25,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -36,20 +32,14 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register, container, false);
         RelativeLayout RelativeLayoutCity = (RelativeLayout) v.findViewById(R.id.RelativeLayout_register_city);
-
+        registerActivity = (RegisterActivity)getActivity();
         RelativeLayoutCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterCityFragment registerCityFragment = new RegisterCityFragment();
-                RegisterFragment registerFragment = new RegisterFragment();
-                fm = getParentFragmentManager();
-                ft = fm.beginTransaction();
-                ft.hide(registerFragment);
-                ft.add(R.id.FrameLayout_register, registerCityFragment, "registerFragment");
-                ft.commit();
+                registerActivity.showCity();
             }
         });
-
         return v;
     }
+
 }

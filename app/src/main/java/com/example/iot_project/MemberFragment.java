@@ -13,22 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
     private ImageView imageViewMystore, imageViewSetting, imageViewCart, imageViewMypic;
-    private ImageView imageViewOrders1, imageViewOrders2, imageViewOrders3;
+    private LinearLayout LinearLayoutOrders1, LinearLayoutOrders2, LinearLayoutOrders3;
     private RelativeLayout RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
     private Intent intent;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-    private FragmentManager fragmentMgr;
-    private FragmentTransaction fragmentTrans;
     private MemberActivity memberActivity;
+
 
     public static MemberFragment newInstance(String param1, String param2) {
         MemberFragment fragment = new MemberFragment();
@@ -51,9 +49,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
         imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_mypic);
-        imageViewOrders1 = (ImageView)v.findViewById(R.id.imageView_member_orders1);
-        imageViewOrders2 = (ImageView)v.findViewById(R.id.imageView_member_orders2);
-        imageViewOrders3 = (ImageView)v.findViewById(R.id.imageView_member_orders3);
+        LinearLayoutOrders1 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders1);
+        LinearLayoutOrders2 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders2);
+        LinearLayoutOrders3 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders3);
         RelativeLayoutBecomeSeller = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_becomeSeller);
         RelativeLayoutOrders = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_orders);
         RelativeLayoutFavorite = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_favorite);
@@ -65,9 +63,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         imageViewSetting.setOnClickListener(this);
         imageViewCart.setOnClickListener(this);
         imageViewMypic.setOnClickListener(this);
-        imageViewOrders1.setOnClickListener(this);
-        imageViewOrders2.setOnClickListener(this);
-        imageViewOrders3.setOnClickListener(this);
+        LinearLayoutOrders1.setOnClickListener(this);
+        LinearLayoutOrders2.setOnClickListener(this);
+        LinearLayoutOrders3.setOnClickListener(this);
         RelativeLayoutBecomeSeller.setOnClickListener(this);
         RelativeLayoutOrders.setOnClickListener(this);
         RelativeLayoutFavorite.setOnClickListener(this);
@@ -89,7 +87,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.imageView_member_setting:
-                Toast.makeText(getContext(), "imageView_member_setting", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), RegisterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.imageView_member_cart:
                 Log.d("main", "getContext() = " + getContext());
@@ -98,14 +97,14 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
             case R.id.imageView_member_mypic:
                 Toast.makeText(getContext(), "imageView_member_mypic", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.imageView_member_orders1:
-                Toast.makeText(getContext(), "imageView_member_orders1", Toast.LENGTH_SHORT).show();
+            case R.id.LinearLayout_member_orders1:
+                memberActivity.showOrders();
                 break;
-            case R.id.imageView_member_orders2:
-                Toast.makeText(getContext(), "imageView_member_orders2", Toast.LENGTH_SHORT).show();
+            case R.id.LinearLayout_member_orders2:
+                memberActivity.showOrders();
                 break;
-            case R.id.imageView_member_orders3:
-                Toast.makeText(getContext(), "imageView_member_orders3", Toast.LENGTH_SHORT).show();
+            case R.id.LinearLayout_member_orders3:
+                memberActivity.showOrders();
                 break;
             case R.id.RelativeLayout_member_becomeSeller:
                 Log.d("main", "getContext() = " + getContext());
@@ -120,16 +119,18 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 memberActivity.showGoods();
                 break;
             case R.id.RelativeLayout_member_bought:
-                Toast.makeText(getContext(), "RelativeLayout_member_bought", Toast.LENGTH_SHORT).show();
+                memberActivity.showGoods();
                 break;
             case R.id.RelativeLayout_member_seen:
-                Toast.makeText(getContext(), "RelativeLayout_member_seen", Toast.LENGTH_SHORT).show();
+                memberActivity.showGoods();
                 break;
             case R.id.RelativeLayout_member_coupon:
                 Toast.makeText(getContext(), "RelativeLayout_member_coupon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.RelativeLayout_member_personal:
-                Toast.makeText(getContext(), "RelativeLayout_member_personal", Toast.LENGTH_SHORT).show();
+                int a;
+                intent = new Intent(getContext(), RegisterActivity.class);
+                startActivity(intent);
                 break;
         }
     }

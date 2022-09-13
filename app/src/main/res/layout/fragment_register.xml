@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/RelaitiveLayout_bar"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

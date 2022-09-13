@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 public class MemberActivity extends AppCompatActivity {
@@ -16,60 +17,74 @@ public class MemberActivity extends AppCompatActivity {
     private MemberFragment memberFragment;
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
-    private boolean flag_Orders = false;
-    private boolean flag_Goods = false;
+    private boolean fragFlag = false;
+    private Window window;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
-
-        getSupportActionBar().hide();                   // 隱藏ActionBar
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.Mycolor_1));      // 最上面StatusBar橘底
-        getWindow().setNavigationBarColor(0xaaffffff);  // 最下面NavigationBar白色底
-        getWindow().getDecorView()                      // 上面字設黑 | 下面虛擬按鈕深色
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-
+        window = getWindow();
+        getSupportActionBar().hide();              // 隱藏ActionBar
+        window.setNavigationBarColor(0xaaffffff);  // 下面NavigationBar白色底
+        setWindowOrange();
         memberFragment = new MemberFragment();
         memberOrdersFragment = new MemberOrdersFragment();
         memberGoodsFragment = new MemberGoodsFragment();
         fragmentMgr = getSupportFragmentManager();
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.add(R.id.FrameLayout_member, memberFragment, "memberFragment");
+        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
+        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
+        fragmentTrans.hide(memberOrdersFragment);
+        fragmentTrans.hide(memberGoodsFragment);
         fragmentTrans.commit();
     }
 
-    public void showOrders() {
-       flag_Orders = true;
-       fragmentTrans = fragmentMgr.beginTransaction();
-       fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-       fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
-       fragmentTrans.commit();
+    public void setWindowWhite() {
+        window.setStatusBarColor(0xffffffff);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);  // 黑字
     }
-    public void showGoods() {
-        flag_Goods = true;
+
+    public void setWindowOrange() {
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.Mycolor_1));
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+    }
+
+    public void showOrders() {
+        fragFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
+        fragmentTrans.show(memberOrdersFragment);
+        fragmentTrans.hide(memberFragment);
         fragmentTrans.commit();
+        setWindowWhite();
+    }
+    public void showGoods() {
+        fragFlag = true;
+        fragmentTrans = fragmentMgr.beginTransaction();
+        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+        fragmentTrans.show(memberGoodsFragment);
+        fragmentTrans.hide(memberFragment);
+        fragmentTrans.commit();
+        setWindowWhite();
     }
 
     @Override
     public void onBackPressed() {
-        fragmentTrans = fragmentMgr.beginTransaction();
-        fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-        if (flag_Orders) {
-            flag_Orders = false;
+        if (fragFlag) {
+            setWindowOrange();
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
             fragmentTrans.hide(memberOrdersFragment);
-        }
-        if (flag_Goods) {
-            flag_Goods = false;
             fragmentTrans.hide(memberGoodsFragment);
+            fragmentTrans.show(memberFragment);
+            fragmentTrans.commit();
+            fragFlag = false;
+        } else {
+            super.onBackPressed();
         }
-        fragmentTrans.show(memberFragment);
-        fragmentTrans.commit();
-        if (!flag_Orders && !flag_Goods) super.onBackPressed();
     }
 
 }
