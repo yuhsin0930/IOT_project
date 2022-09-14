@@ -13,7 +13,7 @@ public class MemberRecyclerViewAdapter extends RecyclerView.Adapter<MemberRecycl
     @NonNull
     @Override
     public MemberRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_member_goods, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_goods, parent, false);
         return new ViewHolder(v);
     }
 

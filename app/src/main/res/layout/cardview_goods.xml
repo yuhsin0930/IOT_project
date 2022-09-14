@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/outline_local_shipping_black_18" />
+                    app:srcCompat="@drawable/outline_local_shipping_black_18_blue" />
 
             </RelativeLayout>
 
