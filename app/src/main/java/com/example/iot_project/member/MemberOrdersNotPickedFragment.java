@@ -40,7 +40,7 @@ public class MemberOrdersNotPickedFragment extends Fragment {
         recyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
 
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),1));
-        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter();
+        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("未收");
         recyclerViewGoods.setAdapter(adapter);
         
         return v;

@@ -54,16 +54,10 @@ public class MemberOrdersFragment extends Fragment {
             }
         });
 
-
-
-
-
         viewPager2 = (ViewPager2)v.findViewById(R.id.viewPager2);
         tabLayout = (TabLayout)v.findViewById(R.id.t1);
 
-
         tabTitle = new ArrayList<>();
-
         tabTitle.add("待付款");
         tabTitle.add("待出貨");
         tabTitle.add("待收貨");
@@ -77,17 +71,6 @@ public class MemberOrdersFragment extends Fragment {
                 tab.setText(tabTitle.get(position));
             }
         }).attach();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
         return v;
     }
