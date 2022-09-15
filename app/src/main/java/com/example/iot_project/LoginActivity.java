@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.iot_project.member.MemberActivity;
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button buttonLogin;

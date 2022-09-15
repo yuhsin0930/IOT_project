@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListViewFragment">
+    tools:context=".RegisterCityFragment">
 
     <RelativeLayout
         android:id="@+id/RelaitiveLayout_bar"
@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/ImageView_register_city_back"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"

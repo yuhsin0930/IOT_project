@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.member;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -8,7 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
+
+import com.example.iot_project.R;
 
 public class MemberActivity extends AppCompatActivity {
 

@@ -1,12 +1,10 @@
-package com.example.iot_project;
+package com.example.iot_project.member;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,15 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.iot_project.BecomeSellerActivity;
+import com.example.iot_project.MyStoreActivity;
+import com.example.iot_project.R;
+import com.example.iot_project.RegisterActivity;
+
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
+    private MemberActivity memberActivity;
     private ImageView imageViewMystore, imageViewSetting, imageViewCart, imageViewMypic;
     private LinearLayout LinearLayoutOrders1, LinearLayoutOrders2, LinearLayoutOrders3;
     private RelativeLayout RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
     private Intent intent;
-    private MemberActivity memberActivity;
+
 
 
     public static MemberFragment newInstance(String param1, String param2) {
@@ -45,6 +49,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member, container, false);
+        memberActivity = (MemberActivity)getActivity();
+
         imageViewMystore = (ImageView)v.findViewById(R.id.imageView_member_mystore);
         imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
@@ -59,6 +65,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         RelativeLayoutSeen = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_seen);
         RelativeLayoutCoupon = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_coupon);
         RelativeLayoutPersonal = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_personal);
+
+        imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.headshot));
         imageViewMystore.setOnClickListener(this);
         imageViewSetting.setOnClickListener(this);
         imageViewCart.setOnClickListener(this);
@@ -73,8 +81,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         RelativeLayoutSeen.setOnClickListener(this);
         RelativeLayoutCoupon.setOnClickListener(this);
         RelativeLayoutPersonal.setOnClickListener(this);
-        imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.headshot));
-        memberActivity = (MemberActivity)getActivity();
+
         return v;
     }
 

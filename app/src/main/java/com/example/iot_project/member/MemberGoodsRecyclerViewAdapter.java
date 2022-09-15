@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.member;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +8,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MemberRecyclerViewAdapter extends RecyclerView.Adapter<MemberRecyclerViewAdapter.ViewHolder> {
+import com.example.iot_project.R;
+
+public class MemberGoodsRecyclerViewAdapter extends RecyclerView.Adapter<MemberGoodsRecyclerViewAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public MemberRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MemberGoodsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_goods, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemberRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MemberGoodsRecyclerViewAdapter.ViewHolder holder, int position) {
 
     }
 

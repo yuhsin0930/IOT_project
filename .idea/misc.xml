@@ -36,10 +36,16 @@
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/activity_member.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/activity_register.xml" value="0.30364583333333334" />
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/activity_sales_record.xml" value="0.2866666666666667" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/cardview_goods.xml" value="0.298974358974359" />
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/cardview_member_goods.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.1" />
-        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_goods.xml" value="0.1175925925925926" />
-        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_orders.xml" value="0.1175925925925926" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/cardview_member_orders.xml" value="0.298974358974359" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_listview.xml" value="0.15462962962962962" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_goods.xml" value="0.3" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_order_unpaid.xml" value="0.298974358974359" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_orders.xml" value="0.25" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_ordes_notpicked.xml" value="0.298974358974359" />
+        <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_member_ordes_notshipped.xml" value="0.298974358974359" />
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_register.xml" value="0.1175925925925926" />
         <entry key="..\:/Users/mac305/Desktop/ALL/ANDROID/Code/IOT_project/app/src/main/res/layout/fragment_register_city.xml" value="0.1175925925925926" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/drawable/dialog_background_corner.xml" value="0.169" />

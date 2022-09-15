@@ -12,7 +12,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
     private RegisterFragment registerFragment;
-    private ListViewFragment registerCityFragment;
+    private RegisterCityFragment registerCityFragment;
     private boolean flag_City = false;;
 
     @Override
@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 
         registerFragment = new RegisterFragment();
-        registerCityFragment = new ListViewFragment();
+        registerCityFragment = new RegisterCityFragment();
         fragmentMgr = getSupportFragmentManager();
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.add(R.id.FrameLayout_register, registerFragment, "registerFragment");

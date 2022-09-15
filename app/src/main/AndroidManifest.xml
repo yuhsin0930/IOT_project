@@ -17,7 +17,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MemberActivity"
+            android:name=".member.MemberActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
