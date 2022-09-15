@@ -54,7 +54,7 @@ public class MemberOrdersRecyclerViewAdapter extends RecyclerView.Adapter<Member
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewCardviewOrders = (TextView)itemView.findViewById(R.id.TextView_cardview_member_orders);
-            button_1 = (Button)itemView.findViewById(R.id.button_1);
+            button_1 = (Button)itemView.findViewById(R.id.button_member_orders_1);
 //            itemView.setOnClickListener(this);
         }
 

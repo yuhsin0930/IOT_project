@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imageView_goods_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
             android:paddingVertical="5dp">
 
             <TextView
-                android:id="@+id/textView42"
+                android:id="@+id/textView_goods_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.78"
@@ -48,7 +48,6 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView38"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -59,7 +58,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView45"
+                    android:id="@+id/textView_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -71,7 +70,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/imageView7"
+                    android:id="@+id/imageView_goods_shippingCar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -94,6 +93,7 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/textView_goods_"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="45dp"

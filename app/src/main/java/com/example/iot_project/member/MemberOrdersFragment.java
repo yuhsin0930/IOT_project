@@ -31,8 +31,7 @@ public class MemberOrdersFragment extends Fragment {
         return fragment;
     }
 
-    public MemberOrdersFragment() {
-    }
+    public MemberOrdersFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,8 @@ public class MemberOrdersFragment extends Fragment {
         memberActivity = (MemberActivity)getActivity();
 
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_orders_back);
+        viewPager2 = (ViewPager2)v.findViewById(R.id.viewPager2);
+        tabLayout = (TabLayout)v.findViewById(R.id.t1);
 
         ImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,16 +55,13 @@ public class MemberOrdersFragment extends Fragment {
             }
         });
 
-        viewPager2 = (ViewPager2)v.findViewById(R.id.viewPager2);
-        tabLayout = (TabLayout)v.findViewById(R.id.t1);
+        MemberOrdersPagerAdapter pageAdapter = new MemberOrdersPagerAdapter(memberActivity);
+        viewPager2.setAdapter(pageAdapter);
 
         tabTitle = new ArrayList<>();
         tabTitle.add("待付款");
         tabTitle.add("待出貨");
         tabTitle.add("待收貨");
-
-        MemberOrdersPagerAdapter pageAdapter = new MemberOrdersPagerAdapter(memberActivity);
-        viewPager2.setAdapter(pageAdapter);
 
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -74,4 +72,9 @@ public class MemberOrdersFragment extends Fragment {
 
         return v;
     }
+
+    public void setTabLayout(int whichTab){
+        tabLayout.getTabAt(whichTab).select();
+    }
+
 }

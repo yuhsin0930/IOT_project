@@ -3,9 +3,11 @@ package com.example.iot_project.member;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iot_project.R;
@@ -31,8 +33,12 @@ public class MemberGoodsRecyclerViewAdapter extends RecyclerView.Adapter<MemberG
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final ImageView imageViewPicture;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageViewPicture = (ImageView)itemView.findViewById(R.id.imageView_goods_picture);
+//            imageViewPicture.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), R.drawable.goods_demo));
             itemView.setOnClickListener(this);
         }
 

@@ -26,6 +26,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/Mycolor_1">
 
                 <ImageView
@@ -74,7 +75,7 @@
                     android:layout_marginTop="15dp"
                     android:text="TextView"
                     android:textColor="#FFFFFF"
-                    android:textSize="24dp"
+                    android:textSize="22dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/imageView_member_mypic"
                     app:layout_constraintTop_toBottomOf="@id/imageView_member_mystore" />
@@ -86,7 +87,6 @@
                 android:id="@+id/RelativeLayout_member_becomeSeller"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="#FFECE8"
                 android:paddingVertical="24dp">
@@ -140,7 +140,6 @@
                 android:id="@+id/RelativeLayout_member_orders"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
@@ -188,12 +187,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="8dp"
                 android:background="#FFFFFF"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout_member_orders1"
+                    android:id="@+id/LinearLayout_member_orders_0"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -218,7 +217,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout_member_orders2"
+                    android:id="@+id/LinearLayout_member_orders_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -243,7 +242,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout_member_orders3"
+                    android:id="@+id/LinearLayout_member_orders_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -272,7 +271,7 @@
                 android:id="@+id/RelativeLayout_member_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF"
                 android:paddingVertical="24dp">
 
@@ -317,7 +316,7 @@
                 android:id="@+id/RelativeLayout_member_bought"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF"
                 android:paddingVertical="24dp">
 
@@ -361,7 +360,7 @@
                 android:id="@+id/RelativeLayout_member_seen"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF"
                 android:paddingVertical="24dp">
 
@@ -405,7 +404,7 @@
                 android:id="@+id/RelativeLayout_member_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF"
                 android:paddingVertical="24dp">
 
@@ -449,7 +448,7 @@
                 android:id="@+id/RelativeLayout_member_personal"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF"
                 android:paddingVertical="24dp">
 

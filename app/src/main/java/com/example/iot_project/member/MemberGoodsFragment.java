@@ -10,19 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.iot_project.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MemberGoodsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MemberGoodsFragment extends Fragment {
 
     private MemberActivity memberActivity;
     private ImageView ImageViewBack;
     private RecyclerView RecyclerViewGoods;
+    private TextView textViewGoodsBar;
 
     public static MemberGoodsFragment newInstance(String param1, String param2) {
         MemberGoodsFragment fragment = new MemberGoodsFragment();
@@ -44,6 +41,8 @@ public class MemberGoodsFragment extends Fragment {
 
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_goods_back);
         RecyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_goods);
+        textViewGoodsBar = (TextView)v.findViewById(R.id.TextView_member_goods_bar);
+
 
         ImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,5 +56,9 @@ public class MemberGoodsFragment extends Fragment {
         RecyclerViewGoods.setAdapter(adapter);
 
         return v;
+    }
+
+    public void setTextViewGoodsBar(String barName) {
+        textViewGoodsBar.setText(barName);
     }
 }

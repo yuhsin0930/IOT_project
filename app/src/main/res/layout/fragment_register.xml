@@ -8,7 +8,7 @@
     tools:context=".RegisterActivity">
 
     <RelativeLayout
-        android:id="@+id/RelaitiveLayout_bar"
+        android:id="@+id/RelativeLayout_register_bar"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="#FFFFFF"
@@ -50,14 +50,15 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/RelaitiveLayout_bar"
+        app:layout_constraintTop_toBottomOf="@id/RelativeLayout_register_bar"
         app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
@@ -68,7 +69,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -104,7 +105,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -140,7 +141,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -176,7 +177,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -212,7 +213,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -248,7 +249,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -285,7 +286,7 @@
                 android:id="@+id/RelativeLayout_register_city"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -321,7 +322,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
 
                 <TextView
@@ -357,7 +358,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginVertical="1dp"
+                android:layout_marginBottom="2dp"
                 android:background="#F1F1F1">
 
                 <Button

@@ -21,7 +21,6 @@ public class MemberActivity extends AppCompatActivity {
     private boolean fragFlag = false;
     private Window window;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +52,9 @@ public class MemberActivity extends AppCompatActivity {
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
-    public void showOrders() {
+    public void showOrders(int whichTab) {
         fragFlag = true;
+        memberOrdersFragment.setTabLayout(whichTab);
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         fragmentTrans.show(memberOrdersFragment);
@@ -62,8 +62,10 @@ public class MemberActivity extends AppCompatActivity {
         fragmentTrans.commit();
         setWindowWhite();
     }
-    public void showGoods() {
+
+    public void showGoods(String barName) {
         fragFlag = true;
+        memberGoodsFragment.setTextViewGoodsBar(barName);
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         fragmentTrans.show(memberGoodsFragment);
