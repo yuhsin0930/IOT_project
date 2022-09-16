@@ -93,10 +93,6 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 Log.d("main", "getContext() = " + getContext());
                 startActivity(intent);
                 break;
-            case R.id.imageView_member_setting:
-                intent = new Intent(getContext(), RegisterActivity.class);
-                startActivity(intent);
-                break;
             case R.id.imageView_member_cart:
                 Log.d("main", "getContext() = " + getContext());
                 Toast.makeText(getContext(), "這是購物車..", Toast.LENGTH_SHORT).show();
@@ -134,9 +130,11 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
             case R.id.RelativeLayout_member_coupon:
                 Toast.makeText(getContext(), "RelativeLayout_member_coupon", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:
-                int a;
                 intent = new Intent(getContext(), RegisterActivity.class);
+                intent.putExtra("name", "帳號設定");
+                intent.putExtra("isFromRegister", false);
                 startActivity(intent);
                 break;
         }
