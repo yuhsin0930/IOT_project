@@ -42,6 +42,22 @@ public class MemberActivity extends AppCompatActivity {
         fragmentTrans.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (fragFlag) {
+            setWindowOrange();
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+            fragmentTrans.hide(memberOrdersFragment);
+            fragmentTrans.hide(memberGoodsFragment);
+            fragmentTrans.show(memberFragment);
+            fragmentTrans.commit();
+            fragFlag = false;
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void setWindowWhite() {
         window.setStatusBarColor(0xffffffff);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);  // 黑字
@@ -72,22 +88,6 @@ public class MemberActivity extends AppCompatActivity {
         fragmentTrans.hide(memberFragment);
         fragmentTrans.commit();
         setWindowWhite();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (fragFlag) {
-            setWindowOrange();
-            fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-            fragmentTrans.hide(memberOrdersFragment);
-            fragmentTrans.hide(memberGoodsFragment);
-            fragmentTrans.show(memberFragment);
-            fragmentTrans.commit();
-            fragFlag = false;
-        } else {
-            super.onBackPressed();
-        }
     }
 
 }

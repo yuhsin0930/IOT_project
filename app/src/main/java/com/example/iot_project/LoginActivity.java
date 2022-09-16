@@ -14,6 +14,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button buttonLogin;
     private TextView textViewRegister;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MemberActivity.class);
+                intent = new Intent(LoginActivity.this, MemberActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,7 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent.putExtra("name", "註冊");
+                intent.putExtra("isFromRegister", true);
                 startActivity(intent);
             }
         });

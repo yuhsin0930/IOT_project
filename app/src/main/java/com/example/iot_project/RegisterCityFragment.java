@@ -47,8 +47,14 @@ public class RegisterCityFragment extends Fragment {
 
         listViewCommon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "123456", Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String cityName = adapterView.getItemAtPosition(position).toString();
+                registerActivity.setCityName(cityName);
+                registerActivity.onBackPressed();
+//                testActivity testActivity = (testActivity)getActivity();
+//                Bundle result = new Bundle();
+//                result.putString("city", data);
+//                getParentFragmentManager().setFragmentResult("requestKey", result);
             }
         });
 
