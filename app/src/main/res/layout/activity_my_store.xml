@@ -66,7 +66,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="#00FFFFFF"
                         android:text="查看賣場"
-                        android:textColor="#FF5722"
+                        android:textColor="@color/Mycolor_1"
                         android:textStyle="bold" />
 
                 </LinearLayout>

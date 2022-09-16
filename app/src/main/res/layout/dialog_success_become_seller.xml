@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#FF5722"
+            android:backgroundTint="@color/Mycolor_1"
             android:text="查看我的賣場"
             android:textSize="20sp"
             android:textStyle="bold" />
