@@ -886,8 +886,7 @@
     <string-array name="台北富邦商業銀行屏東">
         <item>屏東分行</item>
     </string-array>
-    <string-array name="台北富邦商業銀行澎湖">
-    </string-array>
+    <string-array name="台北富邦商業銀行澎湖"></string-array>
     <string-array name="國泰世華商業銀行台北">
         <item>南門分行</item>
         <item>華山分行</item>
@@ -1083,8 +1082,7 @@
     <string-array name="國泰世華商業銀行花蓮">
         <item>花蓮分行</item>
     </string-array>
-    <string-array name="國泰世華商業銀行澎湖">
-    </string-array>
+    <string-array name="國泰世華商業銀行澎湖"></string-array>
     <string-array name="玉山商業銀行基隆">
         <item>基隆分行</item>
     </string-array>
@@ -1446,8 +1444,7 @@
         <item>東花蓮分行</item>
         <item>花蓮分行</item>
     </string-array>
-    <string-array name="中國信託商業銀行澎湖">
-    </string-array>
+    <string-array name="中國信託商業銀行澎湖"></string-array>
 
     <string-array name="bankArea">
         <item>臺北市</item>

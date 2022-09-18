@@ -1,5 +1,5 @@
 
-package com.example.iot_project;
+package com.example.iot_project.SellerRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.example.iot_project.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
