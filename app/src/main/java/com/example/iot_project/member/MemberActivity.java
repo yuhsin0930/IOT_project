@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
+
 import com.example.iot_project.R;
 
 public class MemberActivity extends AppCompatActivity {
@@ -34,26 +36,30 @@ public class MemberActivity extends AppCompatActivity {
         initFragment();
     }
 
+    private long timeTemp;
     @Override
     public void onBackPressed() {
-        if (DetailFlag) {
-            DetailFlag = false;
-            fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-            fragmentTrans.hide(memberOrdersDetailedFragment);
-            fragmentTrans.show(memberOrdersFragment);
-            fragmentTrans.commit();
-        } else if (OrdersGoodsFlag) {
-            OrdersGoodsFlag = false;
-            fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-            fragmentTrans.hide(memberOrdersFragment);
-            fragmentTrans.hide(memberGoodsFragment);
-            fragmentTrans.show(memberFragment);
-            fragmentTrans.commit();
-            setWindowOrange();
-        } else {
-            super.onBackPressed();
+        if ((System.currentTimeMillis() - timeTemp) > 2000) {
+            timeTemp = System.currentTimeMillis();
+            if (DetailFlag) {
+                DetailFlag = false;
+                fragmentTrans = fragmentMgr.beginTransaction();
+                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                fragmentTrans.hide(memberOrdersDetailedFragment);
+                fragmentTrans.show(memberOrdersFragment);
+                fragmentTrans.commit();
+            } else if (OrdersGoodsFlag) {
+                OrdersGoodsFlag = false;
+                fragmentTrans = fragmentMgr.beginTransaction();
+                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                fragmentTrans.hide(memberOrdersFragment);
+                fragmentTrans.hide(memberGoodsFragment);
+                fragmentTrans.show(memberFragment);
+                fragmentTrans.commit();
+                setWindowOrange();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -81,7 +87,6 @@ public class MemberActivity extends AppCompatActivity {
 
     public void setWindowOrange() {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.Mycolor_1));
-//        window.setStatusBarColor(Color.parseColor("#FF4E41"));
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 

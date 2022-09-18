@@ -1,6 +1,8 @@
 package com.example.iot_project.register;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -11,13 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.iot_project.LoginActivity;
+import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
+import com.example.iot_project.SellerRegister.BecomeSellerActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.BitSet;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener{
 
@@ -32,10 +44,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private ImageView imageViewAddress_X, imageViewAddress_Arrow, imageViewBack;
     private TextView textViewBarName, textViewBirthday, textViewAddress, textViewCity;
     private Button buttonSubmit, buttonLogout;
-    private String barName, cityName, address;
+    private String barName, cityName, districtName, address;
     private RegisterActivity registerActivity;
-    private InputMethodManager kryboard;
-    private boolean isFromRegister, addressFlag;
+    private InputMethodManager keyboard;
+    private boolean isLoggedIn = false, addressFlag = true;
+    private Intent intent;
+    private Calendar calendar;
+    private DatePickerDialog.OnDateSetListener datePicker;
+    private String birthdayInput;
 
     public RegisterFragment() {}
 
@@ -85,16 +101,26 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         buttonLogout = (Button)v.findViewById(R.id.button_register_logout);
 
         registerActivity = (RegisterActivity)getActivity();
-        kryboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        kryboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        address = "桃園市楊梅區幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地止
+        keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        address = "幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地址
         textViewBarName.setText(barName);
         editTextAddress.setText(address);
         textViewAddress.setText(editTextAddress.getText().toString().substring(0,6) + "..");
-        isFromRegister = false;
-        addressFlag = true;
 
-        if (isFromRegister) {   // 改判斷是否為登入中
+        calendar = Calendar.getInstance();
+        datePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN);
+                textViewBirthday.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        };
+
+        if (isLoggedIn) {   // 之後改判斷 if (為登入中)
             buttonSubmit.setVisibility(View.VISIBLE);
             relativeLayoutLogout.setVisibility(View.GONE);
         } else {
@@ -152,7 +178,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) textViewCity.setText(cityName);
+        if (!hidden) textViewCity.setText(cityName + districtName);
     }
 
     @Override
@@ -160,43 +186,50 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.RelativeLayout_register_account:
                 editTextAccount.requestFocus();
-                kryboard.showSoftInput(editTextAccount, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextAccount, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_password_1:
                 editTextPassword_1.requestFocus();
-                kryboard.showSoftInput(editTextPassword_1, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextPassword_1, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_password_2:
                 editTextPassword_2.requestFocus();
-                kryboard.showSoftInput(editTextPassword_2, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextPassword_2, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_name:
                 editTextName.requestFocus();
-                kryboard.showSoftInput(editTextName, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextName, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_birthday:
-                kryboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                textViewBirthday.setText("2022/09/18");
+                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(),
+                        datePicker, calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                );
+                dialog.show();
                 break;
             case R.id.RelativeLayout_register_phone:
                 editTextPhone.requestFocus();
-                kryboard.showSoftInput(editTextPhone, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextPhone, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_email:
                 editTextEmail.requestFocus();
-                kryboard.showSoftInput(editTextEmail, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextEmail, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_city:
-                kryboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                cityName = "";
+                districtName = "";
                 registerActivity.showCity();
                 break;
             case R.id.RelativeLayout_register_bankNumber:
                 editTextBankNumber.requestFocus();
-                kryboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_bankAccount:
                 editTextBankAccount.requestFocus();
-                kryboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
+                keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.LinearLayout_register_address:
                 // 預設地址方式與資料庫互動方式要改
@@ -220,10 +253,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
-                Toast.makeText(registerActivity, "button_register_submit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button_register_logout:
-                Toast.makeText(registerActivity, "button_register_logout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -232,10 +269,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         this.barName = barName;
     }
 
-    public void setIsFromRegister(boolean isFromRegister) {
-        this.isFromRegister = isFromRegister;
+    public void isLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 
-    public void setCityName(String cityName) { this.cityName = cityName; }
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
 
 }

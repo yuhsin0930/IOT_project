@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -16,7 +17,7 @@ public class RegisterCityFragment extends Fragment {
     private RegisterActivity registerActivity;
     private ListView listViewCommon;
     private ImageView ImageViewBack;
-
+    private String cityName = "台北市";
 
     public RegisterCityFragment() {}
 
@@ -49,16 +50,14 @@ public class RegisterCityFragment extends Fragment {
         listViewCommon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String cityName = adapterView.getItemAtPosition(position).toString();
+                cityName = adapterView.getItemAtPosition(position).toString();
                 registerActivity.setCityName(cityName);
-                registerActivity.onBackPressed();
-//                testActivity testActivity = (testActivity)getActivity();
-//                Bundle result = new Bundle();
-//                result.putString("city", data);
-//                getParentFragmentManager().setFragmentResult("requestKey", result);
+                registerActivity.addDistrictFragment();
+                registerActivity.showDistrict();
             }
         });
 
         return v;
     }
+
 }
