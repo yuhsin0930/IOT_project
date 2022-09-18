@@ -12,10 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
-import com.example.iot_project.RegisterActivity;
+import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 
@@ -46,7 +45,6 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member, container, false);
         memberActivity = (MemberActivity)getActivity();
-
 
         imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);

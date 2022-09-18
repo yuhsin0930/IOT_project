@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.register;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.example.iot_project.R;
 
 public class RegisterCityFragment extends Fragment {
 

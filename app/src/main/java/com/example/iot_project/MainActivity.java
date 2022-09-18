@@ -2,13 +2,13 @@ package com.example.iot_project;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 
 public class MainActivity extends AppCompatActivity {
 

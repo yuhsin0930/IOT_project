@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1F1F1"
-    tools:context=".RegisterActivity">
+    tools:context=".register.RegisterActivity">
 
     <RelativeLayout
         android:id="@+id/RelativeLayout_register_bar"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ImageView_register_back"
+            android:id="@+id/imageView_register_back"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="56dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="會員註冊"
             android:textSize="22dp"
             android:textStyle="bold" />
@@ -51,7 +53,6 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -68,6 +69,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_account"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -83,15 +85,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPersonName"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -104,6 +109,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_password_1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -119,15 +125,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_password_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPassword"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -140,6 +149,47 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_password_2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="2dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="再次輸入密碼"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/edittext_register_password_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPassword"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_register_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -155,15 +205,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPersonName"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -176,6 +229,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -192,12 +246,12 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/textView_register_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
                     android:textColor="#1E1E1E"
                     android:textSize="16dp" />
 
@@ -212,6 +266,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_phone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -227,15 +282,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="phone"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -248,6 +306,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -263,15 +322,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPersonName"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -318,9 +380,91 @@
                     android:layout_marginEnd="16dp"
                     android:alpha="0.4"
                     app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/LinearLayout_register_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="16dp"
+                        android:text="地址"
+                        android:textColor="#1E1E1E"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView_register_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="50dp"
+                        android:textColor="#1E1E1E"
+                        android:textSize="16dp" />
+
+                    <ImageView
+                        android:id="@+id/imageView_register_address_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:alpha="0.4"
+                        app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout_register_address_drop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="40dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imageView_register_address_x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="2dp"
+                        android:alpha="0.5"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/outline_cancel_black_20" />
+
+                    <EditText
+                        android:id="@+id/editText_register_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="40dp"
+                        android:background="@drawable/register_address_edittext_corner"
+                        android:gravity="top"
+                        android:minHeight="48dp"
+                        android:padding="6dp"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_bankNumber"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
@@ -332,19 +476,22 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="16dp"
-                    android:text="地址"
+                    android:text="銀行帳號"
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/edittext_register_bankNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="50dp"
-                    android:text="87 讚"
-                    android:textColor="#1E1E1E"
-                    android:textSize="16dp" />
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="number"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -357,6 +504,47 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/RelativeLayout_register_bankAccount"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="2dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="銀行戶名"
+                    android:textColor="#1E1E1E"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/edittext_register_bankAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:gravity="end"
+                    android:inputType="textPersonName"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_register_logout"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="2dp"
@@ -375,12 +563,6 @@
                     android:textStyle="bold" />
 
             </RelativeLayout>
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>
