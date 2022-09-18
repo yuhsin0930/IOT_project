@@ -50,7 +50,7 @@ public class MyProductActivity extends AppCompatActivity {
         addProduct_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyProductActivity.this,NewProductActivity.class);
+                Intent intent = new Intent(MyProductActivity.this, NewProductActivity.class);
                 startActivity(intent);
             }
         });

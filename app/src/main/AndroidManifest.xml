@@ -15,22 +15,28 @@
         tools:targetApi="31"
         tools:ignore="Instantiatable">
         <activity
-            android:name=".ChooseBankAreaActivity"
+            android:name=".ProductDescribeActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseBankBranchActivity"
+            android:name=".shoppingCart.ShoppingCartActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseBankNameActivity"
+            android:name=".SellerRegister.ChooseBankAreaActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseSellerAreaActivity"
+            android:name=".SellerRegister.ChooseBankBranchActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseSellerCountyActivity"
+            android:name=".SellerRegister.ChooseBankNameActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseCitizenActivity"
+            android:name=".SellerRegister.ChooseSellerAreaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SellerRegister.ChooseSellerCountyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SellerRegister.ChooseCitizenActivity"
             android:exported="false" />
         <activity
             android:name=".NewProductActivity"
@@ -69,13 +75,13 @@
             android:name=".MyStoreActivity"
             android:exported="false" />
         <activity
-            android:name=".BankAccountActivity"
+            android:name=".SellerRegister.BankAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".SellerDetailActivity"
+            android:name=".SellerRegister.SellerDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".BecomeSellerActivity"
+            android:name=".SellerRegister.BecomeSellerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

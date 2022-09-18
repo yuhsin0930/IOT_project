@@ -40,7 +40,7 @@ public class MemberOrdersUnpaidFragment extends Fragment {
         recyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
 
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),1));
-        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("未結");
+        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("待付款");
         recyclerViewGoods.setAdapter(adapter);
         
         return v;

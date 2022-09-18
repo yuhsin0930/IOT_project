@@ -38,19 +38,7 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
-//            @Override
-//            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-//                String testString = result.getString("city");
-//                Log.d("main", testString);
-//                textView_id.setText(testString);
-//            }
-//        });
-
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +82,7 @@ public class RegisterFragment extends Fragment {
 
             }
         });
+
         return v;
     }
 

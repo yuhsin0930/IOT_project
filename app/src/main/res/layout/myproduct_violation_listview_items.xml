@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_cardview_member_orders_picture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -40,7 +40,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView41"
+                        android:id="@+id/textView_cardview_member_orders_goodsSum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"

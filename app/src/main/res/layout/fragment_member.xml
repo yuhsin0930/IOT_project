@@ -25,9 +25,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/Mycolor_1">
+                android:layout_height="214dp"
+                android:background="@drawable/member_background_color">
 
                 <ImageView
                     android:id="@+id/imageView_member_cart"
@@ -44,41 +43,94 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toStartOf="@id/imageView_member_cart"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/outline_settings_white_18" />
 
-                <ImageView
-                    android:id="@+id/imageView_member_mystore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout_member_mystore"
+                    android:layout_width="140dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/member_mystore_corner"
+                    android:backgroundTint="#FFFCE1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/mystore" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="28dp"
+                        android:text="我的賣場"
+                        android:textColor="@color/Mycolor_1"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:alpha="0.5"
+                        app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+
+                </RelativeLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView_member_mypic"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:id="@+id/imageView_member_picture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageView_member_mystore" />
+                    app:layout_constraintTop_toBottomOf="@id/RelativeLayout_member_mystore" />
 
                 <TextView
-                    android:id="@+id/textView25"
+                    android:id="@+id/textView_member_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="TextView"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:text="apple2022"
+                    android:textColor="@color/white"
+                    android:textSize="24dp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/imageView_member_mypic"
-                    app:layout_constraintTop_toBottomOf="@id/imageView_member_mystore" />
+                    app:layout_constraintStart_toEndOf="@id/imageView_member_picture"
+                    app:layout_constraintTop_toBottomOf="@id/RelativeLayout_member_mystore" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/member_background_corner"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView_member_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/member_rank_corner"
+                    android:backgroundTint="#3E79A1"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="2dp"
+                    android:text="一般會員"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/imageView_member_picture"
+                    app:layout_constraintTop_toBottomOf="@id/textView_member_name" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -186,7 +238,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="100dp"
                 android:layout_marginBottom="8dp"
                 android:background="#FFFFFF"
                 android:orientation="horizontal">
@@ -200,7 +252,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView_member_orders1"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
@@ -209,11 +260,12 @@
                         app:srcCompat="@drawable/outline_account_balance_wallet_black_48" />
 
                     <TextView
-                        android:id="@+id/textView37"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="待付款" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="待付款"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -225,7 +277,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView_member_orders2"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
@@ -234,11 +285,12 @@
                         app:srcCompat="@drawable/outline_unarchive_black_48" />
 
                     <TextView
-                        android:id="@+id/textView39"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="待出貨" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="待出貨"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -250,7 +302,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView_member_orders3"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
@@ -259,12 +310,43 @@
                         app:srcCompat="@drawable/outline_local_shipping_black_48" />
 
                     <TextView
-                        android:id="@+id/textView40"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="待收貨" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="待收貨"
+                        android:textSize="12dp" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayout_member_orders_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:alpha="0.5"
+                        app:srcCompat="@drawable/outline_task_alt_black_48" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="已完成"
+                        android:textSize="12dp" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <RelativeLayout

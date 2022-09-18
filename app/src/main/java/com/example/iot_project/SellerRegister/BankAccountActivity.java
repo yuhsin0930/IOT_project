@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.SellerRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.iot_project.MyStoreActivity;
+import com.example.iot_project.R;
 
 public class BankAccountActivity extends AppCompatActivity {
 
@@ -24,7 +27,7 @@ public class BankAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_account);
 
         SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-        String bankName = sp.getString("bankName","臺灣銀行  > ");
+        String bankName = sp.getString("bankName","臺灣銀行");
         String bankArea = sp.getString("bankArea","臺北");
         String bankBranch = sp.getString("bankBranch","選擇");
 
@@ -77,7 +80,7 @@ public class BankAccountActivity extends AppCompatActivity {
                         String bankAccountNumber = editTextBankAccount_bankAccountNumber.getText().toString();
                         SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
                         sp.edit().clear().commit();
-                        Intent intent = new Intent(BankAccountActivity.this,MyStoreActivity.class);
+                        Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
                         startActivity(intent);
                     }
                 });
