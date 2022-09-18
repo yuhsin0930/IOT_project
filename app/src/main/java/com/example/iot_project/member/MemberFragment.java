@@ -12,17 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.example.iot_project.BecomeSellerActivity;
+
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.RegisterActivity;
+import com.example.iot_project.SellerRegister.BecomeSellerActivity;
+import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
     private MemberActivity memberActivity;
     private ImageView imageViewSetting, imageViewCart, imageViewMypic;
     private LinearLayout LinearLayoutOrders_0, LinearLayoutOrders_1, LinearLayoutOrders_2, LinearLayoutOrders_3;
-    private RelativeLayout RelativeLayoutBecomeSeller, RelativeLayoutOrders;
+    private RelativeLayout RelativeLayoutMystore, RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
     private Intent intent;
@@ -48,11 +50,12 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
 
         imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
-        imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_mypic);
+        imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_picture);
         LinearLayoutOrders_0 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_0);
         LinearLayoutOrders_1 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_1);
         LinearLayoutOrders_2 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_2);
         LinearLayoutOrders_3 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_3);
+        RelativeLayoutMystore = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_mystore);
         RelativeLayoutBecomeSeller = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_becomeSeller);
         RelativeLayoutOrders = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_orders);
         RelativeLayoutFavorite = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_favorite);
@@ -70,6 +73,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         LinearLayoutOrders_1.setOnClickListener(this);
         LinearLayoutOrders_2.setOnClickListener(this);
         LinearLayoutOrders_3.setOnClickListener(this);
+        RelativeLayoutMystore.setOnClickListener(this);
         RelativeLayoutBecomeSeller.setOnClickListener(this);
         RelativeLayoutOrders.setOnClickListener(this);
         RelativeLayoutFavorite.setOnClickListener(this);
@@ -84,17 +88,16 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.imageView_member_mystore:
-//                intent = new Intent(getContext(), MyStoreActivity.class);
-//                Log.d("main", "getContext() = " + getContext());
-//                startActivity(intent);
-//                break;
-            case R.id.imageView_member_cart:
-                Log.d("main", "getContext() = " + getContext());
-                Toast.makeText(getContext(), "這是購物車..", Toast.LENGTH_SHORT).show();
+            case R.id.RelativeLayout_member_mystore:
+                intent = new Intent(getContext(), MyStoreActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.imageView_member_mypic:
-                Toast.makeText(getContext(), "imageView_member_mypic", Toast.LENGTH_SHORT).show();
+            case R.id.imageView_member_cart:
+                intent = new Intent(getContext(), ShoppingCartActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageView_member_picture:
+                Toast.makeText(getContext(), "imageView_member_picture", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.RelativeLayout_member_orders:
             case R.id.LinearLayout_member_orders_0:
@@ -125,6 +128,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 memberActivity.showGoods("瀏覽紀錄");
                 break;
             case R.id.RelativeLayout_member_coupon:
+                Toast.makeText(memberActivity, "RelativeLayout_member_coupon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:

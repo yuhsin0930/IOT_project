@@ -36,7 +36,7 @@ public class MemberOrdersCompletedFragment extends Fragment {
         recyclerViewOrders = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
 
         recyclerViewOrders.setLayoutManager(new GridLayoutManager(getContext(),1));
-        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("已完");
+        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("已完成");
         recyclerViewOrders.setAdapter(adapter);
 
         return v;

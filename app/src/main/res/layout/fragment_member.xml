@@ -49,7 +49,7 @@
                     app:srcCompat="@drawable/outline_settings_white_18" />
 
                 <RelativeLayout
-                    android:id="@+id/re_1"
+                    android:id="@+id/RelativeLayout_member_mystore"
                     android:layout_width="140dp"
                     android:layout_height="36dp"
                     android:layout_marginTop="20dp"
@@ -83,14 +83,14 @@
                 </RelativeLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView_member_mypic"
+                    android:id="@+id/imageView_member_picture"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
 
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/re_1" />
+                    app:layout_constraintTop_toBottomOf="@id/RelativeLayout_member_mystore" />
 
                 <TextView
                     android:id="@+id/textView_member_name"
@@ -102,8 +102,8 @@
                     android:textColor="@color/white"
                     android:textSize="24dp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/imageView_member_mypic"
-                    app:layout_constraintTop_toBottomOf="@id/re_1" />
+                    app:layout_constraintStart_toEndOf="@id/imageView_member_picture"
+                    app:layout_constraintTop_toBottomOf="@id/RelativeLayout_member_mystore" />
 
                 <View
                     android:id="@+id/view3"
@@ -129,7 +129,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="12dp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/imageView_member_mypic"
+                    app:layout_constraintStart_toEndOf="@id/imageView_member_picture"
                     app:layout_constraintTop_toBottomOf="@id/textView_member_name" />
 
 

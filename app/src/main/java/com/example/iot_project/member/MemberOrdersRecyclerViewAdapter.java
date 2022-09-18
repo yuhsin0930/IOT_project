@@ -1,5 +1,6 @@
 package com.example.iot_project.member;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.iot_project.R;
 public class MemberOrdersRecyclerViewAdapter extends RecyclerView.Adapter<MemberOrdersRecyclerViewAdapter.ViewHolder> {
 
     private String name;
+    private Context context;
 
     public MemberOrdersRecyclerViewAdapter(String name) {
         this.name = name;
@@ -29,22 +31,32 @@ public class MemberOrdersRecyclerViewAdapter extends RecyclerView.Adapter<Member
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemberOrdersRecyclerViewAdapter.ViewHolder holder, int position) {
-        Context Context = holder.itemView.getContext();
-        int a = position;
-        holder.textViewCardviewOrders.setText(name);
-        holder.button_1.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull MemberOrdersRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        context = holder.itemView.getContext();
+
+        holder.buttonCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.textViewCardviewOrders.setText("777" + a);
+                Toast.makeText(context, "position: " + position , Toast.LENGTH_SHORT).show();
             }
         });
 
-        if (name.equals("未收")) {
-            holder.button_1.setVisibility(View.GONE);
-            holder.imageViewPic.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.goods_demo));
-            holder.textViewPrice.setText("9999");
+        switch (name) {
+            case "待付款":
+                holder.buttonCardView.setText("已付款");
+                break;
+            case "待出貨":
+                holder.buttonCardView.setVisibility(View.GONE);
+                break;
+            case "待取貨":
+                holder.buttonCardView.setText("已取貨");
+                holder.imageViewPic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.okinawa));
+                break;
+            case "已完成":
+                holder.buttonCardView.setVisibility(View.GONE);
+                break;
         }
+
     }
 
     @Override
@@ -54,16 +66,16 @@ public class MemberOrdersRecyclerViewAdapter extends RecyclerView.Adapter<Member
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView textViewCardviewOrders;
-        private final Button button_1;
+        private final TextView textViewStoreName;
+        private final Button buttonCardView;
         private final ImageView imageViewPic;
         private final TextView textViewPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewCardviewOrders = (TextView)itemView.findViewById(R.id.TextView_cardview_member_orders);
-            button_1 = (Button)itemView.findViewById(R.id.button_member_orders_1);
-            imageViewPic = (ImageView)itemView.findViewById(R.id.imageView_member_orders_pic);
+            textViewStoreName = (TextView)itemView.findViewById(R.id.TextView_cardview_member_orders_storeName);
+            buttonCardView = (Button)itemView.findViewById(R.id.button_cardview_member_orders);
+            imageViewPic = (ImageView)itemView.findViewById(R.id.imageView_cardview_member_orders_picture);
             textViewPrice = (TextView)itemView.findViewById(R.id.textView_member_orders_total);
             itemView.setOnClickListener(this);
         }

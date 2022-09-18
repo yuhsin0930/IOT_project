@@ -27,7 +27,6 @@
             android:paddingVertical="6dp">
 
             <ImageView
-                android:id="@+id/imageView_newProductPicture"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginVertical="4dp"
@@ -36,7 +35,7 @@
                 app:srcCompat="@drawable/outline_storefront_black_18" />
 
             <TextView
-                android:id="@+id/TextView_cardview_member_orders"
+                android:id="@+id/TextView_cardview_member_orders_storeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -52,7 +51,7 @@
             android:paddingVertical="6dp">
 
             <ImageView
-                android:id="@+id/imageView_member_orders_pic"
+                android:id="@+id/imageView_cardview_member_orders_picture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:srcCompat="@drawable/inpods_demo" />
@@ -63,7 +62,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/textView_cardview_member_orders_goodsName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="6dp"
@@ -78,11 +77,10 @@
                     android:paddingStart="10dp">
 
                     <TextView
-                        android:id="@+id/textView38"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="粉色"
-                        android:textColor="#9F9F9F"
+                        android:textColor="#FFFFFF"
                         android:textSize="12dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -91,11 +89,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="x "
-                        app:layout_constraintEnd_toStartOf="@+id/textView41"
+                        app:layout_constraintEnd_toStartOf="@+id/textView_cardview_member_orders_goodsSum"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView41"
+                        android:id="@+id/textView_cardview_member_orders_goodsSum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2"
@@ -110,7 +108,16 @@
                     android:paddingStart="10dp">
 
                     <TextView
-                        android:id="@+id/textView43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$"
+                        android:textColor="@color/Mycolor_1"
+                        android:textSize="16dp"
+                        app:layout_constraintEnd_toStartOf="@id/textView_cardview_member_orders_goodsPrice"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_cardview_member_orders_goodsPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="end"
@@ -120,15 +127,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView45"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$"
-                        android:textColor="@color/Mycolor_1"
-                        android:textSize="16dp"
-                        app:layout_constraintEnd_toStartOf="@+id/textView43"
-                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -141,7 +139,6 @@
             android:background="#E8CFCFCF" />
 
         <TextView
-            android:id="@+id/textView51"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -161,7 +158,7 @@
             android:paddingVertical="6dp">
 
             <TextView
-                android:id="@+id/textView48"
+                android:id="@+id/textView_cardview_member_orders_Sum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3"
@@ -172,17 +169,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView47"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="訂單金額: "
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView454"
+                app:layout_constraintEnd_toStartOf="@+id/textView1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView454"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$"
@@ -204,14 +200,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView49"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 商品"
                 android:textColor="#9F9F9F"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView48"
+                app:layout_constraintStart_toEndOf="@id/textView_cardview_member_orders_Sum"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,7 +232,7 @@
                 android:textSize="12dp" />
 
             <Button
-                android:id="@+id/button_member_orders_1"
+                android:id="@+id/button_cardview_member_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

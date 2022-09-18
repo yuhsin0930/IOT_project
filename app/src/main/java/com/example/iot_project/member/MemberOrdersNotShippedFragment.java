@@ -36,7 +36,7 @@ public class MemberOrdersNotShippedFragment extends Fragment {
         RecyclerViewOrders = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
 
         RecyclerViewOrders.setLayoutManager(new GridLayoutManager(getContext(),1));
-        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("未出");
+        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("待出貨");
         RecyclerViewOrders.setAdapter(adapter);
 
         return v;
