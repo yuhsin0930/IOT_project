@@ -62,6 +62,7 @@ public class MemberOrdersFragment extends Fragment {
         tabTitle.add("待付款");
         tabTitle.add("待出貨");
         tabTitle.add("待收貨");
+        tabTitle.add("已完成");
 
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -73,8 +74,8 @@ public class MemberOrdersFragment extends Fragment {
         return v;
     }
 
-    public void setTabLayout(int whichTab){
-        tabLayout.getTabAt(whichTab).select();
+    public void selectWhichTab(int whichTab){
+        viewPager2.setCurrentItem(whichTab, false);
     }
 
 }

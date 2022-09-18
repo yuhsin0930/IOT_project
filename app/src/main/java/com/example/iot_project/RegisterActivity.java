@@ -45,12 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (fragFlag) {
+            fragFlag = false;
             fragmentTrans = fragmentMgr.beginTransaction();
             fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
             fragmentTrans.hide(registerCityFragment);
             fragmentTrans.show(registerFragment);
             fragmentTrans.commit();
-            fragFlag = false;
         } else {
             super.onBackPressed();
         }
@@ -68,4 +68,5 @@ public class RegisterActivity extends AppCompatActivity {
     public void setCityName(String cityName) {
         registerFragment.setCityName(cityName);
     }
+
 }

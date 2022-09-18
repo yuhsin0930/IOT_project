@@ -20,7 +20,6 @@ public class MemberOrdersNotPickedFragment extends Fragment {
 
     public MemberOrdersNotPickedFragment() {}
 
-
     public static MemberOrdersNotPickedFragment newInstance(String param1, String param2) {
         MemberOrdersNotPickedFragment fragment = new MemberOrdersNotPickedFragment();
         return fragment;
@@ -35,14 +34,14 @@ public class MemberOrdersNotPickedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_member_ordes_notpicked, container, false);
+        View v = inflater.inflate(R.layout.fragment_member_orders_notpicked, container, false);
         
         recyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
 
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),1));
         MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("未收");
         recyclerViewGoods.setAdapter(adapter);
-        
+
         return v;
     }
 }
