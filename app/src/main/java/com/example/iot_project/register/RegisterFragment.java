@@ -20,16 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.iot_project.LoginActivity;
 import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
-import com.example.iot_project.SellerRegister.BecomeSellerActivity;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
-import java.util.BitSet;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -55,7 +48,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
-
     private Map<String, Object> fireMap;
     private String account, password, name, birthday, phone, email, city, district, address, bankNumber, bankAccount;
     private TextView textViewTest;
@@ -74,44 +66,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register, container, false);
-
-        relativeLayoutAccount = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_account);
-        relativeLayoutPassword_1 = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_password_1);
-        relativeLayoutPassword_2 = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_password_2);
-        relativeLayoutName = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_name);
-        relativeLayoutBirthday = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_birthday);
-        relativeLayoutPhone = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_phone);
-        relativeLayoutEmail = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_email);
-        relativeLayoutCity = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_city);
-        relativeLayoutBankNumber = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_bankNumber);
-        relativeLayoutBankAccount = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_bankAccount);
-        relativeLayoutLogout = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_logout);
-        relativeLayouAddressDrop = (RelativeLayout) v.findViewById(R.id.RelativeLayout_register_address_drop);
-        linearLayoutAddress = (LinearLayout)v.findViewById(R.id.LinearLayout_register_address);
-        editTextAccount = (EditText)v.findViewById(R.id.edittext_register_account);
-        editTextPassword_1 = (EditText)v.findViewById(R.id.edittext_register_password_1);
-        editTextPassword_2 = (EditText)v.findViewById(R.id.edittext_register_password_2);
-        editTextName = (EditText)v.findViewById(R.id.edittext_register_name);
-        editTextPhone = (EditText)v.findViewById(R.id.edittext_register_phone);
-        editTextEmail = (EditText)v.findViewById(R.id.edittext_register_email);
-        editTextAddress = (EditText)v.findViewById(R.id.editText_register_address);
-        editTextBankNumber = (EditText)v.findViewById(R.id.edittext_register_bankNumber);
-        editTextBankAccount = (EditText)v.findViewById(R.id.edittext_register_bankAccount);
-        imageViewAddress_X = (ImageView)v.findViewById(R.id.imageView_register_address_x);
-        imageViewAddress_Arrow = (ImageView)v.findViewById(R.id.imageView_register_address_arrow);
-        imageViewBack = (ImageView)v.findViewById(R.id.imageView_register_back);
-        textViewBarName = (TextView)v.findViewById(R.id.textView_register_barName);
-        textViewBirthday = (TextView)v.findViewById(R.id.textView_register_birthday);
-        textViewCity = (TextView)v.findViewById(R.id.textView_register_city);
-        textViewAddress = (TextView)v.findViewById(R.id.textView_register_address);
-        buttonSubmit = (Button)v.findViewById(R.id.button_register_submit);
-        buttonLogout = (Button)v.findViewById(R.id.button_register_logout);
-
-
-        textViewTest = (TextView)v.findViewById(R.id.textView_register_test);
+        initView(v);
         textViewTest.setText("");
-
-
         registerActivity = (RegisterActivity)getActivity();
         keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -119,8 +75,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         textViewBarName.setText(barName);
         editTextAddress.setText(address);
         textViewAddress.setText(editTextAddress.getText().toString().substring(0,6) + "..");
-
         calendar = Calendar.getInstance();
+
         datePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -164,25 +120,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-
-        relativeLayoutAccount.setOnClickListener(this);
-        relativeLayoutPassword_1.setOnClickListener(this);
-        relativeLayoutPassword_2.setOnClickListener(this);
-        relativeLayoutName.setOnClickListener(this);
-        relativeLayoutBirthday.setOnClickListener(this);
-        relativeLayoutPhone.setOnClickListener(this);
-        relativeLayoutEmail.setOnClickListener(this);
-        relativeLayoutCity.setOnClickListener(this);
-        relativeLayoutBankNumber.setOnClickListener(this);
-        relativeLayoutBankAccount.setOnClickListener(this);
-        relativeLayoutLogout.setOnClickListener(this);
-        relativeLayouAddressDrop.setOnClickListener(this);
-        linearLayoutAddress.setOnClickListener(this);
-        editTextAddress.setOnClickListener(this);
-        imageViewAddress_X.setOnClickListener(this);
-        imageViewBack.setOnClickListener(this);
-        buttonSubmit.setOnClickListener(this);
-        buttonLogout.setOnClickListener(this);
 
         return v;
     }
@@ -268,30 +205,30 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
 
                 account = editTextAccount.getText().toString();
-//                password = editTextPassword_1.getText().toString();
-//                name = editTextName.getText().toString();
-//                birthday = textViewBirthday.getText().toString();
-//                phone = editTextPhone.getText().toString();
-//                email = editTextEmail.getText().toString();
-//                bankNumber = editTextBankNumber.getText().toString();
-//                bankAccount = editTextBankAccount.getText().toString();
+                password = editTextPassword_1.getText().toString();
+                name = editTextName.getText().toString();
+                birthday = textViewBirthday.getText().toString();
+                phone = editTextPhone.getText().toString();
+                email = editTextEmail.getText().toString();
+                bankNumber = editTextBankNumber.getText().toString();
+                bankAccount = editTextBankAccount.getText().toString();
 
                 makeMap();
                 registerActivity.setFireMap(fireMap);
                 registerActivity.Log_d_fireMap();
                 registerActivity.MapUploadToFireBase();
 
-//                textViewTest.append("account: " + fireMap.get("account"));
-//                textViewTest.append("\npassword: " + fireMap.get("password"));
-//                textViewTest.append("\nname: " + fireMap.get("name"));
-//                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
-//                textViewTest.append("\nphone: " + fireMap.get("phone"));
-//                textViewTest.append("\nemail: " + fireMap.get("email"));
-//                textViewTest.append("\ncity: " + fireMap.get("city"));
-//                textViewTest.append("\ndistrict: " + fireMap.get("district"));
-//                textViewTest.append("\naddress: " + fireMap.get("address"));
-//                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
-//                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
+                textViewTest.append("account: " + fireMap.get("account"));
+                textViewTest.append("\npassword: " + fireMap.get("password"));
+                textViewTest.append("\nname: " + fireMap.get("name"));
+                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
+                textViewTest.append("\nphone: " + fireMap.get("phone"));
+                textViewTest.append("\nemail: " + fireMap.get("email"));
+                textViewTest.append("\ncity: " + fireMap.get("city"));
+                textViewTest.append("\ndistrict: " + fireMap.get("district"));
+                textViewTest.append("\naddress: " + fireMap.get("address"));
+                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
+                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
 
 //                intent = new Intent(getContext(), LoginActivity.class);
 //                startActivity(intent);
@@ -334,5 +271,59 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         fireMap.put("bankNumber", bankNumber);
         fireMap.put("bankAccount", bankAccount);
     }
+
+    private void initView(View v) {
+        relativeLayoutAccount = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_account);
+        relativeLayoutPassword_1 = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_password_1);
+        relativeLayoutPassword_2 = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_password_2);
+        relativeLayoutName = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_name);
+        relativeLayoutBirthday = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_birthday);
+        relativeLayoutPhone = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_phone);
+        relativeLayoutEmail = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_email);
+        relativeLayoutCity = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_city);
+        relativeLayoutBankNumber = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_bankNumber);
+        relativeLayoutBankAccount = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_bankAccount);
+        relativeLayoutLogout = (RelativeLayout)v.findViewById(R.id.RelativeLayout_register_logout);
+        relativeLayouAddressDrop = (RelativeLayout) v.findViewById(R.id.RelativeLayout_register_address_drop);
+        linearLayoutAddress = (LinearLayout)v.findViewById(R.id.LinearLayout_register_address);
+        editTextAccount = (EditText)v.findViewById(R.id.edittext_register_account);
+        editTextPassword_1 = (EditText)v.findViewById(R.id.edittext_register_password_1);
+        editTextPassword_2 = (EditText)v.findViewById(R.id.edittext_register_password_2);
+        editTextName = (EditText)v.findViewById(R.id.edittext_register_name);
+        editTextPhone = (EditText)v.findViewById(R.id.edittext_register_phone);
+        editTextEmail = (EditText)v.findViewById(R.id.edittext_register_email);
+        editTextAddress = (EditText)v.findViewById(R.id.editText_register_address);
+        editTextBankNumber = (EditText)v.findViewById(R.id.edittext_register_bankNumber);
+        editTextBankAccount = (EditText)v.findViewById(R.id.edittext_register_bankAccount);
+        imageViewAddress_X = (ImageView)v.findViewById(R.id.imageView_register_address_x);
+        imageViewAddress_Arrow = (ImageView)v.findViewById(R.id.imageView_register_address_arrow);
+        imageViewBack = (ImageView)v.findViewById(R.id.imageView_register_back);
+        textViewBarName = (TextView)v.findViewById(R.id.textView_register_barName);
+        textViewBirthday = (TextView)v.findViewById(R.id.textView_register_birthday);
+        textViewCity = (TextView)v.findViewById(R.id.textView_register_city);
+        textViewAddress = (TextView)v.findViewById(R.id.textView_register_address);
+        buttonSubmit = (Button)v.findViewById(R.id.button_register_submit);
+        buttonLogout = (Button)v.findViewById(R.id.button_register_logout);
+        textViewTest = (TextView)v.findViewById(R.id.textView_register_test);
+        relativeLayoutAccount.setOnClickListener(this);
+        relativeLayoutPassword_1.setOnClickListener(this);
+        relativeLayoutPassword_2.setOnClickListener(this);
+        relativeLayoutName.setOnClickListener(this);
+        relativeLayoutBirthday.setOnClickListener(this);
+        relativeLayoutPhone.setOnClickListener(this);
+        relativeLayoutEmail.setOnClickListener(this);
+        relativeLayoutCity.setOnClickListener(this);
+        relativeLayoutBankNumber.setOnClickListener(this);
+        relativeLayoutBankAccount.setOnClickListener(this);
+        relativeLayoutLogout.setOnClickListener(this);
+        relativeLayouAddressDrop.setOnClickListener(this);
+        linearLayoutAddress.setOnClickListener(this);
+        editTextAddress.setOnClickListener(this);
+        imageViewAddress_X.setOnClickListener(this);
+        imageViewBack.setOnClickListener(this);
+        buttonSubmit.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
+    }
+
 
 }

@@ -1,7 +1,10 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -20,12 +23,12 @@ import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
-    private MemberActivity memberActivity;
     private ImageView imageViewSetting, imageViewCart, imageViewMypic;
     private LinearLayout LinearLayoutOrders_0, LinearLayoutOrders_1, LinearLayoutOrders_2, LinearLayoutOrders_3;
     private RelativeLayout RelativeLayoutMystore, RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
+    private MemberActivity memberActivity;
     private Intent intent;
 
     public static MemberFragment newInstance(String param1, String param2) {
@@ -45,41 +48,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member, container, false);
         memberActivity = (MemberActivity)getActivity();
-
-        imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
-        imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
-        imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_picture);
-        LinearLayoutOrders_0 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_0);
-        LinearLayoutOrders_1 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_1);
-        LinearLayoutOrders_2 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_2);
-        LinearLayoutOrders_3 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_3);
-        RelativeLayoutMystore = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_mystore);
-        RelativeLayoutBecomeSeller = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_becomeSeller);
-        RelativeLayoutOrders = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_orders);
-        RelativeLayoutFavorite = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_favorite);
-        RelativeLayoutBought = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_bought);
-        RelativeLayoutSeen = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_seen);
-        RelativeLayoutCoupon = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_coupon);
-        RelativeLayoutPersonal = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_personal);
-
+        initView(v);
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
-
-        imageViewSetting.setOnClickListener(this);
-        imageViewCart.setOnClickListener(this);
-        imageViewMypic.setOnClickListener(this);
-        LinearLayoutOrders_0.setOnClickListener(this);
-        LinearLayoutOrders_1.setOnClickListener(this);
-        LinearLayoutOrders_2.setOnClickListener(this);
-        LinearLayoutOrders_3.setOnClickListener(this);
-        RelativeLayoutMystore.setOnClickListener(this);
-        RelativeLayoutBecomeSeller.setOnClickListener(this);
-        RelativeLayoutOrders.setOnClickListener(this);
-        RelativeLayoutFavorite.setOnClickListener(this);
-        RelativeLayoutBought.setOnClickListener(this);
-        RelativeLayoutSeen.setOnClickListener(this);
-        RelativeLayoutCoupon.setOnClickListener(this);
-        RelativeLayoutPersonal.setOnClickListener(this);
-
         return v;
     }
 
@@ -144,6 +114,39 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         if (!hidden) {
             memberActivity.initFragment();
         }
+    }
+
+    private void initView(View v) {
+        imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
+        imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
+        imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_picture);
+        LinearLayoutOrders_0 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_0);
+        LinearLayoutOrders_1 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_1);
+        LinearLayoutOrders_2 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_2);
+        LinearLayoutOrders_3 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_3);
+        RelativeLayoutMystore = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_mystore);
+        RelativeLayoutBecomeSeller = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_becomeSeller);
+        RelativeLayoutOrders = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_orders);
+        RelativeLayoutFavorite = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_favorite);
+        RelativeLayoutBought = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_bought);
+        RelativeLayoutSeen = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_seen);
+        RelativeLayoutCoupon = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_coupon);
+        RelativeLayoutPersonal = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_personal);
+        imageViewSetting.setOnClickListener(this);
+        imageViewCart.setOnClickListener(this);
+        imageViewMypic.setOnClickListener(this);
+        LinearLayoutOrders_0.setOnClickListener(this);
+        LinearLayoutOrders_1.setOnClickListener(this);
+        LinearLayoutOrders_2.setOnClickListener(this);
+        LinearLayoutOrders_3.setOnClickListener(this);
+        RelativeLayoutMystore.setOnClickListener(this);
+        RelativeLayoutBecomeSeller.setOnClickListener(this);
+        RelativeLayoutOrders.setOnClickListener(this);
+        RelativeLayoutFavorite.setOnClickListener(this);
+        RelativeLayoutBought.setOnClickListener(this);
+        RelativeLayoutSeen.setOnClickListener(this);
+        RelativeLayoutCoupon.setOnClickListener(this);
+        RelativeLayoutPersonal.setOnClickListener(this);
     }
 
 }

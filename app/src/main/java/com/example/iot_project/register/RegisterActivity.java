@@ -12,8 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.iot_project.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -28,9 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
     private InputMethodManager kryboard;
     private String cityName;
     private Map<String, Object> fireMap;
-
-
-
 
     public void setFireMap(Map fireMap) {
         this.fireMap = fireMap;
@@ -53,10 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference dataref = database.getReference();
         dataref.child("user").setValue(fireMap);
     }
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
