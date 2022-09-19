@@ -3,6 +3,7 @@ package com.example.iot_project.NewProduct;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -10,9 +11,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.iot_project.ProductDescribeActivity;
 import com.example.iot_project.R;
 
 public class NewProductActivity extends AppCompatActivity {
@@ -29,11 +30,17 @@ public class NewProductActivity extends AppCompatActivity {
     private TextView textViewNewProduct_describeLength;
     private String NewProductNameLength;
     private String NewProductName;
+    private ImageButton imagebuttonAddProductNum;
+    private ImageButton imagebuttonMinusProductNum;
+    private Integer ProductNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
+
+        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+
         textViewNewProduct_NameLength = (TextView)findViewById(R.id.textView_newProduct_NameLength);
         textViewNewProduct_describeLength = (TextView)findViewById(R.id.textView_newProduct_describeLength);
         textViewNewProduct_describe = (TextView)findViewById(R.id.textView_newProduct_Describe);
@@ -45,9 +52,9 @@ public class NewProductActivity extends AppCompatActivity {
         editTextNumberNewProduct_Quatity = (EditText)findViewById(R.id.editTextNumber_newProduct_Quatity);
 
         //------------------------------------------------------------------------------------------
-        String NewProductQuatity = editTextNumberNewProduct_Quatity.getText().toString();
-        //------------------------------------------------------------------------------------------
-        NewProductNameLength="0";
+        NewProductNameLength=sp.getString("productNameLength","0");
+        String productName = sp.getString("productName","");
+        editTextNewProduct_Name.setText(productName);
         editTextNewProduct_Name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
         editTextNewProduct_Name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,11 +70,16 @@ public class NewProductActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 NewProductName =  s.toString();
+                NewProductNameLength = String.valueOf(NewProductName.length());
+                sp.edit().putString("productNameLength",NewProductNameLength)
+                        .putString("productName",NewProductName).commit();
+
             }
         });
         textViewNewProduct_NameLength.setText(NewProductNameLength);
+
         //------------------------------------------------------------------------------------------
-        String  describeLength;
+        String  describeLength = sp.getString("DescribeWordNum","0");
         textViewNewProduct_describe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,15 +87,8 @@ public class NewProductActivity extends AppCompatActivity {
                startActivity(intent);
             }
         });
-        //------------------------------------------------------------------------------------------
-        Intent it = getIntent();
-        if(it.getStringExtra("describeLength")==null){
-            describeLength="0";
-        }
-        else{
-            describeLength = it.getStringExtra("describeLength");
-        }
         textViewNewProduct_describeLength.setText(describeLength);
+
         //------------------------------------------------------------------------------------------
         textViewNewProduct_classification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +98,63 @@ public class NewProductActivity extends AppCompatActivity {
             }
         });
         //-----------------------------------------------------------------------------------------
-        buttonNewProduct_save = (Button)findViewById(R.id.button_newProduct_save);
+        textViewNewProduct_setPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewProductActivity.this, SetPriceActivity.class);
+                startActivity(intent);
+            }
+        });
+        //------------------------------------------------------------------------------------------
+        imagebuttonAddProductNum  = (ImageButton)findViewById(R.id.imageButton_productNumAdd);
+        imagebuttonMinusProductNum = (ImageButton)findViewById(R.id.imageButton_productNum_minus);
+        ProductNum = Integer.valueOf(editTextNumberNewProduct_Quatity.getText().toString());
+        sp.edit().putInt("productNum",ProductNum);
+
+        //------------------------------------------------------------------------------------------
+        imagebuttonAddProductNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductNum = Integer.valueOf(editTextNumberNewProduct_Quatity.getText().toString());
+                ProductNum++;
+                if(ProductNum>99999){
+                    ProductNum=99999;
+                }
+                else{
+                    editTextNumberNewProduct_Quatity.setText(String.valueOf(ProductNum));
+                }
+
+            }
+        });
+        //------------------------------------------------------------------------------------------
+        imagebuttonMinusProductNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductNum = Integer.valueOf(editTextNumberNewProduct_Quatity.getText().toString());
+                ProductNum--;
+                if(ProductNum<0){
+                    ProductNum=0;
+                }else{
+                    editTextNumberNewProduct_Quatity.setText(String.valueOf(ProductNum));
+                }
+
+
+            }
+        });
+        //------------------------------------------------------------------------------------------
+        editTextNumberNewProduct_Quatity.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)} );
+        //------------------------------------------------------------------------------------------
+        textViewNewProduct_shippiingFee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewProductActivity.this, ShippingFeeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        //------------------------------------------------------------------------------------------
+
         button_newProduct_launch = (Button) findViewById(R.id.button_newProduct_launch);
     }
 }

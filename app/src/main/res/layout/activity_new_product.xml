@@ -194,7 +194,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imageButton_productNum_minus"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
@@ -220,7 +220,7 @@
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/imageButton_productNumAdd"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
@@ -263,27 +263,12 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_newProduct_save"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/Mycolor_1"
-        android:text="儲存"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-
-    <Button
         android:id="@+id/button_newProduct_launch"
-        android:layout_width="150dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:backgroundTint="@color/Mycolor_1"
@@ -292,6 +277,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

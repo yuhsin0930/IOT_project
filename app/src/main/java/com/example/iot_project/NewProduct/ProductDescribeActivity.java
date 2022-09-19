@@ -1,8 +1,9 @@
-package com.example.iot_project;
+package com.example.iot_project.NewProduct;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -13,21 +14,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.iot_project.NewProduct.NewProductActivity;
+import com.example.iot_project.R;
 
 public class ProductDescribeActivity extends AppCompatActivity {
 
 
-    private Editable ProductDescribe;
+    private String ProductDescribe;
     private String DescribeWordNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_describe);
+        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+
+
         TextView textViewDescribeLength = (TextView) findViewById(R.id.textView_productDescribe_describeLength);
         EditText editTextProductDescirbe = (EditText) findViewById(R.id.editTextTextMultiLine_ProductDescribe);
-
+        String productDescribe = sp.getString("productDescribe","");
+        editTextProductDescirbe.setText(productDescribe);
         editTextProductDescirbe.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3000)});
         editTextProductDescirbe.addTextChangedListener(new TextWatcher() {
             @Override
@@ -40,19 +45,18 @@ public class ProductDescribeActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //改變中
                 //這個方法被調用，說明在s字符串中，從start位置開始的count個字符刚刚取代了長度為before的舊文本。在這個方法里面改變s，會報錯。
-
                 DescribeWordNum = String.valueOf(s.length());
                 textViewDescribeLength.setText(DescribeWordNum);
-
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 //改變後
                 //這個方法被使用，那麼說明s字符串的某個地方已經被改變。
-                ProductDescribe = s;
-                Log.d("main","describe = "+ProductDescribe);
+                ProductDescribe = s.toString();
+                DescribeWordNum = String.valueOf(s.toString().length());
+
+
             }
         });
         //------------------------------------------------------------------------------------------
@@ -60,10 +64,9 @@ public class ProductDescribeActivity extends AppCompatActivity {
         buttonFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(ProductDescribeActivity.this, NewProductActivity.class);
-                intent.putExtra("describeLength",DescribeWordNum);
-                intent.putExtra("describe",ProductDescribe);
+                sp.edit().putString("productDescribe",ProductDescribe)
+                        .putString("DescribeWordNum",DescribeWordNum).commit();
+                Intent intent = new Intent(ProductDescribeActivity.this, NewProductActivity.class);
                 startActivity(intent);
             }
         });

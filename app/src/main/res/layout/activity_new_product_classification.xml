@@ -56,20 +56,21 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#D6D3D3"
-                android:text="啟用/停用"
+                android:text="停用/啟用"
                 android:textAlignment="center"
                 android:textColor="@color/font_color"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView66"
-                android:layout_width="match_parent"
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="#D6D3D3"
                 android:text="刪除"
-                android:textAlignment="center"
                 android:textColor="@color/font_color"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <FrameLayout
