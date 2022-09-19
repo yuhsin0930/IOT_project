@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,10 @@ import android.widget.TextView;
 
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Map;
 
 public class BankAccountActivity extends AppCompatActivity {
 
@@ -88,6 +93,21 @@ public class BankAccountActivity extends AppCompatActivity {
             }
         });
 
-
+//        FireBase-by翔雲 借我測一下Firebase------------------------------------------------------------
+//      使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+        Log.d("main","sp.getAll()="+sp.getAll());
+//        sp.getAll()={area=中山區, sellerId=A123456789, bankBranch=中山分行, citizenship=香港,
+//        sellerBirthday=2022/09/07, sellerName=user, county=臺北市, sellerAddressNumber=777,
+//        sellerAddress=中正路23號5樓}
+//      sp.getAll(): retuern Map， 取出 SharedPreference 所有資料
+        Map<String, ?> MapData = sp.getAll();
+//
+        if(MapData.size()==9){
+            dataref.child("user/group/seller").setValue(true);
+            dataref.child("seller").push().setValue(MapData);
+        }
     }
 }
