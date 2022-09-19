@@ -1,5 +1,27 @@
 <resources>
     <string name="app_name">IOT_project</string>
+    <string-array name="productClass">
+        <item>最新商品</item>
+        <item>熱賣商品</item>
+        <item>男女衣著</item>
+        <item>男女鞋</item>
+        <item>3C與筆電</item>
+        <item>飾品</item>
+        <item>家電影音</item>
+        <item>寵物用品</item>
+        <item>美食伴手禮</item>
+        <item>文創商品</item>
+        <item>手機平板周邊</item>
+        <item>生活用品</item>
+        <item>嬰幼兒用品</item>
+        <item>戶外/旅行</item>
+        <item>美妝保健</item>
+        <item>汽機車零件1</item>
+        <item>運動/健身</item>
+        <item>書籍及雜誌期刊</item>
+        <item>娛樂/收藏</item>
+        <item>其他類別</item>
+    </string-array>
 
     <string-array name="citizenship">
         <item>臺灣</item>

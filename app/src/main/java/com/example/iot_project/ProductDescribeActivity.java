@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.iot_project.NewProduct.NewProductActivity;
+
 public class ProductDescribeActivity extends AppCompatActivity {
 
 

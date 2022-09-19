@@ -1,10 +1,9 @@
-package com.example.iot_project;
+package com.example.iot_project.NewProduct;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -12,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.iot_project.ProductDescribeActivity;
+import com.example.iot_project.R;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -83,6 +85,14 @@ public class NewProductActivity extends AppCompatActivity {
         }
         textViewNewProduct_describeLength.setText(describeLength);
         //------------------------------------------------------------------------------------------
+        textViewNewProduct_classification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewProductActivity.this, NewProductClassificationActivity.class);
+                startActivity(intent);
+            }
+        });
+        //-----------------------------------------------------------------------------------------
         buttonNewProduct_save = (Button)findViewById(R.id.button_newProduct_save);
         button_newProduct_launch = (Button) findViewById(R.id.button_newProduct_launch);
     }

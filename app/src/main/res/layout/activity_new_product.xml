@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewProductActivity">
+    tools:context=".NewProduct.NewProductActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout_newProduct_newPicture"
@@ -73,7 +73,7 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:textColor="@color/font_color"
-            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"
