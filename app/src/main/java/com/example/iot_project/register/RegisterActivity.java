@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import com.example.iot_project.R;
 
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private FragmentManager fragmentMgr;
@@ -21,6 +23,17 @@ public class RegisterActivity extends AppCompatActivity {
     private Intent intent;
     private InputMethodManager kryboard;
     private String cityName;
+
+
+
+
+    private Map<String, Object> fireMap;
+    public void setFireMap(Map fireMap) {
+        this.fireMap = fireMap;
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

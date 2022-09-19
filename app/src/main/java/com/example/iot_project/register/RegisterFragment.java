@@ -33,6 +33,7 @@ import java.util.BitSet;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener{
 
@@ -54,7 +55,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
-    private HashMap<String, Object> fireMap;
+
+    private Map<String, Object> fireMap;
     private String account, password, name, birthday, phone, email, city, district, address, bankNumber, bankAccount;
     private TextView textViewTest;
 
@@ -273,7 +275,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 email = editTextEmail.getText().toString();
                 bankNumber = editTextBankNumber.getText().toString();
                 bankAccount = editTextBankAccount.getText().toString();
+
                 makeMap();
+                registerActivity.setFireMap(fireMap);
+
                 textViewTest.append("account: " + fireMap.get("account"));
                 textViewTest.append("\npassword: " + fireMap.get("password"));
                 textViewTest.append("\nname: " + fireMap.get("name"));
