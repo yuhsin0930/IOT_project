@@ -19,19 +19,22 @@
             android:id="@+id/spinner"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:entries="@array/productClass" />
+            android:entries="@array/productClass"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switch_openProductClass"
             android:layout_width="100dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/imageButton_deleteProductClass"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/outline_delete_black_24" />
+            android:src="@drawable/outline_delete_black_24"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
