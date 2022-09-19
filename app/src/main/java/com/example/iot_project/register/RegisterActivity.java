@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 //      取得  Firebase 資料庫 (GET網址)
         DatabaseReference dataref = database.getReference();
-        dataref.child("user").setValue(fireMap);
+        dataref.child("user").push().setValue(fireMap);
     }
 
 
