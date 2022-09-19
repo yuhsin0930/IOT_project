@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ImageView_member_goods_back"
+            android:id="@+id/ImageView_member_back"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/orangebackarrow" />
 
         <TextView
-            android:id="@+id/TextView_member_goods_bar"
+            android:id="@+id/TextView_member_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

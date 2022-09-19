@@ -13,12 +13,12 @@ public class MemberOrdersPagerAdapter extends FragmentStateAdapter {
         add(new MemberOrdersUnpaidFragment());
         add(new MemberOrdersNotShippedFragment());
         add(new MemberOrdersNotPickedFragment());
+        add(new MemberOrdersCompletedFragment());
     }};
 
     public MemberOrdersPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
-
 
     @NonNull
     @Override
@@ -30,4 +30,5 @@ public class MemberOrdersPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return fList.size();
     }
+
 }

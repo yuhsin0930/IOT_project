@@ -15,7 +15,6 @@ public class MyStoreActivity extends AppCompatActivity {
     private TextView textViewMyStore_name,textViewMyStore_account,textViewMyStore_checkSalesRecord,textViewMyStore_toBeShipped,textViewMyStore_invaild,textViewMyStore_return,textViewMyStore_myProduct,textViewMyStore_payment;
     private Button buttonMyStore_checkStore;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

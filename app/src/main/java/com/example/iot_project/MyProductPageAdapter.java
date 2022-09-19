@@ -19,7 +19,6 @@ public class MyProductPageAdapter  extends FragmentStateAdapter {
         super(fragmentActivity);
     }
 
-
     @NonNull
     @Override
     public Fragment createFragment(int position) {

@@ -36,7 +36,6 @@ public class MyProductActivity extends AppCompatActivity {
         myProducttabTitle.add("審核中");
         myProducttabTitle.add("已違規");
 
-
         MyProductPageAdapter pageAdapter = new MyProductPageAdapter(this);
         myProduct_ViewPager.setAdapter(pageAdapter);
 

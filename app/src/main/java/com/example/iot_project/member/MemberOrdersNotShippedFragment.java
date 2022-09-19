@@ -14,7 +14,7 @@ import com.example.iot_project.R;
 
 public class MemberOrdersNotShippedFragment extends Fragment {
 
-    private RecyclerView recyclerViewGoods;
+    private RecyclerView RecyclerViewOrders;
 
     public MemberOrdersNotShippedFragment() {}
 
@@ -31,14 +31,14 @@ public class MemberOrdersNotShippedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_member_ordes_notshipped, container, false);
-        
-        recyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
+        View v = inflater.inflate(R.layout.fragment_member_orders_notshipped, container, false);
 
-        recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),1));
-        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("未出");
-        recyclerViewGoods.setAdapter(adapter);
-        
+        RecyclerViewOrders = (RecyclerView)v.findViewById(R.id.RecyclerView_member_orders);
+
+        RecyclerViewOrders.setLayoutManager(new GridLayoutManager(getContext(),1));
+        MemberOrdersRecyclerViewAdapter adapter = new MemberOrdersRecyclerViewAdapter("待出貨");
+        RecyclerViewOrders.setAdapter(adapter);
+
         return v;
     }
 }

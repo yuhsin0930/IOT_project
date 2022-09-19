@@ -1,25 +1,22 @@
 package com.example.iot_project.member;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.iot_project.R;
 
 public class MemberGoodsFragment extends Fragment {
 
     private MemberActivity memberActivity;
     private ImageView ImageViewBack;
-    private RecyclerView RecyclerViewGoods;
-    private TextView textViewGoodsBar;
+    private RecyclerView recyclerViewGoods;
+    private TextView textViewBar;
 
     public static MemberGoodsFragment newInstance(String param1, String param2) {
         MemberGoodsFragment fragment = new MemberGoodsFragment();
@@ -39,9 +36,9 @@ public class MemberGoodsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_member_goods, container, false);
         memberActivity = (MemberActivity)getActivity();
 
-        ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_goods_back);
-        RecyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_goods);
-        textViewGoodsBar = (TextView)v.findViewById(R.id.TextView_member_goods_bar);
+        ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_back);
+        recyclerViewGoods = (RecyclerView)v.findViewById(R.id.RecyclerView_member_goods);
+        textViewBar = (TextView)v.findViewById(R.id.TextView_member_bar);
 
 
         ImageViewBack.setOnClickListener(new View.OnClickListener() {
@@ -51,14 +48,15 @@ public class MemberGoodsFragment extends Fragment {
             }
         });
 
-        RecyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
         MemberGoodsRecyclerViewAdapter adapter = new MemberGoodsRecyclerViewAdapter();
-        RecyclerViewGoods.setAdapter(adapter);
+        recyclerViewGoods.setAdapter(adapter);
 
         return v;
     }
 
-    public void setTextViewGoodsBar(String barName) {
-        textViewGoodsBar.setText(barName);
+    public void setTextViewBar(String barName) {
+        textViewBar.setText(barName);
     }
+
 }
