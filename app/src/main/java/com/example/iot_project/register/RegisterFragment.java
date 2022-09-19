@@ -26,9 +26,12 @@ import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.BitSet;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener{
@@ -44,14 +47,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private ImageView imageViewAddress_X, imageViewAddress_Arrow, imageViewBack;
     private TextView textViewBarName, textViewBirthday, textViewAddress, textViewCity;
     private Button buttonSubmit, buttonLogout;
-    private String barName, cityName, districtName, address;
+    private String barName;
     private RegisterActivity registerActivity;
     private InputMethodManager keyboard;
     private boolean isLoggedIn = false, addressFlag = true;
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
-    private String birthdayInput;
+    private HashMap<String, Object> fireMap;
+    private String account, password, name, birthday, phone, email, city, district, address, bankNumber, bankAccount;
+    private TextView textViewTest;
 
     public RegisterFragment() {}
 
@@ -99,6 +104,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         textViewAddress = (TextView)v.findViewById(R.id.textView_register_address);
         buttonSubmit = (Button)v.findViewById(R.id.button_register_submit);
         buttonLogout = (Button)v.findViewById(R.id.button_register_logout);
+
+
+        textViewTest = (TextView)v.findViewById(R.id.textView_register_test);
+        textViewTest.setText("");
+
 
         registerActivity = (RegisterActivity)getActivity();
         keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -178,7 +188,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) textViewCity.setText(cityName + districtName);
+        if (!hidden) textViewCity.setText(city + district);
     }
 
     @Override
@@ -219,8 +229,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.RelativeLayout_register_city:
                 keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                cityName = "";
-                districtName = "";
+                city = "";
+                district = "";
                 registerActivity.showCity();
                 break;
             case R.id.RelativeLayout_register_bankNumber:
@@ -254,8 +264,30 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.button_register_submit:
                 Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-                intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
+
+                account = editTextAccount.getText().toString();
+                password = editTextPassword_1.getText().toString();
+                name = editTextName.getText().toString();
+                birthday = textViewBirthday.getText().toString();
+                phone = editTextPhone.getText().toString();
+                email = editTextEmail.getText().toString();
+                bankNumber = editTextBankNumber.getText().toString();
+                bankAccount = editTextBankAccount.getText().toString();
+                makeMap();
+                textViewTest.append("account: " + fireMap.get("account"));
+                textViewTest.append("\npassword: " + fireMap.get("password"));
+                textViewTest.append("\nname: " + fireMap.get("name"));
+                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
+                textViewTest.append("\nphone: " + fireMap.get("phone"));
+                textViewTest.append("\nemail: " + fireMap.get("email"));
+                textViewTest.append("\ncity: " + fireMap.get("city"));
+                textViewTest.append("\ndistrict: " + fireMap.get("district"));
+                textViewTest.append("\naddress: " + fireMap.get("address"));
+                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
+                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
+
+//                intent = new Intent(getContext(), LoginActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.button_register_logout:
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
@@ -273,12 +305,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         this.isLoggedIn = isLoggedIn;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCityName(String city) {
+        this.city = city;
     }
 
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
+    public void setDistrictName(String district) {
+        this.district = district;
+    }
+
+    public void makeMap() {
+        fireMap = new HashMap<>();
+        fireMap.put("account", account);
+        fireMap.put("password", password);
+        fireMap.put("name", name);
+        fireMap.put("birthday", birthday);
+        fireMap.put("phone", phone);
+        fireMap.put("email", email);
+        fireMap.put("city", city);
+        fireMap.put("district", district);
+        fireMap.put("address", address);
+        fireMap.put("bankNumber", bankNumber);
+        fireMap.put("bankAccount", bankAccount);
     }
 
 }
