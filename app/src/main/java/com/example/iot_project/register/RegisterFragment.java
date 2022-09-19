@@ -268,28 +268,29 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
 
                 account = editTextAccount.getText().toString();
-                password = editTextPassword_1.getText().toString();
-                name = editTextName.getText().toString();
-                birthday = textViewBirthday.getText().toString();
-                phone = editTextPhone.getText().toString();
-                email = editTextEmail.getText().toString();
-                bankNumber = editTextBankNumber.getText().toString();
-                bankAccount = editTextBankAccount.getText().toString();
+//                password = editTextPassword_1.getText().toString();
+//                name = editTextName.getText().toString();
+//                birthday = textViewBirthday.getText().toString();
+//                phone = editTextPhone.getText().toString();
+//                email = editTextEmail.getText().toString();
+//                bankNumber = editTextBankNumber.getText().toString();
+//                bankAccount = editTextBankAccount.getText().toString();
 
                 makeMap();
                 registerActivity.setFireMap(fireMap);
+                registerActivity.Log_d_fireMap();
 
-                textViewTest.append("account: " + fireMap.get("account"));
-                textViewTest.append("\npassword: " + fireMap.get("password"));
-                textViewTest.append("\nname: " + fireMap.get("name"));
-                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
-                textViewTest.append("\nphone: " + fireMap.get("phone"));
-                textViewTest.append("\nemail: " + fireMap.get("email"));
-                textViewTest.append("\ncity: " + fireMap.get("city"));
-                textViewTest.append("\ndistrict: " + fireMap.get("district"));
-                textViewTest.append("\naddress: " + fireMap.get("address"));
-                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
-                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
+//                textViewTest.append("account: " + fireMap.get("account"));
+//                textViewTest.append("\npassword: " + fireMap.get("password"));
+//                textViewTest.append("\nname: " + fireMap.get("name"));
+//                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
+//                textViewTest.append("\nphone: " + fireMap.get("phone"));
+//                textViewTest.append("\nemail: " + fireMap.get("email"));
+//                textViewTest.append("\ncity: " + fireMap.get("city"));
+//                textViewTest.append("\ndistrict: " + fireMap.get("district"));
+//                textViewTest.append("\naddress: " + fireMap.get("address"));
+//                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
+//                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
 
 //                intent = new Intent(getContext(), LoginActivity.class);
 //                startActivity(intent);
@@ -321,16 +322,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     public void makeMap() {
         fireMap = new HashMap<>();
         fireMap.put("account", account);
-        fireMap.put("password", password);
-        fireMap.put("name", name);
-        fireMap.put("birthday", birthday);
-        fireMap.put("phone", phone);
-        fireMap.put("email", email);
-        fireMap.put("city", city);
-        fireMap.put("district", district);
-        fireMap.put("address", address);
-        fireMap.put("bankNumber", bankNumber);
-        fireMap.put("bankAccount", bankAccount);
+//        fireMap.put("password", password);
+//        fireMap.put("name", name);
+//        fireMap.put("birthday", birthday);
+//        fireMap.put("phone", phone);
+//        fireMap.put("email", email);
+//        fireMap.put("city", city);
+//        fireMap.put("district", district);
+//        fireMap.put("address", address);
+//        fireMap.put("bankNumber", bankNumber);
+//        fireMap.put("bankAccount", bankAccount);
     }
 
 }

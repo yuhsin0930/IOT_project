@@ -6,10 +6,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import com.example.iot_project.R;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -23,15 +25,19 @@ public class RegisterActivity extends AppCompatActivity {
     private Intent intent;
     private InputMethodManager kryboard;
     private String cityName;
-
-
-
-
     private Map<String, Object> fireMap;
+
+
+
+
     public void setFireMap(Map fireMap) {
         this.fireMap = fireMap;
     }
 
+    public void Log_d_fireMap() {
+        String account = this.fireMap.get("account").toString();
+        Log.d("main", "account: " + account);
+    }
 
 
 
