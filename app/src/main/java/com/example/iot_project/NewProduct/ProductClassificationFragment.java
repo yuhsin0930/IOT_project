@@ -93,7 +93,14 @@ public class ProductClassificationFragment extends Fragment {
 
         //-----------------------------------------------------------------------------------------
         imageButtonDeleteClass=(ImageButton)v.findViewById(R.id.imageButton_deleteClass);
-        imageButtonDeleteClass.setOnClickListener(newProductClassificationActivity);
+//        imageButtonDeleteClass.setOnClickListener(newProductClassificationActivity);
+
+        imageButtonDeleteClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newProductClassificationActivity.deleteFragment(mParam2);
+            }
+        });
 
         //-----------------------------------------------------------------------------------------
         spinnerProductClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
