@@ -3,6 +3,8 @@ package com.example.iot_project.member;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,11 @@ public class MemberOrdersDetailedFragment extends Fragment {
     private MemberActivity memberActivity;
     private ImageView ImageViewBack;
     private TextView textViewBar;
+    private FragmentManager fragmentMgr;
+    private FragmentTransaction fragmentTrans;
+    private MemberOrdersDetailedInfoFragment fragmentInfo;
+    private MemberOrdersDetailedItemFragment fragmentItem;
+    private MemberOrdersDetailedTimeFragment fragmentTime;
 
     public MemberOrdersDetailedFragment() {}
 
@@ -45,6 +52,24 @@ public class MemberOrdersDetailedFragment extends Fragment {
                 memberActivity.onBackPressed();
             }
         });
+
+        fragmentMgr = getChildFragmentManager();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        fragmentInfo = new MemberOrdersDetailedInfoFragment();
+        fragmentTrans.add(R.id.LinearLayout_orders_detailed, fragmentInfo, "fragmentInfo");
+        fragmentTrans.commit();
+
+        for (int i = 0; i < 5; i++) {
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentItem = new MemberOrdersDetailedItemFragment();
+            fragmentTrans.add(R.id.LinearLayout_orders_detailed, fragmentItem, "fragmentItem");
+            fragmentTrans.commit();
+        }
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        fragmentTime = new MemberOrdersDetailedTimeFragment();
+        fragmentTrans.add(R.id.LinearLayout_orders_detailed, fragmentTime, "fragmentTime");
+        fragmentTrans.commit();
 
         return v;
     }

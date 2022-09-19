@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     private long timeTemp;
     @Override
     public void onBackPressed() {
-        if ((System.currentTimeMillis() - timeTemp) > 2000) {
+        if ((System.currentTimeMillis() - timeTemp) > 300) {
             timeTemp = System.currentTimeMillis();
             if (districtFlag) {
                 districtFlag = false;
