@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 //      (temp) Enroll button => BecomeSellerActivity.class
         buttonEnroll = (Button) findViewById(R.id.button_main_enroll);
 
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

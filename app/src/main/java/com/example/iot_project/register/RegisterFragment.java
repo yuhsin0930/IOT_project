@@ -279,6 +279,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 makeMap();
                 registerActivity.setFireMap(fireMap);
                 registerActivity.Log_d_fireMap();
+                registerActivity.MapUploadToFireBase();
 
 //                textViewTest.append("account: " + fireMap.get("account"));
 //                textViewTest.append("\npassword: " + fireMap.get("password"));
@@ -322,16 +323,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     public void makeMap() {
         fireMap = new HashMap<>();
         fireMap.put("account", account);
-//        fireMap.put("password", password);
-//        fireMap.put("name", name);
-//        fireMap.put("birthday", birthday);
-//        fireMap.put("phone", phone);
-//        fireMap.put("email", email);
-//        fireMap.put("city", city);
-//        fireMap.put("district", district);
-//        fireMap.put("address", address);
-//        fireMap.put("bankNumber", bankNumber);
-//        fireMap.put("bankAccount", bankAccount);
+        fireMap.put("password", password);
+        fireMap.put("name", name);
+        fireMap.put("birthday", birthday);
+        fireMap.put("phone", phone);
+        fireMap.put("email", email);
+        fireMap.put("city", city);
+        fireMap.put("district", district);
+        fireMap.put("address", address);
+        fireMap.put("bankNumber", bankNumber);
+        fireMap.put("bankAccount", bankAccount);
     }
 
 }

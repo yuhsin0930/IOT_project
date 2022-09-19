@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import com.example.iot_project.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 import java.util.Map;
@@ -35,9 +37,24 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void Log_d_fireMap() {
-        String account = this.fireMap.get("account").toString();
+        String account = fireMap.get("account").toString();
         Log.d("main", "account: " + account);
+        Log.d("main", "fireMap: " + fireMap);
+//       [BUG] 只收到部分資料，但是在輸入時所有欄位都有輸入資料
+//        fireMap: {birthday=null, bankNumber=null, bankAccount=null,
+//        password=null, address=幼獅路一段23號, phone=null,
+//        city=新竹市, district=北 區, name=null, account=user1, email=null}
     }
+
+    public void MapUploadToFireBase() {
+//      使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+        dataref.child("user").setValue(fireMap);
+    }
+
+
 
 
 
