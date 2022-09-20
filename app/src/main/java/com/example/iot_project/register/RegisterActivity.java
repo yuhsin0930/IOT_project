@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 //      取得  Firebase 資料庫 (GET網址)
         DatabaseReference dataref = database.getReference();
-        dataref.child("user").push().setValue(fireMap);
+//        dataref.child("user").push().setValue(fireMap);
     }
 
     @Override
@@ -76,7 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
         fragmentTrans.add(R.id.FrameLayout_register, registerCityFragment, "memberGoodsFragment");
         fragmentTrans.hide(registerCityFragment);
         fragmentTrans.commit();
+
+
+
+
     }
+
 
     private long timeTemp;
     @Override
