@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.iot_project.LoginActivity;
 import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
 import java.text.SimpleDateFormat;
@@ -50,7 +51,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private DatePickerDialog.OnDateSetListener datePicker;
     private Map<String, Object> fireMap;
     private String account, password, name, birthday, phone, email, city, district, address, bankNumber, bankAccount;
-    private TextView textViewTest;
 
     public RegisterFragment() {}
 
@@ -67,7 +67,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register, container, false);
         initView(v);
-        textViewTest.setText("");
         registerActivity = (RegisterActivity)getActivity();
         keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -212,26 +211,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 email = editTextEmail.getText().toString();
                 bankNumber = editTextBankNumber.getText().toString();
                 bankAccount = editTextBankAccount.getText().toString();
-
                 makeMap();
                 registerActivity.setFireMap(fireMap);
-                registerActivity.Log_d_fireMap();
                 registerActivity.MapUploadToFireBase();
-
-                textViewTest.append("account: " + fireMap.get("account"));
-                textViewTest.append("\npassword: " + fireMap.get("password"));
-                textViewTest.append("\nname: " + fireMap.get("name"));
-                textViewTest.append("\nbirthday: " + fireMap.get("birthday"));
-                textViewTest.append("\nphone: " + fireMap.get("phone"));
-                textViewTest.append("\nemail: " + fireMap.get("email"));
-                textViewTest.append("\ncity: " + fireMap.get("city"));
-                textViewTest.append("\ndistrict: " + fireMap.get("district"));
-                textViewTest.append("\naddress: " + fireMap.get("address"));
-                textViewTest.append("\nbankNumber: " + fireMap.get("bankNumber"));
-                textViewTest.append("\nbankAccount: " + fireMap.get("bankAccount"));
-
-//                intent = new Intent(getContext(), LoginActivity.class);
-//                startActivity(intent);
+                intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button_register_logout:
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
@@ -304,7 +288,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         textViewAddress = (TextView)v.findViewById(R.id.textView_register_address);
         buttonSubmit = (Button)v.findViewById(R.id.button_register_submit);
         buttonLogout = (Button)v.findViewById(R.id.button_register_logout);
-        textViewTest = (TextView)v.findViewById(R.id.textView_register_test);
         relativeLayoutAccount.setOnClickListener(this);
         relativeLayoutPassword_1.setOnClickListener(this);
         relativeLayoutPassword_2.setOnClickListener(this);
@@ -324,6 +307,5 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         buttonSubmit.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
     }
-
 
 }

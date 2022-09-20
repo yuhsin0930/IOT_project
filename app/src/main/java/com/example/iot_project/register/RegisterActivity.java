@@ -27,28 +27,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String cityName;
     private Map<String, Object> fireMap;
 
-    public void setFireMap(Map fireMap) {
-        this.fireMap = fireMap;
-    }
-
-    public void Log_d_fireMap() {
-        String account = fireMap.get("account").toString();
-        Log.d("main", "account: " + account);
-        Log.d("main", "fireMap: " + fireMap);
-//       [BUG] 只收到部分資料，但是在輸入時所有欄位都有輸入資料
-//        fireMap: {birthday=null, bankNumber=null, bankAccount=null,
-//        password=null, address=幼獅路一段23號, phone=null,
-//        city=新竹市, district=北 區, name=null, account=user1, email=null}
-    }
-
-    public void MapUploadToFireBase() {
-//      使用 Firebase 服務
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//      取得  Firebase 資料庫 (GET網址)
-        DatabaseReference dataref = database.getReference();
-        dataref.child("user").push().setValue(fireMap);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +82,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    public void MapUploadToFireBase() {
+////      使用 Firebase 服務
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+////      取得  Firebase 資料庫 (GET網址)
+//        DatabaseReference dataref = database.getReference();
+//        dataref.child("user").push().setValue(fireMap);
+    }
+
     public void addDistrictFragment() {
         registerDistrictFragment = new RegisterDistrictFragment();
         fragmentTrans = fragmentMgr.beginTransaction();
@@ -111,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
         fragmentTrans.hide(registerDistrictFragment);
         fragmentTrans.commit();
     }
-
 
     public void showCity() {
         cityFlag = true;
@@ -139,6 +124,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void setDistrictName(String districtName) {
         registerFragment.setDistrictName(districtName);
+    }
+
+    public void setFireMap(Map fireMap) {
+        this.fireMap = fireMap;
     }
     
 }

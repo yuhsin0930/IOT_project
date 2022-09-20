@@ -61,6 +61,6 @@ public class MemberOrdersDetailedInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_member_orders_detailed_info, container, false);
+        return inflater.inflate(R.layout.fragment_member_orders_detailedinfo, container, false);
     }
 }
