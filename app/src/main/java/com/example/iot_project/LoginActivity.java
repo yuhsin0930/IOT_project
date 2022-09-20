@@ -80,5 +80,10 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextAccount.clearFocus();
 
+
+
+
     }
+
+
 }

@@ -60,7 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_corner"
+                android:background="@color/white"
                 android:padding="5dp"
                 app:srcCompat="@drawable/outline_shopping_cart_1"
                 tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
