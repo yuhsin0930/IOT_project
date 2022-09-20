@@ -1,10 +1,7 @@
 package com.example.iot_project.member;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -23,34 +20,68 @@ import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
+    private View view;
+    private MemberActivity memberActivity;
+    private Intent intent;
     private ImageView imageViewSetting, imageViewCart, imageViewMypic;
     private LinearLayout LinearLayoutOrders_0, LinearLayoutOrders_1, LinearLayoutOrders_2, LinearLayoutOrders_3;
     private RelativeLayout RelativeLayoutMystore, RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
-    private MemberActivity memberActivity;
-    private Intent intent;
 
-    public static MemberFragment newInstance(String param1, String param2) {
-        MemberFragment fragment = new MemberFragment();
-        return fragment;
-    }
-
-    public MemberFragment() {}
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static MemberFragment newInstance() {
+        return new MemberFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_member, container, false);
+        view = inflater.inflate(R.layout.fragment_member, container, false);
+        findView();
+        setData();
+        setListener();
+        return view;
+    }
+
+    private void findView() {
+        imageViewSetting = (ImageView)view.findViewById(R.id.imageView_member_setting);
+        imageViewCart = (ImageView)view.findViewById(R.id.imageView_member_cart);
+        imageViewMypic = (ImageView)view.findViewById(R.id.imageView_member_picture);
+        LinearLayoutOrders_0 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_0);
+        LinearLayoutOrders_1 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_1);
+        LinearLayoutOrders_2 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_2);
+        LinearLayoutOrders_3 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_3);
+        RelativeLayoutMystore = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_mystore);
+        RelativeLayoutBecomeSeller = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_becomeSeller);
+        RelativeLayoutOrders = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_orders);
+        RelativeLayoutFavorite = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_favorite);
+        RelativeLayoutBought = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_bought);
+        RelativeLayoutSeen = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_seen);
+        RelativeLayoutCoupon = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_coupon);
+        RelativeLayoutPersonal = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_personal);
+    }
+
+    private void setData(){
         memberActivity = (MemberActivity)getActivity();
-        initView(v);
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
-        return v;
+    }
+
+    private void setListener(){
+        imageViewSetting.setOnClickListener(this);
+        imageViewCart.setOnClickListener(this);
+        imageViewMypic.setOnClickListener(this);
+        LinearLayoutOrders_0.setOnClickListener(this);
+        LinearLayoutOrders_1.setOnClickListener(this);
+        LinearLayoutOrders_2.setOnClickListener(this);
+        LinearLayoutOrders_3.setOnClickListener(this);
+        RelativeLayoutMystore.setOnClickListener(this);
+        RelativeLayoutBecomeSeller.setOnClickListener(this);
+        RelativeLayoutOrders.setOnClickListener(this);
+        RelativeLayoutFavorite.setOnClickListener(this);
+        RelativeLayoutBought.setOnClickListener(this);
+        RelativeLayoutSeen.setOnClickListener(this);
+        RelativeLayoutCoupon.setOnClickListener(this);
+        RelativeLayoutPersonal.setOnClickListener(this);
     }
 
     @Override
@@ -112,41 +143,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            memberActivity.initFragment();
+            memberActivity.setFragment();
         }
-    }
-
-    private void initView(View v) {
-        imageViewSetting = (ImageView)v.findViewById(R.id.imageView_member_setting);
-        imageViewCart = (ImageView)v.findViewById(R.id.imageView_member_cart);
-        imageViewMypic = (ImageView)v.findViewById(R.id.imageView_member_picture);
-        LinearLayoutOrders_0 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_0);
-        LinearLayoutOrders_1 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_1);
-        LinearLayoutOrders_2 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_2);
-        LinearLayoutOrders_3 = (LinearLayout)v.findViewById(R.id.LinearLayout_member_orders_3);
-        RelativeLayoutMystore = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_mystore);
-        RelativeLayoutBecomeSeller = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_becomeSeller);
-        RelativeLayoutOrders = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_orders);
-        RelativeLayoutFavorite = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_favorite);
-        RelativeLayoutBought = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_bought);
-        RelativeLayoutSeen = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_seen);
-        RelativeLayoutCoupon = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_coupon);
-        RelativeLayoutPersonal = (RelativeLayout)v.findViewById(R.id.RelativeLayout_member_personal);
-        imageViewSetting.setOnClickListener(this);
-        imageViewCart.setOnClickListener(this);
-        imageViewMypic.setOnClickListener(this);
-        LinearLayoutOrders_0.setOnClickListener(this);
-        LinearLayoutOrders_1.setOnClickListener(this);
-        LinearLayoutOrders_2.setOnClickListener(this);
-        LinearLayoutOrders_3.setOnClickListener(this);
-        RelativeLayoutMystore.setOnClickListener(this);
-        RelativeLayoutBecomeSeller.setOnClickListener(this);
-        RelativeLayoutOrders.setOnClickListener(this);
-        RelativeLayoutFavorite.setOnClickListener(this);
-        RelativeLayoutBought.setOnClickListener(this);
-        RelativeLayoutSeen.setOnClickListener(this);
-        RelativeLayoutCoupon.setOnClickListener(this);
-        RelativeLayoutPersonal.setOnClickListener(this);
     }
 
 }

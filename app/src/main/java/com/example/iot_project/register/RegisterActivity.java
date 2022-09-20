@@ -21,17 +21,24 @@ public class RegisterActivity extends AppCompatActivity {
     private RegisterFragment registerFragment;
     private RegisterCityFragment registerCityFragment;
     private RegisterDistrictFragment registerDistrictFragment;
-    private boolean cityFlag = false, districtFlag = false;
+    private boolean cityFlag, districtFlag;
     private Intent intent;
     private InputMethodManager kryboard;
     private String cityName;
     private Map<String, Object> fireMap;
+    private long timeTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        setData();
+        setFragment();
+    }
 
+    private void setData() {
+        cityFlag = false;
+        districtFlag = false;
         getSupportActionBar().hide();                   // 隱藏ActionBar
         getWindow().setStatusBarColor(0xffffffff);      // 最上面StatusBar白色底
         getWindow().setNavigationBarColor(0xaaffffff);  // 最下面NavigationBar白色底
@@ -39,13 +46,15 @@ public class RegisterActivity extends AppCompatActivity {
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         kryboard = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         kryboard.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-
         intent = getIntent();
+    }
+
+    private void setFragment() {
         registerFragment = new RegisterFragment();
         registerCityFragment = new RegisterCityFragment();
         registerFragment.setTextViewBarName(intent.getStringExtra("name"));
 
-        // 假裝未登入
+        // 從註冊來(假裝未登入)
         registerFragment.isLoggedIn(intent.getBooleanExtra("isFromRegister", false));
 
         fragmentMgr = getSupportFragmentManager();
@@ -54,32 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
         fragmentTrans.add(R.id.FrameLayout_register, registerCityFragment, "memberGoodsFragment");
         fragmentTrans.hide(registerCityFragment);
         fragmentTrans.commit();
-    }
-
-    private long timeTemp;
-    @Override
-    public void onBackPressed() {
-        if ((System.currentTimeMillis() - timeTemp) > 300) {
-            timeTemp = System.currentTimeMillis();
-            if (districtFlag) {
-                districtFlag = false;
-                cityFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(registerDistrictFragment);
-                fragmentTrans.show(registerFragment);
-                fragmentTrans.commit();
-            } else if (cityFlag) {
-                cityFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(registerCityFragment);
-                fragmentTrans.show(registerFragment);
-                fragmentTrans.commit();
-            } else {
-                super.onBackPressed();
-            }
-        }
     }
 
     public void MapUploadToFireBase() {
@@ -128,6 +111,31 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void setFireMap(Map fireMap) {
         this.fireMap = fireMap;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - timeTemp) > 300) {
+            timeTemp = System.currentTimeMillis();
+            if (districtFlag) {
+                districtFlag = false;
+                cityFlag = false;
+                fragmentTrans = fragmentMgr.beginTransaction();
+                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                fragmentTrans.hide(registerDistrictFragment);
+                fragmentTrans.show(registerFragment);
+                fragmentTrans.commit();
+            } else if (cityFlag) {
+                cityFlag = false;
+                fragmentTrans = fragmentMgr.beginTransaction();
+                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                fragmentTrans.hide(registerCityFragment);
+                fragmentTrans.show(registerFragment);
+                fragmentTrans.commit();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
     
 }

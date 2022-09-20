@@ -19,18 +19,10 @@ public class RegisterDistrictFragment extends Fragment {
     private RegisterActivity registerActivity;
     private ListView ListViewDistrict;
     private ImageView ImageViewBack;
-    private String cityName = "台北市";
+    private String cityName;
 
-    public RegisterDistrictFragment() {}
-
-    public static RegisterDistrictFragment newInstance(String param1, String param2) {
-        RegisterDistrictFragment fragment = new RegisterDistrictFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static RegisterDistrictFragment newInstance() {
+        return new RegisterDistrictFragment();
     }
 
     @Override
@@ -58,7 +50,6 @@ public class RegisterDistrictFragment extends Fragment {
                 registerActivity.onBackPressed();
             }
         });
-
         return v;
     }
 
