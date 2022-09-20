@@ -1,6 +1,8 @@
 package com.example.iot_project.member;
 
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +21,12 @@ public class MemberGoodsFragment extends Fragment {
     private RecyclerView recyclerViewGoods;
     private TextView textViewBar;
 
-    public static MemberGoodsFragment newInstance() {
-        return new MemberGoodsFragment();
+    public static MemberGoodsFragment newInstance(String barName) {
+        MemberGoodsFragment fragment = new MemberGoodsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("barName", barName);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -41,6 +47,7 @@ public class MemberGoodsFragment extends Fragment {
     }
 
     private void setData(){
+        textViewBar.setText(getArguments().getString("barName"));
         memberActivity = (MemberActivity)getActivity();
     }
 
@@ -60,7 +67,7 @@ public class MemberGoodsFragment extends Fragment {
     }
 
     public void setTextViewBar(String barName) {
-        textViewBar.setText(barName);
+//        textViewBar.setText(barName);
     }
 
 }

@@ -21,9 +21,10 @@ public class MemberActivity extends AppCompatActivity {
     private MemberOrdersFragment memberOrdersFragment;
     private MemberFragment memberFragment;
     private MemberOrdersDetailedFragment memberOrdersDetailedFragment;
+    private MemberCouponFragment memberCouponFragment;
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
-    private boolean DetailFlag, OrdersGoodsFlag;
+    private boolean DetailFlag, OrdersGoodsCouponFlag;
     private long timeTemp;
 
     @Override
@@ -36,7 +37,7 @@ public class MemberActivity extends AppCompatActivity {
 
     private void setData(){
         DetailFlag = false;
-        OrdersGoodsFlag = false;
+        OrdersGoodsCouponFlag = false;
         getSupportActionBar().hide();              // 隱藏ActionBar
         window = getWindow();
         window.setNavigationBarColor(0xaaffffff);  // 下面NavigationBar白色底
@@ -45,18 +46,22 @@ public class MemberActivity extends AppCompatActivity {
 
     public void setFragment() {
         memberFragment = new MemberFragment();
-        memberOrdersFragment = new MemberOrdersFragment();
-        memberGoodsFragment = new MemberGoodsFragment();
-        memberOrdersDetailedFragment = new MemberOrdersDetailedFragment();
+//        memberOrdersFragment = new MemberOrdersFragment();
+//        memberGoodsFragment = new MemberGoodsFragment();
+//        memberOrdersDetailedFragment = new MemberOrdersDetailedFragment();
+
         fragmentMgr = getSupportFragmentManager();
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.add(R.id.FrameLayout_member, memberFragment, "memberFragment");
-        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
-        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
-        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersDetailedFragment, "memberOrdersDetailedFragment");
-        fragmentTrans.hide(memberOrdersFragment);
-        fragmentTrans.hide(memberGoodsFragment);
-        fragmentTrans.hide(memberOrdersDetailedFragment);
+//        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
+//        fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
+//        fragmentTrans.add(R.id.FrameLayout_member, memberOrdersDetailedFragment, "memberOrdersDetailedFragment");
+
+//        fragmentTrans.add(R.id.FrameLayout_member, memberCouponFragment, "memberCouponFragment");
+//        fragmentTrans.hide(memberOrdersFragment);
+//        fragmentTrans.hide(memberGoodsFragment);
+//        fragmentTrans.hide(memberOrdersDetailedFragment);
+////        fragmentTrans.hide(memberCouponFragment);
         fragmentTrans.commit();
     }
 
@@ -73,25 +78,75 @@ public class MemberActivity extends AppCompatActivity {
         }
     }
 
+//    public void showOrders(int whichTab) {
+//        OrdersGoodsCouponFlag = true;
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+//        fragmentTrans.show(memberOrdersFragment);
+//        fragmentTrans.hide(memberFragment);
+//        fragmentTrans.commit();
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+//        fragmentTrans.show(memberOrdersFragment);
+//        fragmentTrans.hide(memberFragment);
+//        fragmentTrans.commit();
+//        memberOrdersFragment.selectWhichTab(whichTab);
+//        setStatusBarColor("white");;
+//    }
+
     public void showOrders(int whichTab) {
-        OrdersGoodsFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(memberOrdersFragment);
+        if (fragmentMgr.findFragmentByTag("memberOrdersFragment") == null) {
+            memberOrdersFragment = new MemberOrdersFragment();
+            fragmentTrans.add(R.id.FrameLayout_member, memberOrdersFragment, "memberOrdersFragment");
+            fragmentTrans.addToBackStack(null);
+        } else {
+            fragmentTrans.show(memberOrdersFragment);
+        }
         fragmentTrans.hide(memberFragment);
         fragmentTrans.commit();
-        memberOrdersFragment.selectWhichTab(whichTab);
-        setStatusBarColor("white");;
+        setStatusBarColor("white");
     }
 
+//    public void showGoods(String barName) {
+//        OrdersGoodsCouponFlag = true;
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+//        fragmentTrans.show(memberGoodsFragment);
+//        fragmentTrans.hide(memberFragment);
+//        fragmentTrans.commit();
+//        memberGoodsFragment.setTextViewBar(barName);
+//        setStatusBarColor("white");
+//    }
+
     public void showGoods(String barName) {
-        OrdersGoodsFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(memberGoodsFragment);
+        if (fragmentMgr.findFragmentByTag("memberGoodsFragment") == null) {
+            memberGoodsFragment = MemberGoodsFragment.newInstance(barName);
+            fragmentTrans.add(R.id.FrameLayout_member, memberGoodsFragment, "memberGoodsFragment");
+            fragmentTrans.addToBackStack(null);
+        } else {
+            fragmentTrans.show(memberGoodsFragment);
+        }
         fragmentTrans.hide(memberFragment);
         fragmentTrans.commit();
-        memberGoodsFragment.setTextViewBar(barName);
+        setStatusBarColor("white");
+    }
+
+    public void showCoupon(String barName) {
+        fragmentTrans = fragmentMgr.beginTransaction();
+        fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
+        if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
+            memberCouponFragment = new MemberCouponFragment();
+            fragmentTrans.add(R.id.FrameLayout_member, memberCouponFragment, "memberCouponFragment");
+            fragmentTrans.addToBackStack(null);
+        } else {
+            fragmentTrans.show(memberCouponFragment);
+        }
+        fragmentTrans.hide(memberFragment);
+        fragmentTrans.commit();
         setStatusBarColor("white");
     }
 
@@ -105,31 +160,51 @@ public class MemberActivity extends AppCompatActivity {
         fragmentTrans.commit();
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        if ((System.currentTimeMillis() - timeTemp) > 300) {
+//            timeTemp = System.currentTimeMillis();
+////            if (DetailFlag) {
+////                DetailFlag = false;
+////                fragmentTrans = fragmentMgr.beginTransaction();
+////                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+////                fragmentTrans.hide(memberOrdersDetailedFragment);
+////                fragmentTrans.show(memberOrdersFragment);
+////                fragmentTrans.commit();
+////            } else
+//                if (OrdersGoodsCouponFlag) {
+//                OrdersGoodsCouponFlag = false;
+//                fragmentTrans = fragmentMgr.beginTransaction();
+//                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+////                fragmentTrans.hide(memberOrdersFragment);
+////                fragmentTrans.hide(memberGoodsFragment);
+//                fragmentTrans.hide(memberCouponFragment);
+//                fragmentTrans.show(memberFragment);
+//                fragmentTrans.commit();
+//                setStatusBarColor("orange");
+//                Log.d("main", "ccc");
+//            } else {
+//                    Log.d("main", "ddd");
+//                super.onBackPressed();
+//            }
+//        }
+//    }
+
+
     @Override
     public void onBackPressed() {
-        if ((System.currentTimeMillis() - timeTemp) > 300) {
-            timeTemp = System.currentTimeMillis();
-            if (DetailFlag) {
-                DetailFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(memberOrdersDetailedFragment);
-                fragmentTrans.show(memberOrdersFragment);
-                fragmentTrans.commit();
-            } else if (OrdersGoodsFlag) {
-                OrdersGoodsFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(memberOrdersFragment);
-                fragmentTrans.hide(memberGoodsFragment);
-                fragmentTrans.show(memberFragment);
-                fragmentTrans.commit();
-                setStatusBarColor("orange");
-            } else {
-                super.onBackPressed();
-            }
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+            Log.d("main", "ccc");
+        } else {
+            Log.d("main", "ddd");
+            getSupportFragmentManager().popBackStack();
+            setStatusBarColor("orange");
         }
     }
+
 
     MemberOrdersDetailedFragment getMemberOrdersDetailedFragment(){
         return memberOrdersDetailedFragment;

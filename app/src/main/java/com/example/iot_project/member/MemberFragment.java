@@ -127,7 +127,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 memberActivity.showGoods("瀏覽紀錄");
                 break;
             case R.id.RelativeLayout_member_coupon:
-                Toast.makeText(memberActivity, "RelativeLayout_member_coupon", Toast.LENGTH_SHORT).show();
+                memberActivity.showCoupon("優惠券");
                 break;
             case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:

@@ -61,10 +61,14 @@
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_success_become_seller.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_listview.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.264" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_coupon.xml" value="0.2351851851851852" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_coupon_item.xml" value="0.2230769230769231" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_goods.xml" value="0.1" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders.xml" value="0.16956521739130434" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_completed.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_detailed.xml" value="0.2111111111111111" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_detailed_info.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_detailed_item.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_detaileditem.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_notpicked.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_orders_notshipped.xml" value="0.2111111111111111" />

@@ -68,11 +68,6 @@ public class MemberOrdersDetailedFragment extends Fragment{
         return v;
     }
 
-
-    public void deleteFragment(String tag) {
-//        fragmentMgr.beginTransaction().remove(fragmentMgr.findFragmentByTag(tag)).commit();
-    }
-
     public void setTextViewBar(String barName) {
         textViewBar.setText(barName);
     }
