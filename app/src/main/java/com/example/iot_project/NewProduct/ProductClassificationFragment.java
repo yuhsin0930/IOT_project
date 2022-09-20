@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ import android.widget.Switch;
 
 import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +49,7 @@ public class ProductClassificationFragment extends Fragment {
     private Switch switchProductClass;
     private ImageView imageButtonDeleteClass;
     private int deleteFlag;
-    private String productClassitem;
+    private String productClassName;
 
     public ProductClassificationFragment() {
         // Required empty public constructor
@@ -99,75 +105,639 @@ public class ProductClassificationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 newProductClassificationActivity.deleteFragment(mParam2);
+                Log.d("main",mParam2);
             }
         });
 
         //-----------------------------------------------------------------------------------------
+        Map<String,Object> productClassItem = new HashMap<String,Object>();
+
         spinnerProductClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            private int ProductClassUseFlag;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        productClassitem = "最新商品";
+                        productClassName = "最新商品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 1:
-                        productClassitem = "熱賣商品";
+                        productClassName = "熱賣商品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 2 :
-                        productClassitem = "男女衣著";
+                        productClassName = "男女衣著";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 3 :
-                        productClassitem = "男女鞋";
+                        productClassName = "男女鞋";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 4:
-                        productClassitem = "3C與筆電";
+                        productClassName = "3C與筆電";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 5 :
-                        productClassitem = "飾品";
+                        productClassName = "飾品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 6 :
-                        productClassitem = "家電影音";
+                        productClassName = "家電影音";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 7:
-                        productClassitem = "寵物用品";
+                        productClassName = "寵物用品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 8 :
-                        productClassitem = "美食伴手禮";
+                        productClassName = "美食伴手禮";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 9:
-                        productClassitem = "文創商品";
+                        productClassName = "文創商品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 10:
-                        productClassitem = "手機平板周邊";
+                        productClassName = "手機平板周邊";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 11 :
-                        productClassitem = "生活用品";
+                        productClassName = "生活用品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 12 :
-                        productClassitem = "嬰幼兒用品";
+                        productClassName = "嬰幼兒用品";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 13:
-                        productClassitem = "戶外/旅行";
+                        productClassName = "戶外/旅行";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
                         break;
                     case 14 :
-                        productClassitem = "美妝保健";
+                        productClassName = "美妝保健";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 15 :
-                        productClassitem = "汽機車零件";
+                        productClassName = "汽機車零件";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 16 :
-                        productClassitem = "運動/健身";
+                        productClassName = "運動/健身";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
                         break;
                     case 17 :
-                        productClassitem = "書籍及雜誌期刊";
+                        productClassName = "書籍及雜誌期刊";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 18 :
-                        productClassitem = "娛樂/收藏";
+                        productClassName = "娛樂/收藏";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                     case 19 :
-                        productClassitem = "其他類別";
+                        productClassName = "其他類別";
+                        switchProductClass.setChecked(true);
+                        ProductClassUseFlag = 1;
+                        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked==true){
+                                    ProductClassUseFlag = 1;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                                else{
+                                    ProductClassUseFlag = 0;
+                                    productClassItem.clear();
+                                    productClassItem.put(productClassName,ProductClassUseFlag);
+                                    Log.d("main",productClassItem.toString());
+
+                                    newProductClassificationActivity.saveClass(mParam2,productClassItem);
+                                }
+                            }
+                        });
+                        productClassItem.clear();
+                        productClassItem.put(productClassName,ProductClassUseFlag);
+                        Log.d("main",productClassItem.toString());
+
+                        newProductClassificationActivity.saveClass(mParam2,productClassItem);
                         break;
                 }
+
+
             }
 
             @Override
@@ -175,20 +745,9 @@ public class ProductClassificationFragment extends Fragment {
 
             }
         });
-        //------------------------------------------------------------------------------------------
-        switchProductClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            private int ProductClassUseFlag;
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked==true){
-                    ProductClassUseFlag = 1;
-                }
-                else{
-                    ProductClassUseFlag = 0;
-                }
-            }
-        });
+        //------------------------------------------------------------------------------------------
+
         //------------------------------------------------------------------------------------------
 
         return v;

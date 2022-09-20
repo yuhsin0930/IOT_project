@@ -57,9 +57,11 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_my_product.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_my_store.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_new_product.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_new_product_classification.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_product_describe.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_sales_record.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_seller_detail.xml" value="0.5" />
+        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_shipping_fee.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_shopping_cart.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/basic_listview_items.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/buyagain_listview_items.xml" value="0.3536458333333333" />
@@ -69,6 +71,7 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_completed.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_return.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_shipped.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_product_classification.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_seller_detail.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_seller_detail_county.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_shopping_cart_all_product.xml" value="0.3536458333333333" />
@@ -76,6 +79,7 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/myproduct_soldout_listview_items.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/payment_listview_items.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/seller_choose_county_listview_items.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/shipping_detail_dialog.xml" value="0.25" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/drawable/dialog_background_corner.xml" value="0.169" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_bank_account.xml" value="0.3234375" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_main.xml" value="0.3338541666666667" />

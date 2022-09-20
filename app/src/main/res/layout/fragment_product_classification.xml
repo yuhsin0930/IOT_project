@@ -24,7 +24,7 @@
 
         <Switch
             android:id="@+id/switch_openProductClass"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:textOff="停用"
             android:textOn="啟用"

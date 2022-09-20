@@ -5,13 +5,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.iot_project.R;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 public class NewProductClassificationActivity extends AppCompatActivity {
@@ -23,20 +30,15 @@ public class NewProductClassificationActivity extends AppCompatActivity {
     private TextView textViewAddClass;
     private int count;
     private ProductClassificationFragment newProductClass;
-    private String deleteNum;
+    private Button buttonNewClassFinished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product_classification);
+        if(productClassMap!=null){
 
-//        fragManager = getSupportFragmentManager();
-//        fragProductClass = ProductClassificationFragment.newInstance("Fragment ProductClass", "Data 1");
-//        count = 1;
-//        fragTransit = fragManager.beginTransaction();
-//        fragTransit.add(R.id.linear_layout_productClass_fragment, fragProductClass, "fragProductClass");
-//        fragTransit.commit();
-
+        }
         count = 1;
         fragManager = getSupportFragmentManager();
         fragProductClass = ProductClassificationFragment.newInstance("Fragment ProductClass", "" + count);
@@ -49,12 +51,6 @@ public class NewProductClassificationActivity extends AppCompatActivity {
         textViewAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                fragTransit = fragManager.beginTransaction();
-//                newProductClass = ProductClassificationFragment.newInstance("Add data", "count = " + count);
-//                count++;
-//                fragTransit.add(R.id.linear_layout_productClass_fragment, newProductClass, "fragProductClass" + count);
-//                fragTransit.commit();
-
                 count++;
                 fragTransit = fragManager.beginTransaction();
                 newProductClass = ProductClassificationFragment.newInstance("Add data", "" + count);
@@ -63,16 +59,33 @@ public class NewProductClassificationActivity extends AppCompatActivity {
 
             }
         });
+        //------------------------------------------------------------------------------------------
+        buttonNewClassFinished = (Button)findViewById(R.id.button_newClass_finished);
+        buttonNewClassFinished.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewProductClassificationActivity.this,NewProductActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
-
+    
     public void deleteFragment(String tag) {
         Fragment f = fragManager.findFragmentByTag(tag);
         if (f != null) {
             fragTransit = fragManager.beginTransaction();
             fragTransit.remove(f);
             fragTransit.commit();
+            productClassMap.remove(tag);
+            Log.d("main",productClassMap.toString());
         }
+    }
+    Map<String,Object> productClassMap = new HashMap<String,Object>();
+    public void saveClass(String tag, Map map){
+        Fragment f = fragManager.findFragmentByTag(tag);
+        productClassMap.put(tag,map);
+        Log.d("main",productClassMap.toString());
     }
 
 }
