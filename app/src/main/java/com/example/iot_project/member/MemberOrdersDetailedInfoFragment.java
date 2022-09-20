@@ -13,7 +13,6 @@ import com.example.iot_project.R;
 public class MemberOrdersDetailedInfoFragment extends Fragment {
 
     private View view;
-    private MemberActivity memberActivity;
 
     public static MemberOrdersDetailedInfoFragment newInstance() {
         return new MemberOrdersDetailedInfoFragment();

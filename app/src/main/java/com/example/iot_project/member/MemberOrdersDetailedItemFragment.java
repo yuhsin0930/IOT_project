@@ -1,41 +1,45 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.iot_project.NewProduct.ProductClassificationFragment;
 import com.example.iot_project.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MemberOrdersDetailedItemFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MemberOrdersDetailedItemFragment extends Fragment {
+public class MemberOrdersDetailedItemFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_PARAM1 = "param1";
-
+    private ImageView imageViewPicture;
     private String tag;
 
-
+    @Override
+    public void onClick(View view) {
+        Toast.makeText(getContext(), tag, Toast.LENGTH_SHORT).show();
+    }
 
     public static MemberOrdersDetailedItemFragment newInstance(String tag) {
         MemberOrdersDetailedItemFragment fragment = new MemberOrdersDetailedItemFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, tag);
-        fragment.setArguments(args);
+        Bundle bundle = new Bundle();
+        bundle.putString("tag", tag);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tag = getArguments().getString(ARG_PARAM1);
+            tag = getArguments().getString("tag");
         }
     }
 
@@ -43,7 +47,13 @@ public class MemberOrdersDetailedItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_member_orders_detaileditem, container, false);
-
+        imageViewPicture = (ImageView)view.findViewById(R.id.imageView_cardview_member_orders_picture);
+        imageViewPicture.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 }
