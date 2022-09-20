@@ -106,8 +106,8 @@ public class BankAccountActivity extends AppCompatActivity {
         Map<String, ?> MapData = sp.getAll();
 //
         if(MapData.size()==9){
-            dataref.child("user/group/seller").setValue(true);
-            dataref.child("seller").push().setValue(MapData);
+//            dataref.child("user/group/seller").setValue(true);
+//            dataref.child("seller").push().setValue(MapData);
         }
     }
 }
