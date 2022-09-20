@@ -131,6 +131,10 @@ public class MemberActivity extends AppCompatActivity {
         }
     }
 
+    MemberOrdersDetailedFragment getMemberOrdersDetailedFragment(){
+        return memberOrdersDetailedFragment;
+    }
+
 }
 
 // https://www.twblogs.net/a/5b800a5c2b717767c6b2fd52 Fragment各種操作與生命週期的關聯

@@ -61,7 +61,7 @@ public class MemberOrdersDetailedFragment extends Fragment {
 
         for (int i = 0; i < 5; i++) {
             fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentItem = new MemberOrdersDetailedItemFragment();
+//            fragmentItem = new MemberOrdersDetailedItemFragment.newInstance();
             fragmentTrans.add(R.id.LinearLayout_orders_detailed, fragmentItem, "fragmentItem");
             fragmentTrans.commit();
         }
@@ -73,6 +73,12 @@ public class MemberOrdersDetailedFragment extends Fragment {
 
         return v;
     }
+
+//    pubilc void deleteFragment(String) {
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        fragmentTrans.remove();
+//        fragmentTrans.commit();
+//    }
 
     public void setTextViewBar(String barName) {
         textViewBar.setText(barName);
