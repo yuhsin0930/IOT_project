@@ -564,14 +564,6 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView_register_test"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#CFFFEF"
-                android:padding="16dp"
-                android:textSize="20dp" />
-
         </LinearLayout>
     </ScrollView>
 
