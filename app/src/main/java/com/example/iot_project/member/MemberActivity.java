@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+
 import com.example.iot_project.R;
 
 public class MemberActivity extends AppCompatActivity {
@@ -45,6 +49,10 @@ public class MemberActivity extends AppCompatActivity {
     }
 
     public void setStatusBarColor(String color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         switch (color) {
             case "orange":
                 window.setStatusBarColor(ContextCompat.getColor(this, R.color.Mycolor_1));
@@ -119,13 +127,9 @@ public class MemberActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-        if (count == 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
-            //additional code
-            Log.d("main", "ccc");
         } else {
-            Log.d("main", "ddd");
             getSupportFragmentManager().popBackStack();
             setStatusBarColor("orange");
         }

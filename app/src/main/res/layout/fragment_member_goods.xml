@@ -8,6 +8,15 @@
     android:background="#F1F1F1"
     tools:context=".member.MemberGoodsFragment">
 
+    <View
+        android:id="@+id/view_bar"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/RelaitiveLayout_bar"
         android:layout_width="0dp"
@@ -15,7 +24,7 @@
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/view_bar">
 
         <ImageView
             android:id="@+id/ImageView_member_back"
