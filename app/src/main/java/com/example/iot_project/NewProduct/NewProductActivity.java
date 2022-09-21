@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.iot_project.MyProductActivity;
 import com.example.iot_project.R;
 
 public class NewProductActivity extends AppCompatActivity {
@@ -156,5 +157,12 @@ public class NewProductActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
 
         button_newProduct_launch = (Button) findViewById(R.id.button_newProduct_launch);
+        button_newProduct_launch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -36,14 +36,11 @@ public class NewProductClassificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product_classification);
-        if(productClassMap!=null){
-
-        }
         count = 1;
         fragManager = getSupportFragmentManager();
-        fragProductClass = ProductClassificationFragment.newInstance("Fragment ProductClass", "" + count);
+        fragProductClass = ProductClassificationFragment.newInstance("Fragment ProductClass", "productClass" + count);
         fragTransit = fragManager.beginTransaction();
-        fragTransit.add(R.id.linear_layout_productClass_fragment, fragProductClass, "" + count);
+        fragTransit.add(R.id.linear_layout_productClass_fragment, fragProductClass, "productClass" + count);
         fragTransit.commit();
 
 
@@ -53,8 +50,8 @@ public class NewProductClassificationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 count++;
                 fragTransit = fragManager.beginTransaction();
-                newProductClass = ProductClassificationFragment.newInstance("Add data", "" + count);
-                fragTransit.add(R.id.linear_layout_productClass_fragment, newProductClass, "" + count);
+                newProductClass = ProductClassificationFragment.newInstance("Add data", "productClass" + count);
+                fragTransit.add(R.id.linear_layout_productClass_fragment, newProductClass, "productClass" + count);
                 fragTransit.commit();
 
             }

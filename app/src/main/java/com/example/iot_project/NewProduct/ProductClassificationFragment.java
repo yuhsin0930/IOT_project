@@ -47,7 +47,7 @@ public class ProductClassificationFragment extends Fragment {
     private ListView ListViewProductClass;
     private Spinner spinnerProductClass;
     private Switch switchProductClass;
-    private ImageView imageButtonDeleteClass;
+    private ImageButton imageButtonDeleteClass;
     private int deleteFlag;
     private String productClassName;
 
@@ -94,6 +94,7 @@ public class ProductClassificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_product_classification, container, false);
         NewProductClassificationActivity newProductClassificationActivity = (NewProductClassificationActivity) getActivity();
+
         spinnerProductClass = (Spinner)v.findViewById(R.id.spinner_productClass);
         switchProductClass = (Switch)v.findViewById(R.id.switch_openProductClass);
 
@@ -745,10 +746,6 @@ public class ProductClassificationFragment extends Fragment {
 
             }
         });
-
-        //------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------------------------------------------
 
         return v;
     }
