@@ -26,12 +26,13 @@ public class MemberOrdersFragment extends Fragment {
     private TabLayout tabLayout;
     private List<String> tabTitle;
 
-    public static MemberOrdersFragment newInstance(String param1, String param2) {
+    public static MemberOrdersFragment newInstance(int whichTab) {
         MemberOrdersFragment fragment = new MemberOrdersFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("whichTab", whichTab);
+        fragment.setArguments(bundle);
         return fragment;
     }
-
-    public MemberOrdersFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,12 +71,8 @@ public class MemberOrdersFragment extends Fragment {
                 tab.setText(tabTitle.get(position));
             }
         }).attach();
-
+        viewPager2.setCurrentItem(getArguments().getInt("whichTab"), false);
         return v;
-    }
-
-    public void selectWhichTab(int whichTab){
-        viewPager2.setCurrentItem(whichTab, false);
     }
 
 }
