@@ -31,8 +31,9 @@ public class SetPriceActivity extends AppCompatActivity {
     private TextView textViewAddNorm;
     private SetPriceFragment newSetPriceFrag;
     private Button buttonFinishedSetNorm;
-    private Object[] productNormArray;
+    private String[] productNormArray;
     private int productNormNum;
+    Set<String> productNormSet;
 
 
     @Override
@@ -42,12 +43,10 @@ public class SetPriceActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
         count = sp.getInt("NormFragmentCount",1);
         productNormSet = sp.getStringSet("normFragmentSet",null);
-        productNormArray = productNormSet.toArray();
-        productNormNum =productNormArray.length;
-
         FragManager = getSupportFragmentManager();
         if(productNormSet!=null){
-            productNormArray = productNormSet.toArray();
+            productNormArray = (String[]) productNormSet.toArray();
+            Log.d("main","productNormArray = "+productNormArray.toString());
             productNormNum = productNormArray.length;
             for(int i=0;i<productNormNum;i++){
                 fragTransit = FragManager.beginTransaction();
@@ -81,6 +80,14 @@ public class SetPriceActivity extends AppCompatActivity {
         buttonFinishedSetNorm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for(int i=0 ; i<productNormNum;i++ ){
+                    String normFrag = productNormArray[i];
+                    SharedPreferences newsp = getSharedPreferences(normFrag,MODE_PRIVATE);
+                    String productNorm = newsp.getString("productNorm",null);
+                    String productNormAmount = newsp.getString("productNormAmount",null);
+                    String productNormPrice = newsp.getString("productNormPrice",null);
+                }
+
                 Intent intent = new Intent(SetPriceActivity.this,NewProductActivity.class);
                 startActivity(intent);
             }
@@ -106,7 +113,6 @@ public class SetPriceActivity extends AppCompatActivity {
     }
 
 //    Map<String,Object> productPriceMap = new HashMap<>();
-    Set<String> productNormSet = new HashSet<>();
     public void saveFragment(String tag, Map map){
         Fragment f = FragManager.findFragmentByTag(tag);
         if (f != null) {
