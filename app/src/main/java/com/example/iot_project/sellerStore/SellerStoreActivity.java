@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.iot_project.R;
 
@@ -27,10 +29,13 @@ public class SellerStoreActivity extends AppCompatActivity {
 
     private void setWindow() {
         getSupportActionBar().hide();                   // 隱藏ActionBar
-        getWindow().setStatusBarColor(0xffffffff);      // 最上面StatusBar白色底
         getWindow().setNavigationBarColor(0xaaffffff);  // 最下面NavigationBar白色底
         getWindow().getDecorView()                      // 上面字設黑 | 下面虛擬按鈕深色
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
     private void setFragment() {
