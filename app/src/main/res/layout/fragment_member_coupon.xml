@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ImageView_member_coupon_back"
+            android:id="@+id/imageView_seller_store_type_show_back"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
@@ -27,12 +27,12 @@
             app:srcCompat="@drawable/orangebackarrow" />
 
         <TextView
-            android:id="@+id/text_member_coupon_bar"
+            android:id="@+id/textView_seller_store_type_show_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="56dp"
-            android:text="優惠券"
+            android:text="優惠券(點我)"
             android:textSize="22dp"
             android:textStyle="bold" />
 

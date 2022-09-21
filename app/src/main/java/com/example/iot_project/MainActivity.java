@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewBecomeSaller, textViewLogin;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

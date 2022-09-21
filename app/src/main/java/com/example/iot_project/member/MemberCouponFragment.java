@@ -86,8 +86,8 @@ public class MemberCouponFragment extends Fragment {
     }
 
     private void findView() {
-        ImageViewBack = (ImageView)view.findViewById(R.id.ImageView_member_coupon_back);
-        textViewBar = (TextView)view.findViewById(R.id.text_member_coupon_bar);
+        ImageViewBack = (ImageView)view.findViewById(R.id.imageView_seller_store_type_show_back);
+        textViewBar = (TextView)view.findViewById(R.id.textView_seller_store_type_show_bar);
     }
 
     private void setData(){

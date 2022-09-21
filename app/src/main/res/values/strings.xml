@@ -1948,6 +1948,12 @@
         <item>富里鄉</item>
     </string-array>
 
+    <string-array name="seller_type_goods_pic">
+        <item>@drawable/inpods_demo</item>
+        <item>@drawable/okinawa</item>
+        <item>@drawable/cat2</item>
+    </string-array>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
