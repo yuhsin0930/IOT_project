@@ -1,16 +1,25 @@
 package com.example.iot_project.NewProduct;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.iot_project.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +37,13 @@ public class SetPriceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ImageView imageViewSetNormDelete;
+    private EditText editTextSetNorm_productNorm;
+    private EditText editTextSetNorm_productAmount;
+    private EditText editTextSetNorm_productPrice;
+    private String productNorm;
+    private String productNormPrice;
+    private String productNormAmount;
+
 
     public SetPriceFragment() {
         // Required empty public constructor
@@ -66,6 +82,95 @@ public class SetPriceFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_set_price, container, false);
         SetPriceActivity setPriceActivity = (SetPriceActivity) getActivity();
+        editTextSetNorm_productNorm = (EditText)v.findViewById(R.id.editText_setNorm_productNorm);
+        editTextSetNorm_productAmount = (EditText)v.findViewById(R.id.editText_setNorm_productAmount);
+        editTextSetNorm_productPrice = (EditText)v.findViewById(R.id.editText_setNorm_productPrice);
+
+        SharedPreferences newsp = setPriceActivity.getSharedPreferences(mParam2, Context.MODE_PRIVATE);
+        productNorm = newsp.getString("productNorm",null);
+        productNormPrice = newsp.getString("productNormPrice",null);
+        productNormAmount = newsp.getString("productNormAmount",null);
+
+        editTextSetNorm_productNorm.setText(productNorm);
+        editTextSetNorm_productPrice.setText(productNormPrice);
+        editTextSetNorm_productAmount.setText(productNormAmount);
+
+        Map<String,String> productPrice = new HashMap<>();
+        productPrice.put("productNorm",productNorm);
+        productPrice.put("productNormPrice",productNormPrice);
+        productPrice.put("productNormAmount",productNormAmount);
+        Log.d("main",productPrice.toString());
+        setPriceActivity.saveFragment(mParam2,productPrice);
+
+        editTextSetNorm_productNorm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()!=0){
+                    productNorm = s.toString();
+                    productPrice.put("productNorm",productNorm);
+                    Log.d("main",productPrice.toString());
+                }else{
+                    productNorm = null;
+                    productPrice.put("productNorm",productNorm);
+                    Log.d("main",productPrice.toString());
+                }
+                setPriceActivity.saveFragment(mParam2,productPrice);
+            }
+        });
+        editTextSetNorm_productPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()!=0){
+                    productNormPrice = s.toString();
+                    productPrice.put("productNormPrice",productNormPrice);
+                    Log.d("main",productPrice.toString());
+                }else{
+                    productNormPrice=null;
+                    productPrice.put("productNormPrice",productNormPrice);
+                    Log.d("main",productPrice.toString());
+                }
+                setPriceActivity.saveFragment(mParam2,productPrice);
+            }
+        });
+        editTextSetNorm_productAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()!=0){
+                    productNormAmount= s.toString();
+                    productPrice.put("productNormAmount",productNormAmount);
+                    Log.d("main",productPrice.toString());
+                }else{
+                    productNormPrice=null;
+                    productPrice.put("productNormAmount",productNormAmount);
+                    Log.d("main",productPrice.toString());
+                }
+                setPriceActivity.saveFragment(mParam2,productPrice);
+            }
+        });
+
+        productPrice.put("productNorm",productNorm);
+        productPrice.put("productNormPrice",productNormPrice);
+        productPrice.put("productNormAmount",productNormAmount);
+        Log.d("main",productPrice.toString());
+
         imageViewSetNormDelete = (ImageView)v.findViewById(R.id.imageView_setNorm_delete);
         imageViewSetNormDelete.setOnClickListener(new View.OnClickListener() {
             @Override
