@@ -6,12 +6,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.iot_project.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SetPriceActivity extends AppCompatActivity {
 
@@ -22,17 +31,37 @@ public class SetPriceActivity extends AppCompatActivity {
     private TextView textViewAddNorm;
     private SetPriceFragment newSetPriceFrag;
     private Button buttonFinishedSetNorm;
+    private Object[] productNormArray;
+    private int productNormNum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_price);
-        count = 1;
+        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+        count = sp.getInt("NormFragmentCount",1);
+        productNormSet = sp.getStringSet("normFragmentSet",null);
+        productNormArray = productNormSet.toArray();
+        productNormNum =productNormArray.length;
+
         FragManager = getSupportFragmentManager();
-        fragSetPrice = SetPriceFragment.newInstance("Fragment SetPrice","setPrice"+count);
-        fragTransit = FragManager.beginTransaction();
-        fragTransit.add(R.id.linearLayout_setPrice,fragSetPrice,"setPrice"+count);
-        fragTransit.commit();
+        if(productNormSet!=null){
+            productNormArray = productNormSet.toArray();
+            productNormNum = productNormArray.length;
+            for(int i=0;i<productNormNum;i++){
+                fragTransit = FragManager.beginTransaction();
+                newSetPriceFrag = SetPriceFragment.newInstance("Add data",productNormArray[i].toString() );
+                fragTransit.add(R.id.linearLayout_setPrice,newSetPriceFrag,productNormArray[i].toString());
+                fragTransit.commit();
+                Log.d("main","normFragment = " +productNormArray[i].toString());
+            }
+        }else{
+            fragSetPrice = SetPriceFragment.newInstance("Fragment SetPrice","setPrice"+count);
+            fragTransit = FragManager.beginTransaction();
+            fragTransit.add(R.id.linearLayout_setPrice,fragSetPrice,"setPrice"+count);
+            fragTransit.commit();
+        }
 
         textViewAddNorm = (TextView)findViewById(R.id.textView_addNorm);
         textViewAddNorm.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +72,8 @@ public class SetPriceActivity extends AppCompatActivity {
                 newSetPriceFrag = SetPriceFragment.newInstance("Add data", "setPrice" + count);
                 fragTransit.add(R.id.linearLayout_setPrice,newSetPriceFrag,"setPrice"+count);
                 fragTransit.commit();
+                sp.edit().putInt("NormFragmentCount",count).commit();
+                productNormSet.add("setPrice"+count);
             }
         });
 
@@ -62,6 +93,40 @@ public class SetPriceActivity extends AppCompatActivity {
             fragTransit = FragManager.beginTransaction();
             fragTransit.remove(f);
             fragTransit.commit();
+//            productPriceMap.remove(tag);
+//            Log.d("main",productPriceMap.toString());
+            productNormSet.remove(tag);
+            SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+            sp.edit().putStringSet("normFragmentSet",productNormSet);
+
+            SharedPreferences newsp = getSharedPreferences(tag,MODE_PRIVATE);
+            newsp.edit().clear();
+
+        }
+    }
+
+//    Map<String,Object> productPriceMap = new HashMap<>();
+    Set<String> productNormSet = new HashSet<>();
+    public void saveFragment(String tag, Map map){
+        Fragment f = FragManager.findFragmentByTag(tag);
+        if (f != null) {
+//            productPriceMap.put(tag,map);
+//            Log.d("main",productPriceMap.toString());
+            productNormSet.add(tag);
+
+            SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+            sp.edit().putStringSet("normFragmentSet",productNormSet).commit();
+
+            String Norm = String.valueOf(map.get("productNorm"));
+            String NormPrice = String.valueOf(map.get("productNormPrice"));
+            String NormAmount = String.valueOf(map.get("productNormAmount"));
+
+            SharedPreferences newsp = getSharedPreferences(tag,MODE_PRIVATE);
+            newsp.edit().putString("productNorm",Norm)
+                    .putString("productNormPrice",NormPrice)
+                    .putString("productNormAmount",NormAmount)
+                    .commit();
+
         }
     }
 }
