@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.MyProduct;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

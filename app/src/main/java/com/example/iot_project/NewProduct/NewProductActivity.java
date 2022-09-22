@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.iot_project.MyProductActivity;
+import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
 
 public class NewProductActivity extends AppCompatActivity {
@@ -164,5 +164,30 @@ public class NewProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+        //------------------------------------------------------------------------------------------
+//        商品照片(picture_id)(int)
+//        商品名稱(gName)(Text)
+//        商品描述(info)(Text)
+//        商品分類(type)(Text)
+//        商品規格(productNorm)(Text)
+//        商品價格(price)、商品數量)(int)
+//        商品數量(soldQuantity)(int)
+
+//        包裹尺寸-長(packageSizeLength)(int)
+//        包裹尺寸-寬(packageSizeWidth)(int)
+//        包裹尺寸-高(packageSizeHeight)(int)
+
+//        運送方法-全家(shippingMethod)(Boolean)
+//        運送方法-7-11(shippingMethod)(Boolean)
+//        運送方法-黑貓(shippingMethod)(Boolean)
+//        運送方法-郵局(shippingMethod)(Boolean)
+
+//        運費價格-全家(shippingFeeFamilyMart)(int)
+//        運費價格-7-11(shippingFeeSeven)(int)
+//        運費價格-黑貓(shippingFeeBlackCat)(int)
+//        運費價格-郵局(shippingFeePostOffice)(int)
     }
 }

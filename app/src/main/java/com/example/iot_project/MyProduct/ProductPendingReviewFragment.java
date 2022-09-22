@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.MyProduct;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.iot_project.R;
 
 /**
  * A simple {@link Fragment} subclass.
