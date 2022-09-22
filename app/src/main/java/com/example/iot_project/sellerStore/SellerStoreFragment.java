@@ -73,6 +73,8 @@ public class SellerStoreFragment extends Fragment {
             }
         });
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.storedemo));
+
+        // 改寫在editText按下虛擬鍵盤Enter的後續動作
         editTextShow.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

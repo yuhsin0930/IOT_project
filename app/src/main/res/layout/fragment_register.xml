@@ -85,6 +85,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/textView_register_account_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/edittext_register_account"
                     android:layout_width="wrap_content"
@@ -96,6 +108,7 @@
                     android:ems="8"
                     android:gravity="end"
                     android:inputType="textPersonName"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -125,6 +138,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/textView_register_password_warn_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/edittext_register_password_1"
                     android:layout_width="wrap_content"
@@ -135,7 +160,9 @@
                     android:background="@color/white"
                     android:ems="8"
                     android:gravity="end"
+                    android:hint="6-12位英文+數字"
                     android:inputType="textPassword"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -165,6 +192,19 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/textView_register_password_warn_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
                 <EditText
                     android:id="@+id/edittext_register_password_2"
                     android:layout_width="wrap_content"
@@ -176,6 +216,7 @@
                     android:ems="8"
                     android:gravity="end"
                     android:inputType="textPassword"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -194,6 +235,18 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/textView_register_name_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -216,6 +269,7 @@
                     android:ems="8"
                     android:gravity="end"
                     android:inputType="textPersonName"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -282,6 +336,18 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/textView_register_phone_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/edittext_register_phone"
                     android:layout_width="wrap_content"
@@ -292,7 +358,9 @@
                     android:background="@color/white"
                     android:ems="8"
                     android:gravity="end"
+                    android:hint="ex. 0987654321"
                     android:inputType="phone"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -322,6 +390,19 @@
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/textView_register_email_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
                 <EditText
                     android:id="@+id/edittext_register_email"
                     android:layout_width="wrap_content"
@@ -332,7 +413,9 @@
                     android:background="@color/white"
                     android:ems="8"
                     android:gravity="end"
+                    android:hint="ex. abc@aaa.com"
                     android:inputType="textPersonName"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView
@@ -358,7 +441,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="16dp"
-                    android:text="縣市"
+                    android:text="市區"
                     android:textColor="#1E1E1E"
                     android:textSize="18dp" />
 
@@ -455,6 +538,7 @@
                         android:layout_marginStart="40dp"
                         android:background="@drawable/register_address_edittext_corner"
                         android:gravity="top"
+                        android:hint="ex. 幼獅路一段23號"
                         android:minHeight="48dp"
                         android:padding="6dp"
                         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
@@ -490,8 +574,22 @@
                     android:background="@color/white"
                     android:ems="8"
                     android:gravity="end"
+                    android:hint="ex. 000000000000"
                     android:inputType="number"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView_register_bankNumber_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -509,6 +607,18 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="2dp"
                 android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/textView_register_bankAccount_warn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="#FB8980"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -531,6 +641,7 @@
                     android:ems="8"
                     android:gravity="end"
                     android:inputType="textPersonName"
+                    android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <ImageView

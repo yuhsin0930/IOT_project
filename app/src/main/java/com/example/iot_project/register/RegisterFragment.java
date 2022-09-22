@@ -4,9 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -56,6 +58,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private EditText editTextAddress, editTextBankNumber, editTextBankAccount;
     private ImageView imageViewAddress_X, imageViewAddress_Arrow, imageViewBack;
     private TextView textViewBarName, textViewBirthday, textViewAddress, textViewCity;
+    private TextView textViewAccountWarn, textViewPasswordWarn_1, textViewPasswordWarn_2, textViewNameWarn;
+    private TextView textViewPhoneWarn, textViewEmailWarn, textViewBankNumberWarn, textViewBankAccountWarn;
     private Button buttonSubmit, buttonLogout;
     private RegisterActivity registerActivity;
     private InputMethodManager keyboard;
@@ -64,7 +68,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
     private Map<String, Object> fireMap;
-    private String account, password, name, birthday, phone, email, city, district;
+    private String account, password_1, password_2, name, birthday, phone, email, city, district;
     private String address, bankNumber, bankAccount, barName;
     private View view;
 
@@ -88,29 +92,32 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         registerActivity = (RegisterActivity) getActivity();
         keyboard = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        address = "幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地址
+//        address = "幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地址
         textViewBarName.setText(barName);
         editTextAddress.setText(address);
-        textViewAddress.setText(editTextAddress.getText().toString().substring(0, 6) + "..");
+//        textViewExists.setText("");
+//        textViewPassword.setText("");
+//        textViewAddress.setText(editTextAddress.getText().toString().substring(0, 6) + "..");
         calendar = Calendar.getInstance();
 
 //        [isLoggedIn : 判斷帳號是否已登入]
 //       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
-//       SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+       SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", registerActivity.MODE_PRIVATE);
 //       "is_login" : 帳號是否登入， true 為登入，false為登出
-//       Boolean isLoggedIn = sp.getBoolean("is_login",true);
+       Boolean isLoggedIn = sp.getBoolean("is_login",false);
 //       "member_id" : 帳號ID
-//       String memberId= sp.getString("member_id","0");
+       String memberId= sp.getString("member_id","0");
 //       "account_name" : 帳號名稱
-//       String account = sp.getString("account_name","user");
+       String account = sp.getString("account_name","user");
+       Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
 
-        if (isLoggedIn) {   // 之後改判斷 if (為登入中)
-            buttonSubmit.setVisibility(View.VISIBLE);
-            relativeLayoutLogout.setVisibility(View.GONE);
-        } else {
-            buttonSubmit.setVisibility(View.GONE);
-            relativeLayoutLogout.setVisibility(View.VISIBLE);
-        }
+//        if (isLoggedIn) {
+//            buttonSubmit.setVisibility(View.GONE);
+//            relativeLayoutLogout.setVisibility(View.VISIBLE);
+//        } else {
+//            buttonSubmit.setVisibility(View.VISIBLE);
+//            relativeLayoutLogout.setVisibility(View.GONE);
+//        }
 
         if (editTextAddress.getText().toString().length() > 0) {
             imageViewAddress_X.setVisibility(View.VISIBLE);
@@ -149,6 +156,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         textViewBirthday = (TextView) view.findViewById(R.id.textView_register_birthday);
         textViewCity = (TextView) view.findViewById(R.id.textView_register_city);
         textViewAddress = (TextView) view.findViewById(R.id.textView_register_address);
+        textViewAccountWarn = (TextView) view.findViewById(R.id.textView_register_account_warn);
+        textViewPasswordWarn_1 = (TextView) view.findViewById(R.id.textView_register_password_warn_1);
+        textViewPasswordWarn_2 = (TextView) view.findViewById(R.id.textView_register_password_warn_2);
+        textViewNameWarn = (TextView) view.findViewById(R.id.textView_register_name_warn);
+        textViewPhoneWarn = (TextView) view.findViewById(R.id.textView_register_phone_warn);
+        textViewEmailWarn = (TextView) view.findViewById(R.id.textView_register_email_warn);
+        textViewBankNumberWarn = (TextView) view.findViewById(R.id.textView_register_bankNumber_warn);
+        textViewBankAccountWarn = (TextView) view.findViewById(R.id.textView_register_bankAccount_warn);
         buttonSubmit = (Button) view.findViewById(R.id.button_register_submit);
         buttonLogout = (Button) view.findViewById(R.id.button_register_logout);
     }
@@ -172,27 +187,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         imageViewBack.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
-        editTextAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                address = editTextAddress.getText().toString();
-                if (address.length() > 0) {
-                    imageViewAddress_X.setVisibility(View.VISIBLE);
-                    textViewAddress.setText(address.length() > 6 ? (address.substring(0, 6) + "..") : address);
-                } else {
-                    imageViewAddress_X.setVisibility(View.GONE);
-                    textViewAddress.setText("");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+        editTextAccount.addTextChangedListener(new myTextWatcher(editTextAccount.getId()));
+        editTextPassword_1.addTextChangedListener(new myTextWatcher(editTextPassword_1.getId()));
+        editTextPassword_2.addTextChangedListener(new myTextWatcher(editTextPassword_2.getId()));
+        editTextName.addTextChangedListener(new myTextWatcher(editTextName.getId()));
+        editTextPhone.addTextChangedListener(new myTextWatcher(editTextPhone.getId()));
+        editTextEmail.addTextChangedListener(new myTextWatcher(editTextEmail.getId()));
+        editTextAddress.addTextChangedListener(new myTextWatcher(editTextAddress.getId()));
+        editTextBankNumber.addTextChangedListener(new myTextWatcher(editTextBankNumber.getId()));
+        editTextBankAccount.addTextChangedListener(new myTextWatcher(editTextBankAccount.getId()));
         datePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -283,54 +286,31 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
-                if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
-                    account = editTextAccount.getText().toString();
-                    ///     使用 Firebase 服務
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    //      取得  Firebase 資料庫 member 資料表 (GET網址)
-                    DatabaseReference memberRef = database.getReference("member");
-                    //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
-                    memberRef.orderByChild("account_name").equalTo(account)
-                            .addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
-                                    if (snapshot.exists()) { // 帳號已註冊
-                                        Toast.makeText(registerActivity, "此帳號已存在", Toast.LENGTH_SHORT).show();
-                                    } else { // 帳號未註冊
-
-                                        Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-                                        account = editTextAccount.getText().toString();
-                                        password = editTextPassword_1.getText().toString();
-                                        name = editTextName.getText().toString();
-                                        birthday = textViewBirthday.getText().toString();
-                                        phone = editTextPhone.getText().toString();
-                                        email = editTextEmail.getText().toString();
-                                        bankNumber = editTextBankNumber.getText().toString();
-                                        bankAccount = editTextBankAccount.getText().toString();
-                                        makeMap();
-                                        registerActivity.setFireMap(fireMap);
-                                        registerActivity.MapUploadToFireBase();
-                                        intent = new Intent(getContext(), LoginActivity.class);
-                                        startActivity(intent);
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                }
+                account = editTextAccount.getText().toString();
+                password_1 = editTextPassword_1.getText().toString();
+                name = editTextName.getText().toString();
+                birthday = textViewBirthday.getText().toString();
+                phone = editTextPhone.getText().toString();
+                email = editTextEmail.getText().toString();
+                bankNumber = editTextBankNumber.getText().toString();
+                bankAccount = editTextBankAccount.getText().toString();
+                makeMap();
+                registerActivity.setFireMap(fireMap);
+//                registerActivity.MapUploadToFireBase();
+                Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button_register_logout:
+//                SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//                sp.edit().putBoolean("is_login", false).commit();
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 break;
         }
-        if (view.getId() != R.id.LinearLayout_register_address) {
+        if (view.getId() != R.id.LinearLayout_register_address && view.getId() != R.id.editText_register_address
+                && view.getId() != R.id.imageView_register_address_x) {
             imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
             relativeLayouAddressDrop.setVisibility(View.GONE);
             addressFlag = true;
@@ -367,7 +347,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        fireMap.put("account", account);
         fireMap.put("account_name", account);
         fireMap.put("picture", "");
-        fireMap.put("password", password);
+        fireMap.put("password", password_1);
         fireMap.put("name", name);
         fireMap.put("birthday", birthday);
         fireMap.put("phone", phone);
@@ -379,7 +359,95 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         fireMap.put("bankAccount", bankAccount);
         fireMap.put("createTime", createTime);//新增會員建立時間
         fireMap.put("is_seller", "false");//判斷會員是否申請賣家通過
+    }
+
+    public void isInputDataFinish() {
 
     }
 
+    public void isAccountExistedInFirebase() {
+        if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
+            account = editTextAccount.getText().toString();
+            ///     使用 Firebase 服務
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            //      取得  Firebase 資料庫 member 資料表 (GET網址)
+            DatabaseReference memberRef = database.getReference("member");
+            //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
+            memberRef.orderByChild("account_name").equalTo(account)
+                    .addValueEventListener(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
+                            if (snapshot.exists()) {
+                                textViewAccountWarn.setText("(帳號已存在)");
+                            };
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
+    }
+
+    // 及時監聽
+    private class myTextWatcher implements TextWatcher {
+        private int whichEdit;
+        myTextWatcher(int whichEdit) {
+            this.whichEdit = whichEdit;
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            switch (whichEdit) {
+                case R.id.edittext_register_account:
+                    isAccountExistedInFirebase();
+                    break;
+                case R.id.edittext_register_password_1:
+                    textViewPasswordWarn_1.setText("(密碼格式不符)");
+                    password_1 = editTextPassword_1.getText().toString();
+                    break;
+                case R.id.edittext_register_password_2:
+                    textViewPasswordWarn_2.setText("(密碼不一致)");
+                    password_2 = editTextPassword_2.getText().toString();
+                    break;
+                case R.id.edittext_register_name:
+                    textViewNameWarn.setText("(姓名格式不符)");
+                    name = editTextName.getText().toString();
+                    break;
+                case R.id.edittext_register_phone:
+                    textViewPhoneWarn.setText("(手機格式不符)");
+                    phone = editTextPhone.getText().toString();
+                    break;
+                case R.id.edittext_register_email:
+                    textViewEmailWarn.setText("(信箱格式不符)");
+                    email = editTextEmail.getText().toString();
+                    break;
+                case R.id.editText_register_address:
+                    address = editTextAddress.getText().toString();
+                    address = address.trim();
+                    if (address.length() > 0) {
+                        imageViewAddress_X.setVisibility(View.VISIBLE);
+                        textViewAddress.setText(address.length() > 6 ? (address.substring(0, 6) + "..") : address);
+                    } else {
+                        imageViewAddress_X.setVisibility(View.GONE);
+                        textViewAddress.setText("");
+                    }
+                    break;
+                case R.id.edittext_register_bankNumber:
+                    textViewBankNumberWarn.setText("(銀行帳號格式不符)");
+                    bankNumber = editTextBankNumber.getText().toString();
+                    break;
+                case R.id.edittext_register_bankAccount:
+                    textViewBankAccountWarn.setText("(戶名格式不符)");
+                    bankAccount = editTextBankAccount.getText().toString();
+                    break;
+            }
+        }
+        @Override
+        public void afterTextChanged(Editable s) {}
+    }
+
 }
+

@@ -5,6 +5,7 @@
     android:id="@+id/ConstraintLayout_member_coupon"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:background="@drawable/member_rank_corner"
     android:padding="4dp"
     tools:context=".member.MemberCouponItemFragment">
 
