@@ -8,14 +8,17 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.R;
@@ -66,23 +69,19 @@ public class SellerStoreFragment extends Fragment {
         RelativeLayoutSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String word = editTextShow.getText().toString();
-                if ( word.length() > 0) {
-                    Toast.makeText(getContext(), word, Toast.LENGTH_SHORT).show();
-                    editTextShow.clearFocus();
-                    keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                } else {
-                    if (keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), 0)) {
-                        keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-                    } else {
-                        editTextShow.requestFocus();
-                        keyboard.showSoftInput(editTextShow, InputMethodManager.SHOW_IMPLICIT);
-                    }
-                }
+                search();
             }
         });
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.storedemo));
+        editTextShow.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    search();
+                }
+                return false;
+            }
+        });
 
         tabTitle = new ArrayList<>();
         tabTitle.add("全部商品");
@@ -102,5 +101,22 @@ public class SellerStoreFragment extends Fragment {
         sellerStoreActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         return view;
+    }
+
+    public void search() {
+        String keyWord = editTextShow.getText().toString();
+        if ( keyWord.length() > 0) {
+            sellerStoreActivity.showGoodsOfType(keyWord);
+            editTextShow.clearFocus();
+            keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } else {
+            if (keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), 0)) {   //內容是空的 且 鍵盤是開的
+                keyboard.hideSoftInputFromWindow(editTextShow.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+            } else {
+                editTextShow.requestFocus();
+                keyboard.showSoftInput(editTextShow, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }
     }
 }
