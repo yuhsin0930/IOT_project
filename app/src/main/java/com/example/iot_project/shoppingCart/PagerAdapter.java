@@ -5,11 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.iot_project.ProductLaunchedAlreadyFragment;
-import com.example.iot_project.ProductPendingReviewFragment;
-import com.example.iot_project.ProductSoldOutFragment;
-import com.example.iot_project.ProductViolationFragment;
-
 import java.util.ArrayList;
 
 public class PagerAdapter extends FragmentStateAdapter {

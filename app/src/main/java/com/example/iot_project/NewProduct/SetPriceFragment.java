@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.iot_project.R;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,9 +89,10 @@ public class SetPriceFragment extends Fragment {
         editTextSetNorm_productPrice = (EditText)v.findViewById(R.id.editText_setNorm_productPrice);
 
         SharedPreferences newsp = setPriceActivity.getSharedPreferences(mParam2, Context.MODE_PRIVATE);
-        productNorm = newsp.getString("productNorm",null);
-        productNormPrice = newsp.getString("productNormPrice",null);
-        productNormAmount = newsp.getString("productNormAmount",null);
+        productNorm = newsp.getString("productNorm","");
+        productNormPrice = newsp.getString("productNormPrice","");
+        productNormAmount = newsp.getString("productNormAmount","");
+
 
         editTextSetNorm_productNorm.setText(productNorm);
         editTextSetNorm_productPrice.setText(productNormPrice);
@@ -114,11 +117,9 @@ public class SetPriceFragment extends Fragment {
                 if(s.toString().length()!=0){
                     productNorm = s.toString();
                     productPrice.put("productNorm",productNorm);
-                    Log.d("main",productPrice.toString());
                 }else{
-                    productNorm = null;
+                    productNorm = "";
                     productPrice.put("productNorm",productNorm);
-                    Log.d("main",productPrice.toString());
                 }
                 setPriceActivity.saveFragment(mParam2,productPrice);
             }
@@ -135,11 +136,9 @@ public class SetPriceFragment extends Fragment {
                 if(s.toString().length()!=0){
                     productNormPrice = s.toString();
                     productPrice.put("productNormPrice",productNormPrice);
-                    Log.d("main",productPrice.toString());
                 }else{
-                    productNormPrice=null;
+                    productNormPrice="";
                     productPrice.put("productNormPrice",productNormPrice);
-                    Log.d("main",productPrice.toString());
                 }
                 setPriceActivity.saveFragment(mParam2,productPrice);
             }
@@ -158,9 +157,8 @@ public class SetPriceFragment extends Fragment {
                     productPrice.put("productNormAmount",productNormAmount);
                     Log.d("main",productPrice.toString());
                 }else{
-                    productNormPrice=null;
+                    productNormPrice="";
                     productPrice.put("productNormAmount",productNormAmount);
-                    Log.d("main",productPrice.toString());
                 }
                 setPriceActivity.saveFragment(mParam2,productPrice);
             }
@@ -176,10 +174,14 @@ public class SetPriceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setPriceActivity.deleteFragment(mParam2);
+                SharedPreferences sp = setPriceActivity.getSharedPreferences("newProduct",Context.MODE_PRIVATE);
+                Set<String> productNormSet = sp.getStringSet("normFragmentSet", new HashSet<String>());
+                Log.d("main","SetSize = " +productNormSet.size());
+                productNormSet.remove(mParam2);
+                Log.d("main","SetSize = " +productNormSet.size());
                 Log.d("main",mParam2);
             }
         });
-
 
         return v;
     }

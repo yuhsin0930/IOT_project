@@ -77,7 +77,7 @@
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".MyProductActivity"
+            android:name=".MyProduct.MyProductActivity"
             android:exported="false" />
         <activity
             android:name=".MyStoreActivity"
