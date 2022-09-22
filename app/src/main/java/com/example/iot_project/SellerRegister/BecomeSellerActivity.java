@@ -6,9 +6,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,9 +22,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -37,14 +43,17 @@ public class BecomeSellerActivity extends AppCompatActivity {
     private FragmentTransaction fragTransit;
     private String sellername_checkAccount;
     private String sellerId_checkAccount;
-
     DatePickerDialog.OnDateSetListener datePicker; //日歷的監聽，獲得選擇的日期
     Calendar calendar = Calendar.getInstance(); //日期的格式
+    private String citizen;
+    private SQLiteDatabase sellerDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
+
 
         //----------------------------------------------------------------------------------------------------------
         Dialog becomeSellerNowDlg = new Dialog(BecomeSellerActivity.this);
@@ -113,7 +122,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
             }
         });
         SharedPreferences sp  = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-        String citizen = sp.getString("citizenship","臺灣");
+        citizen = sp.getString("citizenship","臺灣");
         textViewSellerCheckAccount_citizenShip.setText(citizen+"  > ");
         //---------------------------------------------------------------------------------------------------------------
 
@@ -138,13 +147,28 @@ public class BecomeSellerActivity extends AppCompatActivity {
                             .putString("sellerBirthday",sellerBirthday)
                             .putString("sellerId",sellerId)
                             .commit(); //呼叫commit()方法寫入
+                    // Gets the data repository in write mode
+                    DBHelper dbHelper = new DBHelper(BecomeSellerActivity.this);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                // Create a new map of values, where column names are the keys
+                    ContentValues values = new ContentValues();
+                    values.put("sName", sellerName);
+                    values.put("sBirthday", sellerBirthday);
+
+                // Insert the new row, returning the primary key value of the new row
+                    long newRowId = db.insert("seller", null, values);
                     Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
                     startActivity(intent);
                 }
             }
         });
     }
-
+    @Override
+    protected void onDestroy() {
+        sellerDatabase.close();
+        super.onDestroy();
+    }
 
 }
 

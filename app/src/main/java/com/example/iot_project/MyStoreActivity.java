@@ -3,6 +3,8 @@ package com.example.iot_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,9 @@ public class MyStoreActivity extends AppCompatActivity {
 
     private TextView textViewMyStore_name,textViewMyStore_account,textViewMyStore_checkSalesRecord,textViewMyStore_toBeShipped,textViewMyStore_invaild,textViewMyStore_return,textViewMyStore_myProduct,textViewMyStore_payment;
     private Button buttonMyStore_checkStore;
-
+    private static final String DB_FILE = "demo.db";
+    private static final String DB_TABLE= "create_goodsSQL";
+    private DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,11 @@ public class MyStoreActivity extends AppCompatActivity {
         textViewMyStore_checkSalesRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MyStoreActivity.this,SalesRecordActivity.class);
                 startActivity(intent);
+
+
             }
         });
 

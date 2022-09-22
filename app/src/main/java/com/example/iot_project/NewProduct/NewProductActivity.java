@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
 
@@ -39,6 +41,7 @@ public class NewProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
+
 
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
 
@@ -162,23 +165,26 @@ public class NewProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
                 startActivity(intent);
+
             }
         });
 
 
 
         //------------------------------------------------------------------------------------------
+//        sharepreferences "newProduct"
 //        商品照片(picture_id)(int)
-//        商品名稱(gName)(Text)
-//        商品描述(info)(Text)
-//        商品分類(type)(Text)
-//        商品規格(productNorm)(Text)
-//        商品價格(price)、商品數量)(int)
-//        商品數量(soldQuantity)(int)
+//        商品名稱(gName)(Text)  "productName"
+//        商品描述(info)(Text)  "productDescribe"
+//        商品分類(type)(Text)  "productClass"
+//        商品規格(productNorm)(Text)  "productNorm"
+//        商品價格(price)(int) "productNormPrice"
+//        商品數量(NormQuantity)(int)  "productNormNum"
+//        商品數量(soldQuantity)(int)  "productNum"
 
-//        包裹尺寸-長(packageSizeLength)(int)
-//        包裹尺寸-寬(packageSizeWidth)(int)
-//        包裹尺寸-高(packageSizeHeight)(int)
+//        包裹尺寸-長(packageSizeLength)(int) "productWidth"
+//        包裹尺寸-寬(packageSizeWidth)(int)  "productLength"
+//        包裹尺寸-高(packageSizeHeight)(int)  "productHeight"
 
 //        運送方法-全家(shippingMethod)(Boolean)
 //        運送方法-7-11(shippingMethod)(Boolean)
