@@ -296,7 +296,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 bankAccount = editTextBankAccount.getText().toString();
                 makeMap();
                 registerActivity.setFireMap(fireMap);
-//                registerActivity.MapUploadToFireBase();
+                registerActivity.MapUploadToFireBase();
                 Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
@@ -381,7 +381,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
                             if (snapshot.exists()) {
                                 textViewAccountWarn.setText("(帳號已存在)");
-                            };
+                            }
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -403,26 +403,53 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             switch (whichEdit) {
                 case R.id.edittext_register_account:
                     isAccountExistedInFirebase();
+
+                    account = editTextAccount.getText().toString();
+                    if (account.length() == 0 || account.matches("^[a-zA-Z]\\w*$")) {
+                        textViewAccountWarn.setText("");
+                    } else if (account.matches("^[a-z]")){
+                        textViewAccountWarn.setText("(開頭須為英文小寫)");
+                    } else if (account.matches("[^a-zA-Z0-9]")) {
+                        textViewAccountWarn.setText("(不可有特殊字元)");
+                    }
                     break;
                 case R.id.edittext_register_password_1:
-                    textViewPasswordWarn_1.setText("(密碼格式不符)");
-                    password_1 = editTextPassword_1.getText().toString();
-                    break;
                 case R.id.edittext_register_password_2:
-                    textViewPasswordWarn_2.setText("(密碼不一致)");
+                    password_1 = editTextPassword_1.getText().toString();
                     password_2 = editTextPassword_2.getText().toString();
+                    if (password_1.length() == 0 || password_1.matches(".*[a-zA-Z]+[0-9&a-zA-Z]{6,12}")){
+                        textViewPasswordWarn_1.setText("");
+                    } else {
+                        textViewPasswordWarn_1.setText("(密碼格式不符)");
+                    }
+                    if (password_2.length() == 0 || password_2.equals(password_1)) {
+                        textViewPasswordWarn_2.setText("");
+                        Log.d("main", "true: " + password_2 + " : " + password_1);
+                    } else {
+                        textViewPasswordWarn_2.setText("(密碼不一致)");
+                        Log.d("main", "false: " + password_2 + " : " + password_1);
+                    }
                     break;
                 case R.id.edittext_register_name:
                     textViewNameWarn.setText("(姓名格式不符)");
                     name = editTextName.getText().toString();
                     break;
                 case R.id.edittext_register_phone:
-                    textViewPhoneWarn.setText("(手機格式不符)");
                     phone = editTextPhone.getText().toString();
+                    if (phone.length() == 0 || phone.matches("^(09)(\\d{2})(-)?(\\d{3})(-)?(\\d{3})")) {
+                        textViewPhoneWarn.setText("");
+                    } else {
+                        textViewPhoneWarn.setText("(手機格式不符)");
+                    }
                     break;
                 case R.id.edittext_register_email:
-                    textViewEmailWarn.setText("(信箱格式不符)");
+
                     email = editTextEmail.getText().toString();
+                    if (email.length() == 0 || email.matches("(.+)(@){1}(\\w+)(\\.){1}(.*)")) {
+                        textViewEmailWarn.setText("");
+                    } else {
+                        textViewEmailWarn.setText("(信箱格式不符)");
+                    }
                     break;
                 case R.id.editText_register_address:
                     address = editTextAddress.getText().toString();

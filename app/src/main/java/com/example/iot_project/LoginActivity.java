@@ -33,7 +33,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private Button buttonLogin;
-    private TextView textViewRegister;
+    private TextView textViewRegister, textViewForget;
     private Intent intent;
     private ImageView imageViewEyes;
     private EditText editTextPassword, editTextAccount;
@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         imageViewEyes = (ImageView) findViewById(R.id.imageView_login_eyes);
         buttonLogin = (Button) findViewById(R.id.button_login_login);
         textViewRegister = (TextView) findViewById(R.id.textView_login_register);
+        textViewForget = (TextView) findViewById(R.id.textView_login_forget);
         editTextPassword = (EditText) findViewById(R.id.editText_login_password);
         editTextAccount = (EditText) findViewById(R.id.editText_login_account);
 
@@ -72,6 +73,14 @@ public class LoginActivity extends AppCompatActivity {
                     editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     imageViewEyes.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.outline_visibility_off_black_18));
                 }
+            }
+        });
+
+        textViewForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(LoginActivity.this, MemberActivity.class);
+                startActivity(intent);
             }
         });
 
