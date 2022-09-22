@@ -71,7 +71,7 @@
             android:name=".SalesRecordActivity"
             android:exported="false" />
         <activity
-            android:name=".SellerStoreActivity"
+            android:name=".sellerStore.SellerStoreActivity"
             android:exported="false" />
         <activity
             android:name=".PaymentActivity"

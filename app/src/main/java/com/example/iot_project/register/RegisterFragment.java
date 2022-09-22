@@ -3,9 +3,13 @@ package com.example.iot_project.register;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,16 +25,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class RegisterFragment extends Fragment implements View.OnClickListener{
+public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private RelativeLayout relativeLayoutAccount, relativeLayoutPassword_1, relativeLayoutPassword_2;
     private RelativeLayout relativeLayoutName, relativeLayoutBirthday, relativeLayoutPhone;
@@ -55,7 +69,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private View view;
 
     public static RegisterFragment newInstance() {
-       return new RegisterFragment();
+        return new RegisterFragment();
     }
 
     @Override
@@ -71,14 +85,24 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     private void setData() {
         addressFlag = true;
-        registerActivity = (RegisterActivity)getActivity();
-        keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        registerActivity = (RegisterActivity) getActivity();
+        keyboard = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
         address = "幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地址
         textViewBarName.setText(barName);
         editTextAddress.setText(address);
-        textViewAddress.setText(editTextAddress.getText().toString().substring(0,6) + "..");
+        textViewAddress.setText(editTextAddress.getText().toString().substring(0, 6) + "..");
         calendar = Calendar.getInstance();
+
+//        [isLoggedIn : 判斷帳號是否已登入]
+//       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
+//       SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//       "is_login" : 帳號是否登入， true 為登入，false為登出
+//       Boolean isLoggedIn = sp.getBoolean("is_login",true);
+//       "member_id" : 帳號ID
+//       String memberId= sp.getString("member_id","0");
+//       "account_name" : 帳號名稱
+//       String account = sp.getString("account_name","user");
 
         if (isLoggedIn) {   // 之後改判斷 if (為登入中)
             buttonSubmit.setVisibility(View.VISIBLE);
@@ -96,37 +120,37 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findView() {
-        relativeLayoutAccount = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_account);
-        relativeLayoutPassword_1 = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_password_1);
-        relativeLayoutPassword_2 = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_password_2);
-        relativeLayoutName = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_name);
-        relativeLayoutBirthday = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_birthday);
-        relativeLayoutPhone = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_phone);
-        relativeLayoutEmail = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_email);
-        relativeLayoutCity = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_city);
-        relativeLayoutBankNumber = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_bankNumber);
-        relativeLayoutBankAccount = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_bankAccount);
-        relativeLayoutLogout = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_logout);
-        relativeLayouAddressDrop = (RelativeLayout)view.findViewById(R.id.RelativeLayout_register_address_drop);
-        linearLayoutAddress = (LinearLayout)view.findViewById(R.id.LinearLayout_register_address);
-        editTextAccount = (EditText)view.findViewById(R.id.edittext_register_account);
-        editTextPassword_1 = (EditText)view.findViewById(R.id.edittext_register_password_1);
-        editTextPassword_2 = (EditText)view.findViewById(R.id.edittext_register_password_2);
-        editTextName = (EditText)view.findViewById(R.id.edittext_register_name);
-        editTextPhone = (EditText)view.findViewById(R.id.edittext_register_phone);
-        editTextEmail = (EditText)view.findViewById(R.id.edittext_register_email);
-        editTextAddress = (EditText)view.findViewById(R.id.editText_register_address);
-        editTextBankNumber = (EditText)view.findViewById(R.id.edittext_register_bankNumber);
-        editTextBankAccount = (EditText)view.findViewById(R.id.edittext_register_bankAccount);
-        imageViewAddress_X = (ImageView)view.findViewById(R.id.imageView_register_address_x);
-        imageViewAddress_Arrow = (ImageView)view.findViewById(R.id.imageView_register_address_arrow);
-        imageViewBack = (ImageView)view.findViewById(R.id.imageView_register_back);
-        textViewBarName = (TextView)view.findViewById(R.id.textView_register_barName);
-        textViewBirthday = (TextView)view.findViewById(R.id.textView_register_birthday);
-        textViewCity = (TextView)view.findViewById(R.id.textView_register_city);
-        textViewAddress = (TextView)view.findViewById(R.id.textView_register_address);
-        buttonSubmit = (Button)view.findViewById(R.id.button_register_submit);
-        buttonLogout = (Button)view.findViewById(R.id.button_register_logout);
+        relativeLayoutAccount = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_account);
+        relativeLayoutPassword_1 = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_password_1);
+        relativeLayoutPassword_2 = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_password_2);
+        relativeLayoutName = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_name);
+        relativeLayoutBirthday = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_birthday);
+        relativeLayoutPhone = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_phone);
+        relativeLayoutEmail = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_email);
+        relativeLayoutCity = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_city);
+        relativeLayoutBankNumber = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_bankNumber);
+        relativeLayoutBankAccount = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_bankAccount);
+        relativeLayoutLogout = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_logout);
+        relativeLayouAddressDrop = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_address_drop);
+        linearLayoutAddress = (LinearLayout) view.findViewById(R.id.LinearLayout_register_address);
+        editTextAccount = (EditText) view.findViewById(R.id.edittext_register_account);
+        editTextPassword_1 = (EditText) view.findViewById(R.id.edittext_register_password_1);
+        editTextPassword_2 = (EditText) view.findViewById(R.id.edittext_register_password_2);
+        editTextName = (EditText) view.findViewById(R.id.edittext_register_name);
+        editTextPhone = (EditText) view.findViewById(R.id.edittext_register_phone);
+        editTextEmail = (EditText) view.findViewById(R.id.edittext_register_email);
+        editTextAddress = (EditText) view.findViewById(R.id.editText_register_address);
+        editTextBankNumber = (EditText) view.findViewById(R.id.edittext_register_bankNumber);
+        editTextBankAccount = (EditText) view.findViewById(R.id.edittext_register_bankAccount);
+        imageViewAddress_X = (ImageView) view.findViewById(R.id.imageView_register_address_x);
+        imageViewAddress_Arrow = (ImageView) view.findViewById(R.id.imageView_register_address_arrow);
+        imageViewBack = (ImageView) view.findViewById(R.id.imageView_register_back);
+        textViewBarName = (TextView) view.findViewById(R.id.textView_register_barName);
+        textViewBirthday = (TextView) view.findViewById(R.id.textView_register_birthday);
+        textViewCity = (TextView) view.findViewById(R.id.textView_register_city);
+        textViewAddress = (TextView) view.findViewById(R.id.textView_register_address);
+        buttonSubmit = (Button) view.findViewById(R.id.button_register_submit);
+        buttonLogout = (Button) view.findViewById(R.id.button_register_logout);
     }
 
     private void setListener() {
@@ -150,20 +174,24 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         buttonLogout.setOnClickListener(this);
         editTextAddress.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 address = editTextAddress.getText().toString();
                 if (address.length() > 0) {
                     imageViewAddress_X.setVisibility(View.VISIBLE);
-                    textViewAddress.setText(address.length() > 6 ? (address.substring(0,6) + "..") : address);
+                    textViewAddress.setText(address.length() > 6 ? (address.substring(0, 6) + "..") : address);
                 } else {
                     imageViewAddress_X.setVisibility(View.GONE);
                     textViewAddress.setText("");
                 }
             }
+
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
         datePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -255,20 +283,46 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
-                Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-                account = editTextAccount.getText().toString();
-                password = editTextPassword_1.getText().toString();
-                name = editTextName.getText().toString();
-                birthday = textViewBirthday.getText().toString();
-                phone = editTextPhone.getText().toString();
-                email = editTextEmail.getText().toString();
-                bankNumber = editTextBankNumber.getText().toString();
-                bankAccount = editTextBankAccount.getText().toString();
-                makeMap();
-                registerActivity.setFireMap(fireMap);
-                registerActivity.MapUploadToFireBase();
-                intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
+                if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
+                    account = editTextAccount.getText().toString();
+                    ///     使用 Firebase 服務
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    //      取得  Firebase 資料庫 member 資料表 (GET網址)
+                    DatabaseReference memberRef = database.getReference("member");
+                    //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
+                    memberRef.orderByChild("account_name").equalTo(account)
+                            .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
+                                    if (snapshot.exists()) { // 帳號已註冊
+                                        Toast.makeText(registerActivity, "此帳號已存在", Toast.LENGTH_SHORT).show();
+                                    } else { // 帳號未註冊
+
+                                        Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+                                        account = editTextAccount.getText().toString();
+                                        password = editTextPassword_1.getText().toString();
+                                        name = editTextName.getText().toString();
+                                        birthday = textViewBirthday.getText().toString();
+                                        phone = editTextPhone.getText().toString();
+                                        email = editTextEmail.getText().toString();
+                                        bankNumber = editTextBankNumber.getText().toString();
+                                        bankAccount = editTextBankAccount.getText().toString();
+                                        makeMap();
+                                        registerActivity.setFireMap(fireMap);
+                                        registerActivity.MapUploadToFireBase();
+                                        intent = new Intent(getContext(), LoginActivity.class);
+                                        startActivity(intent);
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                }
                 break;
             case R.id.button_register_logout:
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
@@ -300,8 +354,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     public void makeMap() {
+//      新增會員帳號建立時間
+//      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+        ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+//      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+//      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+        String createTime = NowTime.format(dateTimeFormat);
+
         fireMap = new HashMap<>();
-        fireMap.put("account", account);
+//        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
+//        fireMap.put("account", account);
+        fireMap.put("account_name", account);
+        fireMap.put("picture", "");
         fireMap.put("password", password);
         fireMap.put("name", name);
         fireMap.put("birthday", birthday);
@@ -312,6 +377,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         fireMap.put("address", address);
         fireMap.put("bankNumber", bankNumber);
         fireMap.put("bankAccount", bankAccount);
+        fireMap.put("createTime", createTime);//新增會員建立時間
+        fireMap.put("is_seller", "false");//判斷會員是否申請賣家通過
+
     }
 
 }

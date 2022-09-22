@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.iot_project.MyProduct.MyProductActivity;
+import org.w3c.dom.Text;
 
 public class MyStoreActivity extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class MyStoreActivity extends AppCompatActivity {
         textViewMyStore_myProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyStoreActivity.this, MyProductActivity.class);
+                Intent intent = new Intent(MyStoreActivity.this,MyProductActivity.class);
                 startActivity(intent);
             }
         });

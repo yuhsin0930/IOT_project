@@ -66,8 +66,4 @@ public class MemberGoodsFragment extends Fragment {
         });
     }
 
-    public void setTextViewBar(String barName) {
-//        textViewBar.setText(barName);
-    }
-
 }

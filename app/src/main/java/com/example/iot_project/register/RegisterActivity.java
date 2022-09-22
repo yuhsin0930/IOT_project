@@ -1,5 +1,6 @@
 package com.example.iot_project.register;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,9 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
 import com.example.iot_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -27,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String cityName;
     private Map<String, Object> fireMap;
     private long timeTemp;
+    private boolean exist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerFragment.setTextViewBarName(intent.getStringExtra("name"));
 
         // 從註冊來(假裝未登入)
+
         registerFragment.isLoggedIn(intent.getBooleanExtra("isFromRegister", false));
 
         fragmentMgr = getSupportFragmentManager();
@@ -65,12 +74,14 @@ public class RegisterActivity extends AppCompatActivity {
         fragmentTrans.commit();
     }
 
-    public void MapUploadToFireBase() {
-////      使用 Firebase 服務
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-////      取得  Firebase 資料庫 (GET網址)
-//        DatabaseReference dataref = database.getReference();
-//        dataref.child("user").push().setValue(fireMap);
+      public void MapUploadToFireBase() { // 把會員註冊資料存到firebase
+///     使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+//      儲存會員資料: 存在 member 資料表下，以 uniqueKey 儲存對應的會員資料
+//        dataref.child("user").push().child("member").setValue(fireMap); // nested structur is hard to query
+        dataref.child("member").push().setValue(fireMap);
     }
 
     public void addDistrictFragment() {

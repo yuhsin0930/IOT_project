@@ -27,8 +27,12 @@ public class MemberOrdersDetailedFragment extends Fragment{
     private MemberOrdersDetailedItemFragment fragmentItem;
     private MemberOrdersDetailedTimeFragment fragmentTime;
 
-    public static MemberOrdersDetailedFragment newInstance() {
-        return new MemberOrdersDetailedFragment();
+    public static MemberOrdersDetailedFragment newInstance(String barName) {
+        MemberOrdersDetailedFragment fragment = new MemberOrdersDetailedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("barName", barName);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -39,6 +43,7 @@ public class MemberOrdersDetailedFragment extends Fragment{
         memberActivity = (MemberActivity)getActivity();
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_back);
         textViewBar = (TextView)v.findViewById(R.id.TextView_member_bar);
+        textViewBar.setText(getArguments().getString("barName"));
 
         ImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +71,6 @@ public class MemberOrdersDetailedFragment extends Fragment{
         fragmentTrans.commit();
 
         return v;
-    }
-
-    public void setTextViewBar(String barName) {
-        textViewBar.setText(barName);
     }
 
 }
