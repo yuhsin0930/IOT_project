@@ -149,7 +149,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
                             .commit(); //呼叫commit()方法寫入
                     // Gets the data repository in write mode
                     DBHelper dbHelper = new DBHelper(BecomeSellerActivity.this);
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    SQLiteDatabase sellerDatabase = dbHelper.getWritableDatabase();
 
                 // Create a new map of values, where column names are the keys
                     ContentValues values = new ContentValues();
@@ -157,7 +157,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
                     values.put("sBirthday", sellerBirthday);
 
                 // Insert the new row, returning the primary key value of the new row
-                    long newRowId = db.insert("seller", null, values);
+                    long newRowId = sellerDatabase.insert("seller", null, values);
                     Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
                     startActivity(intent);
                 }
