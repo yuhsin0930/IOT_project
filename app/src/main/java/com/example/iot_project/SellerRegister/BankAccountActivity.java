@@ -93,6 +93,22 @@ public class BankAccountActivity extends AppCompatActivity {
             }
         });
 
+//------------------------------------------------------------------------------------------
+//        以下是予馨的願望
+//        是否是第一次註冊(sFirst)(Boolean)
+//        國籍(sCountry)(Text)
+//        姓名(sName)(Text)
+//        出生年月日(sBirthday)(Text)
+//        身分證字號(IDNumber)(Text)
+//        戶籍地址(城市+行政區+輸入地址)(sAddress )(Text)
+//        郵遞區號(postalCode)(Int)
+//        銀行名稱(bankName)(Text)
+//        銀行地區(bankArea)(Text)
+//        銀行分行名稱(bankBranch)(Text)
+//        銀行帳號(bankNumber)(Int)
+//        銀行戶名(bankAccount)(Text)
+//-------------------------------------------------------------------------------------------------
+
 //        FireBase-by翔雲 借我測一下Firebase------------------------------------------------------------
 //      使用 Firebase 服務
         FirebaseDatabase database = FirebaseDatabase.getInstance();
