@@ -47,27 +47,31 @@ public class BecomeSellerActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance(); //日期的格式
     private String citizen;
     private SQLiteDatabase sellerDatabase;
-
+    private  int first;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
-
-
+        SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
         //----------------------------------------------------------------------------------------------------------
-        Dialog becomeSellerNowDlg = new Dialog(BecomeSellerActivity.this);
-        becomeSellerNowDlg.setContentView(R.layout.dialog_become_seller_now);
+        first = sp1.getInt("firstCreateSeller",0);
+        if(first==0){
+            Dialog becomeSellerNowDlg = new Dialog(BecomeSellerActivity.this);
+            becomeSellerNowDlg.setContentView(R.layout.dialog_become_seller_now);
 
-        Button buttonRegisterSellerNow = (Button) becomeSellerNowDlg.findViewById(R.id.button_registerSellerNow);
-        buttonRegisterSellerNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                becomeSellerNowDlg.dismiss();
-            }
-        });
-        becomeSellerNowDlg.show();
-        becomeSellerNowDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            Button buttonRegisterSellerNow = (Button) becomeSellerNowDlg.findViewById(R.id.button_registerSellerNow);
+            buttonRegisterSellerNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    becomeSellerNowDlg.dismiss();
+                }
+            });
+            becomeSellerNowDlg.show();
+            becomeSellerNowDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            first=1;
+            sp1.edit().putInt("firstCreateSeller",first).commit();
+        }
         //-----------------------------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------------------------
@@ -155,21 +159,24 @@ public class BecomeSellerActivity extends AppCompatActivity {
                     ContentValues values = new ContentValues();
                     values.put("sName", sellerName);
                     values.put("sBirthday", sellerBirthday);
+                    values.put("IDNumber",sellerId);
+                    values.put("sCountry",citizen);
 
                 // Insert the new row, returning the primary key value of the new row
                     long newRowId = sellerDatabase.insert("seller", null, values);
+
                     Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
                     startActivity(intent);
                 }
             }
         });
     }
+
     @Override
     protected void onDestroy() {
-        sellerDatabase.close();
         super.onDestroy();
+        sellerDatabase.close();
     }
-
 }
 
 
