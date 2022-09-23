@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.iot_project.MainActivity;
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
@@ -33,6 +36,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
     private TextView textViewName;
+    private Button button_main;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -49,6 +53,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findView() {
+        button_main = (Button)view.findViewById(R.id.button_main);
         textViewName = (TextView)view.findViewById(R.id.textView_member_name);
         imageViewSetting = (ImageView)view.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)view.findViewById(R.id.imageView_member_cart);
@@ -75,6 +80,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setListener(){
+        button_main.setOnClickListener(this);
         imageViewSetting.setOnClickListener(this);
         imageViewCart.setOnClickListener(this);
         imageViewMypic.setOnClickListener(this);
@@ -95,6 +101,10 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.button_main:
+                intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.RelativeLayout_member_mystore:
                 intent = new Intent(getContext(), MyStoreActivity.class);
                 startActivity(intent);

@@ -447,10 +447,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
                     buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                     ScaleAnimation scaleAnimation = new ScaleAnimation(
-                            1.0f,1.2f,1.0f,1.1f,
+                            1.0f,1.3f,1.0f,1.2f,
                             Animation.RELATIVE_TO_SELF,0.5f,
                             Animation.RELATIVE_TO_SELF,0.5f);
-                    scaleAnimation.setDuration(120);
+                    scaleAnimation.setDuration(200);
                     buttonSubmit.startAnimation(scaleAnimation);
                 }
                 isSubmitEnable = true;
