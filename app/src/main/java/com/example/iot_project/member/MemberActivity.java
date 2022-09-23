@@ -65,7 +65,7 @@ public class MemberActivity extends AppCompatActivity {
         }
     }
 
-    public void showOrders(int whichTab) {
+    public void showOrdersFragment(int whichTab) {
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberOrdersFragment") == null) {
@@ -80,7 +80,7 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showGoods(String barName) {
+    public void showGoodsFragment(String barName) {
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberGoodsFragment") == null) {
@@ -95,7 +95,7 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showCoupon(String barName) {
+    public void showCouponFragment(String barName) {
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
@@ -110,7 +110,7 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showOrdersDetailed(String barName) {
+    public void showOrdersDetailedFragment(String barName) {
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberOrdersDetailedFragment") == null) {

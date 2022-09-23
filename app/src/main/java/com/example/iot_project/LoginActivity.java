@@ -145,8 +145,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                intent.putExtra("name", "註冊");
-                intent.putExtra("isFromRegister", true);
                 startActivity(intent);
             }
         });

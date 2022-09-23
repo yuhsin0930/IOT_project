@@ -52,8 +52,7 @@ public class RegisterCityFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 cityName = adapterView.getItemAtPosition(position).toString();
                 registerActivity.setCityName(cityName);
-                registerActivity.addDistrictFragment();
-                registerActivity.showDistrict();
+                registerActivity.showDistrictFragment();
             }
         });
 

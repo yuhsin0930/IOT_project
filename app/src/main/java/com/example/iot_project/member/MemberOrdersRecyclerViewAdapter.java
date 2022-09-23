@@ -83,7 +83,7 @@ public class MemberOrdersRecyclerViewAdapter extends RecyclerView.Adapter<Member
         @Override
         public void onClick(View view) {
             Toast.makeText(view.getContext(), "" + getLayoutPosition(), Toast.LENGTH_SHORT).show();
-            ((MemberActivity)itemView.getContext()).showOrdersDetailed("訂單詳情");
+            ((MemberActivity)itemView.getContext()).showOrdersDetailedFragment("訂單詳情");
         }
 
     }

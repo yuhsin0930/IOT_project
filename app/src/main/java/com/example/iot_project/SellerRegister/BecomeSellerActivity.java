@@ -164,7 +164,8 @@ public class BecomeSellerActivity extends AppCompatActivity {
 
                 // Insert the new row, returning the primary key value of the new row
                     long newRowId = sellerDatabase.insert("seller", null, values);
-
+                    sellerDatabase.close();
+                    dbHelper.close();
                     Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
                     startActivity(intent);
                 }
@@ -175,7 +176,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sellerDatabase.close();
+
     }
 }
 

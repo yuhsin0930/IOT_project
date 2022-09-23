@@ -574,7 +574,7 @@
                     android:background="@color/white"
                     android:ems="8"
                     android:gravity="end"
-                    android:hint="ex. 000000000000"
+                    android:hint="6-14位數字"
                     android:inputType="number"
                     android:textSize="14dp"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />

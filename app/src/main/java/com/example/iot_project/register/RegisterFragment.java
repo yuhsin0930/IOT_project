@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -63,14 +64,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Button buttonSubmit, buttonLogout;
     private RegisterActivity registerActivity;
     private InputMethodManager keyboard;
-    private boolean isLoggedIn, addressFlag;
+    private boolean addressDropFlag;
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
     private Map<String, Object> fireMap;
-    private String account, password_1, password_2, name, birthday, phone, email, city, district;
-    private String address, bankNumber, bankAccount, barName;
+    private String account, password_1, password_2, name, birthday, phone;
+    private String email, city, district, address, bankNumber, bankAccount;
     private View view;
+    private Boolean[] summitFlag;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
@@ -83,22 +85,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         findView();
         setData();
         setListener();
-        Log.d("main", "isLoggedIn = " + isLoggedIn);
         return view;
     }
 
     private void setData() {
-        addressFlag = true;
+        addressDropFlag = true;
         registerActivity = (RegisterActivity) getActivity();
         keyboard = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//        address = "幼獅路一段23號"; // 等資料庫這要改，預設address = "", 再由資料庫下載該帳號已有地址
-        textViewBarName.setText(barName);
-        editTextAddress.setText(address);
-//        textViewExists.setText("");
-//        textViewPassword.setText("");
-//        textViewAddress.setText(editTextAddress.getText().toString().substring(0, 6) + "..");
         calendar = Calendar.getInstance();
+        summitFlag = new Boolean[9];
+        for (int i = 0; i < summitFlag.length; i++) summitFlag[i] = false;
+        address = "";
+        city = "";
+        district = "";
 
 //        [isLoggedIn : 判斷帳號是否已登入]
 //       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
@@ -111,19 +111,341 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
        String account = sp.getString("account_name","user");
        Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
 
-//        if (isLoggedIn) {
-//            buttonSubmit.setVisibility(View.GONE);
-//            relativeLayoutLogout.setVisibility(View.VISIBLE);
-//        } else {
-//            buttonSubmit.setVisibility(View.VISIBLE);
-//            relativeLayoutLogout.setVisibility(View.GONE);
-//        }
-
-        if (editTextAddress.getText().toString().length() > 0) {
-            imageViewAddress_X.setVisibility(View.VISIBLE);
+        if (isLoggedIn) {
+            buttonSubmit.setVisibility(View.VISIBLE);
+            relativeLayoutLogout.setVisibility(View.GONE);
+            textViewBarName.setText("帳號設定");
         } else {
-            imageViewAddress_X.setVisibility(View.GONE);
+            buttonSubmit.setVisibility(View.GONE);
+            relativeLayoutLogout.setVisibility(View.VISIBLE);
+            textViewBarName.setText("註冊");
         }
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            city = registerActivity.getCityName();
+            district = registerActivity.getDistrictName();
+            textViewCity.setText(city + district);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.RelativeLayout_register_account:
+                editTextAccount.requestFocus();
+                keyboard.showSoftInput(editTextAccount, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_password_1:
+                editTextPassword_1.requestFocus();
+                keyboard.showSoftInput(editTextPassword_1, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_password_2:
+                editTextPassword_2.requestFocus();
+                keyboard.showSoftInput(editTextPassword_2, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_name:
+                editTextName.requestFocus();
+                keyboard.showSoftInput(editTextName, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_birthday:
+                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(),
+                        datePicker, calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                );
+                dialog.show();
+                break;
+            case R.id.RelativeLayout_register_phone:
+                editTextPhone.requestFocus();
+                keyboard.showSoftInput(editTextPhone, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_email:
+                editTextEmail.requestFocus();
+                keyboard.showSoftInput(editTextEmail, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_city:
+                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                city = "";
+                district = "";
+                registerActivity.showCityFragment();
+                break;
+            case R.id.RelativeLayout_register_bankNumber:
+                editTextBankNumber.requestFocus();
+                keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.RelativeLayout_register_bankAccount:
+                editTextBankAccount.requestFocus();
+                keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.LinearLayout_register_address:
+                if (addressDropFlag) {
+                    imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_keyboard_arrow_down_black_18_1));
+                    relativeLayouAddressDrop.setVisibility(View.VISIBLE);
+                    editTextAddress.setText(address);
+                    editTextAddress.requestFocus();
+                    addressDropFlag = false;
+                } else {
+                    imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
+                    relativeLayouAddressDrop.setVisibility(View.GONE);
+                    addressDropFlag = true;
+                }
+                break;
+            case R.id.imageView_register_address_x:
+                editTextAddress.setText("");
+                break;
+            case R.id.imageView_register_back:
+                registerActivity.onBackPressed();
+                break;
+            case R.id.button_register_submit:
+                if (summitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+                    account = editTextAccount.getText().toString();
+                    password_1 = editTextPassword_1.getText().toString();
+                    name = editTextName.getText().toString();
+                    birthday = textViewBirthday.getText().toString();
+                    phone = editTextPhone.getText().toString();
+                    email = editTextEmail.getText().toString();
+                    bankNumber = editTextBankNumber.getText().toString();
+                    bankAccount = editTextBankAccount.getText().toString();
+                    makeMap();
+                    registerActivity.setFireMap(fireMap);
+                    registerActivity.MapUploadToFireBase();
+                    Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(registerActivity, "請先輸入完整資料", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.button_register_logout:
+//                SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//                sp.edit().putBoolean("is_login", false).commit();
+                Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+        }
+        if (view.getId() != R.id.LinearLayout_register_address && view.getId() != R.id.editText_register_address
+                && view.getId() != R.id.imageView_register_address_x) {
+            imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
+            relativeLayouAddressDrop.setVisibility(View.GONE);
+            addressDropFlag = true;
+        }
+    }
+
+    public void makeMap() {
+//      新增會員帳號建立時間
+//      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+        ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+//      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+//      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+        String createTime = NowTime.format(dateTimeFormat);
+
+        fireMap = new HashMap<>();
+//        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
+//        fireMap.put("account", account);
+        fireMap.put("account_name", account);
+        fireMap.put("picture", "");
+        fireMap.put("password", password_1);
+        fireMap.put("name", name);
+        fireMap.put("birthday", birthday);
+        fireMap.put("phone", phone);
+        fireMap.put("email", email);
+        fireMap.put("city", city);
+        fireMap.put("district", district);
+        fireMap.put("address", address);
+        fireMap.put("bankNumber", bankNumber);
+        fireMap.put("bankAccount", bankAccount);
+        fireMap.put("createTime", createTime);//新增會員建立時間
+        fireMap.put("is_seller", "false");//判斷會員是否申請賣家通過
+    }
+
+    public void isAccountExistedInFirebase() {
+        if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
+            account = editTextAccount.getText().toString();
+            ///     使用 Firebase 服務
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            //      取得  Firebase 資料庫 member 資料表 (GET網址)
+            DatabaseReference memberRef = database.getReference("member");
+            //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
+            memberRef.orderByChild("account_name").equalTo(account)
+                    .addValueEventListener(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
+                            if (snapshot.exists()) {
+                                textViewAccountWarn.setText("(帳號已存在)");
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
+    }
+
+    // 及時監聽
+    private class myTextWatcher implements TextWatcher {
+        private int whichEdit;
+        myTextWatcher(int whichEdit) {
+            this.whichEdit = whichEdit;
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            switch (whichEdit) {
+                case R.id.edittext_register_account:
+                    isAccountExistedInFirebase();
+                    account = editTextAccount.getText().toString();
+                    if (account.length() == 0) {
+                        textViewAccountWarn.setText("");
+                        summitFlag[0] = false;
+                    } else if (account.matches("^[a-z]\\w*$")) {
+                        textViewAccountWarn.setText("");
+                        summitFlag[0] = true;
+                    }
+                    else {
+                        textViewAccountWarn.setText("(開頭須為a-z)");
+                        summitFlag[0] = false;
+                    }
+                    if (!account.matches("^\\w*$")) {
+                        textViewAccountWarn.setText("(不可有特殊字元)");
+                        summitFlag[0] = false;
+                    }
+                    break;
+                case R.id.edittext_register_password_1:
+                case R.id.edittext_register_password_2:
+                    password_1 = editTextPassword_1.getText().toString();
+                    password_2 = editTextPassword_2.getText().toString();
+//
+//                    if (password_1.length() == 0 || password_1.matches("^([a-zA-Z0-9]{0,6})(([a-zA-Z][0-9a-zA-Z]{5})|([0-9a-zA-Z]{5}[a-zA-Z])|([0-9a-zA-Z]{3}[a-zA-Z][0-9a-zA-Z]{2}))([a-zA-Z0-9]{0,6})$")){
+//                    輸入"123456789a12345678"，超過12字但會過
+
+                    if (password_1.length() == 0) {
+                        textViewPasswordWarn_1.setText("");
+                        summitFlag[1] = false;
+                    } else if (password_1.length() > 5 && password_1.length() < 13 && password_1.matches("^([0-9]*[a-zA-Z][0-9]*)$")){
+                        textViewPasswordWarn_1.setText("");
+                        summitFlag[1] = true;
+                    } else {
+                        textViewPasswordWarn_1.setText("(密碼格式不符)");
+                        summitFlag[1] = false;
+                    }
+
+                    if (password_2.length() == 0) {
+                        textViewPasswordWarn_2.setText("");
+                        summitFlag[2] = false;
+                    } else if (password_2.equals(password_1)) {
+                        textViewPasswordWarn_2.setText("");
+                        summitFlag[2] = true;
+                    } else {
+                        textViewPasswordWarn_2.setText("(密碼不一致)");
+                        summitFlag[2] = false;
+                    }
+                    break;
+                case R.id.edittext_register_name:
+                    name = editTextName.getText().toString();
+                    if (name.length() == 0) {
+                        textViewNameWarn.setText("");
+                        summitFlag[3] = false;
+                    } else if (name.matches("^[A-z\\u4e00-\\u9fa5 ]*$")) {
+                        textViewNameWarn.setText("");
+                        summitFlag[3] = true;
+                    } else {
+                        textViewNameWarn.setText("(姓名格式不符)");
+                        summitFlag[3] = false;
+                    }
+                    break;
+                case R.id.edittext_register_phone:
+                    phone = editTextPhone.getText().toString();
+                    if (phone.length() == 0) {
+                        textViewPhoneWarn.setText("");
+                        summitFlag[4] = false;
+                    } else if (phone.length() == 0 || phone.matches("^(09)(\\d{2})(-)?(\\d{3})(-)?(\\d{3})")) {
+                        textViewPhoneWarn.setText("");
+                        summitFlag[4] = true;
+                    } else {
+                        textViewPhoneWarn.setText("(手機格式不符)");
+                        summitFlag[4] = false;
+                    }
+                    break;
+                case R.id.edittext_register_email:
+                    email = editTextEmail.getText().toString();
+                    if (email.length() == 0) {
+                        textViewEmailWarn.setText("");
+                        summitFlag[5] = false;
+                    } else if (email.matches("(.+)(@){1}(\\w+)(\\.){1}(.*)")) {
+                        textViewEmailWarn.setText("");
+                        summitFlag[5] = true;
+                    } else {
+                        textViewEmailWarn.setText("(信箱格式不符)");
+                        summitFlag[5] = false;
+                    }
+                    break;
+                case R.id.editText_register_address:
+                    address = editTextAddress.getText().toString();
+                    address = address.trim();
+                    if (address.length() > 0) {
+                        imageViewAddress_X.setVisibility(View.VISIBLE);
+                        textViewAddress.setText(address.length() > 6 ? (address.substring(0, 6) + "..") : address);
+                    } else {
+                        imageViewAddress_X.setVisibility(View.GONE);
+                        textViewAddress.setText("");
+                    }
+                    break;
+                case R.id.edittext_register_bankNumber:
+                    bankNumber = editTextBankNumber.getText().toString();
+                    if (bankNumber.length() == 0) {
+                        textViewBankNumberWarn.setText("");
+                        summitFlag[6] = false;
+                    } else if (bankNumber.matches("^([0-9]{10,14})$")) {
+                        textViewBankNumberWarn.setText("");
+                        summitFlag[6] = true;
+                    } else {
+                        textViewBankNumberWarn.setText("(銀行帳號格式不符)");
+                        summitFlag[6] = false;
+                    }
+                    break;
+                case R.id.edittext_register_bankAccount:
+                    bankAccount = editTextBankAccount.getText().toString();
+                    if (bankAccount.length() == 0){
+                        textViewBankAccountWarn.setText("");
+                        summitFlag[7] = false;
+                    } else if (bankAccount.matches("^[A-z\\u4e00-\\u9fa5 ]*$")) {
+                        textViewBankAccountWarn.setText("");
+                        summitFlag[7] = true;
+                    } else {
+                        textViewBankAccountWarn.setText("(戶名格式不符)");
+                        summitFlag[7] = false;
+                    }
+                    break;
+            }
+
+            summitFlag[8] = true;
+            for (int i = 0; i < summitFlag.length-1; i++) {
+                summitFlag[8] &= summitFlag[i];
+                Log.d("register", "summitFlag[" + i +"] = " + summitFlag[i]);
+            }
+            if (summitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+                buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
+                buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            } else {
+                buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_4));
+                buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.font_color));
+            }
+            Log.d("register", "-> summitFlag[8] = " + summitFlag[8]);
+
+        }
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 
     private void findView() {
@@ -206,274 +528,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 textViewBirthday.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) textViewCity.setText(city + district);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.RelativeLayout_register_account:
-                editTextAccount.requestFocus();
-                keyboard.showSoftInput(editTextAccount, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_password_1:
-                editTextPassword_1.requestFocus();
-                keyboard.showSoftInput(editTextPassword_1, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_password_2:
-                editTextPassword_2.requestFocus();
-                keyboard.showSoftInput(editTextPassword_2, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_name:
-                editTextName.requestFocus();
-                keyboard.showSoftInput(editTextName, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_birthday:
-                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                DatePickerDialog dialog = new DatePickerDialog(getContext(),
-                        datePicker, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                );
-                dialog.show();
-                break;
-            case R.id.RelativeLayout_register_phone:
-                editTextPhone.requestFocus();
-                keyboard.showSoftInput(editTextPhone, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_email:
-                editTextEmail.requestFocus();
-                keyboard.showSoftInput(editTextEmail, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_city:
-                keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                city = "";
-                district = "";
-                registerActivity.showCity();
-                break;
-            case R.id.RelativeLayout_register_bankNumber:
-                editTextBankNumber.requestFocus();
-                keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.RelativeLayout_register_bankAccount:
-                editTextBankAccount.requestFocus();
-                keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
-                break;
-            case R.id.LinearLayout_register_address:
-                // 預設地址方式與資料庫互動方式要改
-                if (addressFlag) {
-                    imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_keyboard_arrow_down_black_18_1));
-                    relativeLayouAddressDrop.setVisibility(View.VISIBLE);
-                    editTextAddress.setText(address);
-                    // 自動選定edit與開啟鍵盤
-                    editTextAddress.requestFocus();
-                    addressFlag = false;
-                } else {
-                    imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
-                    relativeLayouAddressDrop.setVisibility(View.GONE);
-                    addressFlag = true;
-                }
-                break;
-            case R.id.imageView_register_address_x:
-                editTextAddress.setText("");
-                break;
-            case R.id.imageView_register_back:
-                registerActivity.onBackPressed();
-                break;
-            case R.id.button_register_submit:
-                account = editTextAccount.getText().toString();
-                password_1 = editTextPassword_1.getText().toString();
-                name = editTextName.getText().toString();
-                birthday = textViewBirthday.getText().toString();
-                phone = editTextPhone.getText().toString();
-                email = editTextEmail.getText().toString();
-                bankNumber = editTextBankNumber.getText().toString();
-                bankAccount = editTextBankAccount.getText().toString();
-                makeMap();
-                registerActivity.setFireMap(fireMap);
-                registerActivity.MapUploadToFireBase();
-                Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-                intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.button_register_logout:
-//                SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-//                sp.edit().putBoolean("is_login", false).commit();
-                Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
-                intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                break;
-        }
-        if (view.getId() != R.id.LinearLayout_register_address && view.getId() != R.id.editText_register_address
-                && view.getId() != R.id.imageView_register_address_x) {
-            imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
-            relativeLayouAddressDrop.setVisibility(View.GONE);
-            addressFlag = true;
-        }
-    }
-
-    public void setTextViewBarName(String barName) {
-        this.barName = barName;
-    }
-
-    public void isLoggedIn(boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
-    }
-
-    public void setCityName(String city) {
-        this.city = city;
-    }
-
-    public void setDistrictName(String district) {
-        this.district = district;
-    }
-
-    public void makeMap() {
-//      新增會員帳號建立時間
-//      1. 取得台灣時區(Asia/Taipei)的目前日期時間
-        ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
-//      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
-//      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
-        String createTime = NowTime.format(dateTimeFormat);
-
-        fireMap = new HashMap<>();
-//        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
-//        fireMap.put("account", account);
-        fireMap.put("account_name", account);
-        fireMap.put("picture", "");
-        fireMap.put("password", password_1);
-        fireMap.put("name", name);
-        fireMap.put("birthday", birthday);
-        fireMap.put("phone", phone);
-        fireMap.put("email", email);
-        fireMap.put("city", city);
-        fireMap.put("district", district);
-        fireMap.put("address", address);
-        fireMap.put("bankNumber", bankNumber);
-        fireMap.put("bankAccount", bankAccount);
-        fireMap.put("createTime", createTime);//新增會員建立時間
-        fireMap.put("is_seller", "false");//判斷會員是否申請賣家通過
-    }
-
-    public void isInputDataFinish() {
-
-    }
-
-    public void isAccountExistedInFirebase() {
-        if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
-            account = editTextAccount.getText().toString();
-            ///     使用 Firebase 服務
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            //      取得  Firebase 資料庫 member 資料表 (GET網址)
-            DatabaseReference memberRef = database.getReference("member");
-            //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
-            memberRef.orderByChild("account_name").equalTo(account)
-                    .addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
-                            if (snapshot.exists()) {
-                                textViewAccountWarn.setText("(帳號已存在)");
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-        }
-    }
-
-    // 及時監聽
-    private class myTextWatcher implements TextWatcher {
-        private int whichEdit;
-        myTextWatcher(int whichEdit) {
-            this.whichEdit = whichEdit;
-        }
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            switch (whichEdit) {
-                case R.id.edittext_register_account:
-                    isAccountExistedInFirebase();
-
-                    account = editTextAccount.getText().toString();
-                    if (account.length() == 0 || account.matches("^[a-zA-Z]\\w*$")) {
-                        textViewAccountWarn.setText("");
-                    } else if (account.matches("^[a-z]")){
-                        textViewAccountWarn.setText("(開頭須為英文小寫)");
-                    } else if (account.matches("[^a-zA-Z0-9]")) {
-                        textViewAccountWarn.setText("(不可有特殊字元)");
-                    }
-                    break;
-                case R.id.edittext_register_password_1:
-                case R.id.edittext_register_password_2:
-                    password_1 = editTextPassword_1.getText().toString();
-                    password_2 = editTextPassword_2.getText().toString();
-                    if (password_1.length() == 0 || password_1.matches(".*[a-zA-Z]+[0-9&a-zA-Z]{6,12}")){
-                        textViewPasswordWarn_1.setText("");
-                    } else {
-                        textViewPasswordWarn_1.setText("(密碼格式不符)");
-                    }
-                    if (password_2.length() == 0 || password_2.equals(password_1)) {
-                        textViewPasswordWarn_2.setText("");
-                        Log.d("main", "true: " + password_2 + " : " + password_1);
-                    } else {
-                        textViewPasswordWarn_2.setText("(密碼不一致)");
-                        Log.d("main", "false: " + password_2 + " : " + password_1);
-                    }
-                    break;
-                case R.id.edittext_register_name:
-                    textViewNameWarn.setText("(姓名格式不符)");
-                    name = editTextName.getText().toString();
-                    break;
-                case R.id.edittext_register_phone:
-                    phone = editTextPhone.getText().toString();
-                    if (phone.length() == 0 || phone.matches("^(09)(\\d{2})(-)?(\\d{3})(-)?(\\d{3})")) {
-                        textViewPhoneWarn.setText("");
-                    } else {
-                        textViewPhoneWarn.setText("(手機格式不符)");
-                    }
-                    break;
-                case R.id.edittext_register_email:
-
-                    email = editTextEmail.getText().toString();
-                    if (email.length() == 0 || email.matches("(.+)(@){1}(\\w+)(\\.){1}(.*)")) {
-                        textViewEmailWarn.setText("");
-                    } else {
-                        textViewEmailWarn.setText("(信箱格式不符)");
-                    }
-                    break;
-                case R.id.editText_register_address:
-                    address = editTextAddress.getText().toString();
-                    address = address.trim();
-                    if (address.length() > 0) {
-                        imageViewAddress_X.setVisibility(View.VISIBLE);
-                        textViewAddress.setText(address.length() > 6 ? (address.substring(0, 6) + "..") : address);
-                    } else {
-                        imageViewAddress_X.setVisibility(View.GONE);
-                        textViewAddress.setText("");
-                    }
-                    break;
-                case R.id.edittext_register_bankNumber:
-                    textViewBankNumberWarn.setText("(銀行帳號格式不符)");
-                    bankNumber = editTextBankNumber.getText().toString();
-                    break;
-                case R.id.edittext_register_bankAccount:
-                    textViewBankAccountWarn.setText("(戶名格式不符)");
-                    bankAccount = editTextBankAccount.getText().toString();
-                    break;
-            }
-        }
-        @Override
-        public void afterTextChanged(Editable s) {}
     }
 
 }

@@ -100,16 +100,16 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.RelativeLayout_member_orders:
             case R.id.LinearLayout_member_orders_0:
-                memberActivity.showOrders(0);
+                memberActivity.showOrdersFragment(0);
                 break;
             case R.id.LinearLayout_member_orders_1:
-                memberActivity.showOrders(1);
+                memberActivity.showOrdersFragment(1);
                 break;
             case R.id.LinearLayout_member_orders_2:
-                memberActivity.showOrders(2);
+                memberActivity.showOrdersFragment(2);
                 break;
             case R.id.LinearLayout_member_orders_3:
-                memberActivity.showOrders(3);
+                memberActivity.showOrdersFragment(3);
                 break;
             case R.id.RelativeLayout_member_becomeSeller:
                 Log.d("main", "getContext() = " + getContext());
@@ -118,22 +118,20 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 RelativeLayoutBecomeSeller.setVisibility(View.GONE);
                 break;
             case R.id.RelativeLayout_member_favorite:
-                memberActivity.showGoods("按讚好物");
+                memberActivity.showGoodsFragment("按讚好物");
                 break;
             case R.id.RelativeLayout_member_bought:
-                memberActivity.showGoods("再買一次");
+                memberActivity.showGoodsFragment("再買一次");
                 break;
             case R.id.RelativeLayout_member_seen:
-                memberActivity.showGoods("瀏覽紀錄");
+                memberActivity.showGoodsFragment("瀏覽紀錄");
                 break;
             case R.id.RelativeLayout_member_coupon:
-                memberActivity.showCoupon("優惠券");
+                memberActivity.showCouponFragment("優惠券");
                 break;
             case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:
                 intent = new Intent(getContext(), RegisterActivity.class);
-                intent.putExtra("name", "帳號設定");
-                intent.putExtra("isFromRegister", false);
                 startActivity(intent);
                 break;
         }
