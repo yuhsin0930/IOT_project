@@ -171,7 +171,7 @@ public class NewProductActivity extends AppCompatActivity {
 
 
 
-        //------------------------------------------------------------------------------------------
+        //--------------------------------商品資訊 存入 Firebase -----------------------------------------------
 //        sharepreferences "newProduct"
 //        商品照片(picture_id)(int)
 //        商品名稱(gName)(Text)  "productName"
@@ -195,5 +195,7 @@ public class NewProductActivity extends AppCompatActivity {
 //        運費價格-7-11(shippingFeeSeven)(int)
 //        運費價格-黑貓(shippingFeeBlackCat)(int)
 //        運費價格-郵局(shippingFeePostOffice)(int)
+//--------------------------------如何從 Firebase 取出商品資訊-----------------------------------------------
+
     }
 }

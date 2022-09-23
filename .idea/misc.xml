@@ -75,7 +75,6 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_return.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_shipped.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_product_classification.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_product_launched_already.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_seller_detail.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_seller_detail_county.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_set_price.xml" value="0.2203125" />
@@ -90,6 +89,24 @@
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_saller.xml" value="0.31927083333333334" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_seller_detail.xml" value="0.3380208333333333" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/dialog_become_seller_now.xml" value="0.3338541666666667" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1005" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/button_background_corner.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/button_corner.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1005" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/main_member_background.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/main_member_corner.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/main_member_image.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/member_mystore_corner.xml" value="0.1" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_become_seller.xml" value="0.22" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_member.xml" value="0.10740740740740741" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_my_product.xml" value="0.10740740740740741" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_my_store.xml" value="0.10740740740740741" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_register.xml" value="0.10740740740740741" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_sales_record.xml" value="0.10740740740740741" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.15" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/header_navigation_drawer.xml" value="0.4466666666666667" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/menu/navigation_drawer.xml" value="0.1" />
       </map>
     </option>
   </component>
