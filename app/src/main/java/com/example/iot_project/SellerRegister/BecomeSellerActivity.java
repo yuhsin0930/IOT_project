@@ -161,13 +161,17 @@ public class BecomeSellerActivity extends AppCompatActivity {
                     values.put("sBirthday", sellerBirthday);
                     values.put("IDNumber",sellerId);
                     values.put("sCountry",citizen);
-
-                // Insert the new row, returning the primary key value of the new row
+//
+//                // Insert the new row, returning the primary key value of the new row
                     long newRowId = sellerDatabase.insert("seller", null, values);
                     sellerDatabase.close();
                     dbHelper.close();
-                    Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
-                    startActivity(intent);
+                    String sql = "INSERT INTO seller (sName,sBirthday ) VALUES ( '"+sellerName+"','"+sellerBirthday+"' ) ;";
+                    Log.d("main","sql="+sql);
+                    sellerDatabase.execSQL(sql);
+                    Log.d("main","newRowId="+newRowId);
+//                    Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
+//                    startActivity(intent);
                 }
             }
         });
