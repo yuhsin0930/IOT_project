@@ -190,7 +190,8 @@ public class DBHelper extends SQLiteOpenHelper {
             ");";
     private String goodsSQL_type = "CREATE TABLE goodsType (" +
             "goodsType_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            "good_name TEXT NOT NULL, " +
+            "good_name TEXT NOT NULL, " +
+            "fragType Text,"+
             "type TEXT, " +
             "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
 //            "FOREIGN KEY (seller_id) REFERENCES seller (seller_id) ON DELETE CASCADE ON UPDATE CASCADE," +
@@ -199,7 +200,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private String goodsSQL_norm = "CREATE TABLE goodsNorm (" +
             "goodsNorm_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            "good_name TEXT NOT NULL, " +
+            "good_name TEXT NOT NULL, " +
+            "fragNum Text,"+
             "price INTEGER, " +
             "norm TEXT, " +
             "normNum INTEGER,"+
