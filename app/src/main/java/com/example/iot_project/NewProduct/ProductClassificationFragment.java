@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.iot_project.DBHelper;
-import com.example.iot_project.MainActivity;
+import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.R;
 
 import java.util.ArrayList;
