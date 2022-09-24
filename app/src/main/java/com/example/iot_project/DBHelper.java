@@ -26,44 +26,46 @@ public class DBHelper extends SQLiteOpenHelper {
             "createTime DATETIME DEFAULT CURRENT_TIMESTAMP " +
             ");";
 
-    private String create_sellerSQL = "CREATE TABLE seller (" +
-            "seller_id INTEGER PRIMARY KEY, " +
-            "storeName TEXT, " +
-            "storePicture BLOB, " +
-            "sCountry TEXT, " +
-            "sName TEXT, " +
-            "sBirthday TEXT, " +
-            "IDNumber TEXT, " +
-            "residence TEXT, " +
-            "sCity TEXT, " +
-            "district TEXT, " +
-            "postalCode TEXT, " +
-            "sAddress TEXT, " +
-            "bankName TEXT, " +
-            "bankArea TEXT, " +
-            "bankBranch TEXT, " +
-            "bankNumber TEXT, " +
-            "bankAccount TEXT, " +
-            "sState TEXT, " +
-            "createTime DATETIME DEFAULT CURRENT_TIMESTAMP " +
+//    private String create_sellerSQL = "CREATE TABLE seller (" +
+//            "seller_id INTEGER PRIMARY KEY, " +
+//            "storeName TEXT, " +
+//            "storePicture BLOB, " +
+//            "sCountry TEXT, " +
+//            "sName TEXT, " +
+//            "sBirthday TEXT, " +
+//            "IDNumber TEXT, " +
+//            "residence TEXT, " +
+//            "sCity TEXT, " +
+//            "district TEXT, " +
+//            "postalCode TEXT, " +
+//            "sAddress TEXT, " +
+//            "bankName TEXT, " +
+//            "bankArea TEXT, " +
+//            "bankBranch TEXT, " +
+//            "bankNumber TEXT, " +
+//            "bankAccount TEXT, " +
+//            "sState TEXT, " +
+//            "createTime DATETIME DEFAULT CURRENT_TIMESTAMP ," +
+//            "sfrist INTEGER DEFAULT 0"+
 //            ",FOREIGN KEY (seller_id) REFERENCES member (member_id) ON DELETE CASCADE ON UPDATE CASCADE" +
-            ");";
+//            ");";
 
-    private String create_goodsSQL = "CREATE TABLE goods (" +
-            "goods_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "seller_id INTEGER NOT NULL, " +
-            "gName TEXT, " +
-            "info TEXT DEFAULT '無描述', " +
-            "price INTEGER, " +
-            "type TEXT, " +
-            "weight INTEGER, " +
-            "packageSize TEXT, " +
-            "inventory INTEGER, " +
-            "soldQuantity INTEGER, " +
-            "gState TEXT, " +               // 上架中、已完售、審核中、已違規、已下架
-            "createTime DATETIME DEFAULT (datetime('now','localtime')), " +
-            "FOREIGN KEY (seller_id) REFERENCES seller (seller_id) ON DELETE CASCADE ON UPDATE CASCADE" +
-            ");";
+//    private String create_goodsSQL = "CREATE TABLE goods (" +
+//            "goods_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            "seller_id INTEGER NOT NULL, " +
+//            "gName TEXT, " +
+//            "info TEXT DEFAULT '無描述', " +
+//            "price INTEGER, " +
+//            "type TEXT, " +
+//            "weight INTEGER, " +
+//            "packageSize TEXT, " +
+//            "inventory INTEGER, " +
+//            "soldQuantity INTEGER, " +
+//            "gState TEXT, " +               // 上架中、已完售、審核中、已違規、已下架
+//            "createTime DATETIME DEFAULT (datetime('now','localtime')), " +
+//            "FOREIGN KEY (seller_id) REFERENCES seller (seller_id) ON DELETE CASCADE ON UPDATE CASCADE" +
+//            ");";
+
 
     private String create_pictureSQL = "CREATE TABLE picture (" +
             "picture_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -166,6 +168,66 @@ public class DBHelper extends SQLiteOpenHelper {
             "('F', '9.5折', '使用整單打9.5折，訂單須滿1000')," +
             "('G', '8.5折', '使用整單打8.5折，訂單須滿2000')" +
             ";";
+    private String create_goodsSQL = "CREATE TABLE goods (" +
+            "goods_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "gName TEXT, " +
+            "info TEXT DEFAULT '無描述', " +
+            "packageLength INTEGER, " +
+            "packageWidth INTEGER, " +
+            "packageHeight INTEGER, " +
+            "inventory INTEGER, " +
+            "soldQuantity INTEGER, " +
+            "seven INTEGER,"+
+            "familyMart INTEGER,"+
+            "postOffice INTEGER,"+
+            "blackCat INTEGER,"+
+            "sevenFee INTEGER,"+
+            "familyMartFee INTEGER,"+
+            "postOfficeFee INTEGER,"+
+            "blackCatFee,"+
+            "gState TEXT, " +               // 上架中、已完售、審核中、已違規、已下架
+            "createTime DATETIME DEFAULT (datetime('now','localtime')) " +
+            ");";
+    private String goodsSQL_type = "CREATE TABLE goodsType (" +
+            "goodsType_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            "good_name TEXT NOT NULL, " +
+            "type TEXT, " +
+            "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
+//            "FOREIGN KEY (seller_id) REFERENCES seller (seller_id) ON DELETE CASCADE ON UPDATE CASCADE," +
+//            "FOREIGN KEY (good_id) REFERENCES goods (good_id) ON DELETE CASCADE ON UPDATE CASCADE" +
+            ");";
+
+    private String goodsSQL_norm = "CREATE TABLE goodsNorm (" +
+            "goodsNorm_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            "good_name TEXT NOT NULL, " +
+            "price INTEGER, " +
+            "norm TEXT, " +
+            "normNum INTEGER,"+
+            "createTime DATETIME DEFAULT (datetime('now','localtime')) " +
+            ");";
+    private String create_sellerSQL = "CREATE TABLE seller (" +
+            "seller_id INTEGER PRIMARY KEY, " +
+            "storeName TEXT, " +
+            "storePicture BLOB, " +
+            "sCountry TEXT, " +
+            "sName TEXT, " +
+            "sBirthday TEXT, " +
+            "IDNumber TEXT, " +
+            "residence TEXT, " +
+            "sCity TEXT, " +
+            "district TEXT, " +
+            "postalCode TEXT, " +
+            "sAddress TEXT, " +
+            "bankName TEXT, " +
+            "bankArea TEXT, " +
+            "bankBranch TEXT, " +
+            "bankNumber TEXT, " +
+            "bankAccount TEXT, " +
+            "sState TEXT, " +
+            "createTime DATETIME DEFAULT CURRENT_TIMESTAMP ," +
+            "sfrist INTEGER DEFAULT 0"+
+//            ",FOREIGN KEY (seller_id) REFERENCES member (member_id) ON DELETE CASCADE ON UPDATE CASCADE" +
+            ");";
 
     public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -190,6 +252,9 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(create_mamberCouponSQL);
         sqLiteDatabase.execSQL(insert_pickupWaySQL);
         sqLiteDatabase.execSQL(insert_couponSQL);
+
+        sqLiteDatabase.execSQL(goodsSQL_type);
+        sqLiteDatabase.execSQL(goodsSQL_norm);
     }
 
     @Override

@@ -197,40 +197,16 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/imageButton_productNum_minus"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:backgroundTint="#00FFFFFF"
-                    app:srcCompat="@drawable/outline_indeterminate_check_box_black_36"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-                <EditText
-                    android:id="@+id/editTextNumber_newProduct_Quatity"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textView_newProductNum"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/dialog_background_corner"
-                    android:ems="5"
-                    android:gravity="bottom|right|end"
-                    android:inputType="number"
+                    android:gravity="right"
                     android:text="0"
-                    android:textAlignment="center"
                     android:textColor="@color/font_color"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-                <ImageButton
-                    android:id="@+id/imageButton_productNumAdd"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="#00FFFFFF"
-                    app:srcCompat="@drawable/outline_add_box_black_36"
-                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

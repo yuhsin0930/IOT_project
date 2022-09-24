@@ -125,7 +125,7 @@ public class ShippingFeeActivity extends AppCompatActivity {
         editTextNumber_productLength.setText(String.valueOf(productLength));
         editTextNumber_productWidth.setText(String.valueOf(productWidth));
         //------------------------------------------------------------------------------------------
-        if (editTextNumber_productHeight.length()!=0 && productHeight>0){
+        if (editTextNumber_productHeight.length()!=0 && editTextNumber_productWidth.length()!=0 && editTextNumber_productLength.length()!=0){
             if(productHeight > 45 || productLength >45 || productWidth >45) {
                 switch_familyMart.setChecked(false);
                 switch_seven.setChecked(false);
@@ -301,406 +301,17 @@ public class ShippingFeeActivity extends AppCompatActivity {
 
                 }
                 else {
-
-                    textViewPostOffice.setText("不適用");
-                    textViewBlackCat.setText("不適用");
-
                     switch_postOffice.setChecked(false);
                     switch_blackCat.setChecked(false);
-
                     switch_postOffice.setClickable(false);
                     switch_blackCat.setClickable(false);
-
+                    textViewPostOffice.setText("不適用");
+                    textViewBlackCat.setText("不適用");
                     textViewPostOfficeFee.setText("");
                     textViewBlackCatFee.setText("");
                 }
             }
         }
-        //-----------------------------------------------------------------------------------------
-        if (editTextNumber_productLength.length()!=0 && productLength>0){
-            if(productHeight > 45 || productLength >45 || productWidth >45) {
-                switch_familyMart.setChecked(false);
-                switch_seven.setChecked(false);
-
-                switch_familyMart.setClickable(false);
-                switch_seven.setClickable(false);
-
-                textViewFamilyMartFee.setText("");
-                textViewSevenFee.setText("");
-
-                textViewSeven.setText("不適用");
-                textViewFamilyMart.setText("不適用");
-                if (productWidth + productHeight + productLength <= 60) {
-                    textViewPostOfficeFee.setText("130");
-                    textViewBlackCatFee.setText("130");
-
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 90) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("170");
-                    textViewBlackCatFee.setText("170");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                } else if (productWidth + productHeight + productLength <= 120) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 150) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("250");
-                    textViewBlackCatFee.setText("250");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                } else {
-                    textViewSeven.setText("不適用");
-                    textViewFamilyMart.setText("不適用");
-
-                    textViewFamilyMartFee.setText("");
-                    textViewSevenFee.setText("");
-
-                    switch_familyMart.setChecked(false);
-                    switch_seven.setChecked(false);
-
-                    switch_familyMart.setClickable(false);
-                    switch_seven.setClickable(false);
-                    textViewPostOffice.setText("不適用");
-                    textViewBlackCat.setText("不適用");
-
-                    switch_postOffice.setChecked(false);
-                    switch_blackCat.setChecked(false);
-
-                    switch_postOffice.setClickable(false);
-                    switch_blackCat.setClickable(false);
-
-                    textViewPostOfficeFee.setText("");
-                    textViewBlackCatFee.setText("");
-                }
-
-            }else if(productWidth + productHeight + productLength <= 105){
-                textViewSevenFee.setText("60");
-                textViewFamilyMartFee.setText("60");
-
-                textViewSeven.setText("NT$ ");
-                textViewFamilyMart.setText("NT$ ");
-
-                switch_familyMart.setClickable(true);
-                switch_seven.setClickable(true);
-
-                switch_familyMart.setChecked(true);
-                switch_seven.setChecked(true);
-                if (productWidth + productHeight + productLength <= 60) {
-                    textViewPostOfficeFee.setText("130");
-                    textViewBlackCatFee.setText("130");
-
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                }else if (productWidth + productHeight + productLength <= 90) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("170");
-                    textViewBlackCatFee.setText("170");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                }else{
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                }
-            }else{
-                textViewSeven.setText("不適用");
-                textViewFamilyMart.setText("不適用");
-
-                textViewFamilyMartFee.setText("");
-                textViewSevenFee.setText("");
-
-                switch_familyMart.setChecked(false);
-                switch_seven.setChecked(false);
-
-                switch_familyMart.setClickable(false);
-                switch_seven.setClickable(false);
-                if (productWidth + productHeight + productLength <= 120) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 150) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("250");
-                    textViewBlackCatFee.setText("250");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                }
-                else {
-
-                    textViewPostOffice.setText("不適用");
-                    textViewBlackCat.setText("不適用");
-
-                    switch_postOffice.setChecked(false);
-                    switch_blackCat.setChecked(false);
-
-                    switch_postOffice.setClickable(false);
-                    switch_blackCat.setClickable(false);
-
-                    textViewPostOfficeFee.setText("");
-                    textViewBlackCatFee.setText("");
-                }
-            }
-        }
-        //------------------------------------------------------------------------------------------
-        if (editTextNumber_productWidth.length()!=0 && productWidth>0){
-            if(productHeight > 45 || productLength >45 || productWidth >45) {
-                switch_familyMart.setChecked(false);
-                switch_seven.setChecked(false);
-
-                switch_familyMart.setClickable(false);
-                switch_seven.setClickable(false);
-
-                textViewFamilyMartFee.setText("");
-                textViewSevenFee.setText("");
-
-                textViewSeven.setText("不適用");
-                textViewFamilyMart.setText("不適用");
-                if (productWidth + productHeight + productLength <= 60) {
-                    textViewPostOfficeFee.setText("130");
-                    textViewBlackCatFee.setText("130");
-
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 90) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("170");
-                    textViewBlackCatFee.setText("170");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                } else if (productWidth + productHeight + productLength <= 120) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 150) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("250");
-                    textViewBlackCatFee.setText("250");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                } else {
-                    textViewSeven.setText("不適用");
-                    textViewFamilyMart.setText("不適用");
-
-                    textViewFamilyMartFee.setText("");
-                    textViewSevenFee.setText("");
-
-                    switch_familyMart.setChecked(false);
-                    switch_seven.setChecked(false);
-
-                    switch_familyMart.setClickable(false);
-                    switch_seven.setClickable(false);
-                    textViewPostOffice.setText("不適用");
-                    textViewBlackCat.setText("不適用");
-
-                    switch_postOffice.setChecked(false);
-                    switch_blackCat.setChecked(false);
-
-                    switch_postOffice.setClickable(false);
-                    switch_blackCat.setClickable(false);
-
-                    textViewPostOfficeFee.setText("");
-                    textViewBlackCatFee.setText("");
-                }
-
-            }else if(productWidth + productHeight + productLength <= 105){
-                textViewSevenFee.setText("60");
-                textViewFamilyMartFee.setText("60");
-
-                textViewSeven.setText("NT$ ");
-                textViewFamilyMart.setText("NT$ ");
-
-                switch_familyMart.setClickable(true);
-                switch_seven.setClickable(true);
-
-                switch_familyMart.setChecked(true);
-                switch_seven.setChecked(true);
-                if (productWidth + productHeight + productLength <= 60) {
-                    textViewPostOfficeFee.setText("130");
-                    textViewBlackCatFee.setText("130");
-
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                }else if (productWidth + productHeight + productLength <= 90) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("170");
-                    textViewBlackCatFee.setText("170");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                }else{
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-                }
-            }else{
-                textViewSeven.setText("不適用");
-                textViewFamilyMart.setText("不適用");
-
-                textViewFamilyMartFee.setText("");
-                textViewSevenFee.setText("");
-
-                switch_familyMart.setChecked(false);
-                switch_seven.setChecked(false);
-
-                switch_familyMart.setClickable(false);
-                switch_seven.setClickable(false);
-                if (productWidth + productHeight + productLength <= 120) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("210");
-                    textViewBlackCatFee.setText("210");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                } else if (productWidth + productHeight + productLength <= 150) {
-                    textViewPostOffice.setText("NT$ ");
-                    textViewBlackCat.setText("NT$ ");
-
-                    textViewPostOfficeFee.setText("250");
-                    textViewBlackCatFee.setText("250");
-
-                    switch_postOffice.setClickable(true);
-                    switch_blackCat.setClickable(true);
-                    switch_postOffice.setChecked(true);
-                    switch_blackCat.setChecked(true);
-
-                }
-                else {
-
-                    textViewPostOffice.setText("不適用");
-                    textViewBlackCat.setText("不適用");
-
-                    switch_postOffice.setChecked(false);
-                    switch_blackCat.setChecked(false);
-
-                    switch_postOffice.setClickable(false);
-                    switch_blackCat.setClickable(false);
-
-                    textViewPostOfficeFee.setText("");
-                    textViewBlackCatFee.setText("");
-                }
-            }
-        }
-
         //------------------------------------------------------------------------------------------
         editTextNumber_productWidth.addTextChangedListener(new TextWatcher() {
             @Override
@@ -711,200 +322,201 @@ public class ShippingFeeActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() != 0 && Integer.valueOf(s.toString()) > 0) {
+                if (s.length() != 0 &&
+                        editTextNumber_productHeight.length()!=0 &&
+                        editTextNumber_productLength.length()!=0)
+                {
                     productWidth = Integer.valueOf(s.toString());
                     Log.d("main","productLength = "+productLength);
                     Log.d("main","productHeight = "+productHeight);
                     Log.d("main","productWidth = "+productWidth);
-                    if(productHeight > 45 || productLength >45 || productWidth >45) {
-                        switch_familyMart.setChecked(false);
-                        switch_seven.setChecked(false);
-
-                        switch_familyMart.setClickable(false);
-                        switch_seven.setClickable(false);
-
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
-
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
-
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        } else if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        } else {
-                            textViewSeven.setText("不適用");
-                            textViewFamilyMart.setText("不適用");
-
+                    if(Integer.valueOf(s.toString()) > 0 &&
+                            Integer.valueOf(editTextNumber_productHeight.getText().toString())>0 &&
+                            Integer.valueOf(editTextNumber_productLength.getText().toString())>0)
+                    {
+                        if(productHeight > 45 || productLength >45 || productWidth >45) {
+                            switch_familyMart.setChecked(false);
+                            switch_seven.setChecked(false);
+                            switch_familyMart.setClickable(false);
+                            switch_seven.setClickable(false);
                             textViewFamilyMartFee.setText("");
                             textViewSevenFee.setText("");
 
+                            textViewSeven.setText("不適用");
+                            textViewFamilyMart.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+
+                            } else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            } else if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+
+                            } else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            } else {
+                                textViewSeven.setText("不適用");
+                                textViewFamilyMart.setText("不適用");
+                                textViewFamilyMartFee.setText("");
+                                textViewSevenFee.setText("");
+                                switch_familyMart.setChecked(false);
+                                switch_seven.setChecked(false);
+                                switch_familyMart.setClickable(false);
+                                switch_seven.setClickable(false);
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
+
+                        }else if(productWidth + productHeight + productLength <= 105){
+                            textViewSevenFee.setText("60");
+                            textViewFamilyMartFee.setText("60");
+                            textViewSeven.setText("NT$ ");
+                            textViewFamilyMart.setText("NT$ ");
+                            switch_familyMart.setClickable(true);
+                            switch_seven.setClickable(true);
+                            switch_familyMart.setChecked(true);
+                            switch_seven.setChecked(true);
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+
+                            }else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }else{
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }
+                        }else{
+                            textViewSeven.setText("不適用");
+                            textViewFamilyMart.setText("不適用");
+                            textViewFamilyMartFee.setText("");
+                            textViewSevenFee.setText("");
                             switch_familyMart.setChecked(false);
                             switch_seven.setChecked(false);
-
                             switch_familyMart.setClickable(false);
                             switch_seven.setClickable(false);
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
+                            } else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
+                            }
+                            else {
 
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
-
-                    }else if(productWidth + productHeight + productLength <= 105){
-                        textViewSevenFee.setText("60");
-                        textViewFamilyMartFee.setText("60");
-
-                        textViewSeven.setText("NT$ ");
-                        textViewFamilyMart.setText("NT$ ");
-
-                        switch_familyMart.setClickable(true);
-                        switch_seven.setClickable(true);
-
-                        switch_familyMart.setChecked(true);
-                        switch_seven.setChecked(true);
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
-
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        }else{
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
                         }
                     }else{
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
-
                         switch_familyMart.setChecked(false);
                         switch_seven.setChecked(false);
-
                         switch_familyMart.setClickable(false);
+                        textViewFamilyMartFee.setText("");
+                        textViewSevenFee.setText("");
+                        textViewSeven.setText("不適用");
+                        textViewFamilyMart.setText("不適用");
                         switch_seven.setClickable(false);
-                        if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }
-                        else {
-
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
-
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
-
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
-
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
+                        switch_postOffice.setClickable(false);
+                        switch_blackCat.setClickable(false);
+                        switch_postOffice.setChecked(false);
+                        switch_blackCat.setChecked(false);
+                        textViewPostOffice.setText("不適用");
+                        textViewBlackCat.setText("不適用");
+                        textViewPostOfficeFee.setText("");
+                        textViewBlackCatFee.setText("");
                     }
+
+                }else{
+                    switch_familyMart.setChecked(false);
+                    switch_seven.setChecked(false);
+                    switch_familyMart.setClickable(false);
+                    textViewFamilyMartFee.setText("");
+                    textViewSevenFee.setText("");
+                    textViewSeven.setText("不適用");
+                    textViewFamilyMart.setText("不適用");
+                    switch_seven.setClickable(false);
+                    switch_postOffice.setClickable(false);
+                    switch_blackCat.setClickable(false);
+                    switch_postOffice.setChecked(false);
+                    switch_blackCat.setChecked(false);
+                    textViewPostOffice.setText("不適用");
+                    textViewBlackCat.setText("不適用");
+                    textViewPostOfficeFee.setText("");
+                    textViewBlackCatFee.setText("");
                 }
             }
         });
@@ -916,73 +528,157 @@ public class ShippingFeeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()!=0 && Integer.valueOf(s.toString())>0) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()!=0 && Integer.valueOf(s.toString())>0 &&
+                        editTextNumber_productHeight.length()!=0 &&
+                        editTextNumber_productWidth.length()!=0) {
                     productLength = Integer.valueOf(s.toString());
                     Log.d("main","productLength = "+productLength);
                     Log.d("main","productHeight = "+productHeight);
                     Log.d("main","productWidth = "+productWidth);
-                    if(productHeight > 45 || productLength >45 || productWidth >45) {
-                        switch_familyMart.setChecked(false);
-                        switch_seven.setChecked(false);
+                    if(Integer.valueOf(s.toString()) > 0 &&
+                            Integer.valueOf(editTextNumber_productHeight.getText().toString())>0 &&
+                            Integer.valueOf(editTextNumber_productWidth.getText().toString())>0)
+                    {
+                        if(productHeight > 45 || productLength >45 || productWidth >45) {
+                            switch_familyMart.setChecked(false);
+                            switch_seven.setChecked(false);
 
-                        switch_familyMart.setClickable(false);
-                        switch_seven.setClickable(false);
+                            switch_familyMart.setClickable(false);
+                            switch_seven.setClickable(false);
 
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
+                            textViewFamilyMartFee.setText("");
+                            textViewSevenFee.setText("");
 
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
+                            textViewSeven.setText("不適用");
+                            textViewFamilyMart.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
 
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
 
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                        } else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
+                            }else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
 
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
 
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        } else if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }else if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
 
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
 
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
+                            }else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
 
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        } else {
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }else {
+                                textViewSeven.setText("不適用");
+                                textViewFamilyMart.setText("不適用");
+
+                                textViewFamilyMartFee.setText("");
+                                textViewSevenFee.setText("");
+
+                                switch_familyMart.setChecked(false);
+                                switch_seven.setChecked(false);
+
+                                switch_familyMart.setClickable(false);
+                                switch_seven.setClickable(false);
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
+
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
+
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
+                        }else if(productWidth + productHeight + productLength <= 105){
+                            textViewSevenFee.setText("60");
+                            textViewFamilyMartFee.setText("60");
+
+                            textViewSeven.setText("NT$ ");
+                            textViewFamilyMart.setText("NT$ ");
+
+                            switch_familyMart.setClickable(true);
+                            switch_seven.setClickable(true);
+
+                            switch_familyMart.setChecked(true);
+                            switch_seven.setChecked(true);
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
+
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+
+                            }else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
+
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }else{
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }
+                        }else{
                             textViewSeven.setText("不適用");
                             textViewFamilyMart.setText("不適用");
 
@@ -994,128 +690,83 @@ public class ShippingFeeActivity extends AppCompatActivity {
 
                             switch_familyMart.setClickable(false);
                             switch_seven.setClickable(false);
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
 
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
 
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                    }else if(productWidth + productHeight + productLength <= 105){
-                        textViewSevenFee.setText("60");
-                        textViewFamilyMartFee.setText("60");
+                            } else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
 
-                        textViewSeven.setText("NT$ ");
-                        textViewFamilyMart.setText("NT$ ");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
 
-                        switch_familyMart.setClickable(true);
-                        switch_seven.setClickable(true);
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                        switch_familyMart.setChecked(true);
-                        switch_seven.setChecked(true);
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
+                            }
+                            else {
 
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
 
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
 
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        }else{
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
                         }
                     }else{
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
-
                         switch_familyMart.setChecked(false);
                         switch_seven.setChecked(false);
-
                         switch_familyMart.setClickable(false);
+                        textViewFamilyMartFee.setText("");
+                        textViewSevenFee.setText("");
+                        textViewSeven.setText("不適用");
+                        textViewFamilyMart.setText("不適用");
                         switch_seven.setClickable(false);
-                        if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }
-                        else {
-
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
-
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
-
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
-
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
+                        switch_postOffice.setClickable(false);
+                        switch_blackCat.setClickable(false);
+                        switch_postOffice.setChecked(false);
+                        switch_blackCat.setChecked(false);
+                        textViewPostOffice.setText("不適用");
+                        textViewBlackCat.setText("不適用");
+                        textViewPostOfficeFee.setText("");
+                        textViewBlackCatFee.setText("");
                     }
+                }else{
+                    switch_familyMart.setChecked(false);
+                    switch_seven.setChecked(false);
+                    switch_familyMart.setClickable(false);
+                    textViewFamilyMartFee.setText("");
+                    textViewSevenFee.setText("");
+                    textViewSeven.setText("不適用");
+                    textViewFamilyMart.setText("不適用");
+                    switch_seven.setClickable(false);
+                    switch_postOffice.setClickable(false);
+                    switch_blackCat.setClickable(false);
+                    switch_postOffice.setChecked(false);
+                    switch_blackCat.setChecked(false);
+                    textViewPostOffice.setText("不適用");
+                    textViewBlackCat.setText("不適用");
+                    textViewPostOfficeFee.setText("");
+                    textViewBlackCatFee.setText("");
                 }
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-
         });
 
         editTextNumber_productHeight.addTextChangedListener(new TextWatcher() {
@@ -1127,200 +778,198 @@ public class ShippingFeeActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()!=0 && Integer.valueOf(s.toString())>0) {
+                if (s.length()!=0 && Integer.valueOf(s.toString())>0 &&
+                        editTextNumber_productWidth.length()!=0 &&
+                        editTextNumber_productLength.length()!=0)
+                {
                     productHeight = Integer.valueOf(s.toString());
                     Log.d("main","productLength = "+productLength);
                     Log.d("main","productHeight = "+productHeight);
                     Log.d("main","productWidth = "+productWidth);
-                    if(productHeight > 45 || productLength >45 || productWidth >45) {
-                        switch_familyMart.setChecked(false);
-                        switch_seven.setChecked(false);
+                    if(Integer.valueOf(s.toString()) > 0 &&
+                            Integer.valueOf(editTextNumber_productLength.getText().toString())>0 &&
+                            Integer.valueOf(editTextNumber_productWidth.getText().toString())>0) {
+                        if (productHeight > 45 || productLength > 45 || productWidth > 45) {
+                            switch_familyMart.setChecked(false);
+                            switch_seven.setChecked(false);
+                            switch_familyMart.setClickable(false);
+                            switch_seven.setClickable(false);
+                            textViewFamilyMartFee.setText("");
+                            textViewSevenFee.setText("");
+                            textViewSeven.setText("不適用");
+                            textViewFamilyMart.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                        switch_familyMart.setClickable(false);
-                        switch_seven.setClickable(false);
+                            } else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            } else if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
+                            } else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            } else {
+                                textViewSeven.setText("不適用");
+                                textViewFamilyMart.setText("不適用");
+                                textViewFamilyMartFee.setText("");
+                                textViewSevenFee.setText("");
+                                switch_familyMart.setChecked(false);
+                                switch_seven.setChecked(false);
+                                switch_familyMart.setClickable(false);
+                                switch_seven.setClickable(false);
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
 
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
+                        } else if (productWidth + productHeight + productLength <= 105) {
+                            textViewSevenFee.setText("60");
+                            textViewFamilyMartFee.setText("60");
+                            textViewSeven.setText("NT$ ");
+                            textViewFamilyMart.setText("NT$ ");
+                            switch_familyMart.setClickable(true);
+                            switch_seven.setClickable(true);
+                            switch_familyMart.setChecked(true);
+                            switch_seven.setChecked(true);
+                            if (productWidth + productHeight + productLength <= 60) {
+                                textViewPostOfficeFee.setText("130");
+                                textViewBlackCatFee.setText("130");
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        } else if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                            } else if (productWidth + productHeight + productLength <= 90) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("170");
+                                textViewBlackCatFee.setText("170");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            } else {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
+                            }
                         } else {
                             textViewSeven.setText("不適用");
                             textViewFamilyMart.setText("不適用");
-
                             textViewFamilyMartFee.setText("");
                             textViewSevenFee.setText("");
-
                             switch_familyMart.setChecked(false);
                             switch_seven.setChecked(false);
-
                             switch_familyMart.setClickable(false);
                             switch_seven.setClickable(false);
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
+                            if (productWidth + productHeight + productLength <= 120) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("210");
+                                textViewBlackCatFee.setText("210");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
+                            } else if (productWidth + productHeight + productLength <= 150) {
+                                textViewPostOffice.setText("NT$ ");
+                                textViewBlackCat.setText("NT$ ");
+                                textViewPostOfficeFee.setText("250");
+                                textViewBlackCatFee.setText("250");
+                                switch_postOffice.setClickable(true);
+                                switch_blackCat.setClickable(true);
+                                switch_postOffice.setChecked(true);
+                                switch_blackCat.setChecked(true);
 
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
+                            } else {
 
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
+                                textViewPostOffice.setText("不適用");
+                                textViewBlackCat.setText("不適用");
+                                switch_postOffice.setChecked(false);
+                                switch_blackCat.setChecked(false);
+                                switch_postOffice.setClickable(false);
+                                switch_blackCat.setClickable(false);
 
-                    }else if(productWidth + productHeight + productLength <= 105){
-                        textViewSevenFee.setText("60");
-                        textViewFamilyMartFee.setText("60");
-
-                        textViewSeven.setText("NT$ ");
-                        textViewFamilyMart.setText("NT$ ");
-
-                        switch_familyMart.setClickable(true);
-                        switch_seven.setClickable(true);
-
-                        switch_familyMart.setChecked(true);
-                        switch_seven.setChecked(true);
-                        if (productWidth + productHeight + productLength <= 60) {
-                            textViewPostOfficeFee.setText("130");
-                            textViewBlackCatFee.setText("130");
-
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }else if (productWidth + productHeight + productLength <= 90) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("170");
-                            textViewBlackCatFee.setText("170");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-                        }else{
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
+                                textViewPostOfficeFee.setText("");
+                                textViewBlackCatFee.setText("");
+                            }
                         }
                     }else{
-                        textViewSeven.setText("不適用");
-                        textViewFamilyMart.setText("不適用");
-
-                        textViewFamilyMartFee.setText("");
-                        textViewSevenFee.setText("");
-
                         switch_familyMart.setChecked(false);
                         switch_seven.setChecked(false);
-
                         switch_familyMart.setClickable(false);
+                        textViewFamilyMartFee.setText("");
+                        textViewSevenFee.setText("");
+                        textViewSeven.setText("不適用");
+                        textViewFamilyMart.setText("不適用");
                         switch_seven.setClickable(false);
-                        if (productWidth + productHeight + productLength <= 120) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("210");
-                            textViewBlackCatFee.setText("210");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        } else if (productWidth + productHeight + productLength <= 150) {
-                            textViewPostOffice.setText("NT$ ");
-                            textViewBlackCat.setText("NT$ ");
-
-                            textViewPostOfficeFee.setText("250");
-                            textViewBlackCatFee.setText("250");
-
-                            switch_postOffice.setClickable(true);
-                            switch_blackCat.setClickable(true);
-                            switch_postOffice.setChecked(true);
-                            switch_blackCat.setChecked(true);
-
-                        }
-                        else {
-
-                            textViewPostOffice.setText("不適用");
-                            textViewBlackCat.setText("不適用");
-
-                            switch_postOffice.setChecked(false);
-                            switch_blackCat.setChecked(false);
-
-                            switch_postOffice.setClickable(false);
-                            switch_blackCat.setClickable(false);
-
-                            textViewPostOfficeFee.setText("");
-                            textViewBlackCatFee.setText("");
-                        }
+                        switch_postOffice.setClickable(false);
+                        switch_blackCat.setClickable(false);
+                        switch_postOffice.setChecked(false);
+                        switch_blackCat.setChecked(false);
+                        textViewPostOffice.setText("不適用");
+                        textViewBlackCat.setText("不適用");
+                        textViewPostOfficeFee.setText("");
+                        textViewBlackCatFee.setText("");
                     }
+                }else{
+                    switch_familyMart.setChecked(false);
+                    switch_seven.setChecked(false);
+                    switch_familyMart.setClickable(false);
+                    textViewFamilyMartFee.setText("");
+                    textViewSevenFee.setText("");
+                    textViewSeven.setText("不適用");
+                    textViewFamilyMart.setText("不適用");
+                    switch_seven.setClickable(false);
+                    switch_postOffice.setClickable(false);
+                    switch_blackCat.setClickable(false);
+                    switch_postOffice.setChecked(false);
+                    switch_blackCat.setChecked(false);
+                    textViewPostOffice.setText("不適用");
+                    textViewBlackCat.setText("不適用");
+                    textViewPostOfficeFee.setText("");
+                    textViewBlackCatFee.setText("");
                 }
             }
         });
