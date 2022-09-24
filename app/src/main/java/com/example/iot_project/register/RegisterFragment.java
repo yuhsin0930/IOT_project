@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -30,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.LoginActivity;
-import com.example.iot_project.MainActivity;
+import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
