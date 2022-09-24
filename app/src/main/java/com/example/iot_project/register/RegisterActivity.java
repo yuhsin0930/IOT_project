@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.iot_project.R;
+import com.example.iot_project.member.MemberOrdersFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,13 +29,12 @@ public class RegisterActivity extends AppCompatActivity {
     private RegisterFragment registerFragment;
     private RegisterCityFragment registerCityFragment;
     private RegisterDistrictFragment registerDistrictFragment;
-    private boolean cityFlag, districtFlag;
-    private Intent intent;
+    private boolean cityFlag, districtFlag, myBackInDistrict;
     private InputMethodManager kryboard;
-    private String cityName;
+    private String cityName, districtName;
     private Map<String, Object> fireMap;
     private long timeTemp;
-    private boolean exist;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setFragment() {
         registerFragment = new RegisterFragment();
-        registerCityFragment = new RegisterCityFragment();
-        registerFragment.setTextViewBarName(intent.getStringExtra("name"));
-
-        // 從註冊來(假裝未登入)
-
-        registerFragment.isLoggedIn(intent.getBooleanExtra("isFromRegister", false));
-
         fragmentMgr = getSupportFragmentManager();
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.add(R.id.FrameLayout_register, registerFragment, "registerFragment");
-        fragmentTrans.add(R.id.FrameLayout_register, registerCityFragment, "memberGoodsFragment");
-        fragmentTrans.hide(registerCityFragment);
         fragmentTrans.commit();
     }
 
@@ -84,56 +75,50 @@ public class RegisterActivity extends AppCompatActivity {
         dataref.child("member").push().setValue(fireMap);
     }
 
-    public void addDistrictFragment() {
-        registerDistrictFragment = new RegisterDistrictFragment();
-        fragmentTrans = fragmentMgr.beginTransaction();
-        fragmentTrans.add(R.id.FrameLayout_register, registerDistrictFragment, "registerDistrictFragment");
-        fragmentTrans.hide(registerDistrictFragment);
-        fragmentTrans.commit();
-    }
-
-    public void showCity() {
+    public void showCityFragment() {
         cityFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(registerCityFragment);
+        if (fragmentMgr.findFragmentByTag("registerCityFragment") == null) {
+            registerCityFragment = new RegisterCityFragment();
+            fragmentTrans.add(R.id.FrameLayout_register, registerCityFragment, "registerCityFragment");
+            fragmentTrans.addToBackStack(null);
+        } else {
+            fragmentTrans.show(registerCityFragment);
+        }
         fragmentTrans.hide(registerFragment);
         fragmentTrans.commit();
-    }
-
-    public void showDistrict() {
+    } 
+    
+    public void showDistrictFragment() {
         districtFlag = true;
-        registerDistrictFragment.setCityName(cityName);
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
-        fragmentTrans.show(registerDistrictFragment);
+        registerDistrictFragment = new RegisterDistrictFragment();
+        fragmentTrans.add(R.id.FrameLayout_register, registerDistrictFragment, "registerDistrictFragment");
         fragmentTrans.hide(registerCityFragment);
         fragmentTrans.commit();
-    }
-
-    public void setCityName(String cityName) {
-        registerFragment.setCityName(cityName);
-        this.cityName = cityName;
-    }
-
-    public void setDistrictName(String districtName) {
-        registerFragment.setDistrictName(districtName);
-    }
-
-    public void setFireMap(Map fireMap) {
-        this.fireMap = fireMap;
     }
 
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - timeTemp) > 300) {
             timeTemp = System.currentTimeMillis();
-            if (districtFlag) {
+            if (myBackInDistrict) {
+                myBackInDistrict = false;
+                districtFlag = false;
+                fragmentTrans = fragmentMgr.beginTransaction();
+                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                fragmentTrans.hide(registerDistrictFragment);
+                fragmentTrans.show(registerCityFragment);
+                fragmentTrans.commit();
+            } else if (districtFlag) {
                 districtFlag = false;
                 cityFlag = false;
                 fragmentTrans = fragmentMgr.beginTransaction();
                 fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
                 fragmentTrans.hide(registerDistrictFragment);
+                fragmentTrans.hide(registerCityFragment);
                 fragmentTrans.show(registerFragment);
                 fragmentTrans.commit();
             } else if (cityFlag) {
@@ -144,9 +129,42 @@ public class RegisterActivity extends AppCompatActivity {
                 fragmentTrans.show(registerFragment);
                 fragmentTrans.commit();
             } else {
+                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                    getSupportFragmentManager().popBackStack();
+                    Log.d("register", "getBackStackEntryCount = " + i);
+                }
                 super.onBackPressed();
             }
         }
+    }
+
+    public void myOnBackPressed(Boolean myBackInDistrict) {
+        this.myBackInDistrict = myBackInDistrict;
+        onBackPressed();
+    }
+
+    // 由RegisterCityFragment呼叫
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    // 由RegisterDistrictFragment呼叫
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    // 由RegisterDistrictFragment呼叫
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    // 由RegisterFragment的onHiddenChanged呼叫
+    public String getDistrictName() {
+        return this.districtName;
+    }
+
+    public void setFireMap(Map fireMap) {
+        this.fireMap = fireMap;
     }
     
 }

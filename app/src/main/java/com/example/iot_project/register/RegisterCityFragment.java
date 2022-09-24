@@ -17,7 +17,7 @@ public class RegisterCityFragment extends Fragment {
     private RegisterActivity registerActivity;
     private ListView listViewCommon;
     private ImageView ImageViewBack;
-    private String cityName = "台北市";
+    private String cityName;
 
     public RegisterCityFragment() {}
 
@@ -52,8 +52,7 @@ public class RegisterCityFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 cityName = adapterView.getItemAtPosition(position).toString();
                 registerActivity.setCityName(cityName);
-                registerActivity.addDistrictFragment();
-                registerActivity.showDistrict();
+                registerActivity.showDistrictFragment();
             }
         });
 

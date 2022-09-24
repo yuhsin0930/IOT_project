@@ -19,7 +19,6 @@ public class RegisterDistrictFragment extends Fragment {
     private RegisterActivity registerActivity;
     private ListView ListViewDistrict;
     private ImageView ImageViewBack;
-    private String cityName;
 
     public static RegisterDistrictFragment newInstance() {
         return new RegisterDistrictFragment();
@@ -33,12 +32,13 @@ public class RegisterDistrictFragment extends Fragment {
 
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_register_district_back);
         ListViewDistrict = (ListView)v.findViewById(R.id.ListView_register_district);
-        ListViewDistrict.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, getDistrictName(cityName)));
+        ListViewDistrict.setAdapter(new ArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_1, getDistrictName(registerActivity.getCityName())));
 
         ImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerActivity.onBackPressed();
+                registerActivity.myOnBackPressed(true);
             }
         });
 
@@ -54,9 +54,10 @@ public class RegisterDistrictFragment extends Fragment {
     }
 
     public String[] getDistrictName(String cityName) {
-        String[] area = getResources().getStringArray(R.array.taipei);
-        switch(cityName) {
+        String[] area;
+        switch(registerActivity.getCityName()) {
             case "臺北市":
+            default:
                 area = getResources().getStringArray(R.array.taipei);
                 break;
             case "基隆市":
@@ -124,10 +125,6 @@ public class RegisterDistrictFragment extends Fragment {
                 break;
         }
         return area;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 
 }

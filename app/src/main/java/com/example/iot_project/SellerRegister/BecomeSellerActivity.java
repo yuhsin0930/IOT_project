@@ -12,8 +12,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,8 +46,8 @@ public class BecomeSellerActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener datePicker; //日歷的監聽，獲得選擇的日期
     Calendar calendar = Calendar.getInstance(); //日期的格式
     private String citizen;
+    private SQLiteDatabase sellerDatabase;
     private  int first;
-    private String sellerBirthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,52 +75,21 @@ public class BecomeSellerActivity extends AppCompatActivity {
         //-----------------------------------------------------------------------------------------------------------
 
         //-----------------------------------------------------------------------------------------------------------
-        SharedPreferences sp  = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-        sellername_checkAccount=sp.getString("sellername","");
 
         editTextSellerCheckAccount_name = (EditText) findViewById(R.id.editText_sellerCheckAccount_name);
         editTextSellerCheckAccount_nationalID = (EditText) findViewById(R.id.editText_sellerCheckAccount_nationalID);
+        if(editTextSellerCheckAccount_name.length()>0){
+            sellername_checkAccount = editTextSellerCheckAccount_name.getText().toString();
+        }
+        if(editTextSellerCheckAccount_nationalID.length()>0){
+            sellerId_checkAccount = editTextSellerCheckAccount_nationalID.getText().toString();
+        }
 
-        editTextSellerCheckAccount_name.setText(sellername_checkAccount);
-        editTextSellerCheckAccount_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                sellername_checkAccount = s.toString();
-                sp.edit().putString("sellername",sellername_checkAccount).commit();
-            }
-        });
-
-        sellerId_checkAccount = sp.getString("sellerID","");
-        editTextSellerCheckAccount_nationalID.setText(sellerId_checkAccount);
-        editTextSellerCheckAccount_nationalID.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                sellerId_checkAccount = s.toString();
-                sp.edit().putString("sellerID",sellerId_checkAccount).commit();
-            }
-        });
 
         //------------------------------------------------------------------------------------------------------------
         imageButtonSellerCheckAccount_birthday = (ImageButton) findViewById(R.id.imageButton_sellerCheckAccount_birthday);
         textViewSellerCheckAccount_birthday = (TextView) findViewById(R.id.textView_sellerCheckAccount_birthday);
-        sellerBirthday = sp.getString("sellerBirthday","");
-        textViewSellerCheckAccount_birthday.setText(sellerBirthday);
+        textViewSellerCheckAccount_birthday.setText("");
         datePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -132,7 +99,6 @@ public class BecomeSellerActivity extends AppCompatActivity {
                 String myformat = "yyyy/MM/dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myformat, Locale.TAIWAN);
                 textViewSellerCheckAccount_birthday.setText(sdf.format(calendar.getTime()));
-                sp.edit().putString("sellerBirthday",sdf.format(calendar.getTime())).commit();
 
             }
         };
@@ -159,7 +125,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        SharedPreferences sp  = getSharedPreferences("sellerDetail",MODE_PRIVATE);
         citizen = sp.getString("citizenship","臺灣");
         textViewSellerCheckAccount_citizenShip.setText(citizen+"  > ");
         //---------------------------------------------------------------------------------------------------------------
@@ -185,6 +151,20 @@ public class BecomeSellerActivity extends AppCompatActivity {
                             .putString("sellerBirthday",sellerBirthday)
                             .putString("sellerId",sellerId)
                             .commit(); //呼叫commit()方法寫入
+                    // Gets the data repository in write mode
+                    DBHelper dbHelper = new DBHelper(BecomeSellerActivity.this);
+                    SQLiteDatabase sellerDatabase = dbHelper.getWritableDatabase();
+
+                // Create a new map of values, where column names are the keys
+                    ContentValues values = new ContentValues();
+                    values.put("sName", sellerName);
+                    values.put("sBirthday", sellerBirthday);
+                    values.put("IDNumber",sellerId);
+                    values.put("sCountry",citizen);
+
+                // Insert the new row, returning the primary key value of the new row
+                    long newRowId = sellerDatabase.insert("seller", null, values);
+
                     Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
                     startActivity(intent);
                 }
@@ -195,7 +175,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        sellerDatabase.close();
     }
 }
 

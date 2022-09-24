@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iot_project.R;
 
@@ -24,6 +26,8 @@ public class MemberActivity extends AppCompatActivity {
     private MemberCouponFragment memberCouponFragment;
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
+    private long timeTemp;
+    private Boolean GoodsOrdersFlag, DetailedFlag, CouponFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,9 @@ public class MemberActivity extends AppCompatActivity {
         getSupportActionBar().hide();              // 隱藏ActionBar
         window = getWindow();
         window.setNavigationBarColor(0xaaffffff);  // 下面NavigationBar白色底
+        GoodsOrdersFlag = false;
+        DetailedFlag = false;
+        CouponFlag = false;
         setStatusBarColor("orange");
     }
 
@@ -65,7 +72,8 @@ public class MemberActivity extends AppCompatActivity {
         }
     }
 
-    public void showOrders(int whichTab) {
+    public void showOrdersFragment(int whichTab) {
+        GoodsOrdersFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberOrdersFragment") == null) {
@@ -80,7 +88,8 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showGoods(String barName) {
+    public void showGoodsFragment(String barName) {
+        GoodsOrdersFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberGoodsFragment") == null) {
@@ -95,7 +104,8 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showCoupon(String barName) {
+    public void showCouponFragment(String barName) {
+        CouponFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
@@ -110,7 +120,8 @@ public class MemberActivity extends AppCompatActivity {
         setStatusBarColor("white");
     }
 
-    public void showOrdersDetailed(String barName) {
+    public void showOrdersDetailedFragment(String barName) {
+        DetailedFlag = true;
         fragmentTrans = fragmentMgr.beginTransaction();
         fragmentTrans.setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim);
         if (fragmentMgr.findFragmentByTag("memberOrdersDetailedFragment") == null) {
@@ -120,18 +131,51 @@ public class MemberActivity extends AppCompatActivity {
         } else {
             fragmentTrans.show(memberOrdersDetailedFragment);
         }
-        fragmentTrans.hide(memberFragment);
+        fragmentTrans.hide(memberOrdersFragment);
         fragmentTrans.commit();
         setStatusBarColor("white");
     }
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            super.onBackPressed();
-        } else {
-            getSupportFragmentManager().popBackStack();
-            setStatusBarColor("orange");
+        if ((System.currentTimeMillis() - timeTemp) > 300) {
+            timeTemp = System.currentTimeMillis();
+        if (DetailedFlag) {
+            DetailedFlag = false;
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+            fragmentTrans.hide(memberOrdersDetailedFragment);
+            fragmentTrans.show(memberOrdersFragment);
+            fragmentTrans.commit();
+            Toast.makeText(this, "aaa", Toast.LENGTH_SHORT).show();
+        } else if (GoodsOrdersFlag) {
+            GoodsOrdersFlag = false;
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+            if (fragmentMgr.findFragmentByTag("memberOrdersFragment") != null) {
+                fragmentTrans.hide(memberOrdersFragment);
+            }
+            if (fragmentMgr.findFragmentByTag("memberGoodsFragment") != null) {
+                fragmentTrans.hide(memberGoodsFragment);
+            }
+            fragmentTrans.show(memberFragment);
+            fragmentTrans.commit();
+            Toast.makeText(this, "BBB", Toast.LENGTH_SHORT).show();
+        } else if (CouponFlag) {
+            CouponFlag = false;
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+            fragmentTrans.hide(memberCouponFragment);
+            fragmentTrans.show(memberFragment);
+            fragmentTrans.commit();
+            Toast.makeText(this, "ccc", Toast.LENGTH_SHORT).show();
+            } else {
+                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                    getSupportFragmentManager().popBackStack();
+                    Log.d("member", "getBackStackEntryCount = " + i);
+                }
+                super.onBackPressed();
+            }
         }
     }
 

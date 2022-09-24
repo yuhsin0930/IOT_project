@@ -1,6 +1,9 @@
 package com.example.iot_project.member;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -8,10 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.iot_project.MainActivity;
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
@@ -28,6 +35,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout RelativeLayoutMystore, RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
+    private TextView textViewName;
+    private Button button_main;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -44,6 +53,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findView() {
+        button_main = (Button)view.findViewById(R.id.button_main);
+        textViewName = (TextView)view.findViewById(R.id.textView_member_name);
         imageViewSetting = (ImageView)view.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)view.findViewById(R.id.imageView_member_cart);
         imageViewMypic = (ImageView)view.findViewById(R.id.imageView_member_picture);
@@ -64,9 +75,12 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private void setData(){
         memberActivity = (MemberActivity)getActivity();
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
+        textViewName.setText(getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE)
+                .getString("account_name", "Apple2022"));
     }
 
     private void setListener(){
+        button_main.setOnClickListener(this);
         imageViewSetting.setOnClickListener(this);
         imageViewCart.setOnClickListener(this);
         imageViewMypic.setOnClickListener(this);
@@ -87,6 +101,10 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.button_main:
+                intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.RelativeLayout_member_mystore:
                 intent = new Intent(getContext(), MyStoreActivity.class);
                 startActivity(intent);
@@ -100,16 +118,16 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.RelativeLayout_member_orders:
             case R.id.LinearLayout_member_orders_0:
-                memberActivity.showOrders(0);
+                memberActivity.showOrdersFragment(0);
                 break;
             case R.id.LinearLayout_member_orders_1:
-                memberActivity.showOrders(1);
+                memberActivity.showOrdersFragment(1);
                 break;
             case R.id.LinearLayout_member_orders_2:
-                memberActivity.showOrders(2);
+                memberActivity.showOrdersFragment(2);
                 break;
             case R.id.LinearLayout_member_orders_3:
-                memberActivity.showOrders(3);
+                memberActivity.showOrdersFragment(3);
                 break;
             case R.id.RelativeLayout_member_becomeSeller:
                 Log.d("main", "getContext() = " + getContext());
@@ -118,22 +136,20 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 RelativeLayoutBecomeSeller.setVisibility(View.GONE);
                 break;
             case R.id.RelativeLayout_member_favorite:
-                memberActivity.showGoods("按讚好物");
+                memberActivity.showGoodsFragment("按讚好物");
                 break;
             case R.id.RelativeLayout_member_bought:
-                memberActivity.showGoods("再買一次");
+                memberActivity.showGoodsFragment("再買一次");
                 break;
             case R.id.RelativeLayout_member_seen:
-                memberActivity.showGoods("瀏覽紀錄");
+                memberActivity.showGoodsFragment("瀏覽紀錄");
                 break;
             case R.id.RelativeLayout_member_coupon:
-                memberActivity.showCoupon("優惠券");
+                memberActivity.showCouponFragment("優惠券");
                 break;
             case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:
                 intent = new Intent(getContext(), RegisterActivity.class);
-                intent.putExtra("name", "帳號設定");
-                intent.putExtra("isFromRegister", false);
                 startActivity(intent);
                 break;
         }
