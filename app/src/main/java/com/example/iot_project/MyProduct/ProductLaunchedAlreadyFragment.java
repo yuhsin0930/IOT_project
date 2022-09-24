@@ -64,7 +64,6 @@ public class ProductLaunchedAlreadyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_product_launched_already, container, false);
-        ProductLaunchAlready_listView = (ListView)v.findViewById(R.id.ProductLaunchAlready_listView);
 
         return v;
     }

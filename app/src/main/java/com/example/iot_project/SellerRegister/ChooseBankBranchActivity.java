@@ -208,10 +208,10 @@ public class ChooseBankBranchActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case " 012 台北富邦商業銀行":
+            case "012 台北富邦商業銀行":
                 switch (bankArea){
                     case "臺北市":
-                        bankBranch = getResources().getStringArray(R.array.台北富邦商業銀行台北);
+                        bankBranch = getResources().getStringArray(R.array.台北富邦商業銀行新北);
                         break;
                     case "基隆市":
                         bankBranch = getResources().getStringArray(R.array.台北富邦商業銀行基隆);

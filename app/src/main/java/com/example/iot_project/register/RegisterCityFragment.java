@@ -17,7 +17,7 @@ public class RegisterCityFragment extends Fragment {
     private RegisterActivity registerActivity;
     private ListView listViewCommon;
     private ImageView ImageViewBack;
-    private String cityName = "台北市";
+    private String cityName;
 
     public RegisterCityFragment() {}
 

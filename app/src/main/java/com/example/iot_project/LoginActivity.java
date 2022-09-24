@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 .commit();
                                         Log.d("main","[LoginInformation]sp.getall()"+sp.getAll());
                                         Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
-                                        intent = new Intent(LoginActivity.this, MemberActivity.class);
+                                        intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                     }
                                 }
@@ -137,6 +137,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+                } else {
+                    Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
                 }
             }
         });

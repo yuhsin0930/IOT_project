@@ -82,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (fragmentMgr.findFragmentByTag("registerCityFragment") == null) {
             registerCityFragment = new RegisterCityFragment();
             fragmentTrans.add(R.id.FrameLayout_register, registerCityFragment, "registerCityFragment");
+            fragmentTrans.addToBackStack(null);
         } else {
             fragmentTrans.show(registerCityFragment);
         }
@@ -104,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
         if ((System.currentTimeMillis() - timeTemp) > 300) {
             timeTemp = System.currentTimeMillis();
             if (myBackInDistrict) {
+                myBackInDistrict = false;
                 districtFlag = false;
                 fragmentTrans = fragmentMgr.beginTransaction();
                 fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
@@ -116,6 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                 fragmentTrans = fragmentMgr.beginTransaction();
                 fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
                 fragmentTrans.hide(registerDistrictFragment);
+                fragmentTrans.hide(registerCityFragment);
                 fragmentTrans.show(registerFragment);
                 fragmentTrans.commit();
             } else if (cityFlag) {
@@ -126,6 +129,10 @@ public class RegisterActivity extends AppCompatActivity {
                 fragmentTrans.show(registerFragment);
                 fragmentTrans.commit();
             } else {
+                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                    getSupportFragmentManager().popBackStack();
+                    Log.d("register", "getBackStackEntryCount = " + i);
+                }
                 super.onBackPressed();
             }
         }

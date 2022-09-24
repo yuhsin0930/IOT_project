@@ -1,7 +1,10 @@
 package com.example.iot_project.NewProduct;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
 
 import java.util.HashMap;
@@ -43,8 +47,9 @@ public class SetPriceFragment extends Fragment {
     private EditText editTextSetNorm_productAmount;
     private EditText editTextSetNorm_productPrice;
     private String productNorm;
-    private String productNormPrice;
-    private String productNormAmount;
+    private int productNormPrice;
+    private Integer productNormAmount;
+
 
 
     public SetPriceFragment() {
@@ -87,24 +92,21 @@ public class SetPriceFragment extends Fragment {
         editTextSetNorm_productNorm = (EditText)v.findViewById(R.id.editText_setNorm_productNorm);
         editTextSetNorm_productAmount = (EditText)v.findViewById(R.id.editText_setNorm_productAmount);
         editTextSetNorm_productPrice = (EditText)v.findViewById(R.id.editText_setNorm_productPrice);
-
-        SharedPreferences newsp = setPriceActivity.getSharedPreferences(mParam2, Context.MODE_PRIVATE);
-        productNorm = newsp.getString("productNorm","");
-        productNormPrice = newsp.getString("productNormPrice","");
-        productNormAmount = newsp.getString("productNormAmount","");
-
-
-        editTextSetNorm_productNorm.setText(productNorm);
-        editTextSetNorm_productPrice.setText(productNormPrice);
-        editTextSetNorm_productAmount.setText(productNormAmount);
-
-        Map<String,String> productPrice = new HashMap<>();
-        productPrice.put("productNorm",productNorm);
-        productPrice.put("productNormPrice",productNormPrice);
-        productPrice.put("productNormAmount",productNormAmount);
-        Log.d("main",productPrice.toString());
-        setPriceActivity.saveFragment(mParam2,productPrice);
-
+        DBHelper dbHelper = new DBHelper(setPriceActivity);
+        SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
+        Map<String, Object> normInfoMap = new HashMap<>();
+        Cursor normCursor = setPriceDatabase.rawQuery(" SELECT * FROM goodsNorm WHERE fragNum='"+mParam2+"';", null);
+        normCursor.moveToFirst();
+        if(normCursor.getCount()!=0){
+            productNorm = normCursor.getString(normCursor.getColumnIndexOrThrow("norm"));
+            productNormPrice = normCursor.getInt(normCursor.getColumnIndexOrThrow("price"));
+            productNormAmount = normCursor.getInt(normCursor.getColumnIndexOrThrow("normNum"));
+            editTextSetNorm_productNorm.setText(productNorm);
+            editTextSetNorm_productPrice.setText(String.valueOf(productNormPrice));
+            editTextSetNorm_productAmount.setText(String.valueOf(productNormAmount));
+        }
+        setPriceDatabase.close();
+        dbHelper.close();
         editTextSetNorm_productNorm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,12 +118,17 @@ public class SetPriceFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if(s.toString().length()!=0){
                     productNorm = s.toString();
-                    productPrice.put("productNorm",productNorm);
+
                 }else{
                     productNorm = "";
-                    productPrice.put("productNorm",productNorm);
                 }
-                setPriceActivity.saveFragment(mParam2,productPrice);
+                DBHelper dbHelper = new DBHelper(setPriceActivity);
+                SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("norm",productNorm);
+                setPriceDatabase.update("goodsNorm",cv,"fragNum='"+mParam2+"'",null);
+                setPriceDatabase.close();
+                dbHelper.close();
             }
         });
         editTextSetNorm_productPrice.addTextChangedListener(new TextWatcher() {
@@ -134,13 +141,17 @@ public class SetPriceFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().length()!=0){
-                    productNormPrice = s.toString();
-                    productPrice.put("productNormPrice",productNormPrice);
+                    productNormPrice=Integer.valueOf(s.toString());
                 }else{
-                    productNormPrice="";
-                    productPrice.put("productNormPrice",productNormPrice);
+                    productNormPrice=0;
                 }
-                setPriceActivity.saveFragment(mParam2,productPrice);
+                DBHelper dbHelper = new DBHelper(setPriceActivity);
+                SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("price",productNormPrice);
+                setPriceDatabase.update("goodsNorm",cv,"fragNum='"+mParam2+"'",null);
+                setPriceDatabase.close();
+                dbHelper.close();
             }
         });
         editTextSetNorm_productAmount.addTextChangedListener(new TextWatcher() {
@@ -153,33 +164,27 @@ public class SetPriceFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().length()!=0){
-                    productNormAmount= s.toString();
-                    productPrice.put("productNormAmount",productNormAmount);
-                    Log.d("main",productPrice.toString());
-                }else{
-                    productNormPrice="";
-                    productPrice.put("productNormAmount",productNormAmount);
+                    productNormAmount= Integer.valueOf(s.toString());
+                }else {
+                    productNormAmount = 0;
+
                 }
-                setPriceActivity.saveFragment(mParam2,productPrice);
+                DBHelper dbHelper = new DBHelper(setPriceActivity);
+                SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("normNum",productNormAmount);
+                setPriceDatabase.update("goodsNorm",cv,"fragNum='"+mParam2+"'",null);
+                setPriceDatabase.close();
+                dbHelper.close();
+
             }
         });
-
-        productPrice.put("productNorm",productNorm);
-        productPrice.put("productNormPrice",productNormPrice);
-        productPrice.put("productNormAmount",productNormAmount);
-        Log.d("main",productPrice.toString());
 
         imageViewSetNormDelete = (ImageView)v.findViewById(R.id.imageView_setNorm_delete);
         imageViewSetNormDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setPriceActivity.deleteFragment(mParam2);
-                SharedPreferences sp = setPriceActivity.getSharedPreferences("newProduct",Context.MODE_PRIVATE);
-                Set<String> productNormSet = sp.getStringSet("normFragmentSet", new HashSet<String>());
-                Log.d("main","SetSize = " +productNormSet.size());
-                productNormSet.remove(mParam2);
-                Log.d("main","SetSize = " +productNormSet.size());
-                Log.d("main",mParam2);
             }
         });
 

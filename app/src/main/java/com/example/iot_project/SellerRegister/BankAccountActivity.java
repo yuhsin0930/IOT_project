@@ -3,20 +3,28 @@ package com.example.iot_project.SellerRegister;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BankAccountActivity extends AppCompatActivity {
@@ -25,6 +33,8 @@ public class BankAccountActivity extends AppCompatActivity {
     private TextView textViewBankAccount_bankName,textViewBankAccount_bankArea,textViewBankAccount_branch;
     private EditText editTextBankAccount_bankAccountNumber,editTextBankAccount_bankAccountName;
     private Button buttonBankAccount_finish;
+    private ContentValues cv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,16 @@ public class BankAccountActivity extends AppCompatActivity {
         String bankName = sp.getString("bankName","臺灣銀行");
         String bankArea = sp.getString("bankArea","臺北");
         String bankBranch = sp.getString("bankBranch","選擇");
+        String sellerName = sp.getString("sellerName","");
+        String sellerBirthday = sp.getString("sellerBirthday","");
+        String sellerID = sp.getString("sellerId","");
+        String city = sp.getString("county","");
+        String area = sp.getString("area","");
+        String citizen = sp.getString("citizenship","");
+        String sellerAddressNum = sp.getString("sellerAddressNum","");
+        String sellerAddress = sp.getString("sellerAddress","");
+        String bankAccount = sp.getString("bankAccount","");
+        String bankAccountName = sp.getString("bankAccountName","");
 
         textViewBankAccount_bankName = (TextView)findViewById(R.id.textView_bankAccount_bankName);
         textViewBankAccount_bankName.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +70,7 @@ public class BankAccountActivity extends AppCompatActivity {
         textViewBankAccount_bankArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.edit().putString("bankBranch","選擇").commit();
                 Intent intent = new Intent(BankAccountActivity.this,ChooseBankAreaActivity.class);
                 startActivity(intent);
             }
@@ -60,6 +81,7 @@ public class BankAccountActivity extends AppCompatActivity {
         textViewBankAccount_branch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(BankAccountActivity.this,ChooseBankBranchActivity.class);
                 startActivity(intent);
             }
@@ -67,35 +89,148 @@ public class BankAccountActivity extends AppCompatActivity {
         textViewBankAccount_branch.setText(bankBranch+"  > ");
         //------------------------------------------------------------------------------------------
         editTextBankAccount_bankAccountNumber = (EditText)findViewById(R.id.editText_bankAccount_bankAccountNumber);
+        editTextBankAccount_bankAccountNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String bankaccount = s.toString();
+                sp.edit().putString("bankAccount",bankaccount).commit();
+            }
+        });
         editTextBankAccount_bankAccountName = (EditText)findViewById(R.id.editText_bankAccount_bankAccountName);
+        editTextBankAccount_bankAccountName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String bankacountName = s.toString();
+                sp.edit().putString("bankAccountName",bankacountName).commit();
+            }
+        });
+        editTextBankAccount_bankAccountName.setText(bankAccountName);
+        editTextBankAccount_bankAccountNumber.setText(bankAccount);
         //------------------------------------------------------------------------------------------
         buttonBankAccount_finish = (Button)findViewById(R.id.button_bankAccount_finish);
         buttonBankAccount_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog successbecomeSellerNowDlg = new Dialog(BankAccountActivity.this);
-                successbecomeSellerNowDlg.setContentView(R.layout.dialog_success_become_seller);
-                successbecomeSellerNowDlg.show();
-                successbecomeSellerNowDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                butttonSuccessBecomeSeller_checkMyStore = (Button)successbecomeSellerNowDlg.findViewById(R.id.button_successBecomeSellerDialog_checkMyStore);
-                butttonSuccessBecomeSeller_checkMyStore.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String bankAccountName = editTextBankAccount_bankAccountName.getText().toString();
-                        String bankAccountNumber = editTextBankAccount_bankAccountNumber.getText().toString();
-                        SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-                        sp.edit().clear().commit();
-                        Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                if(bankBranch=="選擇"||editTextBankAccount_bankAccountName.length()==0||editTextBankAccount_bankAccountNumber.length()==0){
+                    Toast.makeText(BankAccountActivity.this, "尚未填寫完成", Toast.LENGTH_SHORT).show();
+                }else{
+                    String bankAccountName = editTextBankAccount_bankAccountName.getText().toString();
+                    String bankAccountNumber = editTextBankAccount_bankAccountNumber.getText().toString();
+                    SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
+                    sp.edit().clear().commit();
 
+                    SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
+                    sp.edit().putString("IDNumber",sellerID).commit();
+                    //--------------------------------------------------------------------------
+                    Dialog successbecomeSellerNowDlg = new Dialog(BankAccountActivity.this);
+                    successbecomeSellerNowDlg.setContentView(R.layout.dialog_success_become_seller);
+                    successbecomeSellerNowDlg.show();
+                    successbecomeSellerNowDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    butttonSuccessBecomeSeller_checkMyStore = (Button)successbecomeSellerNowDlg.findViewById(R.id.button_successBecomeSellerDialog_checkMyStore);
+                    butttonSuccessBecomeSeller_checkMyStore.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DBHelper dbHelper = new DBHelper(BankAccountActivity.this);
+                            SQLiteDatabase sellerDatabase = dbHelper.getWritableDatabase();
+                            cv = new ContentValues();
+                            cv.put("sCountry",citizen);
+                            cv.put("sName",sellerName);
+                            cv.put("sBirthday",sellerBirthday);
+                            cv.put("IDNumber",sellerID);
+                            cv.put("sCity",city);
+                            cv.put("district",area);
+                            cv.put("postalCode",sellerAddressNum);
+                            cv.put("sAddress",sellerAddress);
+                            cv.put("bankName",bankName);
+                            cv.put("bankArea",bankArea);
+                            cv.put("bankBranch",bankBranch);
+                            cv.put("bankNumber",bankAccount);
+                            cv.put("bankAccount",bankAccountName);
+                            cv.put("sState","審核中");
+                            long id = sellerDatabase.insert("seller", null, cv);
+                            Cursor sellerCursor= sellerDatabase.rawQuery("select * from seller;", null);
+                            Map<String, Object> sellerInfoMap = new HashMap<>();
+                            //    資料表名稱 : seller
+                            //    欄位中文名稱     欄位名稱       Cursor Index
+                            //    *賣家_id        seller_id        1
+                            //    賣場名稱 	     storeName        2
+                            //    賣場照片 	     storePicture     3
+                            //    國籍 	         sCountry         4
+                            //    姓名 	         sName            4
+                            //    生日 	         sBirthday        5
+                            //    身分證字號 	     IDNumber         6
+                            //    城市            sCity            8
+                            //    行政區          district         9
+                            //    郵遞區號        postalCode       10
+                            //    地址           sAddress         11
+                            //    銀行名稱        bankName         12
+                            //    銀行地區        bankArea         13
+                            //    銀行分行        bankBranch       14
+                            //    銀行帳戶        bankNumber       15
+                            //    銀行戶名        bankAccount      16
+                            //    賣家申請狀態     sState           17
+
+                            sellerCursor.moveToFirst();
+                            while(!sellerCursor.isAfterLast()) {
+                                int seller_id = sellerCursor.getInt(sellerCursor.getColumnIndexOrThrow("seller_id"));
+                                String sCountry = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sCountry"));
+                                String sName = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sName"));
+                                String sBirthday = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sBirthday"));
+                                String IDNumber = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("IDNumber"));
+                                String sCity = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sCity"));
+                                String district = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("district"));
+                                String postalCode = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("postalCode"));
+                                String sAddress = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sAddress"));
+                                String bankName = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankName"));
+                                String bankArea = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankArea"));
+                                String bankBranch = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankBranch"));
+                                String bankNumber = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankNumber"));
+                                String sState = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sState"));
+                                sellerInfoMap.put("seller_id",seller_id);
+                                sellerInfoMap.put("sCountry",sCountry);
+                                sellerInfoMap.put("sName",sName);
+                                sellerInfoMap.put("sBirthday",sBirthday);
+                                sellerInfoMap.put("IDNumber",IDNumber);
+                                sellerInfoMap.put("sCity",sCity);
+                                sellerInfoMap.put("district",district);
+                                sellerInfoMap.put("postalCode",postalCode);
+                                sellerInfoMap.put("sAddress",sAddress);
+                                sellerInfoMap.put("bankName",bankName);
+                                sellerInfoMap.put("bankArea",bankArea);
+                                sellerInfoMap.put("bankBranch",bankBranch);
+                                sellerInfoMap.put("bankNumber",bankNumber);
+                                sellerInfoMap.put("sState",sState);
+                                Log.d("main","SellerInfoMap = "+sellerInfoMap.toString());
+                                sellerCursor.moveToNext();
+                            }
+                            sellerDatabase.close();
+                            dbHelper.close();
+                            Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
 
 //------------------------------------------------------------------------------------------
 //        以下是予馨的願望
-//        是否是第一次註冊(sFirst)(Boolean)
 //        國籍(sCountry)(Text)
 //        姓名(sName)(Text)
 //        出生年月日(sBirthday)(Text)
@@ -105,7 +240,7 @@ public class BankAccountActivity extends AppCompatActivity {
 //        銀行名稱(bankName)(Text)
 //        銀行地區(bankArea)(Text)
 //        銀行分行名稱(bankBranch)(Text)
-//        銀行帳號(bankNumber)(Int)
+//        銀行帳號(bankNumber)(Text)
 //        銀行戶名(bankAccount)(Text)
 //-------------------------------------------------------------------------------------------------
 

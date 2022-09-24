@@ -1,23 +1,26 @@
 package com.example.iot_project.register;
 
+import static android.content.Context.MODE_PRIVATE;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,9 +28,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.R;
@@ -36,7 +39,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -63,7 +65,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Button buttonSubmit, buttonLogout;
     private RegisterActivity registerActivity;
     private InputMethodManager keyboard;
-    private boolean addressDropFlag;
+    private boolean addressDropFlag, isSubmitEnable;
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
@@ -71,7 +73,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private String account, password_1, password_2, name, birthday, phone;
     private String email, city, district, address, bankNumber, bankAccount;
     private View view;
-    private Boolean[] summitFlag;
+    private Boolean[] submitFlag;
+    private ScrollView ScrollViewRegister;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
@@ -89,19 +92,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void setData() {
         addressDropFlag = true;
+        isSubmitEnable = false;
         registerActivity = (RegisterActivity) getActivity();
         keyboard = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
         calendar = Calendar.getInstance();
-        summitFlag = new Boolean[9];
-        for (int i = 0; i < summitFlag.length; i++) summitFlag[i] = false;
+        submitFlag = new Boolean[9];
+        for (int i = 0; i < submitFlag.length; i++) submitFlag[i] = false;
         address = "";
         city = "";
         district = "";
 
 //        [isLoggedIn : 判斷帳號是否已登入]
 //       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
-       SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", registerActivity.MODE_PRIVATE);
+       SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
 //       "is_login" : 帳號是否登入， true 為登入，false為登出
        Boolean isLoggedIn = sp.getBoolean("is_login",false);
 //       "member_id" : 帳號ID
@@ -111,12 +115,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
        Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
 
         if (isLoggedIn) {
-            buttonSubmit.setVisibility(View.VISIBLE);
-            relativeLayoutLogout.setVisibility(View.GONE);
-            textViewBarName.setText("帳號設定");
-        } else {
             buttonSubmit.setVisibility(View.GONE);
             relativeLayoutLogout.setVisibility(View.VISIBLE);
+            textViewBarName.setText("帳號設定");
+        } else {
+            buttonSubmit.setVisibility(View.VISIBLE);
+            relativeLayoutLogout.setVisibility(View.GONE);
             textViewBarName.setText("註冊");
         }
 
@@ -170,8 +174,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.RelativeLayout_register_city:
                 keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                city = "";
-                district = "";
+                registerActivity.setCityName("");
+                registerActivity.setDistrictName("");
                 registerActivity.showCityFragment();
                 break;
             case R.id.RelativeLayout_register_bankNumber:
@@ -179,7 +183,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.RelativeLayout_register_bankAccount:
-                editTextBankAccount.requestFocus();
+                editTextBankNumber.requestFocus();
                 keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
                 break;
             case R.id.LinearLayout_register_address:
@@ -195,6 +199,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     addressDropFlag = true;
                 }
                 break;
+            case R.id.editText_register_address:
+                keyboard.showSoftInput(editTextAddress, InputMethodManager.SHOW_IMPLICIT);
+                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                editTextAddress.requestFocus();
+                break;
             case R.id.imageView_register_address_x:
                 editTextAddress.setText("");
                 break;
@@ -202,7 +211,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
-                if (summitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+                if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
                     account = editTextAccount.getText().toString();
                     password_1 = editTextPassword_1.getText().toString();
                     name = editTextName.getText().toString();
@@ -222,8 +231,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.button_register_logout:
-//                SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-//                sp.edit().putBoolean("is_login", false).commit();
+                SharedPreferences sp = getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE);
+                sp.edit().putBoolean("is_login", false).commit();
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -290,7 +299,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // 及時監聽
+    // 即時監聽
     private class myTextWatcher implements TextWatcher {
         private int whichEdit;
         myTextWatcher(int whichEdit) {
@@ -306,18 +315,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     account = editTextAccount.getText().toString();
                     if (account.length() == 0) {
                         textViewAccountWarn.setText("");
-                        summitFlag[0] = false;
+                        submitFlag[0] = false;
                     } else if (account.matches("^[a-z]\\w*$")) {
                         textViewAccountWarn.setText("");
-                        summitFlag[0] = true;
+                        submitFlag[0] = true;
                     }
                     else {
                         textViewAccountWarn.setText("(開頭須為a-z)");
-                        summitFlag[0] = false;
+                        submitFlag[0] = false;
                     }
                     if (!account.matches("^\\w*$")) {
                         textViewAccountWarn.setText("(不可有特殊字元)");
-                        summitFlag[0] = false;
+                        submitFlag[0] = false;
                     }
                     break;
                 case R.id.edittext_register_password_1:
@@ -330,63 +339,63 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
                     if (password_1.length() == 0) {
                         textViewPasswordWarn_1.setText("");
-                        summitFlag[1] = false;
+                        submitFlag[1] = false;
                     } else if (password_1.length() > 5 && password_1.length() < 13 && password_1.matches("^([0-9]*[a-zA-Z][0-9]*)$")){
                         textViewPasswordWarn_1.setText("");
-                        summitFlag[1] = true;
+                        submitFlag[1] = true;
                     } else {
                         textViewPasswordWarn_1.setText("(密碼格式不符)");
-                        summitFlag[1] = false;
+                        submitFlag[1] = false;
                     }
 
                     if (password_2.length() == 0) {
                         textViewPasswordWarn_2.setText("");
-                        summitFlag[2] = false;
+                        submitFlag[2] = false;
                     } else if (password_2.equals(password_1)) {
                         textViewPasswordWarn_2.setText("");
-                        summitFlag[2] = true;
+                        submitFlag[2] = true;
                     } else {
                         textViewPasswordWarn_2.setText("(密碼不一致)");
-                        summitFlag[2] = false;
+                        submitFlag[2] = false;
                     }
                     break;
                 case R.id.edittext_register_name:
                     name = editTextName.getText().toString();
                     if (name.length() == 0) {
                         textViewNameWarn.setText("");
-                        summitFlag[3] = false;
+                        submitFlag[3] = false;
                     } else if (name.matches("^[A-z\\u4e00-\\u9fa5 ]*$")) {
                         textViewNameWarn.setText("");
-                        summitFlag[3] = true;
+                        submitFlag[3] = true;
                     } else {
                         textViewNameWarn.setText("(姓名格式不符)");
-                        summitFlag[3] = false;
+                        submitFlag[3] = false;
                     }
                     break;
                 case R.id.edittext_register_phone:
                     phone = editTextPhone.getText().toString();
                     if (phone.length() == 0) {
                         textViewPhoneWarn.setText("");
-                        summitFlag[4] = false;
+                        submitFlag[4] = false;
                     } else if (phone.length() == 0 || phone.matches("^(09)(\\d{2})(-)?(\\d{3})(-)?(\\d{3})")) {
                         textViewPhoneWarn.setText("");
-                        summitFlag[4] = true;
+                        submitFlag[4] = true;
                     } else {
                         textViewPhoneWarn.setText("(手機格式不符)");
-                        summitFlag[4] = false;
+                        submitFlag[4] = false;
                     }
                     break;
                 case R.id.edittext_register_email:
                     email = editTextEmail.getText().toString();
                     if (email.length() == 0) {
                         textViewEmailWarn.setText("");
-                        summitFlag[5] = false;
+                        submitFlag[5] = false;
                     } else if (email.matches("(.+)(@){1}(\\w+)(\\.){1}(.*)")) {
                         textViewEmailWarn.setText("");
-                        summitFlag[5] = true;
+                        submitFlag[5] = true;
                     } else {
                         textViewEmailWarn.setText("(信箱格式不符)");
-                        summitFlag[5] = false;
+                        submitFlag[5] = false;
                     }
                     break;
                 case R.id.editText_register_address:
@@ -404,43 +413,53 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     bankNumber = editTextBankNumber.getText().toString();
                     if (bankNumber.length() == 0) {
                         textViewBankNumberWarn.setText("");
-                        summitFlag[6] = false;
+                        submitFlag[6] = false;
                     } else if (bankNumber.matches("^([0-9]{10,14})$")) {
                         textViewBankNumberWarn.setText("");
-                        summitFlag[6] = true;
+                        submitFlag[6] = true;
                     } else {
                         textViewBankNumberWarn.setText("(銀行帳號格式不符)");
-                        summitFlag[6] = false;
+                        submitFlag[6] = false;
                     }
                     break;
                 case R.id.edittext_register_bankAccount:
                     bankAccount = editTextBankAccount.getText().toString();
                     if (bankAccount.length() == 0){
                         textViewBankAccountWarn.setText("");
-                        summitFlag[7] = false;
+                        submitFlag[7] = false;
                     } else if (bankAccount.matches("^[A-z\\u4e00-\\u9fa5 ]*$")) {
                         textViewBankAccountWarn.setText("");
-                        summitFlag[7] = true;
+                        submitFlag[7] = true;
                     } else {
                         textViewBankAccountWarn.setText("(戶名格式不符)");
-                        summitFlag[7] = false;
+                        submitFlag[7] = false;
                     }
                     break;
             }
 
-            summitFlag[8] = true;
-            for (int i = 0; i < summitFlag.length-1; i++) {
-                summitFlag[8] &= summitFlag[i];
-                Log.d("register", "summitFlag[" + i +"] = " + summitFlag[i]);
+            submitFlag[8] = true;
+            for (int i = 0; i < submitFlag.length-1; i++) {
+                submitFlag[8] &= submitFlag[i];
+                Log.d("register", "submitFlag[" + i +"] = " + submitFlag[i]);
             }
-            if (summitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
-                buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
-                buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+                if (!isSubmitEnable) {
+                    buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
+                    buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(
+                            1.0f,1.3f,1.0f,1.2f,
+                            Animation.RELATIVE_TO_SELF,0.5f,
+                            Animation.RELATIVE_TO_SELF,0.5f);
+                    scaleAnimation.setDuration(200);
+                    buttonSubmit.startAnimation(scaleAnimation);
+                }
+                isSubmitEnable = true;
             } else {
                 buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_4));
                 buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.font_color));
+                isSubmitEnable = false;
             }
-            Log.d("register", "-> summitFlag[8] = " + summitFlag[8]);
+            Log.d("register", "-> summitFlag[8] = " + submitFlag[8]);
 
         }
         @Override
@@ -487,6 +506,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         textViewBankAccountWarn = (TextView) view.findViewById(R.id.textView_register_bankAccount_warn);
         buttonSubmit = (Button) view.findViewById(R.id.button_register_submit);
         buttonLogout = (Button) view.findViewById(R.id.button_register_logout);
+        ScrollViewRegister = (ScrollView) view.findViewById(R.id.ScrollView_register);
     }
 
     private void setListener() {
@@ -527,6 +547,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 textViewBirthday.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
+
     }
 
 }
