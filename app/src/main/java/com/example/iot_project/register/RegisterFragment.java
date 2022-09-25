@@ -60,18 +60,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private EditText editTextAccount, editTextPassword_1, editTextPassword_2, editTextName;
     private EditText editTextPhone, editTextEmail;
     private EditText editTextAddress, editTextBankNumber, editTextBankAccount;
-    private ImageView imageViewAddress_X, imageViewAddress_Arrow, imageViewBack;
+    private ImageView imageViewAccount_arrow, imageViewAddress_X, imageViewAddress_Arrow, imageViewBack;
     private TextView textViewBarName, textViewBirthday, textViewAddress, textViewCity;
     private TextView textViewAccountWarn, textViewPasswordWarn_1, textViewPasswordWarn_2, textViewNameWarn;
     private TextView textViewPhoneWarn, textViewEmailWarn, textViewBankNumberWarn, textViewBankAccountWarn;
     private Button buttonSubmit, buttonLogout;
     private RegisterActivity registerActivity;
     private InputMethodManager keyboard;
-    private boolean addressDropFlag, isSubmitEnable;
+    private boolean addressDropFlag, isSubmitEnable, isLoggedIn;
     private Intent intent;
     private Calendar calendar;
     private DatePickerDialog.OnDateSetListener datePicker;
     private Map<String, Object> fireMap;
+    private Map<String,String> memberData;
     private String account, password_1, password_2, name, birthday, phone;
     private String email, city, district, address, bankNumber, bankAccount;
     private View view;
@@ -91,7 +92,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         setData();
         checkLoginOnSp();
         setListener();
-        Log.d("register", "onCreateView");
+
         return view;
     }
 
@@ -120,7 +121,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
         SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
 //       "is_login" : 帳號是否登入， true 為登入，false為登出
-        Boolean isLoggedIn = sp.getBoolean("is_login",false);
+        isLoggedIn = sp.getBoolean("is_login",false);
 //       "member_id" : 帳號ID
         String memberId= sp.getString("member_id","0");
 //       "account_name" : 帳號名稱
@@ -131,19 +132,43 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             buttonSubmit.setVisibility(View.GONE);
             buttonLogout.setVisibility(View.VISIBLE);
             textViewBarName.setText("帳號設定");
-
-
-            //SET一堆
-
-
-
-
-
+            setDataFromFirebase(memberId, account);
+            editTextAccount.setEnabled(false);
+            editTextAccount.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+            imageViewAccount_arrow.setVisibility(View.GONE);
+            textViewAccountWarn.setVisibility(View.GONE);
         } else {
             buttonSubmit.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.GONE);
             textViewBarName.setText("");
         }
+    }
+
+    private void setDataFromFirebase(String memberId, String account) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dataRef = database.getReference("member");
+        dataRef.orderByChild("account_name").equalTo(account).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for(DataSnapshot member : snapshot.getChildren()){
+                        memberData = (Map<String,String>)member.getValue();
+//                        "picture"
+                        editTextAccount.setText(memberData.get("account_name"));
+                        editTextName.setText(memberData.get("name"));
+                        textViewBirthday.setText(memberData.get("birthday"));
+                        editTextPhone.setText(memberData.get("phone"));
+                        editTextEmail.setText(memberData.get("email"));
+                        textViewCity.setText(memberData.get("city") + memberData.get("district"));
+                        editTextAddress.setText(memberData.get("address"));
+                        editTextBankNumber.setText(memberData.get("bankNumber"));
+                        editTextBankAccount.setText(memberData.get("bankAccount"));
+                    }
+                } else Toast.makeText(registerActivity, "會員資料可能不存在", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     @Override
@@ -236,32 +261,72 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 editTextAddress.setText("");
                 break;
             case R.id.imageView_register_back:
-                registerActivity.onBackPressed();
+                getEditText();
+                Boolean changeFlag = true;
+                changeFlag &= password_1.equals("");
+                changeFlag &= name.equals(memberData.get("name"));
+                changeFlag &= birthday.equals(memberData.get("birthday"));
+                changeFlag &= phone.equals(memberData.get("phone"));
+                changeFlag &= email.equals(memberData.get("email"));
+                changeFlag &= textViewCity.getText().equals(memberData.get("city") + memberData.get("district"));
+                changeFlag &= textViewAddress.getText().equals(memberData.get("address"));
+                changeFlag &= bankNumber.equals(memberData.get("bankNumber"));
+                changeFlag &= bankAccount.equals(memberData.get("bankAccount"));
+                if (isLoggedIn && !changeFlag) {
+//                    Dialog registerDialog = new Dialog(getContext());
+//                    registerDialog.setContentView(R.layout.dialog_register);
+//                    ImageView imageViewDialogCancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_dialog_cancel);
+//                    Button buttonDialogSubmit = (Button) registerDialog.findViewById(R.id.button_register_dialog_submit);
+//                    Button buttonDialogCancel = (Button) registerDialog.findViewById(R.id.button_register_dialog_cancel);
+//                    imageViewDialogCancel.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            registerDialog.dismiss();
+//                        }
+//                    });
+//                    buttonDialogSubmit.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            getEditText();
+//                            makeMap();
+//                            registerActivity.setFireMap(fireMap);
+//                            registerActivity.MapUploadToFireBase();
+//                            Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+//                            intent = new Intent(getContext(), LoginActivity.class);
+//                            intent.putExtra("account", account);
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(intent);
+//                            registerDialog.dismiss();
+//                        }
+//                    });
+//                    buttonDialogCancel.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            registerDialog.dismiss();
+//                        }
+//                    });
+//                    registerDialog.show();
+//                    registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    registerActivity.onBackPressed();
+                } else registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
-                if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+                if (submitFlag[8] && (city.length() * district.length() * address.length()) > 0) {
                     Dialog registerDialog = new Dialog(getContext());
                     registerDialog.setContentView(R.layout.dialog_register);
-                    ImageView imageViewCancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_dialog_cancel);
-                    Button buttonSubmit = (Button) registerDialog.findViewById(R.id.button_register_dialog_submit);
-                    Button buttonCancel = (Button) registerDialog.findViewById(R.id.button_register_dialog_cancel);
-                    imageViewCancel.setOnClickListener(new View.OnClickListener() {
+                    ImageView imageViewDialogCancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_dialog_cancel);
+                    Button buttonDialogSubmit = (Button) registerDialog.findViewById(R.id.button_register_dialog_submit);
+                    Button buttonDialogCancel = (Button) registerDialog.findViewById(R.id.button_register_dialog_cancel);
+                    imageViewDialogCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             registerDialog.dismiss();
                         }
                     });
-                    buttonSubmit.setOnClickListener(new View.OnClickListener() {
+                    buttonDialogSubmit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            account = editTextAccount.getText().toString();
-                            password_1 = editTextPassword_1.getText().toString();
-                            name = editTextName.getText().toString();
-                            birthday = textViewBirthday.getText().toString();
-                            phone = editTextPhone.getText().toString();
-                            email = editTextEmail.getText().toString();
-                            bankNumber = editTextBankNumber.getText().toString();
-                            bankAccount = editTextBankAccount.getText().toString();
+                            getEditText();
                             makeMap();
                             registerActivity.setFireMap(fireMap);
                             registerActivity.MapUploadToFireBase();
@@ -273,7 +338,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             registerDialog.dismiss();
                         }
                     });
-                    buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    buttonDialogCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             registerDialog.dismiss();
@@ -287,13 +352,28 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_register_logout:
                 SharedPreferences sp = getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE);
-                sp.edit().putBoolean("is_login", false).commit();
+                sp.edit()
+                        .putBoolean("is_login", false)
+                        .putString("member_id","")
+                        .putString("account_name","")
+                        .commit();
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void getEditText() {
+        account = editTextAccount.getText().toString();
+        password_1 = editTextPassword_1.getText().toString();
+        name = editTextName.getText().toString();
+        birthday = textViewBirthday.getText().toString();
+        phone = editTextPhone.getText().toString();
+        email = editTextEmail.getText().toString();
+        bankNumber = editTextBankNumber.getText().toString();
+        bankAccount = editTextBankAccount.getText().toString();
     }
 
     public void makeMap() {
@@ -538,6 +618,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         editTextAddress = (EditText) view.findViewById(R.id.editText_register_address);
         editTextBankNumber = (EditText) view.findViewById(R.id.edittext_register_bankNumber);
         editTextBankAccount = (EditText) view.findViewById(R.id.edittext_register_bankAccount);
+        imageViewAccount_arrow = (ImageView) view.findViewById(R.id.imageView_register_account_arrow);
         imageViewAddress_X = (ImageView) view.findViewById(R.id.imageView_register_address_x);
         imageViewAddress_Arrow = (ImageView) view.findViewById(R.id.imageView_register_address_arrow);
         imageViewBack = (ImageView) view.findViewById(R.id.imageView_register_back);
