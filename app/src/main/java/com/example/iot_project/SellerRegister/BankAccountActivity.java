@@ -55,6 +55,7 @@ public class BankAccountActivity extends AppCompatActivity {
         String sellerAddress = sp.getString("sellerAddress","");
         String bankAccount = sp.getString("bankAccount","");
         String bankAccountName = sp.getString("bankAccountName","");
+        Log.d("main","sp.all()="+sp.getAll());
 
         textViewBankAccount_bankName = (TextView)findViewById(R.id.textView_bankAccount_bankName);
         textViewBankAccount_bankName.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +189,7 @@ public class BankAccountActivity extends AppCompatActivity {
 
                             sellerCursor.moveToFirst();
                             while(!sellerCursor.isAfterLast()) {
-                                int seller_id = sellerCursor.getInt(sellerCursor.getColumnIndexOrThrow("seller_id"));
+//                                int seller_id = sellerCursor.getInt(sellerCursor.getColumnIndexOrThrow("seller_id"));
                                 String sCountry = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sCountry"));
                                 String sName = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sName"));
                                 String sBirthday = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sBirthday"));
@@ -201,8 +202,9 @@ public class BankAccountActivity extends AppCompatActivity {
                                 String bankArea = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankArea"));
                                 String bankBranch = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankBranch"));
                                 String bankNumber = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankNumber"));
+                                String bankAccount = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("bankAccount"));
                                 String sState = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sState"));
-                                sellerInfoMap.put("seller_id",seller_id);
+//                                sellerInfoMap.put("seller_id",seller_id);
                                 sellerInfoMap.put("sCountry",sCountry);
                                 sellerInfoMap.put("sName",sName);
                                 sellerInfoMap.put("sBirthday",sBirthday);
@@ -215,12 +217,15 @@ public class BankAccountActivity extends AppCompatActivity {
                                 sellerInfoMap.put("bankArea",bankArea);
                                 sellerInfoMap.put("bankBranch",bankBranch);
                                 sellerInfoMap.put("bankNumber",bankNumber);
+                                sellerInfoMap.put("bankAccount",bankAccount);
                                 sellerInfoMap.put("sState",sState);
                                 Log.d("main","SellerInfoMap = "+sellerInfoMap.toString());
                                 sellerCursor.moveToNext();
                             }
                             sellerDatabase.close();
                             dbHelper.close();
+//                            [bug] "bankNumber"  "sCountry" 沒有出現在最後的 sellerInfoMap 裡
+//                            sellerInfoMapUploadToFirebase(sellerInfoMap); // upload seller information to Firebase
                             Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
                             startActivity(intent);
                         }
@@ -228,8 +233,9 @@ public class BankAccountActivity extends AppCompatActivity {
                 }
             }
         });
-
-//------------------------------------------------------------------------------------------
+    }
+    private void sellerInfoMapUploadToFirebase(Map<String, Object> map){
+        //------------------------------------------------------------------------------------------
 //        以下是予馨的願望
 //        國籍(sCountry)(Text)
 //        姓名(sName)(Text)
@@ -243,26 +249,42 @@ public class BankAccountActivity extends AppCompatActivity {
 //        銀行帳號(bankNumber)(Text)
 //        銀行戶名(bankAccount)(Text)
 //-------------------------------------------------------------------------------------------------
+        //    資料表名稱 : seller
+        //    欄位中文名稱     欄位名稱       Cursor Index
+        //    *賣家_id        seller_id = member_id       1
+        //    賣場名稱 	     storeName =""       2
+        //    賣場照片 	     storePicture =""    3
+        //    國籍 	         sCountry         4
+        //    姓名 	         sName            4
+        //    生日 	         sBirthday        5
+        //    身分證字號 	     IDNumber         6
+        //    城市            sCity            8
+        //    行政區          district         9
+        //    郵遞區號        postalCode       10
+        //    地址           sAddress         11
+        //    銀行名稱        bankName         12
+        //    銀行地區        bankArea         13
+        //    銀行分行        bankBranch       14
+        //    銀行帳戶        bankNumber       15
+        //    銀行戶名        bankAccount      16
+        //    賣家申請狀態     sState           17
+//        將會員賣家Id統一(seller_id=member_id)
+//        member_id : getSharedPreferenced("LoginInformation",Mode.Private) key: "member_id"
 
-//------------------------------------------
-//      使用 Firebase 服務
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//      取得  Firebase 資料庫 (GET網址)
-        DatabaseReference dataref = database.getReference();
-        Log.d("main","sp.getAll()="+sp.getAll());
-//        sp.getAll()={area=中山區, sellerId=A123456789, bankBranch=中山分行, citizenship=香港,
-//        sellerBirthday=2022/09/07, sellerName=user, county=臺北市, sellerAddressNumber=777,
-//        sellerAddress=中正路23號5樓}
-//      sp.getAll(): retuern Map， 取出 SharedPreference 所有資料
-        Map<String, ?> MapData = sp.getAll();
+//        SharedPreferences memberInfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//        String member_id = memberInfor.getString("member_id","No Id");
+//        Log.d("main","member_id="+member_id);
 //
-        if(MapData.size()==9){
-//            dataref.child("user/group/seller").setValue(true);
-//            dataref.child("seller").push().setValue(MapData);
-        }
+//        map.put("seller_id",member_id);
+//        map.put("storeName","");
+//        map.put("storePicture","");
+//
+////      使用 Firebase 服務
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+////      取得  Firebase 資料庫 (GET網址)
+//        DatabaseReference dataref = database.getReference();
+////      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
+//        dataref.child("seller").push().setValue(map);
     }
-//    private void sellerInfoMapUploadToFirebase( map){
-//
-//    }
 
 }

@@ -8,12 +8,12 @@
     tools:context=".NewProduct.NewPictureFragment" >
 
     <ImageView
-        android:id="@+id/displayImageView"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
-        android:layout_marginStart="16dp"
+        android:id="@+id/ImageView_newPicture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/cat3"
+        android:src="@drawable/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
