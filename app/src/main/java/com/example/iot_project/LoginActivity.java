@@ -4,13 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword, editTextAccount;
     private String account, password;
     private boolean membershipCheck;
+    private InputMethodManager keyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editText_login_password);
         editTextAccount = (EditText) findViewById(R.id.editText_login_account);
 
+        intent = getIntent();
+        editTextAccount.setText(intent.getStringExtra("account"));
+
         imageViewEyes.setOnClickListener(new View.OnClickListener() {
             Boolean flag = true;
-
             @Override
             public void onClick(View view) {
                 if (flag) {
@@ -87,7 +93,10 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editTextAccount.length() > 0 && editTextPassword.length() > 0) {
+
+                if (editTextAccount.length() * editTextPassword.length() > 0) {
+                    keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     account = editTextAccount.getText().toString();
                     password = editTextPassword.getText().toString();
                     Log.d("main", "account=" + account);
@@ -114,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String account_pwd = memberData.get("password");
 //                                    Log.d("main","memberData.get(\"password\")="+memberData.get("password"));
 
-                                    if(password.equals(account_pwd)){
+                                    if (password.equals(account_pwd)) {
                                         membershipCheck = true;
                                         SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
                                         sp.edit()
@@ -126,9 +135,12 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
                                         intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-
+                            } else {
+                                Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -138,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "請輸入完整帳號密碼", Toast.LENGTH_SHORT).show();
                 }
             }
         });

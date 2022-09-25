@@ -1,7 +1,9 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,11 +35,19 @@ public class MemberGoodsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_member_goods, container, false);
+
         findView();
         setData();
         setAdapter();
         setListener();
+
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        memberActivity = (MemberActivity)getActivity();
     }
 
     private void findView(){
@@ -48,7 +58,6 @@ public class MemberGoodsFragment extends Fragment {
 
     private void setData(){
         textViewBar.setText(getArguments().getString("barName"));
-        memberActivity = (MemberActivity)getActivity();
     }
 
     private void setAdapter(){

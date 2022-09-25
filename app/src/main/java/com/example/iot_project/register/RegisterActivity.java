@@ -47,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void setData() {
         cityFlag = false;
         districtFlag = false;
+        cityName = "";
+        districtName = "";
         getSupportActionBar().hide();                   // 隱藏ActionBar
         getWindow().setStatusBarColor(0xffffffff);      // 最上面StatusBar白色底
         getWindow().setNavigationBarColor(0xaaffffff);  // 最下面NavigationBar白色底

@@ -3,6 +3,7 @@ package com.example.iot_project.register;
 import static android.content.Context.MODE_PRIVATE;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ import android.widget.Toast;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.MainActivity;
 import com.example.iot_project.R;
+import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +55,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout relativeLayoutAccount, relativeLayoutPassword_1, relativeLayoutPassword_2;
     private RelativeLayout relativeLayoutName, relativeLayoutBirthday, relativeLayoutPhone;
     private RelativeLayout relativeLayoutEmail, relativeLayoutCity, relativeLayoutBankNumber;
-    private RelativeLayout relativeLayoutBankAccount, relativeLayoutLogout, relativeLayouAddressDrop;
+    private RelativeLayout relativeLayoutBankAccount, relativeLayouAddressDrop;
     private LinearLayout linearLayoutAddress;
     private EditText editTextAccount, editTextPassword_1, editTextPassword_2, editTextName;
     private EditText editTextPhone, editTextEmail;
@@ -84,9 +86,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_register, container, false);
+
         findView();
         setData();
         setListener();
+
         return view;
     }
 
@@ -116,12 +120,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         if (isLoggedIn) {
             buttonSubmit.setVisibility(View.GONE);
-            relativeLayoutLogout.setVisibility(View.VISIBLE);
+            buttonLogout.setVisibility(View.VISIBLE);
             textViewBarName.setText("帳號設定");
+
+
+            //SET一堆
+
+
+
+
+
         } else {
             buttonSubmit.setVisibility(View.VISIBLE);
-            relativeLayoutLogout.setVisibility(View.GONE);
-            textViewBarName.setText("註冊");
+            buttonLogout.setVisibility(View.GONE);
+            textViewBarName.setText("");
         }
 
     }
@@ -138,6 +150,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if (view.getId() != R.id.LinearLayout_register_address && view.getId() != R.id.editText_register_address
+                && view.getId() != R.id.imageView_register_address_x) {
+            imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
+            relativeLayouAddressDrop.setVisibility(View.GONE);
+            addressDropFlag = true;
+        }
         switch (view.getId()) {
             case R.id.RelativeLayout_register_account:
                 editTextAccount.requestFocus();
@@ -174,35 +192,37 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.RelativeLayout_register_city:
                 keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                registerActivity.setCityName("");
-                registerActivity.setDistrictName("");
                 registerActivity.showCityFragment();
                 break;
             case R.id.RelativeLayout_register_bankNumber:
-                editTextBankNumber.requestFocus();
                 keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
+                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                editTextBankNumber.setFocusableInTouchMode(true);
+                editTextBankNumber.requestFocus();
                 break;
             case R.id.RelativeLayout_register_bankAccount:
-                editTextBankNumber.requestFocus();
                 keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
+                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                editTextBankAccount.setFocusableInTouchMode(true);
+                editTextBankAccount.requestFocus();
                 break;
             case R.id.LinearLayout_register_address:
                 if (addressDropFlag) {
                     imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_keyboard_arrow_down_black_18_1));
                     relativeLayouAddressDrop.setVisibility(View.VISIBLE);
                     editTextAddress.setText(address);
-                    editTextAddress.requestFocus();
+                    ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                    if (address.length() == 0) {
+                        keyboard.showSoftInput(editTextAddress, InputMethodManager.SHOW_IMPLICIT);
+                        editTextAddress.setFocusableInTouchMode(true);
+                        editTextAddress.requestFocus();
+                    }
                     addressDropFlag = false;
                 } else {
                     imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
                     relativeLayouAddressDrop.setVisibility(View.GONE);
                     addressDropFlag = true;
                 }
-                break;
-            case R.id.editText_register_address:
-                keyboard.showSoftInput(editTextAddress, InputMethodManager.SHOW_IMPLICIT);
-                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
-                editTextAddress.requestFocus();
                 break;
             case R.id.imageView_register_address_x:
                 editTextAddress.setText("");
@@ -212,20 +232,46 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_register_submit:
                 if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
-                    account = editTextAccount.getText().toString();
-                    password_1 = editTextPassword_1.getText().toString();
-                    name = editTextName.getText().toString();
-                    birthday = textViewBirthday.getText().toString();
-                    phone = editTextPhone.getText().toString();
-                    email = editTextEmail.getText().toString();
-                    bankNumber = editTextBankNumber.getText().toString();
-                    bankAccount = editTextBankAccount.getText().toString();
-                    makeMap();
-                    registerActivity.setFireMap(fireMap);
-                    registerActivity.MapUploadToFireBase();
-                    Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(getContext(), LoginActivity.class);
-                    startActivity(intent);
+                    Dialog registerDialog = new Dialog(getContext());
+                    registerDialog.setContentView(R.layout.dialog_register);
+                    ImageView imageViewCancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_dialog_cancel);
+                    Button buttonSubmit = (Button) registerDialog.findViewById(R.id.button_register_dialog_submit);
+                    Button buttonCancel = (Button) registerDialog.findViewById(R.id.button_register_dialog_cancel);
+                    imageViewCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            registerDialog.dismiss();
+                        }
+                    });
+                    buttonSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            account = editTextAccount.getText().toString();
+                            password_1 = editTextPassword_1.getText().toString();
+                            name = editTextName.getText().toString();
+                            birthday = textViewBirthday.getText().toString();
+                            phone = editTextPhone.getText().toString();
+                            email = editTextEmail.getText().toString();
+                            bankNumber = editTextBankNumber.getText().toString();
+                            bankAccount = editTextBankAccount.getText().toString();
+                            makeMap();
+                            registerActivity.setFireMap(fireMap);
+                            registerActivity.MapUploadToFireBase();
+                            Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
+                            intent = new Intent(getContext(), LoginActivity.class);
+                            intent.putExtra("account", account);
+                            startActivity(intent);
+                            registerDialog.dismiss();
+                        }
+                    });
+                    buttonCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            registerDialog.dismiss();
+                        }
+                    });
+                    registerDialog.show();
+                    registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 } else {
                     Toast.makeText(registerActivity, "請先輸入完整資料", Toast.LENGTH_SHORT).show();
                 }
@@ -237,12 +283,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 break;
-        }
-        if (view.getId() != R.id.LinearLayout_register_address && view.getId() != R.id.editText_register_address
-                && view.getId() != R.id.imageView_register_address_x) {
-            imageViewAddress_Arrow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.outline_arrow_forward_ios_black_18));
-            relativeLayouAddressDrop.setVisibility(View.GONE);
-            addressDropFlag = true;
         }
     }
 
@@ -450,7 +490,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             1.0f,1.3f,1.0f,1.2f,
                             Animation.RELATIVE_TO_SELF,0.5f,
                             Animation.RELATIVE_TO_SELF,0.5f);
-                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setDuration(150);
                     buttonSubmit.startAnimation(scaleAnimation);
                 }
                 isSubmitEnable = true;
@@ -477,7 +517,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         relativeLayoutCity = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_city);
         relativeLayoutBankNumber = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_bankNumber);
         relativeLayoutBankAccount = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_bankAccount);
-        relativeLayoutLogout = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_logout);
         relativeLayouAddressDrop = (RelativeLayout) view.findViewById(R.id.RelativeLayout_register_address_drop);
         linearLayoutAddress = (LinearLayout) view.findViewById(R.id.LinearLayout_register_address);
         editTextAccount = (EditText) view.findViewById(R.id.edittext_register_account);
@@ -509,6 +548,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         ScrollViewRegister = (ScrollView) view.findViewById(R.id.ScrollView_register);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener() {
         relativeLayoutAccount.setOnClickListener(this);
         relativeLayoutPassword_1.setOnClickListener(this);
@@ -520,14 +560,21 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         relativeLayoutCity.setOnClickListener(this);
         relativeLayoutBankNumber.setOnClickListener(this);
         relativeLayoutBankAccount.setOnClickListener(this);
-        relativeLayoutLogout.setOnClickListener(this);
         relativeLayouAddressDrop.setOnClickListener(this);
         linearLayoutAddress.setOnClickListener(this);
-        editTextAddress.setOnClickListener(this);
         imageViewAddress_X.setOnClickListener(this);
         imageViewBack.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
+        editTextAccount.setOnClickListener(this);
+        editTextPassword_1.setOnClickListener(this);
+        editTextPassword_2.setOnClickListener(this);
+        editTextName.setOnClickListener(this);
+        editTextPhone.setOnClickListener(this);
+        editTextEmail.setOnClickListener(this);
+        editTextAddress.setOnClickListener(this);
+        editTextBankNumber.setOnClickListener(this);
+        editTextBankAccount.setOnClickListener(this);
         editTextAccount.addTextChangedListener(new myTextWatcher(editTextAccount.getId()));
         editTextPassword_1.addTextChangedListener(new myTextWatcher(editTextPassword_1.getId()));
         editTextPassword_2.addTextChangedListener(new myTextWatcher(editTextPassword_2.getId()));
@@ -547,6 +594,41 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 textViewBirthday.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
+
+        editTextBankNumber.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    keyboard.showSoftInput(editTextBankNumber, InputMethodManager.SHOW_IMPLICIT);
+                    ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                    editTextBankNumber.setFocusableInTouchMode(true);
+                    editTextBankNumber.requestFocus();
+                }
+                return false;
+            }
+        });
+
+        editTextBankAccount.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                keyboard.showSoftInput(editTextBankAccount, InputMethodManager.SHOW_IMPLICIT);
+                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                editTextBankAccount.setFocusableInTouchMode(true);
+                editTextBankAccount.requestFocus();
+                return false;
+            }
+        });
+
+        editTextAddress.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                keyboard.showSoftInput(editTextAddress, InputMethodManager.SHOW_IMPLICIT);
+                ScrollViewRegister.fullScroll(ScrollView.FOCUS_DOWN);
+                editTextAddress.setFocusableInTouchMode(true);
+                editTextAddress.requestFocus();
+                return false;
+            }
+        });
 
     }
 
