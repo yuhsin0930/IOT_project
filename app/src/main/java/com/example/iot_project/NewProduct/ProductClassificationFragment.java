@@ -1,8 +1,11 @@
 package com.example.iot_project.NewProduct;
 
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,8 +23,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
-import com.example.iot_project.MainActivity;
+import com.example.iot_project.DBHelper;
+import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.R;
 
 import java.util.ArrayList;
@@ -50,7 +55,9 @@ public class ProductClassificationFragment extends Fragment {
     private Spinner spinnerProductClass;
     private ImageButton imageButtonDeleteClass;
     private String productClassName;
-
+    private String productType;
+    private int typeIndex;
+    boolean firstTime;
     public ProductClassificationFragment() {
         // Required empty public constructor
     }
@@ -94,19 +101,55 @@ public class ProductClassificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_product_classification, container, false);
         NewProductClassificationActivity newProductClassificationActivity = (NewProductClassificationActivity) getActivity();
+        String[] productClassArray  = getResources().getStringArray(R.array.productClass);
         spinnerProductClass = (Spinner)v.findViewById(R.id.spinner_productClass);
         imageButtonDeleteClass=(ImageButton)v.findViewById(R.id.imageButton_deleteClass);
-        String[] productClassArray  = getResources().getStringArray(R.array.productClass);
-        SharedPreferences sp = newProductClassificationActivity.getSharedPreferences(mParam2,Context.MODE_PRIVATE);
+
+//        DBHelper dbHelper = new DBHelper(newProductClassificationActivity);
+//        SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
+//        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE fragType='"+mParam2+"';", null);
+//        classCursor.moveToFirst();
+//        if(classCursor.getCount()!=0){
+//            productType = classCursor.getString(classCursor.getColumnIndexOrThrow("type"));
+//            if(productType!=null){
+//                for(int i=0;i<productClassArray.length;i++){
+//                    if(productType.equals(productClassArray[i])){
+//                        typeIndex = i;
+//                    }
+//                }
+//            }
+//
+//        }
+//        productClassDatabase.close();
+//        dbHelper.close();
+//        spinnerProductClass.setSelection(typeIndex,true);
 
         spinnerProductClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                productClassName = productClassArray[position];
 
-                sp.edit().putString("productClass",productClassName).commit();
-                Log.d("main",sp.getAll().toString());
-                newProductClassificationActivity.saveClass(mParam2,productClassName);
+                productClassName = productClassArray[position];
+                DBHelper dbHelper = new DBHelper(newProductClassificationActivity);
+                SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("type",productClassName);
+                productClassDatabase.update("goodsType",cv,"fragType ='"+mParam2+"';",null);
+
+                Map<String, Object> typeInfoMap = new HashMap<>();
+                Cursor classCursor = productClassDatabase.rawQuery(" SELECT * FROM goodsType WHERE fragType='"+mParam2+"';", null);
+                classCursor.moveToFirst();
+                while(!classCursor.isAfterLast()) {
+                    int goodsType_id = classCursor.getInt(classCursor.getColumnIndexOrThrow("goodsType_id"));
+                    String fragType = classCursor.getString(classCursor.getColumnIndexOrThrow("fragType"));
+                    String type = classCursor.getString(classCursor.getColumnIndexOrThrow("type"));
+                    typeInfoMap.put("goodsType_id",goodsType_id);
+                    typeInfoMap.put("fragType",fragType);
+                    typeInfoMap.put("type",type);
+                    classCursor.moveToNext();
+                    Log.d("main",typeInfoMap.toString());
+                }
+                productClassDatabase.close();
+                dbHelper.close();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -125,5 +168,25 @@ public class ProductClassificationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        NewProductClassificationActivity newProductClassificationActivity = (NewProductClassificationActivity) getActivity();
+        String[] productClassArray  = getResources().getStringArray(R.array.productClass);
+        DBHelper dbHelper = new DBHelper(newProductClassificationActivity);
+        SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
+        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE fragType='"+mParam2+"';", null);
+        classCursor.moveToFirst();
+        if(classCursor.getCount()!=0){
+            productType = classCursor.getString(classCursor.getColumnIndexOrThrow("type"));
+            if(productType!=null){
+                for(int i=0;i<productClassArray.length;i++){
+                    if(productType.equals(productClassArray[i])){
+                        typeIndex = i;
+                    }
+                }
+                spinnerProductClass.setSelection(typeIndex,true);
+            }
+        }
+        productClassDatabase.close();
+        dbHelper.close();
+
     }
 }

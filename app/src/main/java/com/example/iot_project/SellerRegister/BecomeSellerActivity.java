@@ -47,12 +47,13 @@ public class BecomeSellerActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance(); //日期的格式
     private String citizen;
     private SQLiteDatabase sellerDatabase;
-    private  int first;
+    private  int first=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
+        onBackPressed();
         SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
         //----------------------------------------------------------------------------------------------------------
         first = sp1.getInt("firstCreateSeller",0);
@@ -161,17 +162,12 @@ public class BecomeSellerActivity extends AppCompatActivity {
                     values.put("sBirthday", sellerBirthday);
                     values.put("IDNumber",sellerId);
                     values.put("sCountry",citizen);
-//
-//                // Insert the new row, returning the primary key value of the new row
+
+                // Insert the new row, returning the primary key value of the new row
                     long newRowId = sellerDatabase.insert("seller", null, values);
-                    sellerDatabase.close();
-                    dbHelper.close();
-                    String sql = "INSERT INTO seller (sName,sBirthday ) VALUES ( '"+sellerName+"','"+sellerBirthday+"' ) ;";
-                    Log.d("main","sql="+sql);
-                    sellerDatabase.execSQL(sql);
-                    Log.d("main","newRowId="+newRowId);
-//                    Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
-//                    startActivity(intent);
+
+                    Intent intent = new Intent(BecomeSellerActivity.this, SellerDetailActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -180,7 +176,11 @@ public class BecomeSellerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        sellerDatabase.close();
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 }
 
