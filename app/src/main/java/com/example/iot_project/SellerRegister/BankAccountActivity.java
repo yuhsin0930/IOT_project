@@ -50,10 +50,10 @@ public class BankAccountActivity extends AppCompatActivity {
         String sellerID = sp.getString("sellerId","");
         String city = sp.getString("county","");
         String area = sp.getString("area","");
-        String citizen = sp.getString("citizenship","");
+        String citizen = sp.getString("sCountry","");
         String sellerAddressNum = sp.getString("sellerAddressNum","");
         String sellerAddress = sp.getString("sellerAddress","");
-        String bankAccount = sp.getString("bankAccount","");
+        String bankAccountNum = sp.getString("bankAccountNum","");
         String bankAccountName = sp.getString("bankAccountName","");
         Log.d("main","sp.all()="+sp.getAll());
 
@@ -102,7 +102,7 @@ public class BankAccountActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String bankaccount = s.toString();
-                sp.edit().putString("bankAccount",bankaccount).commit();
+                sp.edit().putString("bankAccountNum",bankaccount).commit();
             }
         });
         editTextBankAccount_bankAccountName = (EditText)findViewById(R.id.editText_bankAccount_bankAccountName);
@@ -122,7 +122,7 @@ public class BankAccountActivity extends AppCompatActivity {
             }
         });
         editTextBankAccount_bankAccountName.setText(bankAccountName);
-        editTextBankAccount_bankAccountNumber.setText(bankAccount);
+        editTextBankAccount_bankAccountNumber.setText(bankAccountNum);
         //------------------------------------------------------------------------------------------
         buttonBankAccount_finish = (Button)findViewById(R.id.button_bankAccount_finish);
         buttonBankAccount_finish.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +161,7 @@ public class BankAccountActivity extends AppCompatActivity {
                             cv.put("bankName",bankName);
                             cv.put("bankArea",bankArea);
                             cv.put("bankBranch",bankBranch);
-                            cv.put("bankNumber",bankAccount);
+                            cv.put("bankNumber",bankAccountNum);
                             cv.put("bankAccount",bankAccountName);
                             cv.put("sState","審核中");
                             long id = sellerDatabase.insert("seller", null, cv);

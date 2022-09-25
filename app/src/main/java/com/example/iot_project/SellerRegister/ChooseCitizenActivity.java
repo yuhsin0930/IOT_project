@@ -48,7 +48,7 @@ public class ChooseCitizenActivity extends AppCompatActivity {
                 String citizen =(String) citizenship.get("citizenship");
                 Log.d("main",citizen);
                 SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-                sp.edit().putString("citizenship",citizen).commit();
+                sp.edit().putString("sCountry",citizen).commit();
                 Intent intent = new Intent(ChooseCitizenActivity.this,BecomeSellerActivity.class);
                 startActivity(intent);
 
