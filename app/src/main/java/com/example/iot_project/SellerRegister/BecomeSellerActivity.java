@@ -47,12 +47,13 @@ public class BecomeSellerActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance(); //日期的格式
     private String citizen;
     private SQLiteDatabase sellerDatabase;
-    private  int first;
+    private  int first=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
+        onBackPressed();
         SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
         //----------------------------------------------------------------------------------------------------------
         first = sp1.getInt("firstCreateSeller",0);
@@ -176,6 +177,10 @@ public class BecomeSellerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         sellerDatabase.close();
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 }
 

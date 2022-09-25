@@ -50,7 +50,7 @@ public class NewProductClassificationActivity extends AppCompatActivity {
 
         DBHelper dbHelper = new DBHelper(NewProductClassificationActivity.this);
         SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
-        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE good_name = '"+productName+"';", null);
+        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE goods_name = '"+productName+"';", null);
         if(classCursor.getCount()!=0){
             classCursor.moveToFirst();
             while(!classCursor.isAfterLast()) {
@@ -79,7 +79,7 @@ public class NewProductClassificationActivity extends AppCompatActivity {
                 DBHelper dbHelper = new DBHelper(NewProductClassificationActivity.this);
                 SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
-                cv.put("good_name",productName);
+                cv.put("goods_name",productName);
                 cv.put("fragType","productClass"+count);
                 cv.put("count",count);
                 long id = productClassDatabase.insert("goodsType",null,cv);

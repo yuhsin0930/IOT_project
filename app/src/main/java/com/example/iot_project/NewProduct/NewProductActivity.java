@@ -1,13 +1,18 @@
 package com.example.iot_project.NewProduct;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -21,9 +26,11 @@ import android.widget.TextView;
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
+import com.example.iot_project.SelectImageActivity;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,18 +40,17 @@ public class NewProductActivity extends AppCompatActivity {
     private TextView textViewNewProduct_describe;
     private TextView textViewNewProduct_classification;
     private TextView textViewNewProduct_setPrice;
-    private EditText editTextNumberNewProduct_Quatity;
     private TextView textViewNewProduct_shippiingFee;
     private Button button_newProduct_launch;
-    private Button buttonNewProduct_save;
     private TextView textViewNewProduct_NameLength;
     private TextView textViewNewProduct_describeLength;
     private String NewProductNameLength;
     private String NewProductName;
-    private Integer ProductNum;
-    private int productInventory;
     private TextView textViewNewProduct_Inventory;
-    private ContentValues cv;
+    private int inventory=0;
+    private TextView textViewNewProduct_newPicture;
+    private Uri outputFileUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,20 @@ public class NewProductActivity extends AppCompatActivity {
         textViewNewProduct_setPrice = (TextView)findViewById(R.id.textView_newProduct_SetPrice);
         textViewNewProduct_shippiingFee = (TextView)findViewById(R.id.textView_newProduct_shippiingFee);
         textViewNewProduct_Inventory = (TextView)findViewById(R.id.textView_newProductNum);
+        textViewNewProduct_newPicture = (TextView)findViewById(R.id.textView_newPicture);
         editTextNewProduct_Name = (EditText)findViewById(R.id.editTextText_newProduct_Name);
         //------------------------------------------------------------------------------------------
+        textViewNewProduct_newPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog newPictureDlg = new Dialog(NewProductActivity.this);
+
+
+            }
+        });
+        //------------------------------------------------------------------------------------------
         NewProductNameLength=sp.getString("productNameLength","0");
-        String productName = sp.getString("productName","");
+        String productName = sp.getString("productName", "");
         editTextNewProduct_Name.setText(productName);
         editTextNewProduct_Name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
         editTextNewProduct_Name.addTextChangedListener(new TextWatcher() {
@@ -109,8 +125,6 @@ public class NewProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //------------------------------------------------------------------------------------------
-
 
         //------------------------------------------------------------------------------------------
         textViewNewProduct_shippiingFee.setOnClickListener(new View.OnClickListener() {
@@ -131,14 +145,9 @@ public class NewProductActivity extends AppCompatActivity {
 
                 String name = sp.getString("productName","");
                 String describe = sp.getString("productDescribe","");
-//                String norm = sp.getString("","");
-//                int normNum = sp.getInt("",0);
-//                int price = sp.getInt("",0);
-//                String type = sp.getString("","");
                 int pLength = sp.getInt("productLength",0);
                 int pWidth = sp.getInt("productWidth",0);
                 int pHeight = sp.getInt("productHeight",0);
-//                int inventory = sp.getInt("inventory",0);
                 int shippingSeven = sp.getInt("shippingFlag_seven",0);
                 int shippingFamilyMart =  sp.getInt("shippingFlag_familyMart",0);
                 int shippingPostOffice =  sp.getInt("shippingFlag_blackCat",0);
@@ -149,29 +158,32 @@ public class NewProductActivity extends AppCompatActivity {
                 int shippingBlackCatFee =  sp.getInt("shippingFee_blackCat",0);
                 DBHelper dbHelper = new DBHelper(NewProductActivity.this);
                 SQLiteDatabase newProductDatabase = dbHelper.getWritableDatabase();
-                //------------------------------------------------------------------------------------------
-                //    資料表名稱 : goods
-                //    欄位中文名稱     欄位名稱          Cursor Index
-                //    * 商品_id       goods_id             0
-                //    # 賣家_id       seller_id            1
-                //      商品名稱       gName                2
-                //      描述          info                 3
-                //      包裹長度       packageLength        4
-                //      包裹寬度       packageWidth         5
-                //      包裹高度       packageHeight        6
-                //      庫存量        inventory             7
-                // *     售出數量       soldQuantity        8
-                //      運送方法7-11   seven                9
-                //      運送方法全家    familyMart          10
-                //      運送方法郵局    postOffice          11
-                //      運送方法黑貓    blackCat            12
-                //      運費7-11       sevenFee            13
-                //      運費全家        familyMartFee      14
-                //      運費郵局        postOfficeFee      15
-                //      運費黑貓        blackCatFee        16
-                //      商品狀態       gState              17
 
-                cv = new ContentValues();
+
+                //----------------------------------------------------------------------------------
+                //    資料表名稱 : goods
+                //    欄位中文名稱            欄位名稱          Cursor Index
+                //    * 商品_id            goods_id             0
+                //    # 賣家_id            seller_id            1
+                //      商品名稱            gName                2
+                //      描述               info                 3
+                //      包裹長度            packageLength        4
+                //      包裹寬度            packageWidth         5
+                //      包裹高度            packageHeight        6
+                //      庫存量              inventory            7
+                // *     售出數量           soldQuantity         8
+                //      運送方法7-11        seven                9
+                //      運送方法全家         familyMart          10
+                //      運送方法郵局         postOffice          11
+                //      運送方法黑貓         blackCat            12
+                //      運費7-11            sevenFee            13
+                //      運費全家            familyMartFee        14
+                //      運費郵局            postOfficeFee        15
+                //      運費黑貓            blackCatFee          16
+                //      商品狀態            gState               17
+                //      創建時間            createTime           18
+                //----------------------------------------------------------------------------------
+                ContentValues cv = new ContentValues();
                 cv.put("gName",name);
                 cv.put("info",describe);
                 cv.put("packageLength",pLength);
@@ -207,6 +219,7 @@ public class NewProductActivity extends AppCompatActivity {
                     int postOfficeFee = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("postOfficeFee"));
                     int blackCatFee = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("blackCatFee"));
                     String gState = goodCursor.getString(goodCursor.getColumnIndexOrThrow("gState"));
+                    String createTime = goodCursor.getString(goodCursor.getColumnIndexOrThrow("createTime"));
 
                     GoodInfoMap.put("goods_id",goods_id);
                     GoodInfoMap.put("gName",gName);
@@ -223,31 +236,87 @@ public class NewProductActivity extends AppCompatActivity {
                     GoodInfoMap.put("postOfficeFee",postOfficeFee);
                     GoodInfoMap.put("blackCatFee",blackCatFee);
                     GoodInfoMap.put("gState",gState);
-                    Log.d("main","GoodInfoMap = "+GoodInfoMap.toString());
+                    GoodInfoMap.put("createTime",createTime);
+                    Log.d("main","GoodInfoMap = "+GoodInfoMap);
                     goodCursor.moveToNext();
                 }
 
-                //-----------------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
                 //    資料表名稱 : goodsType
-                //    欄位中文名稱      欄位名稱          Cursor Index
-                //    * 商品分類_id    goodsType_id           0
-                //    # 商品_id        goods_id              1
-                //      分類            type                 2
+                //    欄位中文名稱                         欄位名稱          Cursor Index
+                //    * 商品分類_id                       goodsType_id             0
+                //     商品名稱                           goods_name                1
+                //*    fragment代號                       fragType                  2
+                //     分類                               type                      3
+                //*    創的fragment個數(包括刪掉的)         count                     4
+                //     創建時間                            createTime                5
+                //----------------------------------------------------------------------------------
 
-                //-----------------------------------------------------------------------------------------
+                Cursor typeCursor = newProductDatabase.rawQuery("select * from goodsType WHERE goods_name='"+name+"';", null);
+                Map<String, Object> GoodTypeInfoMap = new HashMap<>();
+                typeCursor.moveToFirst();
+                while(!typeCursor.isAfterLast()) {
+                    int goodsType_id = typeCursor.getInt(typeCursor.getColumnIndexOrThrow("goodsType_id"));
+                    String goods_name = typeCursor.getString(typeCursor.getColumnIndexOrThrow("goods_name"));
+                    String fragType = typeCursor.getString(typeCursor.getColumnIndexOrThrow("fragType"));
+                    String type = typeCursor.getString(typeCursor.getColumnIndexOrThrow("type"));
+                    int count = typeCursor.getInt(typeCursor.getColumnIndexOrThrow("count"));
+                    String createTime = typeCursor.getString(typeCursor.getColumnIndexOrThrow("createTime"));
+
+                    GoodTypeInfoMap.put("goodsType_id",goodsType_id);
+                    GoodTypeInfoMap.put("goods_name",goods_name);
+                    GoodTypeInfoMap.put("fragType",fragType);
+                    GoodTypeInfoMap.put("type",type);
+                    GoodTypeInfoMap.put("count",count);
+                    GoodTypeInfoMap.put("createTime",createTime);
+                    Log.d("main","GoodTypeInfoMap = "+GoodTypeInfoMap);
+                    typeCursor.moveToNext();
+                }
+
+                //----------------------------------------------------------------------------------
                 //    資料表名稱 : goodsNorm
-                //    欄位中文名稱      欄位名稱          Cursor Index
-                //  * 商品規格_id    goodsNorm_id             0
-                //     商品價格         price                 2
-                //     商品規格         norm                  3
-                //     商品數量         normNum               4
+                //    欄位中文名稱                         欄位名稱          Cursor Index
+                //  * 商品規格_id                       goodsNorm_id             0
+                //     商品名稱                         goods_name               1
+                //*    fragment代號                       fragNum               2
+                //     商品價格                            price                 3
+                //     商品規格                            norm                  4
+                //     商品數量                            normNum               5
+                //*    創的fragment個數(包括刪掉的)          count                 6
+                //     創建時間                          createTime               7
+                //----------------------------------------------------------------------------------
+                Cursor normCursor = newProductDatabase.rawQuery("select * from goodsNorm WHERE goods_name='"+name+"';", null);
+                Map<String, Object> GoodNormInfoMap = new HashMap<>();
+                normCursor.moveToFirst();
+                while(!normCursor.isAfterLast()) {
+                    int goodsNorm_id = normCursor.getInt(normCursor.getColumnIndexOrThrow("goodsNorm_id"));
+                    String goods_name = normCursor.getString(normCursor.getColumnIndexOrThrow("goods_name"));
+                    String fragNum = normCursor.getString(normCursor.getColumnIndexOrThrow("fragNum"));
+                    int price = normCursor.getInt(normCursor.getColumnIndexOrThrow("price"));
+                    String norm = normCursor.getString(normCursor.getColumnIndexOrThrow("norm"));
+                    int normNum = normCursor.getInt(normCursor.getColumnIndexOrThrow("normNum"));
+                    int count = normCursor.getInt(normCursor.getColumnIndexOrThrow("count"));
+                    String createTime = normCursor.getString(normCursor.getColumnIndexOrThrow("createTime"));
+
+                    GoodNormInfoMap.put("goodsNorm_id",goodsNorm_id);
+                    GoodNormInfoMap.put("goods_name",goods_name);
+                    GoodNormInfoMap.put("fragNum",fragNum);
+                    GoodNormInfoMap.put("price",price);
+                    GoodNormInfoMap.put("norm",norm);
+                    GoodNormInfoMap.put("normNum",normNum);
+                    GoodNormInfoMap.put("count",count);
+                    GoodNormInfoMap.put("createTime",createTime);
+                    Log.d("main","GoodNormInfoMap = "+GoodNormInfoMap);
+                    normCursor.moveToNext();
+                }
+
                 newProductDatabase.close();
                 dbHelper.close();
-
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
                 startActivity(intent);
 
             }
         });
     }
+    
 }

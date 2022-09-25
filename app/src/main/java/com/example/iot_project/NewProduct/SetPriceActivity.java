@@ -43,6 +43,7 @@ public class SetPriceActivity extends AppCompatActivity {
     private int count=0;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class SetPriceActivity extends AppCompatActivity {
 
         DBHelper dbHelper = new DBHelper(SetPriceActivity.this);
         SQLiteDatabase setPriceDataBase = dbHelper.getWritableDatabase();
-        Cursor setPriceCusor = setPriceDataBase.rawQuery(" SELECT * FROM " + "goodsNorm WHERE good_name='"+productName+"';", null);
+        Cursor setPriceCusor = setPriceDataBase.rawQuery(" SELECT * FROM " + "goodsNorm WHERE goods_name='"+productName+"';", null);
         if(setPriceCusor.getCount()!=0){
             setPriceCusor.moveToFirst();
             while(!setPriceCusor.isAfterLast()) {
@@ -84,7 +85,7 @@ public class SetPriceActivity extends AppCompatActivity {
                 SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
                 cv.put("fragNum","setPrice"+count);
-                cv.put("good_name",productName);
+                cv.put("goods_name",productName);
                 cv.put("count",count);
                 long id = setPriceDatabase.insert("goodsNorm",null,cv);
                 Log.d("main","Insert norm id = "+id);
@@ -98,6 +99,7 @@ public class SetPriceActivity extends AppCompatActivity {
                     String norm = normCursor.getString(normCursor.getColumnIndexOrThrow("norm"));
                     int price = normCursor.getInt(normCursor.getColumnIndexOrThrow("price"));
                     int normNum = normCursor.getInt(normCursor.getColumnIndexOrThrow("normNum"));
+
                     normInfoMap.put("goodsNorm_id",goodsNorm_id);
                     normInfoMap.put("fragNum",fragNum);
                     normInfoMap.put("norm",norm);
