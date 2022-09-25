@@ -15,6 +15,11 @@
         tools:ignore="Instantiatable"
         tools:targetApi="31">
         <activity
+            android:name=".Main.LogoutActivity"
+            android:exported="false"
+            android:label="@string/title_activity_logout"
+            android:theme="@style/Theme.IOT_project.NoActionBar" />
+        <activity
             android:name=".NewProduct.ShippingFeeActivity"
             android:exported="false" />
         <activity
@@ -92,7 +97,7 @@
             android:name=".SellerRegister.BecomeSellerActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
