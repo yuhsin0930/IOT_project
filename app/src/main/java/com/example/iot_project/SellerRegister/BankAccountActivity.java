@@ -34,6 +34,8 @@ public class BankAccountActivity extends AppCompatActivity {
     private EditText editTextBankAccount_bankAccountNumber,editTextBankAccount_bankAccountName;
     private Button buttonBankAccount_finish;
     private ContentValues cv;
+    private String bankAccountNum;
+    private String bankAccountName;
 
 
     @Override
@@ -53,8 +55,8 @@ public class BankAccountActivity extends AppCompatActivity {
         String citizen = sp.getString("sCountry","");
         String sellerAddressNum = sp.getString("sellerAddressNum","");
         String sellerAddress = sp.getString("sellerAddress","");
-        String bankAccountNum = sp.getString("bankAccountNum","");
-        String bankAccountName = sp.getString("bankAccountName","");
+        bankAccountNum = sp.getString("bankAccountNum","");
+        bankAccountName = sp.getString("bankAccountName","");
         Log.d("main","sp.all()="+sp.getAll());
 
         textViewBankAccount_bankName = (TextView)findViewById(R.id.textView_bankAccount_bankName);
@@ -101,8 +103,8 @@ public class BankAccountActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String bankaccount = s.toString();
-                sp.edit().putString("bankAccountNum",bankaccount).commit();
+                bankAccountNum = s.toString();
+                sp.edit().putString("bankAccountNum",bankAccountNum).commit();
             }
         });
         editTextBankAccount_bankAccountName = (EditText)findViewById(R.id.editText_bankAccount_bankAccountName);
@@ -117,8 +119,8 @@ public class BankAccountActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String bankacountName = s.toString();
-                sp.edit().putString("bankAccountName",bankacountName).commit();
+                bankAccountName = s.toString();
+                sp.edit().putString("bankAccountName",bankAccountName).commit();
             }
         });
         editTextBankAccount_bankAccountName.setText(bankAccountName);
