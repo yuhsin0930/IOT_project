@@ -51,14 +51,14 @@
                     android:backgroundTint="@color/Mycolor_3"
                     android:insetLeft="10dp"
                     android:insetRight="10dp"
-                    android:text="成為賣家" />
+                    android:text="註冊" />
 
                 <Button
                     android:id="@+id/button_main_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:backgroundTint="@color/Mycolor_2"
+                    android:backgroundTint="@color/Mycolor_1"
                     android:insetLeft="10dp"
                     android:insetRight="10dp"
                     android:text="登入" />
