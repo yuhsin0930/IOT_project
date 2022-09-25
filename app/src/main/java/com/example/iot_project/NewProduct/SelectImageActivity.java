@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.NewProduct;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +19,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.example.iot_project.R;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.io.File;
@@ -30,8 +31,9 @@ public class SelectImageActivity extends AppCompatActivity {
 
 
     private static final int SELECT_FROM_CAMERA = 100;
-    private String currentPhotoPath;
     private static final int SELECT_FROM_ALBUM = 20;
+    private String currentPhotoPath;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,13 +129,13 @@ public class SelectImageActivity extends AppCompatActivity {
     // 獲得相簿中圖片的真實路徑
     private String getImagePath(Uri externalContentUri, String selection) {
         String path = null;
-        Cursor cursor = getContentResolver().query(externalContentUri, null, selection, null, null);
-        if (cursor != null) {
-            if (cursor.moveToNext()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
+//        Cursor cursor = getContentResolver().query(externalContentUri, "", selection, null, null);
+//        if (cursor != null) {
+//            if (cursor.moveToNext()) {
+//                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//            }
+//            cursor.close();
+//        }
         return path;
     }
 

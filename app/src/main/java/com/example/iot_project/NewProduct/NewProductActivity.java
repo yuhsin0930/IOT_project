@@ -1,7 +1,6 @@
 package com.example.iot_project.NewProduct;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -11,8 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -20,17 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
-import com.example.iot_project.SelectImageActivity;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +42,8 @@ public class NewProductActivity extends AppCompatActivity {
     private int inventory=0;
     private TextView textViewNewProduct_newPicture;
     private Uri outputFileUri;
-
+    private static final int SELECT_FROM_CAMERA = 100;
+    private static final int SELECT_FROM_ALBUM = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +64,29 @@ public class NewProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Dialog newPictureDlg = new Dialog(NewProductActivity.this);
-
-
+                newPictureDlg.setContentView(R.layout.new_picture_dialog);
+                newPictureDlg.show();
+                newPictureDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                TextView textViewCamara = (TextView) newPictureDlg.findViewById(R.id.textView_camara);
+                TextView textViewAlbum = (TextView) newPictureDlg.findViewById(R.id.textView_album);
+                textViewCamara.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NewProductActivity.this, SelectImageActivity.class);
+                        intent.putExtra("imageFromWhere", SELECT_FROM_CAMERA);
+                        startActivityForResult(intent, 1);
+                    }
+                });
+                textViewAlbum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NewProductActivity.this, SelectImageActivity.class);
+                        intent.putExtra("imageFromWhere", SELECT_FROM_ALBUM);
+                        startActivityForResult(intent, 1);
+                    }
+                });
             }
+
         });
         //------------------------------------------------------------------------------------------
         NewProductNameLength=sp.getString("productNameLength","0");
