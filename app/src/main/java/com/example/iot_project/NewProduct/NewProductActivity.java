@@ -15,12 +15,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,7 +39,6 @@ import java.util.Map;
 
 public class NewProductActivity extends AppCompatActivity {
 
-    private ImageView imageView;
     private ContentResolver resolver;
     private EditText editTextNewProduct_Name;
     private TextView textViewNewProduct_describe;
@@ -169,7 +170,7 @@ public class NewProductActivity extends AppCompatActivity {
                 DBHelper dbHelper = new DBHelper(NewProductActivity.this);
                 SQLiteDatabase newProductDatabase = dbHelper.getWritableDatabase();
 
-
+                setWindow();
                 //----------------------------------------------------------------------------------
                 //    資料表名稱 : goods
                 //    欄位中文名稱            欄位名稱          Cursor Index
@@ -329,19 +330,14 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Uri uri = data.getData();//取得相片路徑
-            try {
-                //將該路徑的圖片轉成bitmap
-                Bitmap bitmap = BitmapFactory.decodeStream(resolver.openInputStream(uri));
-                //設定ImageView圖片
-                imageView.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
