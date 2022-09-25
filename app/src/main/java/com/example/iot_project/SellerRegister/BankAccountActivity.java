@@ -244,7 +244,7 @@ public class BankAccountActivity extends AppCompatActivity {
 //        銀行戶名(bankAccount)(Text)
 //-------------------------------------------------------------------------------------------------
 
-//        FireBase-by翔雲 借我測一下Firebase------------------------------------------------------------
+//------------------------------------------
 //      使用 Firebase 服務
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 //      取得  Firebase 資料庫 (GET網址)
@@ -261,4 +261,8 @@ public class BankAccountActivity extends AppCompatActivity {
 //            dataref.child("seller").push().setValue(MapData);
         }
     }
+//    private void sellerInfoMapUploadToFirebase( map){
+//
+//    }
+
 }

@@ -234,4 +234,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() { //set user cannot return to previous activity
+        moveTaskToBack(true);
+    }
 }
