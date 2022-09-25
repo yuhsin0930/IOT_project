@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
+import com.example.iot_project.member.MemberActivity;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -181,7 +182,9 @@ public class BecomeSellerActivity extends AppCompatActivity {
         buttonBecomeSellerCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sp1.edit().putInt("firstCreateSeller",0).commit();
+                Intent intent = new Intent(BecomeSellerActivity.this, MemberActivity.class);
+                startActivity(intent);
             }
         });
     }
