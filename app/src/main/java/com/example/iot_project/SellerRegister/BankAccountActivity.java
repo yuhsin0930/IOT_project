@@ -228,8 +228,7 @@ public class BankAccountActivity extends AppCompatActivity {
                             }
                             sellerDatabase.close();
                             dbHelper.close();
-//                            [bug] "bankNumber"  "sCountry" 沒有出現在最後的 sellerInfoMap 裡
-//                            sellerInfoMapUploadToFirebase(sellerInfoMap); // upload seller information to Firebase
+                            sellerInfoMapUploadToFirebase(sellerInfoMap); // upload seller information to Firebase
                             Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
                             startActivity(intent);
                         }
@@ -275,20 +274,20 @@ public class BankAccountActivity extends AppCompatActivity {
 //        將會員賣家Id統一(seller_id=member_id)
 //        member_id : getSharedPreferenced("LoginInformation",Mode.Private) key: "member_id"
 
-//        SharedPreferences memberInfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-//        String member_id = memberInfor.getString("member_id","No Id");
-//        Log.d("main","member_id="+member_id);
-//
-//        map.put("seller_id",member_id);
-//        map.put("storeName","");
-//        map.put("storePicture","");
-//
-////      使用 Firebase 服務
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-////      取得  Firebase 資料庫 (GET網址)
-//        DatabaseReference dataref = database.getReference();
-////      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
-//        dataref.child("seller").push().setValue(map);
+        SharedPreferences memberInfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        String member_id = memberInfor.getString("member_id","No Id");
+        Log.d("main","member_id="+member_id);
+
+        map.put("seller_id",member_id);
+        map.put("storeName","");
+        map.put("storePicture","");
+
+//      使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+//      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
+        dataref.child("seller").push().setValue(map);
     }
     private void setWindow() {
         getSupportActionBar().hide();

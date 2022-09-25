@@ -37,5 +37,9 @@ public class LogoutActivity extends AppCompatActivity {
         }, timeout);
     }
 
-
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        moveTaskToBack(true);
+    }
 }

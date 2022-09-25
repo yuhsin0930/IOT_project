@@ -47,6 +47,7 @@
                     android:id="@+id/button_main_enroll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="0.5"
                     android:backgroundTint="@color/Mycolor_3"
                     android:insetLeft="10dp"

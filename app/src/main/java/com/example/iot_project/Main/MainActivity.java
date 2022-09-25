@@ -12,6 +12,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iot_project.Admin.AdminLoginActivity;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
@@ -60,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         imagebuttonShoppingCart = (ImageButton) findViewById(R.id.imageButton_main_shoppingcart);
 
+//      build context menu to enter administer Activity
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout_main_bottom);
+        registerForContextMenu(linearLayout);
 //      Login button => LoginActivity
         buttonLogin = (Button) findViewById(R.id.button_main_login);
 //      (temp) Enroll button => BecomeSellerActivity.class
@@ -239,10 +244,35 @@ public class MainActivity extends AppCompatActivity {
     private long exitTime;
     @Override
     public void onBackPressed() {
+        Log.d("main","exitTime="+exitTime);
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
-        } else finish();
+            Log.d("main","exitTime="+exitTime);
+        } else {
+//            finish(); // 還是可以返回上一頁
+            moveTaskToBack(true);
+        }
+    }
+    //  create context menu
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if(v.getId()==R.id.linearLayout_main_bottom){
+            getMenuInflater().inflate(R.menu.admin_menu,menu);
+        }
     }
 
+    //  monitoring context menu selected options
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.admin_item){
+            Intent adminintent = new Intent(MainActivity.this, AdminLoginActivity.class);
+            startActivity(adminintent);
+        }
+        return super.onContextItemSelected(item);
+    }
 }
