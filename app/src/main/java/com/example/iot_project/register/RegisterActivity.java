@@ -34,14 +34,15 @@ public class RegisterActivity extends AppCompatActivity {
     private String cityName, districtName;
     private Map<String, Object> fireMap;
     private long timeTemp;
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         setData();
         setFragment();
+
     }
 
     private void setData() {
@@ -56,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         kryboard = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         kryboard.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-        intent = getIntent();
     }
 
     private void setFragment() {

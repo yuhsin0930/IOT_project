@@ -89,9 +89,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         findView();
         setData();
+        checkLoginOnSp();
         setListener();
-
+        Log.d("register", "onCreateView");
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkLoginOnSp();
     }
 
     private void setData() {
@@ -106,17 +113,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         address = "";
         city = "";
         district = "";
+    }
 
-//        [isLoggedIn : 判斷帳號是否已登入]
+    private void checkLoginOnSp() {
+        //        [isLoggedIn : 判斷帳號是否已登入]
 //       SharedPreferences : "LoginInformation" 儲存已登入帳號資訊
-       SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        SharedPreferences sp = registerActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
 //       "is_login" : 帳號是否登入， true 為登入，false為登出
-       Boolean isLoggedIn = sp.getBoolean("is_login",false);
+        Boolean isLoggedIn = sp.getBoolean("is_login",false);
 //       "member_id" : 帳號ID
-       String memberId= sp.getString("member_id","0");
+        String memberId= sp.getString("member_id","0");
 //       "account_name" : 帳號名稱
-       String account = sp.getString("account_name","user");
-       Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
+        String account = sp.getString("account_name","user");
+        Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
 
         if (isLoggedIn) {
             buttonSubmit.setVisibility(View.GONE);
@@ -135,7 +144,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             buttonLogout.setVisibility(View.GONE);
             textViewBarName.setText("");
         }
-
     }
 
     @Override
@@ -260,6 +268,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
                             intent = new Intent(getContext(), LoginActivity.class);
                             intent.putExtra("account", account);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             registerDialog.dismiss();
                         }
@@ -281,6 +290,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 sp.edit().putBoolean("is_login", false).commit();
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }

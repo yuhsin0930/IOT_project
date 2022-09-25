@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d("main","[LoginInformation]sp.getall()"+sp.getAll());
                                         Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
                                         intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                     } else {
                                         Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
