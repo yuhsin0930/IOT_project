@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +50,8 @@ public class SellerDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_detail);
         SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
+        setWindow();
+
         sellerName = sp.getString("sellerName",null);
         sellerId = sp.getString("sellerId",null);
         sellerBirthday = sp.getString("sellerBirthday",null);
@@ -149,5 +153,15 @@ public class SellerDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 }

@@ -62,6 +62,8 @@ public class NewProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
+        setWindow();
+
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
         textViewNewProduct_NameLength = (TextView)findViewById(R.id.textView_newProduct_NameLength);
         textViewNewProduct_describeLength = (TextView)findViewById(R.id.textView_newProduct_describeLength);

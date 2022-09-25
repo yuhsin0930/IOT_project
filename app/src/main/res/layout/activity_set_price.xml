@@ -6,10 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".NewProduct.SetPriceActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/member_background_color"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView123"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:text="商品規格"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/member_rank_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,23 +40,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/member_rank_corner"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/linearLayout8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView_addNorm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
                     android:text="+新增商品規格"
                     android:textColor="@color/Mycolor_3"
                     android:textSize="20sp"
@@ -96,7 +118,7 @@
             <ScrollView
                 android:id="@+id/scrollView5"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="400dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 tools:ignore="SpeakableTextPresentCheck">
@@ -117,11 +139,10 @@
                     android:id="@+id/button_finishedSetNorm"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="10dp"
                     android:backgroundTint="@color/Mycolor_1"
                     android:text="回上一頁"
                     android:textSize="20sp"

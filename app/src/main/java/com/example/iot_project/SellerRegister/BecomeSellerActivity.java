@@ -57,6 +57,8 @@ public class BecomeSellerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
+        setWindow();
+
         onBackPressed();
         SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
         setWindow();
