@@ -193,6 +193,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "good_name TEXT NOT NULL, " +
             "fragType Text,"+
             "type TEXT, " +
+            "count INTEGER,"+
             "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
 //            "FOREIGN KEY (seller_id) REFERENCES seller (seller_id) ON DELETE CASCADE ON UPDATE CASCADE," +
 //            "FOREIGN KEY (good_id) REFERENCES goods (good_id) ON DELETE CASCADE ON UPDATE CASCADE" +
@@ -205,8 +206,10 @@ public class DBHelper extends SQLiteOpenHelper {
             "price INTEGER, " +
             "norm TEXT, " +
             "normNum INTEGER,"+
+            "count INTEGER,"+
             "createTime DATETIME DEFAULT (datetime('now','localtime')) " +
             ");";
+
     private String create_sellerSQL = "CREATE TABLE seller (" +
             "seller_id INTEGER PRIMARY KEY, " +
             "storeName TEXT, " +

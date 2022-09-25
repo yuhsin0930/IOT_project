@@ -33,11 +33,12 @@ public class NewProductClassificationActivity extends AppCompatActivity {
 
     private FragmentTransaction fragTransit;
     private TextView textViewAddClass;
-    private int count;
+    private int count=0;
     private ProductClassificationFragment newProductClass;
     private Button buttonNewClassFinished;
     private FragmentManager FragManager;
     private String productName;
+    private String fragType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +46,27 @@ public class NewProductClassificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_product_classification);
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
         productName = sp.getString("productName","");
+        FragManager = getSupportFragmentManager();
+
         DBHelper dbHelper = new DBHelper(NewProductClassificationActivity.this);
         SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
-        FragManager = getSupportFragmentManager();
-        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType;", null);
-        count = classCursor.getCount();
-        if(count!=0){
-            for(int i=1; i<count+1 ;i++){
-                fragTransit = FragManager.beginTransaction();
-                newProductClass = ProductClassificationFragment.newInstance("Add data","productClass" +i);
-                fragTransit.add(R.id.linear_layout_productClass_fragment, newProductClass,"productClass" +i);
-                fragTransit.commit();
-            }
+        Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE good_name = '"+productName+"';", null);
+        if(classCursor.getCount()!=0){
+            classCursor.moveToFirst();
+            while(!classCursor.isAfterLast()) {
+                count = classCursor.getInt(classCursor.getColumnIndexOrThrow("count"));
+                fragType = classCursor.getString(classCursor.getColumnIndexOrThrow("fragType"));
 
+                fragTransit = FragManager.beginTransaction();
+                newProductClass = ProductClassificationFragment.newInstance("Add data",fragType);
+                fragTransit.add(R.id.linear_layout_productClass_fragment, newProductClass,fragType);
+                fragTransit.commit();
+                classCursor.moveToNext();
+            }
         }
         productClassDatabase.close();
         dbHelper.close();
+
         textViewAddClass = (TextView) findViewById(R.id.textView_newProductClass);
         textViewAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +80,8 @@ public class NewProductClassificationActivity extends AppCompatActivity {
                 SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
                 cv.put("good_name",productName);
-                cv.put("fragType","productClass" + count);
+                cv.put("fragType","productClass"+count);
+                cv.put("count",count);
                 long id = productClassDatabase.insert("goodsType",null,cv);
                 Log.d("main","productClass id = "+id);
                 productClassDatabase.close();
@@ -102,7 +109,6 @@ public class NewProductClassificationActivity extends AppCompatActivity {
 
             DBHelper dbHelper = new DBHelper(NewProductClassificationActivity.this);
             SQLiteDatabase productClassDatabase = dbHelper.getWritableDatabase();
-            Cursor classCursor = productClassDatabase.rawQuery( "SELECT * FROM goodsType WHERE fragType='"+tag+"';", null);
             productClassDatabase.delete("goodsType","fragType ='"+tag+"';",null);
             productClassDatabase.close();
             dbHelper.close();

@@ -37,9 +37,10 @@ public class SetPriceActivity extends AppCompatActivity {
     private TextView textViewAddNorm;
     private SetPriceFragment newSetPriceFrag;
     private Button buttonFinishedSetNorm;
-    private int productNormNum;
     private String goodsNorm_id;
-    private int countNorm;
+    private String productName;
+    private String fragNum;
+    private int count=0;
 
 
     @Override
@@ -47,20 +48,24 @@ public class SetPriceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_price);
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
-        String productName = sp.getString("productName","");
+        productName = sp.getString("productName","");
         FragManager = getSupportFragmentManager();
+
         DBHelper dbHelper = new DBHelper(SetPriceActivity.this);
         SQLiteDatabase setPriceDataBase = dbHelper.getWritableDatabase();
-        Cursor c = setPriceDataBase.rawQuery(" SELECT * FROM " + "goodsNorm;", null);
-        countNorm = c.getCount();
-        if(countNorm!=0){
-           for(int i=1; i< countNorm+1;i++){
+        Cursor setPriceCusor = setPriceDataBase.rawQuery(" SELECT * FROM " + "goodsNorm WHERE good_name='"+productName+"';", null);
+        if(setPriceCusor.getCount()!=0){
+            setPriceCusor.moveToFirst();
+            while(!setPriceCusor.isAfterLast()) {
+                count = setPriceCusor.getInt(setPriceCusor.getColumnIndexOrThrow("count"));
+                fragNum = setPriceCusor.getString(setPriceCusor.getColumnIndexOrThrow("fragNum"));
+
                 fragTransit = FragManager.beginTransaction();
-                newSetPriceFrag = SetPriceFragment.newInstance("Add data","setPrice" +i);
-                fragTransit.add(R.id.linearLayout_setPrice, newSetPriceFrag,"setPrice" +i);
+                newSetPriceFrag = SetPriceFragment.newInstance("Add data",fragNum);
+                fragTransit.add(R.id.linearLayout_setPrice, newSetPriceFrag,fragNum);
                 fragTransit.commit();
-                Log.d("main", "normFragment = " +"setPrice" +i);
-           }
+                setPriceCusor.moveToNext();
+            }
         }
         setPriceDataBase.close();
         dbHelper.close();
@@ -69,18 +74,18 @@ public class SetPriceActivity extends AppCompatActivity {
         textViewAddNorm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countNorm++;
+                count++;
                 fragTransit = FragManager.beginTransaction();
-                newSetPriceFrag = SetPriceFragment.newInstance("Add data", "setPrice" + countNorm);
-                fragTransit.add(R.id.linearLayout_setPrice,newSetPriceFrag,"setPrice"+countNorm);
+                newSetPriceFrag = SetPriceFragment.newInstance("Add data", "setPrice" + count);
+                fragTransit.add(R.id.linearLayout_setPrice,newSetPriceFrag,"setPrice"+count);
                 fragTransit.commit();
-                sp.edit().putInt("NormFragmentCount",countNorm).commit();
 
                 DBHelper dbHelper = new DBHelper(SetPriceActivity.this);
                 SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
-                cv.put("fragNum","setPrice"+countNorm);
+                cv.put("fragNum","setPrice"+count);
                 cv.put("good_name",productName);
+                cv.put("count",count);
                 long id = setPriceDatabase.insert("goodsNorm",null,cv);
                 Log.d("main","Insert norm id = "+id);
 
@@ -125,30 +130,7 @@ public class SetPriceActivity extends AppCompatActivity {
 
             DBHelper dbHelper = new DBHelper(SetPriceActivity.this);
             SQLiteDatabase setPriceDatabase = dbHelper.getWritableDatabase();
-
-            Cursor c = setPriceDatabase.rawQuery(" SELECT * FROM " + "goodsNorm"
-                    + " WHERE fragNum =" + "'" + tag + "';", null);
-            c.moveToFirst();
-            while (!c.isAfterLast()) {
-                goodsNorm_id = c.getString(0);
-                c.moveToNext();
-            }
-
-            Map<String, Object> normInfoMap = new HashMap<>();
-            Cursor normCursor = setPriceDatabase.rawQuery(" SELECT * FROM goodsNorm WHERE fragNum ='"+tag+"';", null);
-            normCursor.moveToFirst();
-            while(!normCursor.isAfterLast()) {
-                int goodsNorm_id = normCursor.getInt(normCursor.getColumnIndexOrThrow("goodsNorm_id"));
-                String norm = normCursor.getString(normCursor.getColumnIndexOrThrow("norm"));
-                int price = normCursor.getInt(normCursor.getColumnIndexOrThrow("price"));
-                int normNum = normCursor.getInt(normCursor.getColumnIndexOrThrow("normNum"));
-                normInfoMap.put("goodsNorm_id",goodsNorm_id);
-                normInfoMap.put("norm",norm);
-                normInfoMap.put("price",price);
-                normInfoMap.put("normNum",normNum);
-                normCursor.moveToNext();
-            }
-            setPriceDatabase.delete("goodsNorm","goodsNorm_id ="+goodsNorm_id,null);
+            setPriceDatabase.delete("goodsNorm","fragNum ='"+tag+"';",null);
             setPriceDatabase.close();
             dbHelper.close();
         }
