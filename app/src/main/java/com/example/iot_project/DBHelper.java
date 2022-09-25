@@ -210,6 +210,15 @@ public class DBHelper extends SQLiteOpenHelper {
             "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
             ");";
 
+    private String goodSQL_picture = "CREATE TABLE　goodsPicture(" +
+            "goodsPicture_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+            "goods_name TEXT NOT NULL,"+
+            "fragNum TEXT,"+
+            "goodsPicture BLOB,"+
+            "count INTEGER,"+
+            "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
+            ");";
+
     private String create_sellerSQL = "CREATE TABLE seller (" +
             "seller_id INTEGER PRIMARY KEY, " +
             "storeName TEXT, " +
@@ -259,6 +268,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(goodsSQL_type);
         sqLiteDatabase.execSQL(goodsSQL_norm);
+        sqLiteDatabase.execSQL(goodSQL_picture);
     }
 
     @Override

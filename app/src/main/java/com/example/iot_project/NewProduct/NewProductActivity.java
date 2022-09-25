@@ -1,13 +1,19 @@
 package com.example.iot_project.NewProduct;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,17 +23,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.pm.PackageManager;
 
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewProductActivity extends AppCompatActivity {
 
+    private ImageView imageView;
+    private ContentResolver resolver;
     private EditText editTextNewProduct_Name;
     private TextView textViewNewProduct_describe;
     private TextView textViewNewProduct_classification;
@@ -41,9 +52,10 @@ public class NewProductActivity extends AppCompatActivity {
     private TextView textViewNewProduct_Inventory;
     private int inventory=0;
     private TextView textViewNewProduct_newPicture;
-    private Uri outputFileUri;
-    private static final int SELECT_FROM_CAMERA = 100;
-    private static final int SELECT_FROM_ALBUM = 20;
+    private FragmentManager FragManager;
+    private FragmentTransaction fragTransit;
+    private NewPictureFragment newPicFrag;
+    private int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,31 +72,16 @@ public class NewProductActivity extends AppCompatActivity {
         textViewNewProduct_newPicture = (TextView)findViewById(R.id.textView_newPicture);
         editTextNewProduct_Name = (EditText)findViewById(R.id.editTextText_newProduct_Name);
         //------------------------------------------------------------------------------------------
+        FragManager = getSupportFragmentManager();
+
         textViewNewProduct_newPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog newPictureDlg = new Dialog(NewProductActivity.this);
-                newPictureDlg.setContentView(R.layout.new_picture_dialog);
-                newPictureDlg.show();
-                newPictureDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                TextView textViewCamara = (TextView) newPictureDlg.findViewById(R.id.textView_camara);
-                TextView textViewAlbum = (TextView) newPictureDlg.findViewById(R.id.textView_album);
-                textViewCamara.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(NewProductActivity.this, SelectImageActivity.class);
-                        intent.putExtra("imageFromWhere", SELECT_FROM_CAMERA);
-                        startActivityForResult(intent, 1);
-                    }
-                });
-                textViewAlbum.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(NewProductActivity.this, SelectImageActivity.class);
-                        intent.putExtra("imageFromWhere", SELECT_FROM_ALBUM);
-                        startActivityForResult(intent, 1);
-                    }
-                });
+                count++;
+                fragTransit = FragManager.beginTransaction();
+                newPicFrag = NewPictureFragment.newInstance("Add data", "setPrice" + count);
+                fragTransit.add(R.id.linearLayout_newProduct_newPicture,newPicFrag,"setPrice"+count);
+                fragTransit.commit();
             }
 
         });
@@ -330,6 +327,21 @@ public class NewProductActivity extends AppCompatActivity {
 
             }
         });
+
     }
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Uri uri = data.getData();//取得相片路徑
+            try {
+                //將該路徑的圖片轉成bitmap
+                Bitmap bitmap = BitmapFactory.decodeStream(resolver.openInputStream(uri));
+                //設定ImageView圖片
+                imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
