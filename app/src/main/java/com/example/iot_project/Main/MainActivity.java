@@ -25,6 +25,7 @@ import com.example.iot_project.LoginActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.member.MemberActivity;
+import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -220,11 +221,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-//          Enroll button => LoginActivity
+//          Enroll button => RegisterActivity
             buttonEnroll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, BecomeSellerActivity.class);
+                    Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                     startActivity(intent);
                 }
             });
@@ -232,5 +233,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() { //set user cannot return to previous activity
+        moveTaskToBack(true);
     }
 }

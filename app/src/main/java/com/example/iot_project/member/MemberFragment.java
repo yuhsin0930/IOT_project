@@ -2,15 +2,20 @@ package com.example.iot_project.member;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,10 +51,18 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_member, container, false);
+
         findView();
         setData();
         setListener();
+
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        memberActivity = (MemberActivity)getActivity();
     }
 
     private void findView() {
@@ -73,7 +86,6 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setData(){
-        memberActivity = (MemberActivity)getActivity();
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
         textViewName.setText(getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE)
                 .getString("account_name", "Apple2022"));
@@ -145,21 +157,13 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 memberActivity.showGoodsFragment("瀏覽紀錄");
                 break;
             case R.id.RelativeLayout_member_coupon:
-                memberActivity.showCouponFragment("優惠券");
+                memberActivity.showCouponFragment();
                 break;
             case R.id.imageView_member_setting:
             case R.id.RelativeLayout_member_personal:
                 intent = new Intent(getContext(), RegisterActivity.class);
                 startActivity(intent);
                 break;
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            memberActivity.setFragment();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,6 @@ public class MemberOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member_orders, container, false);
-        memberActivity = (MemberActivity)getActivity();
 
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_orders_back);
         viewPager2 = (ViewPager2)v.findViewById(R.id.viewPager2);
@@ -73,6 +73,12 @@ public class MemberOrdersFragment extends Fragment {
         }).attach();
         viewPager2.setCurrentItem(getArguments().getInt("whichTab"), false);
         return v;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        memberActivity = (MemberActivity)getActivity();
     }
 
 }

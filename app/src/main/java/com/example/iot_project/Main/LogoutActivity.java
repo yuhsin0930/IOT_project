@@ -37,4 +37,5 @@ public class LogoutActivity extends AppCompatActivity {
         }, timeout);
     }
 
+
 }

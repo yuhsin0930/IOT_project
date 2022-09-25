@@ -1,11 +1,14 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,16 +76,18 @@ public class MemberCouponFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_member_coupon, container, false);
+
         findView();
         setData();
-        for (i = 0; i < 5; i++) {
-            fragmentTrans = fragmentMgr.beginTransaction();
-            fragmentItem = MemberCouponItemFragment.newInstance("MemberCouponItemFragment" + i);
-            fragmentTrans.add(R.id.LinearLayout_member_coupon, fragmentItem, "MemberCouponItemFragment" + i);
-            fragmentTrans.commit();
-        }
         setListener();
+
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        memberActivity = (MemberActivity)getActivity();
     }
 
     private void findView() {
@@ -91,8 +96,13 @@ public class MemberCouponFragment extends Fragment {
     }
 
     private void setData(){
-        memberActivity = (MemberActivity)getActivity();
         fragmentMgr = getParentFragmentManager();
+        for (i = 0; i < 5; i++) {
+            fragmentTrans = fragmentMgr.beginTransaction();
+            fragmentItem = MemberCouponItemFragment.newInstance("MemberCouponItemFragment" + i);
+            fragmentTrans.add(R.id.LinearLayout_member_coupon, fragmentItem, "MemberCouponItemFragment" + i);
+            fragmentTrans.commit();
+        }
     }
 
     private void setListener() {

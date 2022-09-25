@@ -1,7 +1,9 @@
 package com.example.iot_project.member;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,7 +42,6 @@ public class MemberOrdersDetailedFragment extends Fragment{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_member_orders_detailed, container, false);
 
-        memberActivity = (MemberActivity)getActivity();
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_member_back);
         textViewBar = (TextView)v.findViewById(R.id.TextView_member_bar);
         textViewBar.setText(getArguments().getString("barName"));
@@ -71,6 +72,12 @@ public class MemberOrdersDetailedFragment extends Fragment{
         fragmentTrans.commit();
 
         return v;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        memberActivity = (MemberActivity)getActivity();
     }
 
 }
