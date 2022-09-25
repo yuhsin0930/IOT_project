@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ public class MyStoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_store);
+        setWindow();
 
         textViewMyStore_name=(TextView)findViewById(R.id.textView_myStore_name);
         textViewMyStore_account = (TextView)findViewById(R.id.textView_myStore_account);
@@ -72,5 +75,15 @@ public class MyStoreActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 }

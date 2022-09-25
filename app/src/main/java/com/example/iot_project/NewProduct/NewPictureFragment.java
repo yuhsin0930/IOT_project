@@ -4,10 +4,13 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -15,6 +18,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 ;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -26,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.R;
+
+import java.io.FileNotFoundException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,10 +51,10 @@ public class NewPictureFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    public static final int CAMERA_ACTION_CODE=1;
-    public static final int IMAGE_REQUEST_CODE=2;
+
     private ImageView imageView_newPicture;
     private NewProductActivity newProductActivity;
+
 
     public NewPictureFragment() {
         // Required empty public constructor
@@ -100,6 +108,7 @@ public class NewPictureFragment extends Fragment {
         newPictureDlg.setContentView(R.layout.new_picture_dialog);
         newPictureDlg.show();
         newPictureDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
         TextView textViewCamara = (TextView) newPictureDlg.findViewById(R.id.textView_camara);
         TextView textViewAlbum = (TextView) newPictureDlg.findViewById(R.id.textView_album);
         textViewCamara.setOnClickListener(new View.OnClickListener() {
@@ -118,19 +127,36 @@ public class NewPictureFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 newPictureDlg.dismiss();
-                //打開相簿
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                //選擇相片後接回傳
-                startActivityForResult(intent, 1);
-
+                //動態申請許可權
+                if (ContextCompat.checkSelfPermission(newProductActivity,Manifest.permission
+                        .WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(newProductActivity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                }else{
+                    //執行啟動相簿的方法
+                    openAlbum();
+                }
             }
-
         });
-
         return v;
     }
+    //獲取許可權的結果
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1){
+            if (grantResults.length>0&&grantResults[0] == PackageManager.PERMISSION_GRANTED) openAlbum();
+            else Toast.makeText(newProductActivity,"你拒絕了",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //啟動相簿的方法
+    private void openAlbum(){
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent,2);
+    }
+
+    //呼叫相簿網址
+    //https://www.it145.com/9/72906.html
 }
 
 

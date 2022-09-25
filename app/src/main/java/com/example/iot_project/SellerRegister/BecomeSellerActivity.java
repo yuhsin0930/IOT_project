@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
+import com.example.iot_project.member.MemberActivity;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -48,13 +51,17 @@ public class BecomeSellerActivity extends AppCompatActivity {
     private String citizen;
     private SQLiteDatabase sellerDatabase;
     private  int first=0;
+    private Button buttonBecomeSellerCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_become_seller);
+        setWindow();
+
         onBackPressed();
         SharedPreferences sp1 = getSharedPreferences("newProduct",MODE_PRIVATE);
+        setWindow();
         //----------------------------------------------------------------------------------------------------------
         first = sp1.getInt("firstCreateSeller",0);
         if(first==0){
@@ -127,7 +134,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
             }
         });
         SharedPreferences sp  = getSharedPreferences("sellerDetail",MODE_PRIVATE);
-        citizen = sp.getString("citizenship","臺灣");
+        citizen = sp.getString("sCountry","臺灣");
         textViewSellerCheckAccount_citizenShip.setText(citizen+"  > ");
         //---------------------------------------------------------------------------------------------------------------
 
@@ -151,6 +158,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
                     sp.edit().putString("sellerName",sellerName)
                             .putString("sellerBirthday",sellerBirthday)
                             .putString("sellerId",sellerId)
+                            .putString("sCountry",citizen)
                             .commit(); //呼叫commit()方法寫入
                     // Gets the data repository in write mode
                     DBHelper dbHelper = new DBHelper(BecomeSellerActivity.this);
@@ -171,6 +179,16 @@ public class BecomeSellerActivity extends AppCompatActivity {
                 }
             }
         });
+        
+        buttonBecomeSellerCancel = (Button)findViewById(R.id.button_becomeSeller_cancel);
+        buttonBecomeSellerCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp1.edit().putInt("firstCreateSeller",0).commit();
+                Intent intent = new Intent(BecomeSellerActivity.this, MemberActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -181,6 +199,17 @@ public class BecomeSellerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(false);
+    }
+
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 }
 

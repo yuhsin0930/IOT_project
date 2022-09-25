@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,13 +36,15 @@ public class BankAccountActivity extends AppCompatActivity {
     private EditText editTextBankAccount_bankAccountNumber,editTextBankAccount_bankAccountName;
     private Button buttonBankAccount_finish;
     private ContentValues cv;
+    private String bankAccountNum;
+    private String bankAccountName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_account);
-
+        setWindow();
         SharedPreferences sp = getSharedPreferences("sellerDetail",MODE_PRIVATE);
         String bankName = sp.getString("bankName","臺灣銀行");
         String bankArea = sp.getString("bankArea","臺北");
@@ -50,11 +54,11 @@ public class BankAccountActivity extends AppCompatActivity {
         String sellerID = sp.getString("sellerId","");
         String city = sp.getString("county","");
         String area = sp.getString("area","");
-        String citizen = sp.getString("citizenship","");
+        String citizen = sp.getString("sCountry","");
         String sellerAddressNum = sp.getString("sellerAddressNum","");
         String sellerAddress = sp.getString("sellerAddress","");
-        String bankAccount = sp.getString("bankAccount","");
-        String bankAccountName = sp.getString("bankAccountName","");
+        bankAccountNum = sp.getString("bankAccountNum","");
+        bankAccountName = sp.getString("bankAccountName","");
         Log.d("main","sp.all()="+sp.getAll());
 
         textViewBankAccount_bankName = (TextView)findViewById(R.id.textView_bankAccount_bankName);
@@ -101,8 +105,8 @@ public class BankAccountActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String bankaccount = s.toString();
-                sp.edit().putString("bankAccount",bankaccount).commit();
+                bankAccountNum = s.toString();
+                sp.edit().putString("bankAccountNum",bankAccountNum).commit();
             }
         });
         editTextBankAccount_bankAccountName = (EditText)findViewById(R.id.editText_bankAccount_bankAccountName);
@@ -117,12 +121,12 @@ public class BankAccountActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String bankacountName = s.toString();
-                sp.edit().putString("bankAccountName",bankacountName).commit();
+                bankAccountName = s.toString();
+                sp.edit().putString("bankAccountName",bankAccountName).commit();
             }
         });
         editTextBankAccount_bankAccountName.setText(bankAccountName);
-        editTextBankAccount_bankAccountNumber.setText(bankAccount);
+        editTextBankAccount_bankAccountNumber.setText(bankAccountNum);
         //------------------------------------------------------------------------------------------
         buttonBankAccount_finish = (Button)findViewById(R.id.button_bankAccount_finish);
         buttonBankAccount_finish.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +165,7 @@ public class BankAccountActivity extends AppCompatActivity {
                             cv.put("bankName",bankName);
                             cv.put("bankArea",bankArea);
                             cv.put("bankBranch",bankBranch);
-                            cv.put("bankNumber",bankAccount);
+                            cv.put("bankNumber",bankAccountNum);
                             cv.put("bankAccount",bankAccountName);
                             cv.put("sState","審核中");
                             long id = sellerDatabase.insert("seller", null, cv);
@@ -224,8 +228,7 @@ public class BankAccountActivity extends AppCompatActivity {
                             }
                             sellerDatabase.close();
                             dbHelper.close();
-//                            [bug] "bankNumber"  "sCountry" 沒有出現在最後的 sellerInfoMap 裡
-//                            sellerInfoMapUploadToFirebase(sellerInfoMap); // upload seller information to Firebase
+                            sellerInfoMapUploadToFirebase(sellerInfoMap); // upload seller information to Firebase
                             Intent intent = new Intent(BankAccountActivity.this, MyStoreActivity.class);
                             startActivity(intent);
                         }
@@ -271,20 +274,29 @@ public class BankAccountActivity extends AppCompatActivity {
 //        將會員賣家Id統一(seller_id=member_id)
 //        member_id : getSharedPreferenced("LoginInformation",Mode.Private) key: "member_id"
 
-//        SharedPreferences memberInfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-//        String member_id = memberInfor.getString("member_id","No Id");
-//        Log.d("main","member_id="+member_id);
-//
-//        map.put("seller_id",member_id);
-//        map.put("storeName","");
-//        map.put("storePicture","");
-//
-////      使用 Firebase 服務
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-////      取得  Firebase 資料庫 (GET網址)
-//        DatabaseReference dataref = database.getReference();
-////      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
-//        dataref.child("seller").push().setValue(map);
-    }
+        SharedPreferences memberInfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        String member_id = memberInfor.getString("member_id","No Id");
+        Log.d("main","member_id="+member_id);
 
+        map.put("seller_id",member_id);
+        map.put("storeName","");
+        map.put("storePicture","");
+
+//      使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+//      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
+        dataref.child("seller").push().setValue(map);
+    }
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+    }
 }

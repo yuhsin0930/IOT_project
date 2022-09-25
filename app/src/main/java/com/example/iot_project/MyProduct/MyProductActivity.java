@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.iot_project.NewProduct.NewProductActivity;
@@ -29,6 +31,7 @@ public class MyProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_product);
+        setWindow();
 
         myProduct_ViewPager = (ViewPager2) findViewById(R.id.myProduct_ViewPager);
         myProudct_tabLayout = (TabLayout)findViewById(R.id.tabLayout_myProduct);
@@ -66,5 +69,15 @@ public class MyProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    private void setWindow() {
+        getSupportActionBar().hide();
+        getWindow().setNavigationBarColor(0xFFFFFF);
+        getWindow().getDecorView()
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 }
