@@ -2,27 +2,21 @@ package com.example.iot_project.NewProduct;
 
 import static android.app.Activity.RESULT_OK;
 
+
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.iot_project.R;
 
-import java.io.FileNotFoundException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,7 +120,7 @@ public class NewPictureFragment extends Fragment {
             public void onClick(View v) {
                 newPictureDlg.dismiss();
                 //動態申請許可權
-                if (ContextCompat.checkSelfPermission(newProductActivity,Manifest.permission
+                if (ContextCompat.checkSelfPermission(newProductActivity, Manifest.permission
                         .WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(newProductActivity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                 }else{
@@ -137,6 +129,7 @@ public class NewPictureFragment extends Fragment {
                 }
             }
         });
+        //https://developer.android.com/training/data-storage/shared/media?hl=zh-tw
         return v;
     }
     //獲取許可權的結果
