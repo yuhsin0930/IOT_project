@@ -2,22 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.iot_project">
-
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-    <!-- Required only if your app needs to access images or photos
-     that other apps created. -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!--
+ Required only if your app needs to access images or photos
+     that other apps created.
+    -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- Required only if your app needs to access audio files
-         that other apps created. -->
+    <!--
+ Required only if your app needs to access audio files
+         that other apps created.
+    -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-
-    <!-- If your app doesn't need to access media files that other apps created,
-         set the "maxSdkVersion" attribute to "28" instead. -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <!--
+ If your app doesn't need to access media files that other apps created,
+         set the "maxSdkVersion" attribute to "28" instead.
+    -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29" />
 
     <application
@@ -32,9 +36,18 @@
         tools:ignore="Instantiatable"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.AdminProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminSellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminMemberActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.AdminMainActivity"
             android:exported="false"
-            android:theme="@style/Theme.IOT_project.NoActionBar"/>
+            android:theme="@style/Theme.IOT_project.NoActionBar" />
         <activity
             android:name=".Admin.AdminLoginActivity"
             android:exported="false"
@@ -79,8 +92,7 @@
             android:exported="false" />
         <activity
             android:name=".NewProduct.NewProductActivity"
-            android:exported="false" />
-        <!-- <activity -->
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".OrderReturn" -->
         <!-- android:exported="false" /> -->
         <!-- <activity -->
@@ -131,9 +143,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
     </application>
 
 </manifest>
