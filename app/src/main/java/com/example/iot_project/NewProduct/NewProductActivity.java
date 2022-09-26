@@ -51,12 +51,14 @@ public class NewProductActivity extends AppCompatActivity {
     private String NewProductNameLength;
     private String NewProductName;
     private TextView textViewNewProduct_Inventory;
-    private int inventory=0;
+
     private TextView textViewNewProduct_newPicture;
     private FragmentManager FragManager;
     private FragmentTransaction fragTransit;
     private NewPictureFragment newPicFrag;
     private int picCount=0;
+    int inventory;
+    private PictureFragment PicFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,6 @@ public class NewProductActivity extends AppCompatActivity {
         textViewNewProduct_Inventory = (TextView)findViewById(R.id.textView_newProductNum);
         textViewNewProduct_newPicture = (TextView)findViewById(R.id.textView_newPicture);
         editTextNewProduct_Name = (EditText)findViewById(R.id.editTextText_newProduct_Name);
-
         //------------------------------------------------------------------------------------------
         NewProductNameLength=sp.getString("productNameLength","0");
         String productName = sp.getString("productName", "");
@@ -108,9 +109,26 @@ public class NewProductActivity extends AppCompatActivity {
             }
         });
         textViewNewProduct_describeLength.setText(describeLength);
-        //------------------------------------------------------------------------------------------
-        FragManager = getSupportFragmentManager();
+        //------------------------------------------------------------------------------------------------
 
+        //------------------------------------------------------------------------------------------
+
+        FragManager = getSupportFragmentManager();
+        DBHelper dbHelper = new DBHelper(NewProductActivity.this);
+        SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
+        Cursor picCursor = picdataBase.rawQuery(" SELECT * FROM goodsPic WHERE goods_name = '"+productName+"';", null);
+        if(picCursor.getCount()!=0){
+            picCursor.moveToFirst();
+            while(!picCursor.isAfterLast()) {
+                picCount = picCursor.getInt(picCursor.getColumnIndexOrThrow("count"));
+                String fragPic = picCursor.getString(picCursor.getColumnIndexOrThrow("fragPic"));
+                fragTransit = FragManager.beginTransaction();
+                PicFrag = PictureFragment.newInstance("Add data", fragPic);
+                fragTransit.add(R.id.linearLayout_newProduct_newPicture,PicFrag,fragPic);
+                fragTransit.commit();
+                picCursor.moveToNext();
+            }
+        }
         textViewNewProduct_newPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +137,14 @@ public class NewProductActivity extends AppCompatActivity {
                 newPicFrag = NewPictureFragment.newInstance("Add data", "setPrice" + picCount);
                 fragTransit.add(R.id.linearLayout_newProduct_newPicture,newPicFrag,"setPrice"+picCount);
                 fragTransit.commit();
+
+                ContentValues cv = new ContentValues();
+                cv.put("goods_name",productName);
+                cv.put("fragPic","setPrice"+picCount);
+                cv.put("count",picCount);
+                long id = picdataBase.insert("goodsPic",null,cv);
+                picdataBase.close();
+                dbHelper.close();
             }
 
         });
@@ -202,6 +228,7 @@ public class NewProductActivity extends AppCompatActivity {
                 cv.put("packageLength",pLength);
                 cv.put("packageWidth",pWidth);
                 cv.put("packageHeight",pHeight);
+                cv.put("inventory",inventory);
                 cv.put("seven",shippingSeven);
                 cv.put("familyMart",shippingFamilyMart);
                 cv.put("postOffice",shippingPostOffice);
@@ -223,6 +250,7 @@ public class NewProductActivity extends AppCompatActivity {
                     int packageLength = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("packageWidth"));
                     int packageWidth = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("packageWidth"));
                     int packageHeight = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("packageHeight"));
+                    int productNum = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("inventory"));
                     int seven = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("seven"));
                     int familyMart = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("familyMart"));
                     int postOffice = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("postOffice"));
@@ -240,6 +268,7 @@ public class NewProductActivity extends AppCompatActivity {
                     GoodInfoMap.put("packageLength",packageLength);
                     GoodInfoMap.put("packageWidth",packageWidth);
                     GoodInfoMap.put("packageHeight",packageHeight);
+                    GoodInfoMap.put("inventory",productNum);
                     GoodInfoMap.put("seven",seven);
                     GoodInfoMap.put("familyMart",familyMart);
                     GoodInfoMap.put("postOffice",postOffice);
@@ -259,9 +288,9 @@ public class NewProductActivity extends AppCompatActivity {
                 //    欄位中文名稱                         欄位名稱          Cursor Index
                 //    * 商品分類_id                       goodsType_id             0
                 //     商品名稱                           goods_name                1
-                //*    fragment代號                       fragType                  2
+                //     fragment代號                       fragType                  2
                 //     分類                               type                      3
-                //*    創的fragment個數(包括刪掉的)         count                     4
+                //     創的fragment個數(包括刪掉的)         count                     4
                 //     創建時間                            createTime                5
                 //----------------------------------------------------------------------------------
 
@@ -291,11 +320,11 @@ public class NewProductActivity extends AppCompatActivity {
                 //    欄位中文名稱                         欄位名稱          Cursor Index
                 //  * 商品規格_id                       goodsNorm_id             0
                 //     商品名稱                         goods_name               1
-                //*    fragment代號                       fragNum               2
+                //     fragment代號                       fragNum               2
                 //     商品價格                            price                 3
                 //     商品規格                            norm                  4
                 //     商品數量                            normNum               5
-                //*    創的fragment個數(包括刪掉的)          count                 6
+                //     創的fragment個數(包括刪掉的)          count                 6
                 //     創建時間                          createTime               7
                 //----------------------------------------------------------------------------------
                 Cursor normCursor = newProductDatabase.rawQuery("select * from goodsNorm WHERE goods_name='"+name+"';", null);
@@ -322,7 +351,36 @@ public class NewProductActivity extends AppCompatActivity {
                     Log.d("main","GoodNormInfoMap = "+GoodNormInfoMap);
                     normCursor.moveToNext();
                 }
+                //---------------------------------------------------------------------------------------------------
+                //    資料表名稱 : goodsPic
+                //    欄位中文名稱                         欄位名稱          Cursor Index
+                //   * 圖片_id                       goodsPicture_id             0
+                //     商品名稱                         goods_name                1
+                //     fragment代號                       fragPic                2
+                //     圖片                            goodsPicture              3
+                //     創的fragment個數(包括刪掉的)          count                 4
+                //     創建時間                          createTime               5
+                //----------------------------------------------------------------------------------
+                Cursor picCursor = newProductDatabase.rawQuery("select * from goodsPic WHERE goods_name='"+name+"';", null);
+                Map<String, Object> PictureInfoMap = new HashMap<>();
+                picCursor.moveToFirst();
+                while(!picCursor.isAfterLast()) {
+                    int goodsPicture_id = picCursor.getInt(picCursor.getColumnIndexOrThrow("goodsPicture_id"));
+                    String goods_name = picCursor.getString(picCursor.getColumnIndexOrThrow("goods_name"));
+                    String fragPic = picCursor.getString(picCursor.getColumnIndexOrThrow("fragPic"));
+                    byte[] goodsPicture = picCursor.getBlob(picCursor.getColumnIndexOrThrow("goodsPicture"));
+                    int count = picCursor.getInt(picCursor.getColumnIndexOrThrow("count"));
+                    String createTime = picCursor.getString(picCursor.getColumnIndexOrThrow("createTime"));
 
+                    PictureInfoMap.put("goodsPicture_id",goodsPicture_id);
+                    PictureInfoMap.put("goods_name",goods_name);
+                    PictureInfoMap.put("fragPic",fragPic);
+                    PictureInfoMap.put("goodsPicture",goodsPicture);
+                    PictureInfoMap.put("count",count);
+                    PictureInfoMap.put("createTime",createTime);
+                    Log.d("main","PictureInfoMap = "+PictureInfoMap);
+                    picCursor.moveToNext();
+                }
                 newProductDatabase.close();
                 dbHelper.close();
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
@@ -332,7 +390,13 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        inventory = getIntent().getIntExtra("inventory",0);
+        Log.d("main","inventory = "+inventory);
+        textViewNewProduct_Inventory.setText(String.valueOf(inventory));
+    }
 
     private void setWindow() {
         getSupportActionBar().hide();

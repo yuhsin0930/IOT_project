@@ -108,6 +108,8 @@ public class NewPictureFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_new_picture, container, false);
         newProductActivity = (NewProductActivity) getActivity();
         imageView_newPicture = (ImageView) v.findViewById(R.id.ImageView_newPicture);
+
+
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -115,46 +117,30 @@ public class NewPictureFragment extends Fragment {
                     Bundle bundle = result.getData().getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     imageView_newPicture.setImageBitmap(bitmap);
-//
-//                    DBHelper dbHelper = new DBHelper(newProductActivity);
-//                    SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
-//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                    byte[] bytes = baos.toByteArray();
-//
-//                    picdataBase.execSQL("INSERT INTO goodsPic (goodsPicture) VALUES (?)", new byte[][]{bytes});
+
+                    DBHelper dbHelper = new DBHelper(newProductActivity);
+                    SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] bytes = baos.toByteArray();
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("goodsPicture",bytes);
+                    long id = picdataBase.update("goodsPic",cv,"fragPic ='"+mParam2+"';",null);
+                    picdataBase.close();
+                    dbHelper.close();
 
                 }
             }
         });
-        Dialog newPictureDlg = new Dialog(newProductActivity);
-        newPictureDlg.setContentView(R.layout.new_picture_dialog);
-        newPictureDlg.show();
-        newPictureDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        TextView textViewCamara = (TextView) newPictureDlg.findViewById(R.id.textView_camara);
-        TextView textViewAlbum = (TextView) newPictureDlg.findViewById(R.id.textView_album);
-        textViewCamara.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newPictureDlg.dismiss();
-                Intent intent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
-                if (intent.resolveActivity(newProductActivity.getPackageManager()) != null) {
-                    activityResultLauncher.launch(intent);
-                } else {
-                    Toast.makeText(newProductActivity, "no app support", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        textViewAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newPictureDlg.dismiss();
-            }
-        });
-
+        Intent intent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
+        if (intent.resolveActivity(newProductActivity.getPackageManager()) != null) {
+            activityResultLauncher.launch(intent);
+        } else {
+            Toast.makeText(newProductActivity, "no app support", Toast.LENGTH_SHORT).show();
+        }
         return v;
     }
+
+
 }

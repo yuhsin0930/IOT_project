@@ -43,7 +43,7 @@ public class SetPriceActivity extends AppCompatActivity {
     private String productName;
     private String fragNum;
     private int count=0;
-
+    private int inventory=0;
 
 
     @Override
@@ -121,8 +121,26 @@ public class SetPriceActivity extends AppCompatActivity {
         buttonFinishedSetNorm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(SetPriceActivity.this, NewProductActivity.class);
-                    startActivity(intent);
+                DBHelper dbHelper = new DBHelper(SetPriceActivity.this);
+                SQLiteDatabase normDataBase = dbHelper.getWritableDatabase();
+
+                inventory=0;
+                Cursor picCursor = normDataBase.rawQuery("select * from goodsNorm WHERE goods_name='"+productName+"';", null);
+                picCursor.moveToFirst();
+                while(!picCursor.isAfterLast()) {
+                    int  num= picCursor.getInt(picCursor.getColumnIndexOrThrow("normNum"));
+                    picCursor.moveToNext();
+                    inventory+=num;
+                }
+                Log.d("num",inventory+"");
+                ContentValues cv = new ContentValues();
+                cv.put("inventory",inventory);
+                normDataBase.update("goods",cv,"gName='"+productName+"'",null);
+                normDataBase.close();
+                dbHelper.close();
+                Intent intent = new Intent(SetPriceActivity.this, NewProductActivity.class);
+                intent.putExtra("inventory",inventory);
+                startActivity(intent);
             }
         });
 
