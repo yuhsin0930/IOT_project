@@ -1,16 +1,30 @@
 package com.example.iot_project.member;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.iot_project.NewProduct.NewPictureFragment.PICK_PHOTO;
+
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +55,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal, RelativeLayoutGoMain;
     private TextView textViewName;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -88,6 +103,16 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
         textViewName.setText(getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE)
                 .getString("account_name", "Apple2022"));
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    imageViewMypic.setImageBitmap(bitmap);
+                }
+            }
+        });
     }
 
     private void setListener(){
@@ -125,7 +150,45 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.imageView_member_picture:
-                Toast.makeText(getContext(), "imageView_member_picture", Toast.LENGTH_SHORT).show();
+                Dialog newPictureDlg = new Dialog(memberActivity);
+                newPictureDlg.setContentView(R.layout.new_picture_dialog);
+                newPictureDlg.show();
+                newPictureDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+                TextView textViewCamara = (TextView) newPictureDlg.findViewById(R.id.textView_camara);
+                TextView textViewAlbum = (TextView) newPictureDlg.findViewById(R.id.textView_album);
+                textViewCamara.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        newPictureDlg.dismiss();
+                        Intent intent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
+                        if (intent.resolveActivity(memberActivity.getPackageManager()) != null) {
+                            activityResultLauncher.launch(intent);
+                        } else {
+                            Toast.makeText(memberActivity, "no app support", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                textViewAlbum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        newPictureDlg.dismiss();
+
+                        //動態申請獲取存取 讀寫磁碟的許可權
+                        if (ContextCompat.checkSelfPermission(memberActivity,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(memberActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                        } else {
+                            //開啟相簿
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            //Intent.ACTION_GET_CONTENT = "android.intent.action.GET_CONTENT"
+                            intent.setType("image/*");
+                            startActivityForResult(intent, PICK_PHOTO); // 開啟相簿
+                        }
+                    }
+                });
                 break;
             case R.id.RelativeLayout_member_orders:
             case R.id.LinearLayout_member_orders_0:
