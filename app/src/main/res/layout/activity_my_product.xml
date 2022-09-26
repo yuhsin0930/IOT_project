@@ -7,6 +7,7 @@
     tools:context=".MyProduct.MyProductActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/member_background_color"
@@ -22,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/imageView_myproductBack"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
@@ -65,10 +66,9 @@
         android:id="@+id/tabLayout_myProduct"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
         app:tabIndicatorColor="@color/Mycolor_1"
         app:tabTextColor="@color/font_color">
 
@@ -108,7 +108,7 @@
         android:id="@+id/button_myProduct_addProduct"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="@color/Mycolor_1"
         android:text="新增商品"
         android:textSize="20sp"
