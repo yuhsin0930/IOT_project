@@ -39,9 +39,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private LinearLayout LinearLayoutOrders_0, LinearLayoutOrders_1, LinearLayoutOrders_2, LinearLayoutOrders_3;
     private RelativeLayout RelativeLayoutMystore, RelativeLayoutBecomeSeller, RelativeLayoutOrders;
     private RelativeLayout RelativeLayoutFavorite, RelativeLayoutBought, RelativeLayoutSeen;
-    private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal;
+    private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal, RelativeLayoutGoMain;
     private TextView textViewName;
-    private Button button_main;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -66,7 +65,6 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findView() {
-        button_main = (Button)view.findViewById(R.id.button_main);
         textViewName = (TextView)view.findViewById(R.id.textView_member_name);
         imageViewSetting = (ImageView)view.findViewById(R.id.imageView_member_setting);
         imageViewCart = (ImageView)view.findViewById(R.id.imageView_member_cart);
@@ -76,6 +74,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         LinearLayoutOrders_2 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_2);
         LinearLayoutOrders_3 = (LinearLayout)view.findViewById(R.id.LinearLayout_member_orders_3);
         RelativeLayoutMystore = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_mystore);
+        RelativeLayoutGoMain = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_goMain);
         RelativeLayoutBecomeSeller = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_becomeSeller);
         RelativeLayoutOrders = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_orders);
         RelativeLayoutFavorite = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_favorite);
@@ -92,7 +91,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setListener(){
-        button_main.setOnClickListener(this);
+        RelativeLayoutGoMain.setOnClickListener(this);
         imageViewSetting.setOnClickListener(this);
         imageViewCart.setOnClickListener(this);
         imageViewMypic.setOnClickListener(this);
@@ -113,7 +112,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_main:
+            case R.id.RelativeLayout_member_goMain:
                 intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
                 break;

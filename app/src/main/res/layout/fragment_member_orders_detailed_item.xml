@@ -14,7 +14,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:paddingVertical="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -35,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="4dp"
                 android:singleLine="true"
                 android:text="【台灣現貨】BST-12 (送收納盒) 女生通用新款馬卡龍安卓蘋果三代華為小米入耳式運動有線耳機" />
 
@@ -42,7 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
-                android:paddingStart="10dp">
+                android:paddingStart="10dp"
+                android:paddingEnd="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,7 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
-                android:paddingStart="10dp">
+                android:paddingStart="10dp"
+                android:paddingEnd="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"

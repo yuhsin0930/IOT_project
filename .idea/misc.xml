@@ -82,8 +82,6 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/cardview_member_orders.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_buy_again.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.190625" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_member_goods.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_member_orders.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_new_picture.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_completed.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_return.xml" value="0.3536458333333333" />
@@ -104,7 +102,6 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/new_picture_dialog.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/payment_listview_items.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/seller_choose_county_listview_items.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/xml/file_paths.xml" value="0.1" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/drawable/dialog_background_corner.xml" value="0.169" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_bank_account.xml" value="0.3234375" />
         <entry key="..\:/Users/mac305/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_main.xml" value="0.3338541666666667" />

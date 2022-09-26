@@ -107,7 +107,7 @@
                 <View
                     android:id="@+id/view3"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="22dp"
                     android:background="@drawable/member_background_corner"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,19 +131,57 @@
                     app:layout_constraintStart_toEndOf="@id/imageView_member_picture"
                     app:layout_constraintTop_toBottomOf="@id/textView_member_name" />
 
-                <Button
-                    android:id="@+id/button_main"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:backgroundTint="@color/Mycolor_3"
-                    android:text="main"
-                    app:layout_constraintBottom_toTopOf="@+id/view3"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_member_goMain"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="8dp"
+                android:background="#DDFCFF"
+                android:paddingVertical="24dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="16dp"
+                    android:alpha="0.6"
+                    app:srcCompat="@drawable/outline_local_mall_black_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="56dp"
+                    android:text="開始購物囉!"
+                    android:textColor="#FF9C7E"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:text="前往大廳"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:alpha="0.4"
+                    app:srcCompat="@drawable/outline_arrow_forward_ios_black_18" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout_member_becomeSeller"
@@ -154,7 +192,6 @@
                 android:paddingVertical="24dp">
 
                 <ImageView
-                    android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -164,7 +201,6 @@
                     app:srcCompat="@drawable/outline_storefront_black_18" />
 
                 <TextView
-                    android:id="@+id/textView27"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -176,7 +212,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -188,7 +223,6 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
