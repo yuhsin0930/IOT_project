@@ -7,11 +7,15 @@ import static com.example.iot_project.NewProduct.NewPictureFragment.PICK_PHOTO;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -37,12 +41,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.shoppingCart.ShoppingCartActivity;
+
+import java.io.ByteArrayOutputStream;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
@@ -110,6 +117,38 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                     Bundle bundle = result.getData().getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     imageViewMypic.setImageBitmap(bitmap);
+
+
+//                    // SQLite
+//                    //////////////////////////////////////////////////
+//
+//                    DBHelper dbHelper;
+//                    SQLiteDatabase dataBase;
+//                    dbHelper = new DBHelper(memberActivity);
+//                    dataBase = dbHelper.getWritableDatabase();
+//
+//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                    byte[] bytes = baos.toByteArray();
+//                    dataBase.execSQL("INSERT INTO member (picture) VALUES (?)", new byte[][]{bytes});
+//
+//                    //////////////////////////////////////////////////
+//
+//
+////                    ContentValues cv = new ContentValues();
+////                    cv.put( "picture", bytes );
+////                    long cnt = dataBase.insert( "member", null, cv);
+////
+//                    byte[] b = new byte[0];
+//                    Cursor cursor = dataBase.rawQuery("SELECT picture FROM member WHERE member_id = 1;", null);
+//                    if (cursor.getCount() > 0) {
+//                        cursor.moveToFirst();
+//                        b = cursor.getBlob(0);
+//                    }
+//                    Bitmap bm = BitmapFactory.decodeByteArray(b, 0, b.length);
+//                    Log.d("member", "" + bm);
+//                    imageViewMypic.setImageBitmap(bm);
+
                 }
             }
         });

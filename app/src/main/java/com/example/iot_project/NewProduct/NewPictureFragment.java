@@ -114,15 +114,30 @@ public class NewPictureFragment extends Fragment {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
-                    imageView_newPicture.setImageBitmap(bitmap);
-//
-//                    DBHelper dbHelper = new DBHelper(newProductActivity);
-//                    SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
-//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                    byte[] bytes = baos.toByteArray();
-//
-//                    picdataBase.execSQL("INSERT INTO goodsPic (goodsPicture) VALUES (?)", new byte[][]{bytes});
+//                    imageView_newPicture.setImageBitmap(bitmap);
+
+                    DBHelper dbHelper = new DBHelper(newProductActivity);
+                    SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] bytes = baos.toByteArray();
+
+                    picdataBase.execSQL("INSERT INTO member (picture) VALUES (?)", new byte[][]{bytes});
+
+
+                    byte[] b = new byte[0];
+                    Cursor cursor = picdataBase.rawQuery("SELECT picture FROM member WHERE member_id = 1;", null);
+                    if (cursor.getCount() > 0) {
+                        cursor.moveToFirst();
+                        b = cursor.getBlob(0);
+                    }
+                    Bitmap bm = BitmapFactory.decodeByteArray(b, 0, b.length);
+                    Log.d("NewPicture", "" + bm);
+                    imageView_newPicture.setImageBitmap(bm);
+
+
+
+
 
                 }
             }
