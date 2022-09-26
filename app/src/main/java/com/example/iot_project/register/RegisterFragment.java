@@ -152,7 +152,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for(DataSnapshot member : snapshot.getChildren()){
+                    for(DataSnapshot member : snapshot.getChildren()) {
                         memberData = (Map<String,String>)member.getValue();
 //                        "picture"
                         editTextAccount.setText(memberData.get("account_name"));
@@ -164,7 +164,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         editTextAddress.setText(memberData.get("address"));
                         editTextBankNumber.setText(memberData.get("bankNumber"));
                         editTextBankAccount.setText(memberData.get("bankAccount"));
-                        password_1 = memberData.get("password");
                     }
                 } else Toast.makeText(registerActivity, "會員資料可能不存在", Toast.LENGTH_SHORT).show();
             }
@@ -180,6 +179,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             city = registerActivity.getCityName();
             district = registerActivity.getDistrictName();
             textViewCity.setText(city + district);
+            if (isLoggedIn) textViewCity.setText(memberData.get("city") + memberData.get("district"));
         }
     }
 
@@ -301,9 +301,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                                     setDataFromFirebase(memberId, account);
                                     registerActivity.onBackPressed();
                                     registerDialog.dismiss();
-                                } else
-                                    Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
-                            }
+                                } else Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
+                            } else Toast.makeText(registerActivity, "請輸入密碼", Toast.LENGTH_SHORT).show();
                         }
                     });
                     buttonSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
@@ -396,7 +395,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        fireMap.put("account", account);
         fireMap.put("account_name", account);
         fireMap.put("picture", "");
-        fireMap.put("password", password_1);
+        if (password_1.length() > 0) fireMap.put("password", password_1);
         fireMap.put("name", name);
         fireMap.put("birthday", birthday);
         fireMap.put("phone", phone);
@@ -575,7 +574,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 submitFlag[8] &= submitFlag[i];
                 Log.d("register", "submitFlag[" + i +"] = " + submitFlag[i]);
             }
-            if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0) {
+            if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0 && !isLoggedIn) {
                 if (!isSubmitEnable) {
                     buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
                     buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
@@ -587,7 +586,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     buttonSubmit.startAnimation(scaleAnimation);
                 }
                 isSubmitEnable = true;
-            } else {
+            } else if (!isLoggedIn) {
                 buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_4));
                 buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.font_color));
                 isSubmitEnable = false;
