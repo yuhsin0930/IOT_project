@@ -273,41 +273,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 changeFlag &= bankNumber.equals(memberData.get("bankNumber"));
                 changeFlag &= bankAccount.equals(memberData.get("bankAccount"));
                 if (isLoggedIn && !changeFlag) {
-//                    Dialog registerDialog = new Dialog(getContext());
-//                    registerDialog.setContentView(R.layout.dialog_register);
-//                    ImageView imageViewDialogCancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_dialog_cancel);
-//                    Button buttonDialogSubmit = (Button) registerDialog.findViewById(R.id.button_register_dialog_submit);
-//                    Button buttonDialogCancel = (Button) registerDialog.findViewById(R.id.button_register_dialog_cancel);
-//                    imageViewDialogCancel.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            registerDialog.dismiss();
-//                        }
-//                    });
-//                    buttonDialogSubmit.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            getEditText();
-//                            makeMap();
+                    Dialog registerDialog = new Dialog(getContext());
+                    registerDialog.setContentView(R.layout.dialog_register_save);
+                    ImageView imageViewSaveDialog_Cancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_save_dialog_cancel);
+                    Button buttonSaveDialog_Submit = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_submit);
+                    Button buttonSaveDialog_Cancel = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_cancel);
+                    EditText editTextSaveDialog_Password = (EditText) registerDialog.findViewById(R.id.editText_register_save_dialog_password);
+                    imageViewSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            registerDialog.dismiss();
+                        }
+                    });
+                    buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
+                            getEditText();
+                            makeMap();
 //                            registerActivity.setFireMap(fireMap);
 //                            registerActivity.MapUploadToFireBase();
-//                            Toast.makeText(registerActivity, "註冊完成", Toast.LENGTH_SHORT).show();
-//                            intent = new Intent(getContext(), LoginActivity.class);
-//                            intent.putExtra("account", account);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//                            registerDialog.dismiss();
-//                        }
-//                    });
-//                    buttonDialogCancel.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            registerDialog.dismiss();
-//                        }
-//                    });
-//                    registerDialog.show();
-//                    registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    registerActivity.onBackPressed();
+                                Toast.makeText(registerActivity, "資料修改完成", Toast.LENGTH_SHORT).show();
+                                registerActivity.onBackPressed();
+                                registerDialog.dismiss();
+                            } else Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    buttonSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            registerActivity.onBackPressed();
+                        }
+                    });
+                    registerDialog.show();
+                    registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 } else registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
