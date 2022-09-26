@@ -78,6 +78,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private View view;
     private Boolean[] submitFlag;
     private ScrollView ScrollViewRegister;
+    private String memberId;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
@@ -123,9 +124,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //       "is_login" : 帳號是否登入， true 為登入，false為登出
         isLoggedIn = sp.getBoolean("is_login",false);
 //       "member_id" : 帳號ID
-        String memberId= sp.getString("member_id","0");
+        memberId= sp.getString("member_id","0");
 //       "account_name" : 帳號名稱
-        String account = sp.getString("account_name","user");
+        account = sp.getString("account_name","user");
         Log.d("register", isLoggedIn +" "+ memberId +" "+ account);
 
         if (isLoggedIn) {
@@ -163,6 +164,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         editTextAddress.setText(memberData.get("address"));
                         editTextBankNumber.setText(memberData.get("bankNumber"));
                         editTextBankAccount.setText(memberData.get("bankAccount"));
+                        password_1 = memberData.get("password");
                     }
                 } else Toast.makeText(registerActivity, "會員資料可能不存在", Toast.LENGTH_SHORT).show();
             }
@@ -288,15 +290,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
-                            getEditText();
-                            makeMap();
-//                            registerActivity.setFireMap(fireMap);
-//                            registerActivity.MapUploadToFireBase();
-                                Toast.makeText(registerActivity, "資料修改完成", Toast.LENGTH_SHORT).show();
-                                registerActivity.onBackPressed();
-                                registerDialog.dismiss();
-                            } else Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
+                            if (editTextSaveDialog_Password.getText().toString().length() > 0) {
+                                if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
+                                    getEditText();
+                                    makeMap();
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference ref = database.getReference();
+                                    ref.child("member").child(memberId).setValue(fireMap);
+                                    Toast.makeText(registerActivity, "資料修改完成", Toast.LENGTH_SHORT).show();
+                                    setDataFromFirebase(memberId, account);
+                                    registerActivity.onBackPressed();
+                                    registerDialog.dismiss();
+                                } else
+                                    Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     buttonSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
@@ -477,10 +484,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         submitFlag[1] = false;
                     }
 
-                    if (password_2.length() == 0) {
-                        textViewPasswordWarn_2.setText("");
-                        submitFlag[2] = false;
-                    } else if (password_2.equals(password_1)) {
+                    if (password_2.equals(password_1)) {
                         textViewPasswordWarn_2.setText("");
                         submitFlag[2] = true;
                     } else {
