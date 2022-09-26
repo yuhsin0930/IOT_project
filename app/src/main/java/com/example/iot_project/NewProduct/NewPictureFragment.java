@@ -122,7 +122,7 @@ public class NewPictureFragment extends Fragment {
                 //動態申請許可權
                 if (ContextCompat.checkSelfPermission(newProductActivity, Manifest.permission
                         .WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(newProductActivity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                    ActivityCompat.requestPermissions(newProductActivity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
                 }else{
                     //執行啟動相簿的方法
                     openAlbum();

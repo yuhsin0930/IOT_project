@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.iot_project.MyProduct.MyProductActivity;
@@ -24,12 +25,14 @@ public class MyStoreActivity extends AppCompatActivity {
     private static final String DB_FILE = "demo.db";
     private static final String DB_TABLE= "create_goodsSQL";
     private DBHelper dbHelper;
+    private ImageView imageView_myPicture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_store);
         setWindow();
-
+        imageView_myPicture = (ImageView)findViewById(R.id.imageView_myStore_picture);
         textViewMyStore_name=(TextView)findViewById(R.id.textView_myStore_name);
         textViewMyStore_account = (TextView)findViewById(R.id.textView_myStore_account);
         textViewMyStore_checkSalesRecord = (TextView)findViewById(R.id.textView_myStore_checkSalesRecord);
@@ -39,6 +42,7 @@ public class MyStoreActivity extends AppCompatActivity {
         textViewMyStore_myProduct = (TextView)findViewById(R.id.textView_myStore_myProduct);
         textViewMyStore_payment = (TextView)findViewById(R.id.textView_myStore_payment);
 
+        imageView_myPicture.setImageResource(R.drawable.cat);
         buttonMyStore_checkStore = (Button)findViewById(R.id.button_myStore_checkStore);
         buttonMyStore_checkStore.setOnClickListener(new View.OnClickListener() {
             @Override
