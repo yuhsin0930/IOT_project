@@ -39,7 +39,7 @@
 
                 <EditText
                     android:id="@+id/editText_myProduct_search"
-                    android:layout_width="250dp"
+                    android:layout_width="200dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="20dp"
                     android:background="@color/white"
@@ -108,7 +108,7 @@
         android:id="@+id/button_myProduct_addProduct"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="@color/Mycolor_1"
         android:text="新增商品"
         android:textSize="20sp"

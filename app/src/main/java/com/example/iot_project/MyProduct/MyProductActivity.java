@@ -51,6 +51,7 @@ public class MyProductActivity extends AppCompatActivity {
                 tab.setText((CharSequence) myProducttabTitle.get(position));
                 if(position==0){
 
+
                 }else if(position==1){
 
                 }else if(position==2){
