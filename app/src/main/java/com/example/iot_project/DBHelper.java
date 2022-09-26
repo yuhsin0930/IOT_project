@@ -210,9 +210,9 @@ public class DBHelper extends SQLiteOpenHelper {
             "createTime DATETIME DEFAULT (datetime('now','localtime'))" +
             ");";
 
-    private String goodSQL_picture = "CREATE TABLE　goodsPicture(" +
+    private String goodSQL_picture = "CREATE TABLE　goodsPic (" +
             "goodsPicture_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-            "goods_name TEXT NOT NULL,"+
+//            "goods_name TEXT NOT NULL,"+
             "fragNum TEXT,"+
             "goodsPicture BLOB,"+
             "count INTEGER,"+

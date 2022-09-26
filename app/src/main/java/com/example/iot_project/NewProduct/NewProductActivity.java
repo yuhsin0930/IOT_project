@@ -56,7 +56,7 @@ public class NewProductActivity extends AppCompatActivity {
     private FragmentManager FragManager;
     private FragmentTransaction fragTransit;
     private NewPictureFragment newPicFrag;
-    private int count=0;
+    private int picCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,20 +74,7 @@ public class NewProductActivity extends AppCompatActivity {
         textViewNewProduct_Inventory = (TextView)findViewById(R.id.textView_newProductNum);
         textViewNewProduct_newPicture = (TextView)findViewById(R.id.textView_newPicture);
         editTextNewProduct_Name = (EditText)findViewById(R.id.editTextText_newProduct_Name);
-        //------------------------------------------------------------------------------------------
-        FragManager = getSupportFragmentManager();
 
-        textViewNewProduct_newPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                count++;
-                fragTransit = FragManager.beginTransaction();
-                newPicFrag = NewPictureFragment.newInstance("Add data", "setPrice" + count);
-                fragTransit.add(R.id.linearLayout_newProduct_newPicture,newPicFrag,"setPrice"+count);
-                fragTransit.commit();
-            }
-
-        });
         //------------------------------------------------------------------------------------------
         NewProductNameLength=sp.getString("productNameLength","0");
         String productName = sp.getString("productName", "");
@@ -121,6 +108,20 @@ public class NewProductActivity extends AppCompatActivity {
             }
         });
         textViewNewProduct_describeLength.setText(describeLength);
+        //------------------------------------------------------------------------------------------
+        FragManager = getSupportFragmentManager();
+
+        textViewNewProduct_newPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                picCount++;
+                fragTransit = FragManager.beginTransaction();
+                newPicFrag = NewPictureFragment.newInstance("Add data", "setPrice" + picCount);
+                fragTransit.add(R.id.linearLayout_newProduct_newPicture,newPicFrag,"setPrice"+picCount);
+                fragTransit.commit();
+            }
+
+        });
 
         //------------------------------------------------------------------------------------------
         textViewNewProduct_classification.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +173,6 @@ public class NewProductActivity extends AppCompatActivity {
                 DBHelper dbHelper = new DBHelper(NewProductActivity.this);
                 SQLiteDatabase newProductDatabase = dbHelper.getWritableDatabase();
 
-                setWindow();
                 //----------------------------------------------------------------------------------
                 //    資料表名稱 : goods
                 //    欄位中文名稱            欄位名稱          Cursor Index
@@ -332,6 +332,8 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
     }
+
+
     private void setWindow() {
         getSupportActionBar().hide();
         getWindow().setNavigationBarColor(0xFFFFFF);
