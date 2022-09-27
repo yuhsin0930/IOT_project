@@ -2,6 +2,7 @@ package com.example.iot_project.register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
@@ -23,6 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    // 讓有實作的Fragment有能力攔截返回鍵
+    public interface IOnBackPressed {
+        Boolean onBackPressed();
+    }
 
     private FragmentManager fragmentMgr;
     private FragmentTransaction fragmentTrans;
@@ -104,38 +110,46 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if ((System.currentTimeMillis() - timeTemp) > 300) {
-            timeTemp = System.currentTimeMillis();
-            if (myBackInDistrict) {
-                myBackInDistrict = false;
-                districtFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(registerDistrictFragment);
-                fragmentTrans.show(registerCityFragment);
-                fragmentTrans.commit();
-            } else if (districtFlag) {
-                districtFlag = false;
-                cityFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(registerDistrictFragment);
-                fragmentTrans.hide(registerCityFragment);
-                fragmentTrans.show(registerFragment);
-                fragmentTrans.commit();
-            } else if (cityFlag) {
-                cityFlag = false;
-                fragmentTrans = fragmentMgr.beginTransaction();
-                fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
-                fragmentTrans.hide(registerCityFragment);
-                fragmentTrans.show(registerFragment);
-                fragmentTrans.commit();
-            } else {
-                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
-                    getSupportFragmentManager().popBackStack();
-                    Log.d("register", "getBackStackEntryCount = " + i);
+        // https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
+        // 將Fragment轉型成介面並使用他內部Override的介面方法
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.FrameLayout_register);
+
+        // if (FrameLayout_register所顯示的Fragment"沒有"實作 || 方法回傳值為"False")
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed)fragment).onBackPressed()) {
+            Log.d("register", "A");
+            if ((System.currentTimeMillis() - timeTemp) > 300) {
+                timeTemp = System.currentTimeMillis();
+                if (myBackInDistrict) {
+                    myBackInDistrict = false;
+                    districtFlag = false;
+                    fragmentTrans = fragmentMgr.beginTransaction();
+                    fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                    fragmentTrans.hide(registerDistrictFragment);
+                    fragmentTrans.show(registerCityFragment);
+                    fragmentTrans.commit();
+                } else if (districtFlag) {
+                    districtFlag = false;
+                    cityFlag = false;
+                    fragmentTrans = fragmentMgr.beginTransaction();
+                    fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                    fragmentTrans.hide(registerDistrictFragment);
+                    fragmentTrans.hide(registerCityFragment);
+                    fragmentTrans.show(registerFragment);
+                    fragmentTrans.commit();
+                } else if (cityFlag) {
+                    cityFlag = false;
+                    fragmentTrans = fragmentMgr.beginTransaction();
+                    fragmentTrans.setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_right);
+                    fragmentTrans.hide(registerCityFragment);
+                    fragmentTrans.show(registerFragment);
+                    fragmentTrans.commit();
+                } else {
+                    for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                        getSupportFragmentManager().popBackStack();
+                        Log.d("register", "getBackStackEntryCount = " + i);
+                    }
+                    super.onBackPressed();
                 }
-                super.onBackPressed();
             }
         }
     }

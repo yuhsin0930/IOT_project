@@ -49,10 +49,14 @@ import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.shoppingCart.ShoppingCartActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 
@@ -66,7 +70,8 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal, RelativeLayoutGoMain;
     private TextView textViewName;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    private String memberId;
+    private String memberId, account_name;
+    private String base64_picture;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -149,21 +154,38 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         // 向 SharedPreferences 取得 member_id 備用
         SharedPreferences sp = memberActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
         memberId = sp.getString("member_id", "0");
+        account_name = sp.getString("account_name", "Apple2022");
         Log.d("member", "memberId = " +  memberId);
+        Log.d("member", "account_name = " +  account_name);
 
-        // 向 Firebase 取得大頭照(base64)
+        // 向 Firebase 取得該用戶大頭照 (base64)
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference();
+        DatabaseReference ref = database.getReference("member");
+        base64_picture = "";
+        ref.orderByChild("account_name").equalTo(account_name).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for(DataSnapshot member : snapshot.getChildren()) {
+                        base64_picture = ((Map<String,String>)member.getValue()).get("picture");
+                        Log.d("member", "Map = member.getValue() = " + member.getValue());
+                    }
+                } else Toast.makeText(memberActivity, "帳號資料不存在", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
-        // base64 轉 bitmap
+        // base64 轉 bitmap 並顯示在會員頁面
+        if (!base64_picture.equals("")) {
+            byte[] bytes = Base64.decode(base64_picture, Base64.DEFAULT);
+            Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            // 在會員頁面顯示firebase裡的大頭照
+            imageViewMypic.setImageBitmap(bitmap_picture);
+        } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
 
-
-        imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
-        textViewName.setText(getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE)
-                .getString("account_name", "Apple2022"));
-
-
-
+        // 在會員頁面顯示SharedPreferences裡的帳號
+        textViewName.setText(account_name);
     }
 
     private void setListener(){
@@ -212,7 +234,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onClick(View v) {
                         newPictureDlg.dismiss();
-                        Intent intent = new Intent((MediaStore.ACTION_IMAGE_CAPTURE));
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (intent.resolveActivity(memberActivity.getPackageManager()) != null) {
                             activityResultLauncher.launch(intent);
                         } else {

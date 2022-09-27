@@ -55,7 +55,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class RegisterFragment extends Fragment implements View.OnClickListener {
+public class RegisterFragment extends Fragment implements View.OnClickListener, RegisterActivity.IOnBackPressed {
 
     private RelativeLayout relativeLayoutAccount, relativeLayoutPassword_1, relativeLayoutPassword_2;
     private RelativeLayout relativeLayoutName, relativeLayoutBirthday, relativeLayoutPhone;
@@ -106,6 +106,73 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         checkLoginOnSp();
+    }
+
+    // 實作Activity的介面，讓Fragment可以先攔截onBackPressed
+    @Override
+    public Boolean onBackPressed() {
+        // 登入狀態按上一頁，先判斷是否有改個資，再詢問使用者是否上傳
+        Log.d("register", "f");
+        if (isLoggedIn) askUserUpdateToFirebase();
+        return true; // true時activity那邊if不執行
+    }
+
+    // 登入狀態"上一頁"先呼叫此函數，將有修改資料與存firebase功能
+    private void askUserUpdateToFirebase() {
+        getEditText();
+        Boolean changeFlag = true;
+        changeFlag &= password_1.equals("");
+        changeFlag &= name.equals(memberData.get("name"));
+        changeFlag &= birthday.equals(memberData.get("birthday"));
+        changeFlag &= phone.equals(memberData.get("phone"));
+        changeFlag &= email.equals(memberData.get("email"));
+        changeFlag &= textViewCity.getText().equals(memberData.get("city") + memberData.get("district"));
+        changeFlag &= textViewAddress.getText().equals(memberData.get("address"));
+        changeFlag &= bankNumber.equals(memberData.get("bankNumber"));
+        changeFlag &= bankAccount.equals(memberData.get("bankAccount"));
+        // 只要有一個項目被改變changeFlag = false;
+        if (!changeFlag) {
+            Dialog registerDialog = new Dialog(getContext());
+            registerDialog.setContentView(R.layout.dialog_register_save);
+            ImageView imageViewSaveDialog_Cancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_save_dialog_cancel);
+            Button buttonSaveDialog_Submit = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_submit);
+            Button buttonSaveDialog_Cancel = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_cancel);
+            EditText editTextSaveDialog_Password = (EditText) registerDialog.findViewById(R.id.editText_register_save_dialog_password);
+            imageViewSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    registerDialog.dismiss();
+                }
+            });
+            buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (editTextSaveDialog_Password.getText().toString().length() > 0) {
+//                                Log.d("register", "memberData.get(\"password\") = " + memberData.get("password"));
+                        if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
+                            getEditText();
+                            makeMap();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference ref = database.getReference();
+                            ref.child("member").child(memberId).setValue(fireMap);
+                            Toast.makeText(registerActivity, "資料修改完成", Toast.LENGTH_SHORT).show();
+                            setDataFromFirebase(memberId, account);
+//                            registerActivity.onBackPressed();
+                            registerDialog.dismiss();
+                        } else Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(registerActivity, "請輸入密碼", Toast.LENGTH_SHORT).show();
+                }
+            });
+            buttonSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    registerActivity.onBackPressed();
+                }
+            });
+            registerDialog.show();
+            registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+//        } else registerActivity.onBackPressed();
     }
 
     private void setData() {
@@ -179,6 +246,96 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    private void getEditText() {
+        account = editTextAccount.getText().toString();
+        password_1 = editTextPassword_1.getText().toString();
+        name = editTextName.getText().toString();
+        birthday = textViewBirthday.getText().toString();
+        phone = editTextPhone.getText().toString();
+        email = editTextEmail.getText().toString();
+        bankNumber = editTextBankNumber.getText().toString();
+        bankAccount = editTextBankAccount.getText().toString();
+    }
+
+    public void makeMap() {
+//      新增會員帳號建立時間
+//      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+        ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+//      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+//      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+        String createTime = NowTime.format(dateTimeFormat);
+
+        fireMap = new HashMap<>();
+//        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
+//        fireMap.put("account", account);
+        fireMap.put("account_name", account);
+
+        if (isLoggedIn) {
+            // 登入模式時製作Map，使用該帳戶firebase中的照片 (等同於維持原樣)
+            fireMap.put("picture", memberData.get("picture"));
+        } else {
+            // 註冊模式時製作Map，使用內建照片轉Base64存入
+            String encodedImage = "";
+            try {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cat2);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
+                byte[] b = baos.toByteArray();
+                encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                Log.d("register","encodedImage = " + encodedImage);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            fireMap.put("picture", encodedImage);
+        }
+
+        if (password_1.equals("")) {
+            fireMap.put("password", memberData.get("password"));
+        } else {
+            fireMap.put("password", password_1);
+        }
+        Log.d("register", "password_1 = " + password_1);
+
+        fireMap.put("name", name);
+        fireMap.put("birthday", birthday);
+        fireMap.put("phone", phone);
+        fireMap.put("email", email);
+        fireMap.put("city", city);
+        fireMap.put("district", district);
+        fireMap.put("address", address);
+        fireMap.put("bankNumber", bankNumber);
+        fireMap.put("bankAccount", bankAccount);
+        fireMap.put("createTime", createTime); // 新增會員建立時間
+        fireMap.put("is_seller", "false"); // 判斷會員是否申請賣家通過
+    }
+
+    // 判斷帳號是否已註冊
+    public void isAccountExistedInFirebase() {
+        if (editTextAccount.getText().length() > 0) {
+            account = editTextAccount.getText().toString();
+            ///     使用 Firebase 服務
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            //      取得  Firebase 資料庫 member 資料表 (GET網址)
+            DatabaseReference memberRef = database.getReference("member");
+            //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
+            memberRef.orderByChild("account_name").equalTo(account)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
+                            if (snapshot.exists()) {
+                                textViewAccountWarn.setText("(帳號已存在)");
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+        }
     }
 
     @Override
@@ -271,58 +428,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 editTextAddress.setText("");
                 break;
             case R.id.imageView_register_back:
-                getEditText();
-                Boolean changeFlag = true;
-                changeFlag &= password_1.equals("");
-                changeFlag &= name.equals(memberData.get("name"));
-                changeFlag &= birthday.equals(memberData.get("birthday"));
-                changeFlag &= phone.equals(memberData.get("phone"));
-                changeFlag &= email.equals(memberData.get("email"));
-                changeFlag &= textViewCity.getText().equals(memberData.get("city") + memberData.get("district"));
-                changeFlag &= textViewAddress.getText().equals(memberData.get("address"));
-                changeFlag &= bankNumber.equals(memberData.get("bankNumber"));
-                changeFlag &= bankAccount.equals(memberData.get("bankAccount"));
-                if (isLoggedIn && !changeFlag) {
-                    Dialog registerDialog = new Dialog(getContext());
-                    registerDialog.setContentView(R.layout.dialog_register_save);
-                    ImageView imageViewSaveDialog_Cancel = (ImageView) registerDialog.findViewById(R.id.imageView_register_save_dialog_cancel);
-                    Button buttonSaveDialog_Submit = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_submit);
-                    Button buttonSaveDialog_Cancel = (Button) registerDialog.findViewById(R.id.button_register_save_dialog_cancel);
-                    EditText editTextSaveDialog_Password = (EditText) registerDialog.findViewById(R.id.editText_register_save_dialog_password);
-                    imageViewSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            registerDialog.dismiss();
-                        }
-                    });
-                    buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (editTextSaveDialog_Password.getText().toString().length() > 0) {
-//                                Log.d("register", "memberData.get(\"password\") = " + memberData.get("password"));
-                                if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
-                                    getEditText();
-                                    makeMap();
-                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference ref = database.getReference();
-                                    ref.child("member").child(memberId).setValue(fireMap);
-                                    Toast.makeText(registerActivity, "資料修改完成", Toast.LENGTH_SHORT).show();
-                                    setDataFromFirebase(memberId, account);
-                                    registerActivity.onBackPressed();
-                                    registerDialog.dismiss();
-                                } else Toast.makeText(registerActivity, "密碼錯誤", Toast.LENGTH_SHORT).show();
-                            } else Toast.makeText(registerActivity, "請輸入密碼", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    buttonSaveDialog_Cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            registerActivity.onBackPressed();
-                        }
-                    });
-                    registerDialog.show();
-                    registerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                } else registerActivity.onBackPressed();
+                registerActivity.onBackPressed();
                 break;
             case R.id.button_register_submit:
                 if (submitFlag[8] && (city.length() * district.length() * address.length()) > 0) {
@@ -368,103 +474,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 SharedPreferences sp = getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE);
                 sp.edit()
                         .putBoolean("is_login", false)
-                        .putString("member_id","")
-                        .putString("account_name","")
+                        .putString("member_id", "")
+                        .putString("account_name", "")
                         .commit();
                 Toast.makeText(registerActivity, "已登出", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
-        }
-    }
-
-    private void getEditText() {
-        account = editTextAccount.getText().toString();
-        password_1 = editTextPassword_1.getText().toString();
-        name = editTextName.getText().toString();
-        birthday = textViewBirthday.getText().toString();
-        phone = editTextPhone.getText().toString();
-        email = editTextEmail.getText().toString();
-        bankNumber = editTextBankNumber.getText().toString();
-        bankAccount = editTextBankAccount.getText().toString();
-    }
-
-    public void makeMap() {
-//      新增會員帳號建立時間
-//      1. 取得台灣時區(Asia/Taipei)的目前日期時間
-        ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
-//      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
-//      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
-        String createTime = NowTime.format(dateTimeFormat);
-
-        fireMap = new HashMap<>();
-//        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
-//        fireMap.put("account", account);
-        fireMap.put("account_name", account);
-
-        if (isLoggedIn) {
-            // 登入模式時製作Map，使用該帳戶firebase中的照片 (等同於維持原樣)
-            fireMap.put("picture", memberData.get("picture"));
-        } else {
-            // 註冊模式時製作Map，使用內建照片轉Base64存入
-            String encodedImage = "";
-            try {
-                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cat2);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
-                byte[] b = baos.toByteArray();
-                encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                Log.d("register","encodedImage = " + encodedImage);
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-            fireMap.put("picture", encodedImage);
-        }
-
-        if (password_1.equals("")) {
-            fireMap.put("password", memberData.get("password"));
-        } else {
-            fireMap.put("password", password_1);
-        }
-        Log.d("register", "password_1 = " + password_1);
-
-        fireMap.put("name", name);
-        fireMap.put("birthday", birthday);
-        fireMap.put("phone", phone);
-        fireMap.put("email", email);
-        fireMap.put("city", city);
-        fireMap.put("district", district);
-        fireMap.put("address", address);
-        fireMap.put("bankNumber", bankNumber);
-        fireMap.put("bankAccount", bankAccount);
-        fireMap.put("createTime", createTime);//新增會員建立時間
-        fireMap.put("is_seller", "false");//判斷會員是否申請賣家通過
-    }
-
-    public void isAccountExistedInFirebase() {
-        if (editTextAccount.getText().length() > 0) { // 判斷帳號是否已註冊
-            account = editTextAccount.getText().toString();
-            ///     使用 Firebase 服務
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            //      取得  Firebase 資料庫 member 資料表 (GET網址)
-            DatabaseReference memberRef = database.getReference("member");
-            //      搜尋會員資料: 至在 member 資料表下，搜尋以 uniqueKey 儲存的會員資料，account_name 為帳號名稱
-            memberRef.orderByChild("account_name").equalTo(account)
-                    .addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("main", "[memberRef]snapshot.exists()=" + snapshot.exists());
-                            if (snapshot.exists()) {
-                                textViewAccountWarn.setText("(帳號已存在)");
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
         }
     }
 
