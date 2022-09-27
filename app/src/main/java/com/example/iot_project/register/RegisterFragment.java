@@ -293,7 +293,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (editTextSaveDialog_Password.getText().toString().length() >= 0) {
+                            if (editTextSaveDialog_Password.getText().toString().length() > 0) {
                                 Log.d("register", "memberData.get(\"password\") = " + memberData.get("password"));
                                 if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
                                     getEditText();
