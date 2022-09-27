@@ -36,7 +36,6 @@ public class RegisterCityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register_city, container, false);
         registerActivity = (RegisterActivity)getActivity();
-
         ImageViewBack = (ImageView)v.findViewById(R.id.ImageView_register_city_back);
         listViewCommon = (ListView)v.findViewById(R.id.ListView_common);
 
