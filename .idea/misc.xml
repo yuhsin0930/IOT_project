@@ -112,13 +112,17 @@
         <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/admin_button_background.xml" value="0.1" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/outline_auto_fix_normal_20.xml" value="0.1" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/drawable/outline_person_remove_20.xml" value="0.1" />
-        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_admin_main.xml" value="0.41890315052508753" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_admin_main.xml" value="0.306282722513089" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_admin_member.xml" value="0.18697916666666667" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_admin_product.xml" value="0.1" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/layout/activity_admin_seller.xml" value="0.1" />
-        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/admin_m_recyclerview_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/admin_m_recyclerview_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/admin_recyclerview_item.xml" value="0.18536585365853658" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/admin_recyclerview_item_.xml" value="0.1" />
         <entry key="..\:/android_/IOT_project/app/src/main/res/layout/fragment_admin_member.xml" value="0.41890315052508753" />
-        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/fragment_admin_product.xml" value="0.18697916666666667" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/fragment_admin_product.xml" value="0.3333333333333333" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/layout/fragment_admin_seller.xml" value="0.3333333333333333" />
+        <entry key="..\:/android_/IOT_project/app/src/main/res/menu/navigation_admin_drawer.xml" value="0.12685185185185185" />
       </map>
     </option>
   </component>

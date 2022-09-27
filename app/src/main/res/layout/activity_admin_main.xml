@@ -26,6 +26,13 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:navigationIcon="@drawable/navigation" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout_admin_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -34,4 +41,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/navigation_admin_drawer" />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

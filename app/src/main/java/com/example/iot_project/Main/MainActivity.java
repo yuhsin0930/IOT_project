@@ -1,6 +1,7 @@
 package com.example.iot_project.Main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.Admin.AdminLoginActivity;
+import com.example.iot_project.Admin.Member;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
@@ -34,6 +36,17 @@ import com.example.iot_project.shoppingCart.ShoppingCartActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private LinearLayout linearLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
 //      To hide Action Bar
@@ -242,13 +255,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private long exitTime;
+
     @Override
     public void onBackPressed() {
-        Log.d("main","exitTime="+exitTime);
+        Log.d("main", "exitTime=" + exitTime);
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
-            Log.d("main","exitTime="+exitTime);
+            Log.d("main", "exitTime=" + exitTime);
         } else {
 //            finish(); // 還是可以返回上一頁
             moveTaskToBack(true);
@@ -260,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if(v.getId()==R.id.linearLayout_main_bottom){
-            getMenuInflater().inflate(R.menu.admin_menu,menu);
+        if (v.getId() == R.id.linearLayout_main_bottom) {
+            getMenuInflater().inflate(R.menu.admin_menu, menu);
         }
     }
 
@@ -269,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.admin_item){
+        if (item.getItemId() == R.id.admin_item) {
             Intent adminintent = new Intent(MainActivity.this, AdminLoginActivity.class);
             startActivity(adminintent);
         }

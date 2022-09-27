@@ -43,10 +43,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 //      Firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dataref = database.getReference("admin");
-//        Map<String,String> map = new HashMap<>();
-//        map.put("account","admin");
-//        map.put("password","admin12324");
-//        dataref.setValue(map);
+
 //        1. submit button:
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
