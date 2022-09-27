@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,8 @@ import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.shoppingCart.ShoppingCartActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 
@@ -63,6 +66,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout RelativeLayoutCoupon, RelativeLayoutPersonal, RelativeLayoutGoMain;
     private TextView textViewName;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private String memberId;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -76,8 +80,43 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         findView();
         setData();
         setListener();
+        myRegisterForActivityResult();
 
         return view;
+    }
+
+    // 更換用戶大頭照 從相機回Activity時執行
+    private void myRegisterForActivityResult() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+
+                    // 相機拍照後的照片在這取出，此時圖片資料型態為 Bitmap
+                    Bundle bundle = result.getData().getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    imageViewMypic.setImageBitmap(bitmap);
+
+                    // 將 Bitmap 轉型成 Base64
+                    String encodedImage = "";
+                    try {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
+                        byte[] b = baos.toByteArray();
+                        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                        Log.d("member","encodedImage = "+encodedImage);
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // 使用 member_id 與 "picture"，向firebase更新使用者大頭照
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference ref = database.getReference();
+                    ref.child("member").child(memberId).child("picture").setValue(encodedImage);
+                    Toast.makeText(memberActivity, "大頭照修改完成", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -107,51 +146,24 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setData(){
+        // 向 SharedPreferences 取得 member_id 備用
+        SharedPreferences sp = memberActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        memberId = sp.getString("member_id", "0");
+        Log.d("member", "memberId = " +  memberId);
+
+        // 向 Firebase 取得大頭照(base64)
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference();
+
+        // base64 轉 bitmap
+
+
         imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
         textViewName.setText(getContext().getSharedPreferences("LoginInformation", MODE_PRIVATE)
                 .getString("account_name", "Apple2022"));
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    imageViewMypic.setImageBitmap(bitmap);
 
 
-//                    // SQLite
-//                    //////////////////////////////////////////////////
-//
-//                    DBHelper dbHelper;
-//                    SQLiteDatabase dataBase;
-//                    dbHelper = new DBHelper(memberActivity);
-//                    dataBase = dbHelper.getWritableDatabase();
-//
-//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                    byte[] bytes = baos.toByteArray();
-//                    dataBase.execSQL("INSERT INTO member (picture) VALUES (?)", new byte[][]{bytes});
-//
-//                    //////////////////////////////////////////////////
-//
-//
-////                    ContentValues cv = new ContentValues();
-////                    cv.put( "picture", bytes );
-////                    long cnt = dataBase.insert( "member", null, cv);
-////
-//                    byte[] b = new byte[0];
-//                    Cursor cursor = dataBase.rawQuery("SELECT picture FROM member WHERE member_id = 1;", null);
-//                    if (cursor.getCount() > 0) {
-//                        cursor.moveToFirst();
-//                        b = cursor.getBlob(0);
-//                    }
-//                    Bitmap bm = BitmapFactory.decodeByteArray(b, 0, b.length);
-//                    Log.d("member", "" + bm);
-//                    imageViewMypic.setImageBitmap(bm);
 
-                }
-            }
-        });
     }
 
     private void setListener(){

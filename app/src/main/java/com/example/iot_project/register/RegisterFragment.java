@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +44,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -400,9 +405,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         fireMap.put("account_name", account);
 
         if (isLoggedIn) {
+            // 登入模式時製作Map，使用該帳戶firebase中的照片 (等同於維持原樣)
             fireMap.put("picture", memberData.get("picture"));
         } else {
-            fireMap.put("picture", "");
+            // 註冊模式時製作Map，使用內建照片轉Base64存入
+            String encodedImage = "";
+            try {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cat2);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
+                byte[] b = baos.toByteArray();
+                encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                Log.d("register","encodedImage = " + encodedImage);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            fireMap.put("picture", encodedImage);
         }
 
         if (password_1.equals("")) {
