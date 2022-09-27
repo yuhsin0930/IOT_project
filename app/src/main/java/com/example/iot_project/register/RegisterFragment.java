@@ -164,6 +164,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         editTextAddress.setText(memberData.get("address"));
                         editTextBankNumber.setText(memberData.get("bankNumber"));
                         editTextBankAccount.setText(memberData.get("bankAccount"));
+
+                        registerActivity.setCityName(memberData.get("city"));
+                        registerActivity.setDistrictName(memberData.get("district"));
+
                     }
                 } else Toast.makeText(registerActivity, "會員資料可能不存在", Toast.LENGTH_SHORT).show();
             }
@@ -179,7 +183,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             city = registerActivity.getCityName();
             district = registerActivity.getDistrictName();
             textViewCity.setText(city + district);
-            if (isLoggedIn) textViewCity.setText(memberData.get("city") + memberData.get("district"));
         }
     }
 
@@ -290,7 +293,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     buttonSaveDialog_Submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (editTextSaveDialog_Password.getText().toString().length() > 0) {
+                            if (editTextSaveDialog_Password.getText().toString().length() >= 0) {
+                                Log.d("register", "memberData.get(\"password\") = " + memberData.get("password"));
                                 if (editTextSaveDialog_Password.getText().toString().equals(memberData.get("password"))) {
                                     getEditText();
                                     makeMap();
@@ -394,8 +398,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        2022-09-21 : account 似乎是firebase的保留字, 搜尋資料會有問題, 故改成account_name
 //        fireMap.put("account", account);
         fireMap.put("account_name", account);
-        fireMap.put("picture", "");
-        if (password_1.length() > 0) fireMap.put("password", password_1);
+
+        if (isLoggedIn) {
+            fireMap.put("picture", memberData.get("picture"));
+        } else {
+            fireMap.put("picture", "");
+        }
+
+        if (password_1.equals("")) {
+            fireMap.put("password", memberData.get("password"));
+        } else {
+            fireMap.put("password", password_1);
+        }
+        Log.d("register", "password_1 = " + password_1);
+
         fireMap.put("name", name);
         fireMap.put("birthday", birthday);
         fireMap.put("phone", phone);
@@ -574,7 +590,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 submitFlag[8] &= submitFlag[i];
                 Log.d("register", "submitFlag[" + i +"] = " + submitFlag[i]);
             }
-            if (submitFlag[8] && city.length() > 0 && district.length() > 0 && address.length() > 0 && !isLoggedIn) {
+            if (submitFlag[8] && city.length() * district.length() * address.length() > 0 && !isLoggedIn) {
                 if (!isSubmitEnable) {
                     buttonSubmit.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
                     buttonSubmit.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
