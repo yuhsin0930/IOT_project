@@ -1,8 +1,10 @@
-package com.example.iot_project;
+package com.example.iot_project.salesRecord;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.iot_project.R;
 
 public class PaymentActivity extends AppCompatActivity {
 
