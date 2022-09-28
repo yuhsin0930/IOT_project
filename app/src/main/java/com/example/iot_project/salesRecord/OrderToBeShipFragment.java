@@ -116,4 +116,3 @@ public class OrderToBeShipFragment extends Fragment {
 // 付款狀態
 // 訂單總金額
 
-}
