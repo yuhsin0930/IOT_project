@@ -7,16 +7,12 @@ import static com.example.iot_project.NewProduct.NewPictureFragment.PICK_PHOTO;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -34,21 +30,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.iot_project.DBHelper;
 import com.example.iot_project.Main.MainActivity;
 import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
-import com.example.iot_project.shoppingCart.ShoppingCartActivity;
+import com.example.iot_project.Cart.CartActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -170,19 +163,23 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                         base64_picture = ((Map<String,String>)member.getValue()).get("picture");
                         Log.d("member", "Map = member.getValue() = " + member.getValue());
                     }
+
+                    // base64 轉 bitmap 並顯示在會員頁面
+                    if (!base64_picture.equals("")) {
+                        Log.d("member", "base64_picture = " + base64_picture);
+                        byte[] bytes = Base64.decode(base64_picture, Base64.DEFAULT);
+                        Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // 在會員頁面顯示firebase裡的大頭照
+                        imageViewMypic.setImageBitmap(bitmap_picture);
+                    } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
+
                 } else Toast.makeText(memberActivity, "帳號資料不存在", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        // base64 轉 bitmap 並顯示在會員頁面
-        if (!base64_picture.equals("")) {
-            byte[] bytes = Base64.decode(base64_picture, Base64.DEFAULT);
-            Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            // 在會員頁面顯示firebase裡的大頭照
-            imageViewMypic.setImageBitmap(bitmap_picture);
-        } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
+
 
         // 在會員頁面顯示SharedPreferences裡的帳號
         textViewName.setText(account_name);
@@ -219,7 +216,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.imageView_member_cart:
-                intent = new Intent(getContext(), ShoppingCartActivity.class);
+                intent = new Intent(getContext(), CartActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageView_member_picture:

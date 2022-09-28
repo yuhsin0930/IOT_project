@@ -1,7 +1,6 @@
 package com.example.iot_project.Main;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -10,11 +9,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,27 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.Admin.AdminLoginActivity;
-import com.example.iot_project.Admin.Member;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.R;
-import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
-import com.example.iot_project.shoppingCart.ShoppingCartActivity;
+import com.example.iot_project.Cart.CartActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -179,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (v.getId() == R.id.imageButton_main_shoppingcart) {
                     if (login) {
-                        Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
+                        Intent intent = new Intent(MainActivity.this, CartActivity.class);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

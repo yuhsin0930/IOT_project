@@ -1,21 +1,24 @@
-package com.example.iot_project.shoppingCart;
+package com.example.iot_project.Cart;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.iot_project.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AllProductFragment#newInstance} factory method to
+ * Use the {@link CartBuyAgainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllProductFragment extends Fragment {
+public class CartBuyAgainFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,8 +28,9 @@ public class AllProductFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerView;
 
-    public AllProductFragment() {
+    public CartBuyAgainFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +40,11 @@ public class AllProductFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ShoppingCartAllProductFragment.
+     * @return A new instance of fragment BuyAgainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllProductFragment newInstance(String param1, String param2) {
-        AllProductFragment fragment = new AllProductFragment();
+    public static CartBuyAgainFragment newInstance(String param1, String param2) {
+        CartBuyAgainFragment fragment = new CartBuyAgainFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +65,16 @@ public class AllProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shopping_cart_all_product, container, false);
+        View v = inflater.inflate(R.layout.fragment_cart_buy_again,container,false);
+
+
+        recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        CartBuyAgainRecyclerViewAdapter adapter = new CartBuyAgainRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+
+
+
+        return v;
     }
 }

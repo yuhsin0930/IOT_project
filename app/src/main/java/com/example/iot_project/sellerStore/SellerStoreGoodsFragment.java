@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.iot_project.R;
-import com.example.iot_project.member.MemberGoodsRecyclerViewAdapter;
 
 public class SellerStoreGoodsFragment extends Fragment {
 
@@ -34,7 +33,7 @@ public class SellerStoreGoodsFragment extends Fragment {
     }
 
     private void findView() {
-        recyclerViewGoods = (RecyclerView)view.findViewById(R.id.RecyclerVew_seller_store_goods);
+        recyclerViewGoods = (RecyclerView)view.findViewById(R.id.RecyclerView_seller_store_goods);
     }
 
     private void setData() {
