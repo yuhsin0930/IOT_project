@@ -1,23 +1,35 @@
 package com.example.iot_project.Admin;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
+import com.example.iot_project.Main.LogoutActivity;
 import com.example.iot_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +48,17 @@ public class AdminMemberFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-//    private ArrayList<? extends Parcelable> ListData;
+    private ListView ListViewMember;
+    private TextView textViewMemberNum;
+    private TextView textViewMemberDataCount;
+    private EditText editTextSearch;
+    private ImageButton buttonSearch;
+    private AdminMainActivity activity;
+    private String account;
+    private long memberNumber;
+    private ValueEventListener memberListener;
+    private DatabaseReference dataref;
+
 
     public AdminMemberFragment() {
         // Required empty public constructor
@@ -65,6 +87,7 @@ public class AdminMemberFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,43 +95,150 @@ public class AdminMemberFragment extends Fragment {
 //            Log.d("main"," ListData="+ ListData);
 
         }
+        Log.d("main", "[memberFrag]onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("main", "[memberFrag]onCreateView");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_member, container, false);
+        View memberView = inflater.inflate(R.layout.fragment_admin_member, container, false);
+        ListViewMember = (ListView) memberView.findViewById(R.id.listView_admin_menber);//會員資料
+        textViewMemberNum = (TextView) memberView.findViewById(R.id.textView_admin_p_number);//會員數量
+        textViewMemberDataCount = (TextView) memberView.findViewById(R.id.textView_admin_p_data);//會員資料搜尋結果筆數
+        editTextSearch = (EditText) memberView.findViewById(R.id.editText_admin_p_search);//搜尋會員資料
+        buttonSearch = (ImageButton) memberView.findViewById(R.id.imageButton_admin_p_search);//搜尋按鈕
+        return memberView;
     }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View viewFrag1 = inflater.inflate(R.layout.fragment_first, container, false);
-//        ListViewItem = (ListView)viewFrag1.findViewById(R.id.listView_id);
-//        return viewFrag1;
-//    }
-//
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        itemData = new ArrayList<Map<String,Object>>();
-//        String[] itemNameList = getResources().getStringArray(R.array.item_name);
-//        for(int i =0; i<itemNameList.length;i++){
-//            Map<String, Object> data = new HashMap<String, Object>();
-//            data.put("name",itemNameList[i]);
-//            data.put("pic",R.drawable.kalanchoe);
-//            itemData.add(data);
-//        }
-//        SimpleAdapter adpter = new SimpleAdapter(getContext(), itemData, R.layout.listview_layout,
-//                new String[]{"name","pic"}, new int[]{R.id.textView_title,R.id.imageView});
-//        ListViewItem.setAdapter(adpter);
-//
-//    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = (AdminMainActivity) context;
+
+        Log.d("main", "[memberFrag]onAttach");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("main", "[memberFrag]onResume");
+//        SharedPreferences sp = activity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//        Log.d("main", "sp.All=" + sp.getAll());
+//        String member_id = sp.getString("member_id", "").toString();
+//        Boolean is_Login = sp.getBoolean("is_login", false);
+
+//      製作表格 id 與 對應表格的帳戶名稱
+        String reference = "member";
+        String ID = reference.concat("_Id");
+        if (reference.equals("member")) {
+            account = "account_name";
+        } else {
+            account = "sName";
+        }
+
+//      使用 FireBase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("main", "database=" + database);
+//      使用  reference 節點進入FireBase
+        dataref = database.getReference(reference);
+        Log.d("main", "dataref=" + dataref);
+
+        List<Map<String, Object>> ListData = new ArrayList<Map<String, Object>>();
+
+//         從reference為起點下去撈會員資料
+        memberListener=dataref.addValueEventListener(new ValueEventListener() { //每次資料更新都會監聽
+
+            private String dataKey;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //怕更新List會有重複資料，所以如果ListData已經有資料要清掉，不然List會一直add上去
+                if (ListData.isEmpty() == false) ListData.clear();
+                //   取得會員人數 = 幾個 Children
+                memberNumber = snapshot.getChildrenCount();
+                textViewMemberNum.setText(String.valueOf(memberNumber));
+                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
+                    textViewMemberDataCount.setText(String.valueOf(memberNumber));
+                }
+//                Log.d("main","snapshot.getValue()="+snapshot.getValue());
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    dataKey = data.getKey();
+                    dataref.child(dataKey).addListenerForSingleValueEvent(new ValueEventListener() { //只監聽一次
+                        private Map<String, Object> map;
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (reference.equals("member")) {
+                                Member memberdata = snapshot.getValue(Member.class);
+//                                Log.d("main","Member.ToMap()="+memberdata.ToMap());
+                                map = memberdata.ToMap();
+                            }
+//                            }else if(reference.equals("seller")){
+//                                Seller sellerdata= snapshot.getValue(Seller.class);
+////                                Log.d("main","Member.ToMap()="+memberdata.ToMap());
+//                                map = sellerdata.ToMap();
+////                                Log.d("main","ListData="+ListData);
+////                                Log.d("main","ListData.size()="+ListData.size());
+//                            }
+
+                            map.put(ID, dataKey);
+                            ListData.add(map);
+//                            Log.d("main", "map=" + map);
+//                            Log.d("main","ListData()="+ListData);
+                            SimpleAdapter adpter = new SimpleAdapter(getContext(), ListData, R.layout.listview_admin_member,
+                                    new String[]{"account_name", ID}, new int[]{R.id.textView_admin_member_account, R.id.textView_admin_member_id});
+                            adpter.notifyDataSetChanged();
+                            ListViewMember.setAdapter(adpter);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        ListViewMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> item = (Map<String, Object>) parent.getItemAtPosition(position);
+                Log.d("main","item="+item);
+                Intent intent = new Intent(activity, AdminMemberActivity.class);
+                for(Object key: item.keySet().toArray()){
+                    String mapKey = key.toString();
+                    Object mapValue = item.get(mapKey);
+                    Log.d("main","mapKey[mapValue]="+mapKey+" "+mapValue);
+                    if(mapKey.equals("is_seller")){
+                        Boolean is_seller = (Boolean) mapValue;
+                        intent.putExtra(mapKey,is_seller);
+                    }else{
+                        String StringData = mapValue.toString();
+                        intent.putExtra(mapKey,StringData);
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dataref.removeEventListener(memberListener);
+    }
 }
+
