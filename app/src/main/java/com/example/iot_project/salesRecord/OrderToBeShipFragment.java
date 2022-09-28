@@ -88,11 +88,8 @@ public class OrderToBeShipFragment extends Fragment {
             orderList.add(orderMap);
         }
 
-<<<<<<< HEAD
+
 //      set the LayoutManager and Adapter of RecuclerView
-=======
-//       set the LayoutManager and Adapter of RecuclerView
->>>>>>> origin/master
 //      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
 //      LinearLayoutManager.VERTICAL 直向
         salesLayoutManager = new LinearLayoutManager(salesRecordActivity,LinearLayoutManager
@@ -104,7 +101,6 @@ public class OrderToBeShipFragment extends Fragment {
         return v;
     }
 
-<<<<<<< HEAD
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -119,6 +115,5 @@ public class OrderToBeShipFragment extends Fragment {
 // 取件方式
 // 付款狀態
 // 訂單總金額
-=======
+
 }
->>>>>>> origin/master
