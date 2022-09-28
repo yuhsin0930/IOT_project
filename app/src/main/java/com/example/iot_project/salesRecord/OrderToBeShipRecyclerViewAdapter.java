@@ -26,6 +26,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
     private final Context mainContext;
     private final List<Map<String, Object>> myOrderList;
     private final LayoutInflater myLayoutInflater;
+    private String orderNum;
 
     //  1. 資料送進來
     public OrderToBeShipRecyclerViewAdapter(Context context, List<Map<String, Object>> orderList){
@@ -78,7 +79,9 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
             buttonTobeship_shipped.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    //----------------------------------------------------------------------------------
+                    //  這裡有予馨的小小心願
+                    //  將訂單編號為 orderNum 的訂單狀態改成"已出貨"
                 }
             });
 
@@ -86,7 +89,9 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
             buttonTobeship_cancelOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                //----------------------------------------------------------------------------------
+                //  這裡有予馨的小小心願
+                //  將訂單編號為 orderNum 的訂單狀態改成"已取消"
                 }
             });
 
@@ -105,7 +110,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
     @Override
     public void onBindViewHolder(@NonNull OrderToBeShipRecyclerViewAdapter.ViewHolder holder, int position) {
         Map<String, Object> data = myOrderList.get(position);
-        String orderNum = data.get("orderNum").toString();
+        orderNum = data.get("orderNum").toString();
         String productName = data.get("productName").toString();
         int productNum = (int)data.get("productNum");
         int productPrice = (int)data.get("productPrice");
