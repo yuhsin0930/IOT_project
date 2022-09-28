@@ -61,6 +61,8 @@ public class CartFragment extends Fragment {
         shoppingTabLayout = (TabLayout)view.findViewById(R.id.shoppingCart_tabLayout);
         imageViewBack = (ImageView)view.findViewById(R.id.ImageView_Cart_back);
 
+        ShoppingCartViewPager.setUserInputEnabled(false);
+
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

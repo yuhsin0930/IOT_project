@@ -8,16 +8,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 
 public class CartPagerAdapter extends FragmentStateAdapter {
+
     private ArrayList<Fragment> fList = new ArrayList<Fragment>(){{
         add(new CartAllProductFragment());
         add(new CartBuyAgainFragment());
-
     }};
 
     public CartPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
-
 
     @NonNull
     @Override
@@ -29,4 +28,7 @@ public class CartPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return fList.size();
     }
+
+
+
 }

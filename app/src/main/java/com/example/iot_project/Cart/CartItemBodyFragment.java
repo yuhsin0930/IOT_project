@@ -1,12 +1,20 @@
 package com.example.iot_project.Cart;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.le.ScanSettings;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iot_project.R;
 
@@ -25,20 +33,18 @@ public class CartItemBodyFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
+    private TextView textViewMinus;
+    private TextView textViewAdd;
+    private TextView textViewGoodsSum;
+    private int sum;
+    private TextView textViewDelete;
+    private ConstraintLayout constraintLayoutBody;
+    private float x1;
+    private CheckBox checkBox_1;
 
-    public CartItemBodyFragment() {
-        // Required empty public constructor
-    }
+    public CartItemBodyFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemBodyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CartItemBodyFragment newInstance(String param1, String param2) {
         CartItemBodyFragment fragment = new CartItemBodyFragment();
         Bundle args = new Bundle();
@@ -57,10 +63,78 @@ public class CartItemBodyFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart_item_body, container, false);
+        view = inflater.inflate(R.layout.fragment_cart_item_body, container, false);
+
+        textViewMinus = (TextView)view.findViewById(R.id.textView_cart_body_minus);
+        textViewAdd = (TextView)view.findViewById(R.id.textView_cart_body_add);
+        textViewGoodsSum = (TextView)view.findViewById(R.id.textView_cart_goodsSum);
+        textViewDelete = (TextView)view.findViewById(R.id.textView_cart_body_delete);
+        constraintLayoutBody = (ConstraintLayout)view.findViewById(R.id.ConstraintLayout_cart_body);
+        checkBox_1 = (CheckBox)view.findViewById(R.id.checkBox_cart_body_1);
+
+        sum = 1;
+        textViewGoodsSum.setText(String.valueOf(sum));
+
+        textViewAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textViewGoodsSum.setText(String.valueOf(++sum));
+
+            }
+        });
+
+        textViewMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sum <= 1) {
+                    Toast.makeText(getContext(), "88", Toast.LENGTH_SHORT).show();
+                } else textViewGoodsSum.setText(String.valueOf(--sum));
+            }
+        });
+
+        textViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "刪除", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        // 監聽整體的左右滑動來顯示或隱藏刪除鍵
+        constraintLayoutBody.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        x1 = motionEvent.getX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float x2 = motionEvent.getX();
+                        float x = x2 - x1;
+                        Log.d("cart", "x = " + x);
+                        if (x < -100) { // 左滑
+                            textViewDelete.setVisibility(View.VISIBLE);
+                        } else if (x > 100) { // 右滑
+                            textViewDelete.setVisibility(View.GONE);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return view;
     }
+
+    public void setCheckBox_1(Boolean b) {
+        checkBox_1.setChecked(b);
+    }
+
 }

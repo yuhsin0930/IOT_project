@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstraintLayout_member_coupon"
+    android:id="@+id/ConstraintLayout_cart_coupon"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="60dp"
     android:background="@drawable/member_rank_corner"
     android:padding="4dp"
     tools:context=".member.MemberCouponItemFragment">
 
     <TextView
-        android:id="@+id/textView_member_coupon"
+        android:id="@+id/textView_cart_coupon"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:background="#00BCD4"
@@ -32,6 +32,7 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_member_coupon"
+        app:layout_constraintStart_toEndOf="@+id/textView_cart_coupon"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

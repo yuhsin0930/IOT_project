@@ -11,7 +11,7 @@ public class CartActivity extends AppCompatActivity {
 
     private FragmentManager fragmentMgr;
     private CartFragment cartFragment;
-    private MemberCouponFragment memberCouponFragment;
+    private CartCouponFragment cartCouponFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,14 @@ public class CartActivity extends AppCompatActivity {
 
 
     public void showCouponFragment() {
-//        if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
-//            cartCouponFragment = new CartCouponFragment();
-//            fragmentMgr.beginTransaction()
-//                    .setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_right)
-//                    .add(R.id.FrameLayout_Cart, memberCouponFragment, "memberCouponFragment")
-//                    .addToBackStack("")
-//                    .hide(cartFragment)
-//                    .commit();
-//        }
+        if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
+            cartCouponFragment = new CartCouponFragment();
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_bottom)
+                    .add(R.id.FrameLayout_Cart, cartCouponFragment, "cartCouponFragment")
+                    .addToBackStack("")
+                    .commit();
+        }
     }
 
     @Override

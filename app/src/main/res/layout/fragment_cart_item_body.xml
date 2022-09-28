@@ -2,27 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout_cart_body"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
     tools:context=".member.MemberOrdersDetailedInfoFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingVertical="12dp"
         android:paddingEnd="10dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_cart_body_delete"
         app:layout_constraintTop_toTopOf="parent">
 
         <CheckBox
             android:id="@+id/checkBox_cart_body_1"
             android:layout_width="40dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="18dp" />
+            android:layout_marginBottom="18dp"
+            android:backgroundTint="#E91E63" />
 
         <ImageView
             android:id="@+id/imageView_cardview_member_orders_picture"
@@ -32,13 +34,13 @@
             app:srcCompat="@drawable/inpods_demo" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView_car_body_goodsName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="10dp"
@@ -46,7 +48,7 @@
                 android:text="【台灣現貨】BST-12 (送收納盒) 女生通用新款馬卡龍安卓蘋果三代華為小米入耳式運動有線耳機" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="10dp"
@@ -67,7 +69,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="10dp"
@@ -99,7 +101,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -143,4 +145,22 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_cart_body_delete"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="4dp"
+        android:background="@color/Mycolor_1"
+        android:gravity="center"
+        android:text="刪除"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

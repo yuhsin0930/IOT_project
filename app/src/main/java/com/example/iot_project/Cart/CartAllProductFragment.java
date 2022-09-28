@@ -1,26 +1,29 @@
 package com.example.iot_project.Cart;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.iot_project.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +47,8 @@ public class CartAllProductFragment extends Fragment {
     private TextView textViewTotal;
     private RelativeLayout RelativeLayoutCoupon;
     private CartActivity cartActivity;
+    private CheckBox checkBoxSelectAll;
+    private List<Fragment> fragmentList;
 
     public CartAllProductFragment() {}
 
@@ -65,14 +70,27 @@ public class CartAllProductFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cart_all_product, container, false);
 
+        fragmentMgr = getParentFragmentManager();
         textViewCheckout = (TextView)view.findViewById(R.id.textView_cart_checkout);
         textViewTotal = (TextView)view.findViewById(R.id.textView_cart_total);
         RelativeLayoutCoupon = (RelativeLayout)view.findViewById(R.id.RelativeLayout_cart_coupon);
+        checkBoxSelectAll = (CheckBox)view.findViewById(R.id.checkBox_cart_selectAll);
+        fragmentList = new ArrayList<>();
+
+        checkBoxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                for (Fragment f : fragmentList) {
+                    ((CartItemBodyFragment)f).setCheckBox_1(b);
+                }
+            }
+        });
 
         textViewTotal.setText("123465");
         int sum = 100;
@@ -106,13 +124,11 @@ public class CartAllProductFragment extends Fragment {
 
         makeCard(3);
 
-
         return view;
     }
 
     public void makeCard(int count) {
         for (; count  > 0; count--) {
-            fragmentMgr = getParentFragmentManager();
             fragmentTrans = fragmentMgr.beginTransaction();
             cartItemHeadFragment = new CartItemHeadFragment();
             fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment");
@@ -123,6 +139,7 @@ public class CartAllProductFragment extends Fragment {
                 cartItemBodyFragment = new CartItemBodyFragment();
                 fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
                 fragmentTrans.commit();
+                fragmentList.add(cartItemBodyFragment);
             }
 
             fragmentTrans = fragmentMgr.beginTransaction();
