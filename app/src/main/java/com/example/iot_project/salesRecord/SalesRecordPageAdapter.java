@@ -18,7 +18,7 @@ public class SalesRecordPageAdapter extends FragmentStateAdapter {
         super(fragmentActivity);
         fList.add(new OrderToBeShipFragment());
         fList.add(new OrderInvaildFragment());
-        fList.add(new OrderReturn());
+        fList.add(new OrderReturnFragment());
         fList.add(new OrderShippedFragment());
         fList.add(new OrderCompletedFragment());
     }

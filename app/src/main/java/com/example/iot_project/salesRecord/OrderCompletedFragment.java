@@ -64,3 +64,16 @@ public class OrderCompletedFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_order_completed, container, false);
     }
 }
+
+//--------------------------------------------------------------------------------------------------
+// 以下是予馨的願望:
+// 從firebase存取同一賣家 訂單狀態="已完成" 的所有訂單資訊
+// 訂單編號
+// 訂單中所有商品的 商品名稱  商品售價 購買數量
+// 取件人姓名
+// 買家帳號
+// 付款方式
+// 收件地址
+// 取件方式
+// 付款狀態
+// 訂單總金額
