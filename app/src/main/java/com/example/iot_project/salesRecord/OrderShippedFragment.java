@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.salesRecord;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.iot_project.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OrderCompletedFragment#newInstance} factory method to
+ * Use the {@link OrderShippedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderCompletedFragment extends Fragment {
+public class OrderShippedFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class OrderCompletedFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OrderCompletedFragment() {
+    public OrderShippedFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class OrderCompletedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OrderCompletedFragment.
+     * @return A new instance of fragment OrderShippedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderCompletedFragment newInstance(String param1, String param2) {
-        OrderCompletedFragment fragment = new OrderCompletedFragment();
+    public static OrderShippedFragment newInstance(String param1, String param2) {
+        OrderShippedFragment fragment = new OrderShippedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class OrderCompletedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_completed, container, false);
+        return inflater.inflate(R.layout.fragment_order_shipped, container, false);
     }
 }
