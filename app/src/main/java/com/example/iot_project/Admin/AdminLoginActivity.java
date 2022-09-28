@@ -55,13 +55,13 @@ public class AdminLoginActivity extends AppCompatActivity {
                     dataref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("main", "snapshot=" + snapshot);
+//                            Log.d("main", "snapshot=" + snapshot);
 
                             if (snapshot.exists()) {
                                 byte flag = 0;
                                 for (DataSnapshot admin : snapshot.getChildren()) {
-                                    Log.d("main", "admin.Key=" + admin.getKey());
-                                    Log.d("main", "admin.Value=" + admin.getValue());
+//                                    Log.d("main", "admin.Key=" + admin.getKey());
+//                                    Log.d("main", "admin.Value=" + admin.getValue());
                                     String adminKey = admin.getKey().toString();
                                     String adminValue = admin.getValue().toString();
                                     if (adminKey.equals("account")){

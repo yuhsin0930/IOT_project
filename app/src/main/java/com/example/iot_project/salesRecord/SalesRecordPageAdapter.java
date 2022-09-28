@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.salesRecord;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,7 +18,7 @@ public class SalesRecordPageAdapter extends FragmentStateAdapter {
         super(fragmentActivity);
         fList.add(new OrderToBeShipFragment());
         fList.add(new OrderInvaildFragment());
-        fList.add(new OrderReturn());
+        fList.add(new OrderReturnFragment());
         fList.add(new OrderShippedFragment());
         fList.add(new OrderCompletedFragment());
     }
@@ -27,13 +27,6 @@ public class SalesRecordPageAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
-            case 0:
-                fragment = fList.get(0);
-                break;
-            case 1:
-                fragment = fList.get(1);
-        }
         return fList.get(position);
     }
 

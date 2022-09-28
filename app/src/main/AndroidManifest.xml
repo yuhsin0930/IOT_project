@@ -114,13 +114,13 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SalesRecordActivity"
+            android:name=".salesRecord.SalesRecordActivity"
             android:exported="false" />
         <activity
             android:name=".sellerStore.SellerStoreActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".salesRecord.PaymentActivity"
             android:exported="false" />
         <activity
             android:name=".MyProduct.MyProductActivity"
