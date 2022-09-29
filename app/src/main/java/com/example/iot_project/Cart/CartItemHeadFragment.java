@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,35 +19,17 @@ import com.example.iot_project.R;
  */
 public class CartItemHeadFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private View view;
-    private TextView textViewDelete;
+    private boolean b1, b2;
+    private String tag;
+    private TextView textViewShowDelete;
 
-    public CartItemHeadFragment() {
-        // Required empty public constructor
-    }
+    public CartItemHeadFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemHeadFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CartItemHeadFragment newInstance(String param1, String param2) {
+    public static CartItemHeadFragment newInstance(String tag) {
         CartItemHeadFragment fragment = new CartItemHeadFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("tag", tag);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +38,7 @@ public class CartItemHeadFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            tag = getArguments().getString("tag");
         }
     }
 
@@ -64,15 +46,76 @@ public class CartItemHeadFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cart_item_head, container, false);
-        textViewDelete = (TextView)view.findViewById(R.id.textView_cart_head_showdelete);
+        textViewShowDelete = (TextView)view.findViewById(R.id.textView_cart_head_showdelete);
 
-        textViewDelete.setOnClickListener(new View.OnClickListener() {
+        b1 = true;
+        b2 = true;
+        textViewShowDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Log.d("cart", tag);
+
+                if (tag.equals("cartItemHeadFragment0")) {
+
+                    Fragment f = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment0");
+                    if (f != null) {
+                        if (b1 == true) {
+                            ((CartItemBodyFragment)f).setIsDeleteShow(b1);
+                            b1 = false;
+                        } else {
+                            ((CartItemBodyFragment)f).setIsDeleteShow(b1);
+                            b1 = true;
+                        }
+                    }
+
+
+                    Fragment f2 = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment1");
+                    if (f2 != null) {
+                        if (b2 == true) {
+                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
+                            b2 = false;
+                        } else {
+                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
+                            b2 = true;
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+
+                if (tag.equals("cartItemHeadFragment1")) {
+
+                    Fragment f = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment2");
+                    if (f != null) {
+                        if (b1 == true) {
+                            ((CartItemBodyFragment) f).setIsDeleteShow(b1);
+                            b1 = false;
+                        } else {
+                            ((CartItemBodyFragment) f).setIsDeleteShow(b1);
+                            b1 = true;
+                        }
+                    }
+
+                    Fragment f2 = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment3");
+                    if (f2 != null) {
+                        if (b2 == true) {
+                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
+                            b2 = false;
+                        } else {
+                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
+                            b2 = true;
+                        }
+                    }
+                }
             }
         });
 
         return view;
     }
+
 }

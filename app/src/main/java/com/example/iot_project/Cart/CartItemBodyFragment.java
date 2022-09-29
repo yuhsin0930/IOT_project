@@ -2,8 +2,10 @@ package com.example.iot_project.Cart;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.le.ScanSettings;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -25,12 +27,6 @@ import com.example.iot_project.R;
  */
 public class CartItemBodyFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View view;
@@ -42,25 +38,16 @@ public class CartItemBodyFragment extends Fragment {
     private ConstraintLayout constraintLayoutBody;
     private float x1;
     private CheckBox checkBox_1;
+    private CartActivity cartActivity;
 
     public CartItemBodyFragment() {}
 
-    public static CartItemBodyFragment newInstance(String param1, String param2) {
+    public static CartItemBodyFragment newInstance(String tag) {
         CartItemBodyFragment fragment = new CartItemBodyFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("tag", tag);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -96,10 +83,14 @@ public class CartItemBodyFragment extends Fragment {
             }
         });
 
+
+        // fragment找出自己然後使用 Activity自己刪掉
         textViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "刪除", Toast.LENGTH_SHORT).show();
+                Fragment f = getParentFragmentManager().findFragmentByTag(getArguments().getString("tag"));
+                cartActivity.getSupportFragmentManager().beginTransaction().remove((CartItemBodyFragment)f).commit();
+                Toast.makeText(getContext(), "刪除: " + getArguments().getString("tag"), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,9 +113,6 @@ public class CartItemBodyFragment extends Fragment {
                             textViewDelete.setVisibility(View.GONE);
                         }
                         break;
-                    case MotionEvent.ACTION_UP:
-
-                        break;
                 }
                 return true;
             }
@@ -137,4 +125,14 @@ public class CartItemBodyFragment extends Fragment {
         checkBox_1.setChecked(b);
     }
 
+    public void setIsDeleteShow(Boolean b) {
+        if (b) textViewDelete.setVisibility(View.VISIBLE);
+        else textViewDelete.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        cartActivity = (CartActivity)context;
+    }
 }

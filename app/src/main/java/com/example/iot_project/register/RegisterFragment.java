@@ -84,6 +84,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Boolean[] submitFlag;
     private ScrollView ScrollViewRegister;
     private String memberId;
+    private DatabaseReference fireRef;
+    private ValueEventListener fireListener;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
@@ -155,8 +157,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     // 登入狀態呼叫此方法，將Firebase資料下載並顯示在Edittext
     private void setDataFromFirebase(String memberId, String account) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dataRef = database.getReference("member");
-        dataRef.orderByChild("account_name").equalTo(account).addValueEventListener(new ValueEventListener() {
+        fireRef = database.getReference("member");
+        fireListener = fireRef.orderByChild("account_name").equalTo(account).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -790,6 +792,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        fireRef.removeEventListener(fireListener);
+        Log.d("register", "onDetach()");
     }
 
 }

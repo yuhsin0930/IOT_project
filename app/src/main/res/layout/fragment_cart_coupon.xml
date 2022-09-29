@@ -21,8 +21,8 @@
     <View
         android:id="@+id/view_cart_coupon2"
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="350dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="360dp"
         android:background="@drawable/cart_view_color_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

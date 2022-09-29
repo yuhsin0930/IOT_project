@@ -122,31 +122,53 @@ public class CartAllProductFragment extends Fragment {
             }
         });
 
-        makeCard(3);
+        makeCard(2);
 
         return view;
     }
 
     public void makeCard(int count) {
-        for (; count  > 0; count--) {
-            fragmentTrans = fragmentMgr.beginTransaction();
-            cartItemHeadFragment = new CartItemHeadFragment();
-            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment");
-            fragmentTrans.commit();
 
-            for (int i = 0; i < 5; i++) {
-                fragmentTrans = fragmentMgr.beginTransaction();
-                cartItemBodyFragment = new CartItemBodyFragment();
-                fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
-                fragmentTrans.commit();
-                fragmentList.add(cartItemBodyFragment);
-            }
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 0);
+        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 0);
+        fragmentTrans.commit();
 
+        for (int i = 0; i < 2; i++) {
             fragmentTrans = fragmentMgr.beginTransaction();
-            cartItemFooterFragment = new CartItemFooterFragment();
-            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment");
+            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
+            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
             fragmentTrans.commit();
+            fragmentList.add(cartItemBodyFragment);
         }
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartItemFooterFragment = new CartItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 0);
+        fragmentTrans.commit();
+
+
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 1);
+        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 1);
+        fragmentTrans.commit();
+
+        for (int i = 2; i < 4; i++) {
+            fragmentTrans = fragmentMgr.beginTransaction();
+            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
+            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
+            fragmentTrans.commit();
+            fragmentList.add(cartItemBodyFragment);
+        }
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartItemFooterFragment = new CartItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 1);
+        fragmentTrans.commit();
+
     }
 
     @Override

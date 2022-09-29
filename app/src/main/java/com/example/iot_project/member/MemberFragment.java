@@ -46,6 +46,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
@@ -64,7 +65,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private TextView textViewName;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String memberId, account_name;
-    private String base64_picture;
+    private ValueEventListener fireListener;
+    private DatabaseReference fireRef;
+    private String picture, base64_picture;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -143,46 +146,61 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         RelativeLayoutPersonal = (RelativeLayout)view.findViewById(R.id.RelativeLayout_member_personal);
     }
 
-    private void setData(){
+    private void setData() {
         // 向 SharedPreferences 取得 member_id 備用
         SharedPreferences sp = memberActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
         memberId = sp.getString("member_id", "0");
         account_name = sp.getString("account_name", "Apple2022");
+        picture = sp.getString("picture", "");
         Log.d("member", "memberId = " +  memberId);
         Log.d("member", "account_name = " +  account_name);
+        Log.d("member", "picture = " +  picture);
 
-        // 向 Firebase 取得該用戶大頭照 (base64)
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("member");
-        base64_picture = "";
-        ref.orderByChild("account_name").equalTo(account_name).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for(DataSnapshot member : snapshot.getChildren()) {
-                        base64_picture = ((Map<String,String>)member.getValue()).get("picture");
-                        Log.d("member", "Map = member.getValue() = " + member.getValue());
-                    }
-
-                    // base64 轉 bitmap 並顯示在會員頁面
-                    if (!base64_picture.equals("")) {
-                        Log.d("member", "base64_picture = " + base64_picture);
-                        byte[] bytes = Base64.decode(base64_picture, Base64.DEFAULT);
-                        Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        // 在會員頁面顯示firebase裡的大頭照
-                        imageViewMypic.setImageBitmap(bitmap_picture);
-                    } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
-
-                } else Toast.makeText(memberActivity, "帳號資料不存在", Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-
+        if (!picture.equals("")) {
+            byte[] bytes = Base64.decode(picture, Base64.DEFAULT);
+            Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            // 在會員頁面顯示firebase裡的大頭照
+            imageViewMypic.setImageBitmap(bitmap_picture);
+        } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
 
         // 在會員頁面顯示SharedPreferences裡的帳號
         textViewName.setText(account_name);
+
+
+
+
+
+
+        // 改從SharedPreferences拿大頭照
+
+//        // 向 Firebase 取得該用戶大頭照 (base64)
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        fireRef = database.getReference("member");
+//
+//        base64_picture = "";
+//        fireListener = fireRef.orderByChild("account_name").equalTo(account_name).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    for(DataSnapshot member : snapshot.getChildren()) {
+//                        base64_picture = ((Map<String,String>)member.getValue()).get("picture");
+//                        Log.d("member", "Map = member.getValue() = " + member.getValue());
+//                    }
+//
+//                    // base64 轉 bitmap 並顯示在會員頁面
+//                    if (!base64_picture.equals("")) {
+//                        Log.d("member", "base64_picture = " + base64_picture);
+//                        byte[] bytes = Base64.decode(base64_picture, Base64.DEFAULT);
+//                        Bitmap bitmap_picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                        // 在會員頁面顯示firebase裡的大頭照
+//                        imageViewMypic.setImageBitmap(bitmap_picture);
+//                    } else imageViewMypic.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cat6));
+//
+//                } else Toast.makeText(memberActivity, "帳號資料不存在", Toast.LENGTH_SHORT).show();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {}
+//        });
     }
 
     private void setListener(){
@@ -299,4 +317,9 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        fireRef.removeEventListener(fireListener);
+    }
 }
