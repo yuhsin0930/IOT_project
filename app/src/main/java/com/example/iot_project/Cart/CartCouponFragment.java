@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,4 +121,9 @@ public class CartCouponFragment extends Fragment implements View.OnClickListener
         cartActivity.onBackPressed();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("cart", "coupon - onDestroy()");
+    }
 }

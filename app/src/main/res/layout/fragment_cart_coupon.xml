@@ -22,15 +22,17 @@
         android:id="@+id/view_cart_coupon2"
         android:layout_width="0dp"
         android:layout_height="66dp"
-        android:layout_marginBottom="360dp"
+        android:layout_marginBottom="350dp"
         android:background="@drawable/cart_view_color_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView7"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="390dp"
+        android:paddingTop="36dp"
         android:background="@drawable/cart_coupon_background_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,13 +45,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView_cart_coupon_down"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.4"
-                android:src="@drawable/outline_keyboard_arrow_down_black_24" />
         </LinearLayout>
+
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView_cart_coupon_down"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="350dp"
+        android:alpha="0.5"
+        android:src="@drawable/outline_keyboard_arrow_down_black_24"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

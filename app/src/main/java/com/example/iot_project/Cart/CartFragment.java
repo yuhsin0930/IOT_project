@@ -61,6 +61,7 @@ public class CartFragment extends Fragment {
         shoppingTabLayout = (TabLayout)view.findViewById(R.id.shoppingCart_tabLayout);
         imageViewBack = (ImageView)view.findViewById(R.id.ImageView_Cart_back);
 
+        // 禁止使用者滑痛頁面
         ShoppingCartViewPager.setUserInputEnabled(false);
 
         imageViewBack.setOnClickListener(new View.OnClickListener() {

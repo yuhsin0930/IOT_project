@@ -2,31 +2,22 @@ package com.example.iot_project.Cart;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,13 +37,13 @@ public class CartItemBodyFragment extends Fragment {
     private int sum;
     private TextView textViewDelete;
     private ConstraintLayout constraintLayoutBody;
-    private float x1;
     private CheckBox checkBox_1;
     private CartActivity cartActivity;
     private TextView textViewGoodsPrice;
     private Map<String, Object> insideMap;
     private String tag, price;
     private Boolean checkBoxFlag, isExist;
+    private CartAllProductFragment cartAllProductFragment;
 
     public CartItemBodyFragment() {}
 
@@ -108,6 +99,10 @@ public class CartItemBodyFragment extends Fragment {
         price = "5";
         textViewGoodsPrice.setText(price);
 
+       // 從pageView中找到Fragment
+       // 參考: https://learnpainless.com/android/how-to-get-fragment-from-viewpager-android/
+       // 參考: https://stackoverflow.com/questions/55728719/get-current-fragment-with-viewpager2
+        cartAllProductFragment = (CartAllProductFragment)getParentFragmentManager().findFragmentByTag("f0");
 
         checkBox_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -174,6 +169,8 @@ public class CartItemBodyFragment extends Fragment {
 
         // 監聽整體的左右滑動來顯示或隱藏刪除鍵
         constraintLayoutBody.setOnTouchListener(new View.OnTouchListener() {
+            private float x1 = 0, x2 = 0, x = 0;
+            private int absX = 0;
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -181,14 +178,19 @@ public class CartItemBodyFragment extends Fragment {
                         x1 = motionEvent.getX();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        float x2 = motionEvent.getX();
-                        float x = x2 - x1;
+                        x2 = motionEvent.getX();
+                        x = x2 - x1;
+                        absX = (int)Math.abs(x);
                         Log.d("cart", "x = " + x);
                         if (x < -100) { // 左滑
                             textViewDelete.setVisibility(View.VISIBLE);
                         } else if (x > 1) { // 右滑
                             textViewDelete.setVisibility(View.GONE);
                         }
+                        break;
+                    case MotionEvent.ACTION_UP:
+//                        if (absX < 50)Toast.makeText(getContext(), "前往商品", Toast.LENGTH_SHORT).show();
+//                        Log.d("cart", "Math.abs(x) = " + Math.abs(x));
                         break;
                 }
                 return true;
@@ -217,7 +219,7 @@ public class CartItemBodyFragment extends Fragment {
         cartActivity = (CartActivity)getActivity();
     }
 
-    // 每個監聽都來叫它
+    // 每個監聽都呼叫此方法
     private void makeAndSendInsideMap() {
         insideMap.put("id", tag);
         insideMap.put("price", price);
@@ -225,10 +227,8 @@ public class CartItemBodyFragment extends Fragment {
         insideMap.put("checkBoxFlag", checkBoxFlag);
         insideMap.put("isExist", isExist);
         Log.d("cart", "insideMap = " + insideMap);
-        cartActivity.setOutSideMap(insideMap);
+        cartAllProductFragment.setOutSideMap(insideMap);
     }
-
-
 
 
 

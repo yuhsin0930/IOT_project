@@ -18,8 +18,8 @@ public class CartActivity extends AppCompatActivity {
     private FragmentManager fragmentMgr;
     private CartFragment cartFragment;
     private CartCouponFragment cartCouponFragment;
-    private Map<String, Map<String, Object>> outsideMap;
-    int subTotal = 0, allSum = 0;
+    private boolean isCouponShow;
+    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,9 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         setWindow();
-        outsideMap = new HashMap<>();
         setFragment();
+        isCouponShow = false;
+        i = 2;
 
     }
 
@@ -54,49 +55,32 @@ public class CartActivity extends AppCompatActivity {
         if (fragmentMgr.findFragmentByTag("cartCouponFragment") == null) {
             cartCouponFragment = new CartCouponFragment();
             fragmentMgr.beginTransaction()
-                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_bottom)
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
                     .add(R.id.FrameLayout_Cart, cartCouponFragment, "cartCouponFragment")
                     .addToBackStack("")
                     .commit();
+            i = 3;
+        } else {
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
+                    .show(cartCouponFragment)
+                    .commit();
         }
+        isCouponShow = true;
     }
-
-    public void setOutSideMap(Map insideMap) {
-        this.outsideMap.put(insideMap.get("id").toString(), insideMap);
-        Log.d("cart", "outsideMap = " + outsideMap);
-        subTotalAndSend();
-    }
-
-    // id = String
-    // price = String
-    // sum = int
-    // checkBoxFlag = Boolean
-    // isExist = Boolean
-    public void subTotalAndSend() {
-        subTotal = 0;
-        outsideMap.forEach((id, insideMap) -> {
-            // 如果存在且被選擇 subTotal += 價格*數量
-            if ((boolean)insideMap.get("isExist") && (boolean)insideMap.get("checkBoxFlag")) {
-                int price = Integer.parseInt(insideMap.get("price").toString());
-                int sum = (int)insideMap.get("sum");
-                subTotal += price * sum;
-//                allSum += sum;
-            }
-        });
-        Log.d("cart", "subTotal = " + subTotal);
-        Log.d("cart", "allSum = " + allSum);
-//        CartAllProductFragment f = (CartAllProductFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.ShoppingCart_ViewPager + ":" + 0);
-//        f.setTotalAmount(String.valueOf(subTotal), String.valueOf(allSum));
-    }
-
-    // 從pageView中找到Fragment
-    // 參考: https://learnpainless.com/android/how-to-get-fragment-from-viewpager-android/
-
 
     @Override
     public void onBackPressed() {
-        if (fragmentMgr.getBackStackEntryCount() < 2) finish();
-        else fragmentMgr.popBackStack();
+        if (isCouponShow) {
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_bottom)
+                    .hide(cartCouponFragment)
+                    .commit();
+            isCouponShow = false;
+        } else {
+            if (fragmentMgr.getBackStackEntryCount() < i) finish();
+            else fragmentMgr.popBackStack();
+        }
     }
 
 }

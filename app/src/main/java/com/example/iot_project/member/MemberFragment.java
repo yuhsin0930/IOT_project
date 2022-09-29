@@ -65,9 +65,7 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
     private TextView textViewName;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String memberId, account_name;
-    private ValueEventListener fireListener;
-    private DatabaseReference fireRef;
-    private String picture, base64_picture;
+    private String picture;
 
     public static MemberFragment newInstance() {
         return new MemberFragment();
@@ -317,9 +315,4 @@ public class MemberFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        fireRef.removeEventListener(fireListener);
-    }
 }

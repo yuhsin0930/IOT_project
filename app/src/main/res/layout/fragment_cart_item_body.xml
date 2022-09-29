@@ -21,10 +21,10 @@
 
         <CheckBox
             android:id="@+id/checkBox_cart_body_1"
-            android:layout_width="40dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginBottom="18dp"
-            android:backgroundTint="#E91E63" />
+            android:checked="false" />
 
         <ImageView
             android:id="@+id/imageView_cardview_member_orders_picture"
