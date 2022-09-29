@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private TextView textViewRegister, textViewForget;
     private Intent intent;
-    private ImageView imageViewEyes;
+    private ImageView imageViewEyes, imageViewBack;
     private EditText editTextPassword, editTextAccount;
     private String account, password;
     private boolean membershipCheck;
@@ -57,14 +57,24 @@ public class LoginActivity extends AppCompatActivity {
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 
         imageViewEyes = (ImageView) findViewById(R.id.imageView_login_eyes);
+        imageViewBack = (ImageView) findViewById(R.id.imageView_login_back);
         buttonLogin = (Button) findViewById(R.id.button_login_login);
         textViewRegister = (TextView) findViewById(R.id.textView_login_register);
         textViewForget = (TextView) findViewById(R.id.textView_login_forget);
         editTextPassword = (EditText) findViewById(R.id.editText_login_password);
         editTextAccount = (EditText) findViewById(R.id.editText_login_account);
 
+
+
         intent = getIntent();
         editTextAccount.setText(intent.getStringExtra("account"));
+
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         imageViewEyes.setOnClickListener(new View.OnClickListener() {
             Boolean flag = true;

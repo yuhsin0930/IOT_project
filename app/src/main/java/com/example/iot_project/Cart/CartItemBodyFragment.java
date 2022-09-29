@@ -118,7 +118,7 @@ public class CartItemBodyFragment extends Fragment {
                         Log.d("cart", "x = " + x);
                         if (x < -100) { // 左滑
                             textViewDelete.setVisibility(View.VISIBLE);
-                        } else if (x > 100) { // 右滑
+                        } else if (x > 1) { // 右滑
                             textViewDelete.setVisibility(View.GONE);
                         }
                         break;
