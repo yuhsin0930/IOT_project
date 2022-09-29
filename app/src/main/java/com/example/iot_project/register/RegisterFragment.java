@@ -752,7 +752,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN);
                 textViewBirthday.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };

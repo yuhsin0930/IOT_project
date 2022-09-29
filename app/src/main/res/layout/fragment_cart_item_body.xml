@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="129"
+                    android:text="0"
                     android:textColor="@color/Mycolor_1"
                     android:textSize="16dp"
                     android:textStyle="bold"

@@ -12,8 +12,6 @@
         android:id="@+id/scrollView6"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toTopOf="@+id/linaerLayout_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

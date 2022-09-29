@@ -92,8 +92,8 @@ public class CartAllProductFragment extends Fragment {
             }
         });
 
-        textViewTotal.setText("123465");
-        int sum = 100;
+        textViewTotal.setText("0");
+        int sum = 0;
         textViewCheckout.setText("去買單(" + sum +")");
 
         RelativeLayoutCoupon.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +169,11 @@ public class CartAllProductFragment extends Fragment {
         fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 1);
         fragmentTrans.commit();
 
+    }
+
+    public void setTotalAmount(String totalAmount, String allSum) {
+        textViewTotal.setText(totalAmount);
+        textViewCheckout.setText("去買單(" + allSum +")");
     }
 
     @Override
