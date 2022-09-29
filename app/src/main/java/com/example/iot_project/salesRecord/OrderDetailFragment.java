@@ -100,7 +100,7 @@ public class OrderDetailFragment extends Fragment {
         String productPrice = orderList.get(3);
         String allProductNum = orderList.get(4);
         String totalPrice = orderList.get(5);
-        String orderState = orderList.get(6);
+
 
         textView_toBeShipDetail_orderNum.setText(orderNum);
         textView_toBeShipDetail_totalPrice.setText(totalPrice);

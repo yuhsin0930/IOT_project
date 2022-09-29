@@ -53,16 +53,6 @@ public class MyProductActivity extends AppCompatActivity {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText((CharSequence) myProducttabTitle.get(position));
-                if(position==0){
-
-
-                }else if(position==1){
-
-                }else if(position==2){
-
-                }else if(position==3){
-
-                }
             }
         }).attach();
 

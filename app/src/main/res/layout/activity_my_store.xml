@@ -17,24 +17,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button_myStore_checkStore"
-            android:layout_width="120dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="250dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/white"
-            android:shadowColor="@color/font_color"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:text="查看賣場"
-            android:textColor="@color/Mycolor_1"
-            android:textStyle="bold"
-            app:rippleColor="@color/font_color" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_myStore_checkStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="125dp"
+                android:background="@drawable/main_member_corner"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:text="查看賣場 >"
+                android:textColor="@color/Mycolor_1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_myStore_editStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:shadowColor="@color/font_color"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:text="編輯賣場"
+                android:textColor="@color/Mycolor_1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:rippleColor="@color/font_color" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

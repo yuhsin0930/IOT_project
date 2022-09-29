@@ -24,6 +24,8 @@ public class MyStoreActivity extends AppCompatActivity {
     private static final String DB_TABLE= "create_goodsSQL";
     private DBHelper dbHelper;
     private ImageView imageView_myPicture;
+    private TextView textView_myStore_checkStore;
+    private Button button_myStore_editStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +41,20 @@ public class MyStoreActivity extends AppCompatActivity {
         textViewMyStore_return = (TextView)findViewById(R.id.textView_myStore_return);
         textViewMyStore_myProduct = (TextView)findViewById(R.id.textView_myStore_myProduct);
         textViewMyStore_payment = (TextView)findViewById(R.id.textView_myStore_payment);
+        textView_myStore_checkStore = (TextView)findViewById(R.id.textView_myStore_checkStore);
+
+        button_myStore_editStore = (Button)findViewById(R.id.button_myStore_editStore);
 
         imageView_myPicture.setImageResource(R.drawable.cat);
-        buttonMyStore_checkStore = (Button)findViewById(R.id.button_myStore_checkStore);
-        buttonMyStore_checkStore.setOnClickListener(new View.OnClickListener() {
+
+        button_myStore_editStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        textView_myStore_checkStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyStoreActivity.this, SellerStoreActivity.class);
@@ -89,3 +101,11 @@ public class MyStoreActivity extends AppCompatActivity {
         }
     }
 }
+
+
+// -----------------------------------------------------------------------------------
+//  以下是予馨的願望
+//  存取現在登入賣家的 商場照片 、 商場名稱 、賣家帳號
+//  存取現在登入賣家的 "待出貨" 商品數量
+//  存取現在登入賣家的 "不成立" 商品數量
+//  存取現在登入賣家的 "退貨/退款" 商品數量
