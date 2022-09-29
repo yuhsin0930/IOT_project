@@ -10,8 +10,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -100,7 +105,18 @@ public class MainActivity extends AppCompatActivity {
 //      方法2 : 可以用 code 修改預設貓貓圖片，改成其他圖片，方法1加入的那列 app:headerLayout 要刪掉
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
         imageView = (ImageView) headerView.findViewById(R.id.imageView_id);
-        imageView.setImageResource(R.drawable.pearls);
+
+        SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        String base64Pic =sp.getString("picture","").toString();
+
+        if(base64Pic.equals("")){
+            imageView.setImageResource(R.drawable.pearls);
+        }else {
+            byte[] decodedString = Base64.decode(base64Pic, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Drawable d = new BitmapDrawable(getResources(), decodedByte);
+            imageView.setImageBitmap(decodedByte);
+        }
         imageButtonMember = (ImageButton) findViewById(R.id.imageButton_main_member);
 
 //        -------------------------------------------------------------------------------

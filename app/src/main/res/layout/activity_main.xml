@@ -47,6 +47,7 @@
                     android:id="@+id/bottom_navigationView_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Theme.MaterialComponents.DayNight"
                     app:menu="@menu/bottom_navigation_menu"/>
 
 

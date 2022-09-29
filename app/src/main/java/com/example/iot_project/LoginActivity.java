@@ -137,11 +137,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (password.equals(account_pwd)) {
                                         membershipCheck = true;
+                                        String picture= memberData.get("picture");
                                         SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
                                         sp.edit()
                                                 .putBoolean("is_login", membershipCheck)
                                                 .putString("member_id",Id)
                                                 .putString("account_name",account)
+                                                .putString("picture",picture)
                                                 .commit();
                                         Log.d("login","[LoginInformation]sp.getall()"+sp.getAll());
                                         Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
