@@ -8,11 +8,17 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.iot_project.R;
+import com.example.iot_project.SellerRegister.ChooseBankAreaActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +43,7 @@ public class ToBeShipDetailFragment extends Fragment {
     private TextView textView_toBeShipDetail_address;
     private TextView textView_toBeShipDetail_payment_state;
     private TextView textView_toBeShipDetail_totalPrice;
+    private ListView listView_toBeShipDetail;
 
     public ToBeShipDetailFragment() {
         // Required empty public constructor
@@ -74,6 +81,7 @@ public class ToBeShipDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_to_be_ship_detail, container, false);
+        SalesRecordActivity salesRecordActivity = (SalesRecordActivity)getActivity();
         textView_toBeShipDetail_orderNum = (TextView)v.findViewById(R.id.textView_toBeShipDetail_orderNum);
         textView_orderToBeShipDetail_name = (TextView) v.findViewById(R.id.textView_orderToBeShipDetail_name);
         textView_orderToBeShipDetail_account = (TextView)v.findViewById(R.id.textView_orderToBeShipDetail_account);
@@ -82,6 +90,7 @@ public class ToBeShipDetailFragment extends Fragment {
         textView_toBeShipDetail_address = (TextView)v.findViewById(R.id.textView_toBeShipDetail_address);
         textView_toBeShipDetail_payment_state = (TextView)v.findViewById(R.id.textView_toBeShipDetail_payment_state);
         textView_toBeShipDetail_totalPrice = (TextView)v.findViewById(R.id.textView_toBeShipDetail_totalPrice);
+        listView_toBeShipDetail = (ListView)v.findViewById(R.id.listView_toBeShipDetail);
 
         ArrayList<String> orderList = mParam1;
         String orderNum = orderList.get(0);
@@ -93,6 +102,20 @@ public class ToBeShipDetailFragment extends Fragment {
 
         textView_toBeShipDetail_orderNum.setText(orderNum);
         textView_toBeShipDetail_totalPrice.setText(totalPrice);
+
+        List<Map<String,String>> toBeShipList = new ArrayList<>();
+
+        for(int i=0;i < 10;i++){
+            Map<String,String> toBeShipMap = new HashMap<>();
+            toBeShipMap.put("productName",productName);
+            toBeShipMap.put("productNum",productNum);
+            toBeShipMap.put("productPrice",productPrice);
+            toBeShipList.add(toBeShipMap);
+        }
+        SimpleAdapter simAdapter = new SimpleAdapter(salesRecordActivity,toBeShipList,R.layout.fragment_member_orders_detailed_item,
+                new String[]{"productName","productNum","productPrice"},new int[] {R.id.textView_cardview_member_orders_goodsName,R.id.textView_cardview_member_orders_goodsSum,R.id.textView_cardview_member_orders_goodsPrice});
+
+        listView_toBeShipDetail.setAdapter(simAdapter);
 
         return v;
     }

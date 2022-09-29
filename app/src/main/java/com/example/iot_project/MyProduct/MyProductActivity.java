@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.iot_project.MyStoreActivity;
 import com.example.iot_project.NewProduct.NewProductActivity;
 import com.example.iot_project.R;
 import com.google.android.material.tabs.TabLayout;
@@ -25,6 +27,7 @@ public class MyProductActivity extends AppCompatActivity {
     private TabLayout myProudct_tabLayout;
     private List<Object> myProducttabTitle;
     private Button addProduct_button;
+    private ImageView imageView_myproductBack;
 
 
     @Override
@@ -32,6 +35,7 @@ public class MyProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_product);
         setWindow();
+        imageView_myproductBack = (ImageView)findViewById(R.id.imageView_myproductBack);
 
         myProduct_ViewPager = (ViewPager2) findViewById(R.id.myProduct_ViewPager);
         myProudct_tabLayout = (TabLayout)findViewById(R.id.tabLayout_myProduct);
@@ -67,6 +71,14 @@ public class MyProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyProductActivity.this, NewProductActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        imageView_myproductBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyProductActivity.this, MyStoreActivity.class);
                 startActivity(intent);
             }
         });

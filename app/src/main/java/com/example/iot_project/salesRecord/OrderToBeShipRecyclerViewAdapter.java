@@ -1,22 +1,19 @@
 package com.example.iot_project.salesRecord;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iot_project.R;
-import com.example.iot_project.member.MemberActivity;
-import com.example.iot_project.member.MemberOrdersRecyclerViewAdapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,16 +58,19 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
         private final TextView textViewTobeship_totalPrice;
         private final Button buttonTobeship_shipped;
         private final Button buttonTobeship_cancelOrder;
+        private final ImageView imageView_tobeship_Pic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //    6. 監聽哪個item被按
-            textViewTobeship_orderNum = (TextView) itemView.findViewById(R.id.textView_tobeship_orderNum);
-            textViewTobeship_productName = (TextView)itemView.findViewById(R.id.textView_tobeship_productName);
-            textViewTobeship_productNum = (TextView)itemView.findViewById(R.id.textView_tobeship_productNum);
-            textViewTobeship_productPrice = (TextView)itemView.findViewById(R.id.textView_tobeship_productPrice);
-            textViewTobeship_totalProductNum = (TextView)itemView.findViewById(R.id.textView_tobeship_totalProductNum);
-            textViewTobeship_totalPrice = (TextView)itemView.findViewById(R.id.textView_tobeship_totalPrice);
+            textViewTobeship_orderNum = (TextView) itemView.findViewById(R.id.textView_invalid_orderNum);
+            textViewTobeship_productName = (TextView)itemView.findViewById(R.id.textView_invalid_productName);
+            textViewTobeship_productNum = (TextView)itemView.findViewById(R.id.textView_invalid_productNum);
+            textViewTobeship_productPrice = (TextView)itemView.findViewById(R.id.textView_invalid_productPrice);
+            textViewTobeship_totalProductNum = (TextView)itemView.findViewById(R.id.textView_invalid_totalProductNum);
+            textViewTobeship_totalPrice = (TextView)itemView.findViewById(R.id.textView_invalid_totalPrice);
+
+            imageView_tobeship_Pic = (ImageView)itemView.findViewById(R.id.imageView_tobeship_Pic);
 
             buttonTobeship_shipped = (Button)itemView.findViewById(R.id.button_tobeship_shipped);
             buttonTobeship_cancelOrder  = (Button)itemView.findViewById(R.id.button_tobeship_cancelOrder);
