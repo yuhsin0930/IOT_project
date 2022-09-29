@@ -104,7 +104,7 @@ public class BecomeSellerActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR,year);
                 calendar.set(Calendar.MONTH,month);
                 calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-                String myformat = "yyyy/MM/dd";
+                String myformat = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myformat, Locale.TAIWAN);
                 textViewSellerCheckAccount_birthday.setText(sdf.format(calendar.getTime()));
 
