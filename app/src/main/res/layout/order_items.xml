@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -183,16 +184,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:gravity="right"
+            android:gravity="left"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="200dp"
+                android:layout_marginRight="150dp"
                 android:gravity="left"
                 android:orientation="horizontal">
 
@@ -203,6 +206,7 @@
                     android:gravity="left"
                     android:text="2"
                     android:textColor="#77726F"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -212,6 +216,7 @@
                     android:gravity="left"
                     android:text="商品"
                     android:textColor="#77726F"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -265,7 +270,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView124"
+                android:id="@+id/textView_orderState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

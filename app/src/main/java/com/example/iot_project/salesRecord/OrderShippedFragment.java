@@ -3,12 +3,19 @@ package com.example.iot_project.salesRecord;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.iot_project.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,9 @@ public class OrderShippedFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private LinearLayoutManager salesLayoutManager;
+    private RecyclerView recyclerViewOrderShipped;
+    private OrderShippedRecyclerAdapter OrderRecyclerAdapter;
 
     public OrderShippedFragment() {
         // Required empty public constructor
@@ -61,7 +71,29 @@ public class OrderShippedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_shipped, container, false);
+        View v = inflater.inflate(R.layout.fragment_order_shipped, container, false);
+        SalesRecordActivity salesRecordActivity = (SalesRecordActivity)getActivity();
+        List<Map<String,Object>> orderList = new ArrayList<>();
+        Map<String,Object> orderMap = new HashMap<>();
+        for(int i=0;i<5;i++){
+            orderMap.put("orderNum","F123456789");
+            orderMap.put("productName","耳機");
+            orderMap.put("productNum",2);
+            orderMap.put("productPrice",200);
+            orderMap.put("allProductNum",2);
+            orderMap.put("totalPrice",400);
+            orderList.add(orderMap);
+        }
+        //      set the LayoutManager and Adapter of RecuclerView
+//      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
+//      LinearLayoutManager.VERTICAL 直向
+        salesLayoutManager = new LinearLayoutManager(salesRecordActivity,LinearLayoutManager
+                .VERTICAL,false);
+        recyclerViewOrderShipped = (RecyclerView)v.findViewById(R.id.orderShipped_RecyclerView);
+        recyclerViewOrderShipped.setLayoutManager(salesLayoutManager);
+        OrderRecyclerAdapter = new OrderShippedRecyclerAdapter(salesRecordActivity,orderList);
+        recyclerViewOrderShipped.setAdapter(OrderRecyclerAdapter);
+        return v;
     }
 }
 
@@ -77,3 +109,4 @@ public class OrderShippedFragment extends Fragment {
 // 取件方式
 // 付款狀態
 // 訂單總金額
+// 取件狀態

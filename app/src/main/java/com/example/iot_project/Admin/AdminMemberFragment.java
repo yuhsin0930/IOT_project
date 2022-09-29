@@ -239,9 +239,10 @@ public class AdminMemberFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDetach() {
+        super.onDetach();
         dataref.removeEventListener(memberListener);
     }
+
 }
 
