@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.iot_project.MyStoreActivity;
-import com.example.iot_project.NewProduct.SetPriceFragment;
 import com.example.iot_project.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -31,7 +29,7 @@ public class SalesRecordActivity extends AppCompatActivity {
     private List<Object> salesRecordtabTitle;
     private FragmentManager FragManager;
     private FragmentTransaction fragTransit;
-    private ToBeShipDetailFragment toBeShipDetailFrag;
+    private OrderDetailFragment toBeShipDetailFrag;
     private OrderToBeShipFragment OrderToBeShipFragment;
     private ImageView imageViewSalesRecordBack;
 
@@ -90,7 +88,7 @@ public class SalesRecordActivity extends AppCompatActivity {
 
         FragManager = getSupportFragmentManager();
         fragTransit = FragManager.beginTransaction();
-        toBeShipDetailFrag = ToBeShipDetailFragment.newInstance(orderList,orderNum);
+        toBeShipDetailFrag = OrderDetailFragment.newInstance(orderList,orderNum);
         fragTransit.add(R.id.layout_salesRecord, toBeShipDetailFrag,orderNum)
                 .addToBackStack("")
                 .commit();

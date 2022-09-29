@@ -83,6 +83,7 @@ public class OrderCompletedFragment extends Fragment {
             orderMap.put("productPrice",200);
             orderMap.put("allProductNum",2);
             orderMap.put("totalPrice",400);
+            orderMap.put("orderState","已完成");
             orderList.add(orderMap);
         }
         //      set the LayoutManager and Adapter of RecuclerView
@@ -110,3 +111,4 @@ public class OrderCompletedFragment extends Fragment {
 // 取件方式
 // 付款狀態
 // 訂單總金額
+// 取件狀態

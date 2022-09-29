@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E1DFDF"
-    tools:context=".salesRecord.ToBeShipDetailFragment">
+    tools:context=".salesRecord.OrderDetailFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout17"
@@ -315,6 +315,31 @@
                             android:id="@+id/textView_toBeShipDetail_payment_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="@color/font_color"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView149"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="取件狀態 : "
+                            android:textColor="@color/font_color"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView_toBeShipDetail_pickState"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="TextView"
                             android:textColor="@color/font_color"
                             android:textSize="18sp" />
