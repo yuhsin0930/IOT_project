@@ -1,6 +1,7 @@
 package com.example.iot_project.Main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -9,9 +10,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,14 +26,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.Admin.AdminLoginActivity;
+import com.example.iot_project.Admin.Member;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.R;
+import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.Cart.CartActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private LinearLayout linearLayout;
+    private BottomNavigationView bottomNavigationView;
+    private NavigationBarView.OnItemSelectedListener bottmNaviListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout_main_bottom);
         registerForContextMenu(linearLayout);
 //      Login button => LoginActivity
-        buttonLogin = (Button) findViewById(R.id.button_main_login);
+//        buttonLogin = (Button) findViewById(R.id.button_main_login);
 //      (temp) Enroll button => BecomeSellerActivity.class
-        buttonEnroll = (Button) findViewById(R.id.button_main_enroll);
+//        buttonEnroll = (Button) findViewById(R.id.button_main_enroll);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigationView_id);
 
 //      目的 : 建立側開表單 NavigationView，以Imagebutton為觸發元件 -----------------------------------------
 ////    reference : https://material.io/components/navigation-drawer/android#using-navigation-drawers
@@ -142,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setButton(boolean login) {
+
         imageButtonMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         if (login) {//已登入
 //          不顯示首頁下方的兩個登入註冊按鈕
             linearLayout.setVisibility(View.INVISIBLE);
@@ -216,22 +239,46 @@ public class MainActivity extends AppCompatActivity {
 
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//鎖住NavigationView
 
+//            1. buttom 顯示登入註冊按鈕
 //           Login button => LoginActivity 登入頁面
-            buttonLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-            });
+//            buttonLogin.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
 //          Enroll button => RegisterActivity
-            buttonEnroll.setOnClickListener(new View.OnClickListener() {
+//            buttonEnroll.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
+//           2. bottom navigation 顯示登入註冊按鈕
+
+//        2. 用 bottom_navigation
+            bottmNaviListener=new NavigationBarView.OnItemSelectedListener() {
+                private Intent intent;
+
                 @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                    startActivity(intent);
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.menu_eroll:
+                            intent = new Intent(MainActivity.this, RegisterActivity.class);
+                            startActivity(intent);
+                            break;
+                        case R.id.menu_login:
+                            intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            break;
+                    }
+                    return false;
                 }
-            });
+            };
+            bottomNavigationView.setOnItemSelectedListener(bottmNaviListener);
+
 
         }
 
