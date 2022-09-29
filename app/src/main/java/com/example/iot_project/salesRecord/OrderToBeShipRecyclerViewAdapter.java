@@ -1,13 +1,16 @@
 package com.example.iot_project.salesRecord;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,19 +62,21 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
         private final Button buttonTobeship_shipped;
         private final Button buttonTobeship_cancelOrder;
         private final ImageView imageView_tobeship_Pic;
+        private TextView textView_cancelOrderDlg_orderNum;
+        private ImageView imageButton_cancelOrderDlg_cancel;
+        private EditText editText_CancelOrder_reason;
+        private Button button_cancelOrderDlg_ok;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //    6. 監聽哪個item被按
-            textViewTobeship_orderNum = (TextView) itemView.findViewById(R.id.textView_invalid_orderNum);
-            textViewTobeship_productName = (TextView)itemView.findViewById(R.id.textView_invalid_productName);
-            textViewTobeship_productNum = (TextView)itemView.findViewById(R.id.textView_invalid_productNum);
-            textViewTobeship_productPrice = (TextView)itemView.findViewById(R.id.textView_invalid_productPrice);
-            textViewTobeship_totalProductNum = (TextView)itemView.findViewById(R.id.textView_invalid_totalProductNum);
-            textViewTobeship_totalPrice = (TextView)itemView.findViewById(R.id.textView_invalid_totalPrice);
-
+            textViewTobeship_orderNum = (TextView) itemView.findViewById(R.id.textView_tobeship_orderNum);
+            textViewTobeship_productName = (TextView)itemView.findViewById(R.id.textView_tobeship_productName);
+            textViewTobeship_productNum = (TextView)itemView.findViewById(R.id.textView_tobeship_productNum);
+            textViewTobeship_productPrice = (TextView)itemView.findViewById(R.id.textView_tobeship_productPrice);
+            textViewTobeship_totalProductNum = (TextView)itemView.findViewById(R.id.textView_tobeship_totalProductNum);
+            textViewTobeship_totalPrice = (TextView)itemView.findViewById(R.id.textView_tobeship_totalPrice);
             imageView_tobeship_Pic = (ImageView)itemView.findViewById(R.id.imageView_tobeship_Pic);
-
             buttonTobeship_shipped = (Button)itemView.findViewById(R.id.button_tobeship_shipped);
             buttonTobeship_cancelOrder  = (Button)itemView.findViewById(R.id.button_tobeship_cancelOrder);
 
@@ -89,9 +94,40 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
             buttonTobeship_cancelOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                //----------------------------------------------------------------------------------
-                //  這裡有予馨的小小心願
-                //  將訂單編號為 orderNum 的訂單狀態改成"已取消"
+                    Dialog CancelOrderDlg = new Dialog(((SalesRecordActivity)itemView.getContext()));
+                    CancelOrderDlg.setContentView(R.layout.cancel_order_dialog);
+                    textView_cancelOrderDlg_orderNum = (TextView)CancelOrderDlg.findViewById(R.id.textView_cancelOrderDlg_orderNum);
+                    imageButton_cancelOrderDlg_cancel = (ImageView)CancelOrderDlg.findViewById(R.id.imageButton_cancelOrderDlg_cancel);
+                    editText_CancelOrder_reason = (EditText)CancelOrderDlg.findViewById(R.id.editText_CancelOrder_reason);
+                    button_cancelOrderDlg_ok = (Button)CancelOrderDlg.findViewById(R.id.button_cancelOrderDlg_ok);
+                    textView_cancelOrderDlg_orderNum.setText(orderNum);
+
+                    CancelOrderDlg.show();
+                    CancelOrderDlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+                    String CancelReason = editText_CancelOrder_reason.getText().toString();
+                    imageButton_cancelOrderDlg_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CancelOrderDlg.dismiss();
+                        }
+                    });
+
+                    button_cancelOrderDlg_ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(editText_CancelOrder_reason.length()==0){
+                                Toast.makeText(((SalesRecordActivity)itemView.getContext()), "請輸入取消訂單原因", Toast.LENGTH_SHORT).show();
+                            }else{
+                                //----------------------------------------------------------------------------------
+                                //  這裡有予馨的小小心願
+                                //  將訂單編號為 orderNum 的訂單狀態改成"已取消"
+                                //  將取消原因 CancelReason 存到 orderNum 訂單中
+                                //--------------------------------------------------------------------------
+                                CancelOrderDlg.dismiss();
+                            }
+                        }
+                    });
                 }
             });
 

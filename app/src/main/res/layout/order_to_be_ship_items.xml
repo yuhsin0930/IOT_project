@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_margin="5dp"
     android:background="@drawable/member_rank_corner">
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/member_rank_corner"
         android:orientation="vertical"
@@ -40,8 +40,9 @@
                 android:id="@+id/textView_tobeship_orderNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="F123456789"
-                android:textColor="@color/font_color"
+                android:textColor="#77726F"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -91,7 +92,7 @@
                         android:layout_weight="1"
                         android:text="耳機"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/font_color"
+                        android:textColor="#77726F"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -108,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="x "
-                        android:textColor="#635F5D"
+                        android:textColor="#77726F"
                         android:textSize="18sp" />
 
                     <TextView
@@ -117,8 +118,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
                         android:text="2"
-                        android:textColor="@color/font_color"
-                        android:textSize="18sp" />
+                        android:textColor="#77726F"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -181,8 +183,9 @@
             android:background="#D1CFCD" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:gravity="right"
             android:orientation="horizontal">
@@ -191,8 +194,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="200dp"
+                android:layout_marginRight="150dp"
                 android:gravity="left"
                 android:orientation="horizontal">
 
@@ -201,8 +205,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
+                    android:textColor="#77726F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView133"

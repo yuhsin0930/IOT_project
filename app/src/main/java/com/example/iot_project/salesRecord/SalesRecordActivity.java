@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -110,6 +111,8 @@ public class SalesRecordActivity extends AppCompatActivity {
         if (fragManager.getBackStackEntryCount() < 1) finish();
         else fragManager.popBackStack();
     }
+
+
 }
 
 

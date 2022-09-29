@@ -15,14 +15,14 @@ import com.example.iot_project.R;
 import java.util.List;
 import java.util.Map;
 
-public class OrderInvalidRecyclerAdapter extends RecyclerView.Adapter<OrderInvalidRecyclerAdapter.ViewHolder> {
+public class OrderShippedRecyclerAdapter extends RecyclerView.Adapter<OrderShippedRecyclerAdapter.ViewHolder> {
     private final Context mainContext;
     private final List<Map<String, Object>> myOrderList;
     private final LayoutInflater myLayoutInflater;
     private String orderNum;
 
     //  1. 資料送進來
-    public OrderInvalidRecyclerAdapter(Context context, List<Map<String, Object>> orderList){
+    public OrderShippedRecyclerAdapter(Context context, List<Map<String,Object>> orderList){
         mainContext = context;
         myOrderList = orderList;
         myLayoutInflater = LayoutInflater.from(context);
@@ -31,15 +31,15 @@ public class OrderInvalidRecyclerAdapter extends RecyclerView.Adapter<OrderInval
     //    2. 取得RecyclerView上的View (R.layout.item_layout上面設定的View)
     @NonNull
     @Override
-    public OrderInvalidRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OrderShippedRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = myLayoutInflater.inflate(R.layout.order_items, parent, false);
-        OrderInvalidRecyclerAdapter.ViewHolder viewHolder = new OrderInvalidRecyclerAdapter.ViewHolder(itemView);
+        OrderShippedRecyclerAdapter.ViewHolder viewHolder = new OrderShippedRecyclerAdapter.ViewHolder(itemView);
         return viewHolder;
     }
 
     //  5.取出對應position應該要顯示的資料
     @Override
-    public void onBindViewHolder(@NonNull OrderInvalidRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OrderShippedRecyclerAdapter.ViewHolder holder, int position) {
         Map<String, Object> data = myOrderList.get(position);
         orderNum = data.get("orderNum").toString();
         String productName = data.get("productName").toString();
@@ -55,7 +55,7 @@ public class OrderInvalidRecyclerAdapter extends RecyclerView.Adapter<OrderInval
         holder.textView_invalid_productPrice.setText(String.valueOf(productPrice));
         holder.textView_invalid_totalProductNum.setText(String.valueOf(allProductNum));
         holder.textView_invalid_totalPrice.setText(String.valueOf(totalPrice));
-        holder.textView_orderState.setText("訂單不成立");
+        holder.textView_orderState.setText("訂單已出貨");
 
     }
 
@@ -85,7 +85,6 @@ public class OrderInvalidRecyclerAdapter extends RecyclerView.Adapter<OrderInval
             textView_invalid_totalProductNum = (TextView)itemView.findViewById(R.id.textView_invalid_totalProductNum);
             textView_invalid_totalPrice = (TextView)itemView.findViewById(R.id.textView_invalid_totalPrice);
             textView_orderState = (TextView)itemView.findViewById(R.id.textView_orderState);
-
             imageView_invalidPic = (ImageView)itemView.findViewById(R.id.imageView_invalid_Pic);
         }
     }
