@@ -124,7 +124,7 @@ public class AdminMemberFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("main", "[memberFrag]onResume");
-//        SharedPreferences sp = activity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        SharedPreferences sp = activity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
 //        Log.d("main", "sp.All=" + sp.getAll());
 //        String member_id = sp.getString("member_id", "").toString();
 //        Boolean is_Login = sp.getBoolean("is_login", false);
@@ -224,9 +224,12 @@ public class AdminMemberFragment extends Fragment {
                     if(mapKey.equals("is_seller")){
                         Boolean is_seller = (Boolean) mapValue;
                         intent.putExtra(mapKey,is_seller);
-                    }else{
+                    }else if(!mapKey.equals("picture")){
                         String StringData = mapValue.toString();
                         intent.putExtra(mapKey,StringData);
+                    }else{
+                        String PicData = mapValue.toString();
+                        sp.edit().putString(mapKey,PicData).commit();
                     }
                 }
                 startActivity(intent);
