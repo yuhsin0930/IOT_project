@@ -32,8 +32,13 @@ import android.content.pm.PackageManager;
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +64,7 @@ public class NewProductActivity extends AppCompatActivity {
     private int picCount=0;
     int inventory;
     private PictureFragment PicFrag;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +120,8 @@ public class NewProductActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
 
         FragManager = getSupportFragmentManager();
-        DBHelper dbHelper = new DBHelper(NewProductActivity.this);
+        dbHelper = new DBHelper(NewProductActivity.this);
+//        DBHelper dbHelper = new DBHelper(NewProductActivity.this);
         SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
         Cursor picCursor = picdataBase.rawQuery(" SELECT * FROM goodsPic WHERE goods_name = '"+productName+"';", null);
         if(picCursor.getCount()!=0){
@@ -144,7 +151,7 @@ public class NewProductActivity extends AppCompatActivity {
                 cv.put("count",picCount);
                 long id = picdataBase.insert("goodsPic",null,cv);
                 picdataBase.close();
-                dbHelper.close();
+//                dbHelper.close();
             }
 
         });
@@ -180,8 +187,14 @@ public class NewProductActivity extends AppCompatActivity {
 
         button_newProduct_launch = (Button) findViewById(R.id.button_newProduct_launch);
         button_newProduct_launch.setOnClickListener(new View.OnClickListener() {
+            private String seller_id;
+
             @Override
             public void onClick(View v) {
+//               取出賣家id
+                SharedPreferences spinfor = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+                seller_id = spinfor.getString("member_id", "");
+
 
                 String name = sp.getString("productName","");
                 String describe = sp.getString("productDescribe","");
@@ -196,7 +209,7 @@ public class NewProductActivity extends AppCompatActivity {
                 int shippingFamilyMartFee =  sp.getInt("shippingFee_familyMart",0);
                 int shippingPostOfficeFee =  sp.getInt("shippingFee_postOffice",0);
                 int shippingBlackCatFee =  sp.getInt("shippingFee_blackCat",0);
-                DBHelper dbHelper = new DBHelper(NewProductActivity.this);
+//                DBHelper dbHelper = new DBHelper(NewProductActivity.this);
                 SQLiteDatabase newProductDatabase = dbHelper.getWritableDatabase();
 
                 //----------------------------------------------------------------------------------
@@ -260,9 +273,18 @@ public class NewProductActivity extends AppCompatActivity {
                     int postOfficeFee = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("postOfficeFee"));
                     int blackCatFee = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("blackCatFee"));
                     String gState = goodCursor.getString(goodCursor.getColumnIndexOrThrow("gState"));
-                    String createTime = goodCursor.getString(goodCursor.getColumnIndexOrThrow("createTime"));
+//                    String createTime = goodCursor.getString(goodCursor.getColumnIndexOrThrow("createTime"));
+                    //      新增建立時間
+                    //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                    ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                    //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                    //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                    String createTime = NowTime.format(dateTimeFormat);
 
+                    Log.d("createTime","createTime="+createTime); // UTC時間需要從Android Studio建立時間
                     GoodInfoMap.put("goods_id",goods_id);
+                    GoodInfoMap.put("seller_id",seller_id);
                     GoodInfoMap.put("gName",gName);
                     GoodInfoMap.put("info",info);
                     GoodInfoMap.put("packageLength",packageLength);
@@ -280,6 +302,10 @@ public class NewProductActivity extends AppCompatActivity {
                     GoodInfoMap.put("gState",gState);
                     GoodInfoMap.put("createTime",createTime);
                     Log.d("main","GoodInfoMap = "+GoodInfoMap);
+
+                    //  upload data to FireBase
+                    MapUploadToFireBase(GoodInfoMap,"goods");
+
                     goodCursor.moveToNext();
                 }
 
@@ -303,14 +329,25 @@ public class NewProductActivity extends AppCompatActivity {
                     String fragType = typeCursor.getString(typeCursor.getColumnIndexOrThrow("fragType"));
                     String type = typeCursor.getString(typeCursor.getColumnIndexOrThrow("type"));
                     int count = typeCursor.getInt(typeCursor.getColumnIndexOrThrow("count"));
-                    String createTime = typeCursor.getString(typeCursor.getColumnIndexOrThrow("createTime"));
-
+//                    String createTime = typeCursor.getString(typeCursor.getColumnIndexOrThrow("createTime"));
+                    //      新增建立時間
+                    //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                    ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                    //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                    //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                    String createTime = NowTime.format(dateTimeFormat);
                     GoodTypeInfoMap.put("goodsType_id",goodsType_id);
+                    GoodTypeInfoMap.put("seller_id",seller_id);
                     GoodTypeInfoMap.put("goods_name",goods_name);
                     GoodTypeInfoMap.put("fragType",fragType);
                     GoodTypeInfoMap.put("type",type);
                     GoodTypeInfoMap.put("count",count);
                     GoodTypeInfoMap.put("createTime",createTime);
+
+                    //  upload data to FireBase
+                    MapUploadToFireBase(GoodTypeInfoMap,"goodsType");
+
                     Log.d("main","GoodTypeInfoMap = "+GoodTypeInfoMap);
                     typeCursor.moveToNext();
                 }
@@ -338,9 +375,17 @@ public class NewProductActivity extends AppCompatActivity {
                     String norm = normCursor.getString(normCursor.getColumnIndexOrThrow("norm"));
                     int normNum = normCursor.getInt(normCursor.getColumnIndexOrThrow("normNum"));
                     int count = normCursor.getInt(normCursor.getColumnIndexOrThrow("count"));
-                    String createTime = normCursor.getString(normCursor.getColumnIndexOrThrow("createTime"));
+//                    String createTime = normCursor.getString(normCursor.getColumnIndexOrThrow("createTime"));
+                    //      新增建立時間
+                    //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                    ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                    //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                    //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                    String createTime = NowTime.format(dateTimeFormat);
 
                     GoodNormInfoMap.put("goodsNorm_id",goodsNorm_id);
+                    GoodNormInfoMap.put("seller_id",seller_id);
                     GoodNormInfoMap.put("goods_name",goods_name);
                     GoodNormInfoMap.put("fragNum",fragNum);
                     GoodNormInfoMap.put("price",price);
@@ -348,6 +393,10 @@ public class NewProductActivity extends AppCompatActivity {
                     GoodNormInfoMap.put("normNum",normNum);
                     GoodNormInfoMap.put("count",count);
                     GoodNormInfoMap.put("createTime",createTime);
+
+                    //  upload data to FireBase
+                    MapUploadToFireBase(GoodNormInfoMap,"goodsNorm");
+
                     Log.d("main","GoodNormInfoMap = "+GoodNormInfoMap);
                     normCursor.moveToNext();
                 }
@@ -370,19 +419,30 @@ public class NewProductActivity extends AppCompatActivity {
                     String fragPic = picCursor.getString(picCursor.getColumnIndexOrThrow("fragPic"));
                     byte[] goodsPicture = picCursor.getBlob(picCursor.getColumnIndexOrThrow("goodsPicture"));
                     int count = picCursor.getInt(picCursor.getColumnIndexOrThrow("count"));
-                    String createTime = picCursor.getString(picCursor.getColumnIndexOrThrow("createTime"));
+//                    String createTime = picCursor.getString(picCursor.getColumnIndexOrThrow("createTime"));
+                    //      新增建立時間
+                    //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                    ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                    //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                    //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                    String createTime = NowTime.format(dateTimeFormat);
 
                     PictureInfoMap.put("goodsPicture_id",goodsPicture_id);
+                    PictureInfoMap.put("seller_id",seller_id);
                     PictureInfoMap.put("goods_name",goods_name);
                     PictureInfoMap.put("fragPic",fragPic);
                     PictureInfoMap.put("goodsPicture",goodsPicture);
                     PictureInfoMap.put("count",count);
                     PictureInfoMap.put("createTime",createTime);
+//                  upload data to FireBase
+                    MapUploadToFireBase(PictureInfoMap,"goodsPic");
+
                     Log.d("main","PictureInfoMap = "+PictureInfoMap);
                     picCursor.moveToNext();
                 }
                 newProductDatabase.close();
-                dbHelper.close();
+//                dbHelper.close();
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
                 startActivity(intent);
 
@@ -390,6 +450,8 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
     }
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -407,5 +469,22 @@ public class NewProductActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+    }
+
+    public void MapUploadToFireBase(Map<String, Object> map,String tableName) { // 把資料存到firebase
+///     使用 Firebase 服務
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//      取得  Firebase 資料庫 (GET網址)
+        DatabaseReference dataref = database.getReference();
+//      儲存會員資料: 存在 member 資料表下，以 uniqueKey 儲存對應的會員資料
+//        dataref.child("user").push().child("member").setValue(fireMap); // nested structur is hard to query
+        dataref.child(tableName).push().setValue(map);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
+
     }
 }

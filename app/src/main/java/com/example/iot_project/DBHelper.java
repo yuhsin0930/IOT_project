@@ -185,9 +185,10 @@ public class DBHelper extends SQLiteOpenHelper {
             "familyMartFee INTEGER,"+
             "postOfficeFee INTEGER,"+
             "blackCatFee,"+
-            "gState TEXT, " +               // 上架中、已完售、審核中、已違規、已下架
-            "createTime DATETIME DEFAULT (datetime('now','localtime')) " +
-            ");";
+            "gState TEXT,"+             // 上架中、已完售、審核中、已違規、已下架
+            "createTime DATETIME DEFAULT (datetime('now','localtime'))"
+            +");";
+
     private String goodsSQL_type = "CREATE TABLE goodsType (" +
             "goodsType_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "goods_name TEXT NOT NULL, " +

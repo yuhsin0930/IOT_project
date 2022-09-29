@@ -104,19 +104,23 @@ public class MainActivity extends AppCompatActivity {
 //      加上 這列 : app:headerLayout="@layout/header_navigation_drawer"
 //      方法2 : 可以用 code 修改預設貓貓圖片，改成其他圖片，方法1加入的那列 app:headerLayout 要刪掉
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_drawer);
-        imageView = (ImageView) headerView.findViewById(R.id.imageView_id);
 
+//      設定側拉選單的會員照片--------------------------------------------------------------------------------
+        imageView = (ImageView) headerView.findViewById(R.id.imageView_id);
+//      會員登入時會建立 SharedPreferences "LoginInformation"，這時"picture"會存有圖片
         SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
         String base64Pic =sp.getString("picture","").toString();
-
+//      當"picture"沒有圖片時，base64Pic會是""
         if(base64Pic.equals("")){
             imageView.setImageResource(R.drawable.pearls);
-        }else {
+        }else { //當"picture"存有圖片時，轉回bitmap，存到側拉選單的會員照片
             byte[] decodedString = Base64.decode(base64Pic, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             Drawable d = new BitmapDrawable(getResources(), decodedByte);
             imageView.setImageBitmap(decodedByte);
         }
+//      ----------------------------------------------------------------------------------------------------
+
         imageButtonMember = (ImageButton) findViewById(R.id.imageButton_main_member);
 
 //        -------------------------------------------------------------------------------
@@ -272,9 +276,9 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                }
 //            });
-//           2. bottom navigation 顯示登入註冊按鈕
+//
 
-//        2. 用 bottom_navigation
+//        2. bottom navigation 顯示登入註冊按鈕
             bottmNaviListener=new NavigationBarView.OnItemSelectedListener() {
                 private Intent intent;
 

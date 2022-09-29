@@ -1,6 +1,7 @@
 package com.example.iot_project.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.iot_project.R;
@@ -27,7 +29,8 @@ public class AdminMemberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_member);
 
-//        actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         //      get base64 picture (String) from firebase and set in ImageView
         imageView = (ImageView) findViewById(R.id.imageView_admin_menber_id);
@@ -40,5 +43,15 @@ public class AdminMemberActivity extends AppCompatActivity {
         Drawable d = new BitmapDrawable(getResources(), decodedByte);
         imageView.setImageBitmap(decodedByte);
 
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
