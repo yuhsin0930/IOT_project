@@ -55,14 +55,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/imageView_sellerStoreInfoPic"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginLeft="30dp"
                 app:srcCompat="@drawable/headshot" />
 
             <TextView
-                android:id="@+id/textView181"
+                android:id="@+id/textView_editSellerStoreInfoPic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -85,7 +85,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/editText_sellerStoreInfoName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
@@ -97,7 +97,7 @@
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/button_sellerStoreInfo_finish"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

@@ -52,7 +52,8 @@ public class MyStoreActivity extends AppCompatActivity {
         button_myStore_editStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MyStoreActivity.this, EditStoreActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -107,7 +108,7 @@ public class MyStoreActivity extends AppCompatActivity {
 
 // -----------------------------------------------------------------------------------
 //  以下是予馨的願望
-//  存取現在登入賣家(member_id)的 會員照片(picture) 、 姓名(name) 、賣家帳號(account_name)
+//  存取現在登入賣家(member_id)的 商場照片(storePicture) 、 賣場名稱(storeName) 、賣家帳號(account_name)
 //  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "待出貨" 商品數量
 //  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "不成立" 商品數量
 //  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "退貨"&"退款" 商品數量
