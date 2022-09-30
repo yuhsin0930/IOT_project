@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/RelativeLayout_cart_coupon"
             android:layout_width="match_parent"
             android:layout_height="40dp">
@@ -55,8 +55,9 @@
                 android:id="@+id/imageView2"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="12dp"
                 android:alpha="0.6"
                 android:src="@drawable/outline_local_activity_black_18" />
@@ -65,31 +66,67 @@
                 android:id="@+id/textView137"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="47dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageView2"
+                android:layout_marginStart="10dp"
                 android:text="優惠券"
                 android:textColor="@color/font_color" />
 
+
             <TextView
-                android:id="@+id/textView138"
+                android:id="@+id/textView_cart_discount_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="42dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/cart_allproduct_textview_border_discount"
+                android:paddingHorizontal="3dp"
+                android:paddingVertical="2dp"
+                android:text="已選折價"
+                android:textColor="@color/Mycolor_1"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView_cart_ship_select"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_cart_ship_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/cart_allproduct_textview_border_shipping"
+                android:paddingHorizontal="3dp"
+                android:paddingVertical="2dp"
+                android:text="已選免運"
+                android:textColor="#00B5A5"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView_cart_no_select"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_cart_no_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="選擇優惠券"
-                android:textColor="#8E8E8E" />
+                android:textColor="#8E8E8E"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginEnd="4dp"
                 android:alpha="0.5"
-                android:src="@drawable/outline_keyboard_arrow_up_black_24" />
-        </RelativeLayout>
+                android:src="@drawable/outline_keyboard_arrow_up_black_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -152,6 +189,7 @@
                 android:textColor="@color/font_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

@@ -92,12 +92,24 @@ public class CartCouponFragment extends Fragment implements View.OnClickListener
 
     private void setData(){
         fragmentMgr = getParentFragmentManager();
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < 2; i++) {
             fragmentTrans = fragmentMgr.beginTransaction();
             fragmentItem = CartCouponItemFragment.newInstance("CartCouponItemFragment" + i);
             fragmentTrans.add(R.id.LinearLayout_crat_coupon, fragmentItem, "CartCouponItemFragment" + i);
             fragmentTrans.commit();
         }
+
+
+
+//        for (i = 0; i < 2; i++) {
+//            fragmentTrans = fragmentMgr.beginTransaction();
+//            fragmentItem = CartCouponItemFragment.newInstance("shippingFee" + i);
+//            fragmentTrans.add(R.id.LinearLayout_crat_coupon, fragmentItem, "CartCouponItemFragment" + i);
+//            fragmentTrans.commit();
+//        }
+
+
+
     }
 
     private void setListener() {

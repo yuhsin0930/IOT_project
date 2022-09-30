@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,6 @@ import java.util.Map;
  */
 public class CartItemBodyFragment extends Fragment {
 
-    private String mParam1;
-    private String mParam2;
     private View view;
     private TextView textViewMinus;
     private TextView textViewAdd;
@@ -44,6 +43,8 @@ public class CartItemBodyFragment extends Fragment {
     private String tag, price;
     private Boolean checkBoxFlag, isExist;
     private CartAllProductFragment cartAllProductFragment;
+    private ImageView imageViewPicture;
+    private TextView textViewGoodsName;
 
     public CartItemBodyFragment() {}
 
@@ -76,7 +77,7 @@ public class CartItemBodyFragment extends Fragment {
 
 
 
-   @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,8 +88,11 @@ public class CartItemBodyFragment extends Fragment {
         textViewGoodsSum = (TextView)view.findViewById(R.id.textView_cart_goodsSum);
         textViewDelete = (TextView)view.findViewById(R.id.textView_cart_body_delete);
         textViewGoodsPrice = (TextView)view.findViewById(R.id.textView_cart_body_goodsPrice);
+        textViewGoodsName = (TextView)view.findViewById(R.id.textView_car_body_goodsName);
         constraintLayoutBody = (ConstraintLayout)view.findViewById(R.id.ConstraintLayout_cart_body);
         checkBox_1 = (CheckBox)view.findViewById(R.id.checkBox_cart_body_1);
+        imageViewPicture = (ImageView)view.findViewById(R.id.imageView_cardview_member_orders_picture);
+
 
         isExist = true;
         tag = getArguments().getString("tag");
@@ -96,13 +100,24 @@ public class CartItemBodyFragment extends Fragment {
         insideMap = new HashMap<>();
         textViewGoodsSum.setText(String.valueOf(sum));
         checkBoxFlag = false;
-        price = "5";
+        price = "10";
         textViewGoodsPrice.setText(price);
 
-       // 從pageView中找到Fragment
-       // 參考: https://learnpainless.com/android/how-to-get-fragment-from-viewpager-android/
-       // 參考: https://stackoverflow.com/questions/55728719/get-current-fragment-with-viewpager2
-        cartAllProductFragment = (CartAllProductFragment)getParentFragmentManager().findFragmentByTag("f0");
+
+        imageViewPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(cartActivity, "前往商品頁面", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        textViewGoodsName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(cartActivity, "前往商品頁面", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         checkBox_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -217,6 +232,10 @@ public class CartItemBodyFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         cartActivity = (CartActivity)getActivity();
+        cartAllProductFragment = (CartAllProductFragment)getParentFragmentManager().findFragmentByTag("f0");
+        // 從pageView中找到Fragment
+        // 參考: https://learnpainless.com/android/how-to-get-fragment-from-viewpager-android/
+        // 參考: https://stackoverflow.com/questions/55728719/get-current-fragment-with-viewpager2
     }
 
     // 每個監聽都呼叫此方法

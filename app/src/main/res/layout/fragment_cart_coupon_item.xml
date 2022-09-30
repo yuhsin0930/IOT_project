@@ -45,8 +45,8 @@
                     android:layout_marginTop="20dp"
                     android:text="現金回饋30元"
                     android:textColor="@color/font_color"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView_cart_coupon_illus"
@@ -54,20 +54,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="2dp"
-                    android:text="單筆消費滿500元，即可使用!"
+                    android:text="單筆消費滿50元，即可使用!"
                     android:textSize="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/textView_cart_coupon_title"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_cart_coupon_title" />
 
                 <CheckBox
                     android:id="@+id/checkBox_cart_coupon_select"
+                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    style="@style/Widget.AppCompat.CompoundButton.RadioButton" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:background="#80FFFFFF"
+            android:clickable="true"
             android:visibility="gone" />
 
     </androidx.cardview.widget.CardView>
