@@ -93,7 +93,9 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/button_background_corner"
             android:ems="10"
+            android:hint="商場名稱不得超過30個字"
             android:inputType="textPersonName"
+            android:textAlignment="center"
             tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
         <Button
