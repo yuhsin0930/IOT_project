@@ -64,7 +64,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="129"
+                    android:text="0"
                     android:textColor="@color/Mycolor_1"
                     android:textSize="16dp"
                     android:textStyle="bold" />

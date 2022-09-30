@@ -55,6 +55,9 @@ public class CartItemHeadFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("cart", tag);
 
+
+
+
                 if (tag.equals("cartItemHeadFragment0")) {
 
                     Fragment f = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment0");
@@ -112,6 +115,11 @@ public class CartItemHeadFragment extends Fragment {
                         }
                     }
                 }
+
+
+
+
+
             }
         });
 

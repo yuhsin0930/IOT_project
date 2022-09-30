@@ -2,16 +2,24 @@ package com.example.iot_project.Cart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
+import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.example.iot_project.R;
 import com.example.iot_project.member.MemberCouponFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
     private FragmentManager fragmentMgr;
     private CartFragment cartFragment;
     private CartCouponFragment cartCouponFragment;
+    private boolean isCouponShow;
+    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,8 @@ public class CartActivity extends AppCompatActivity {
 
         setWindow();
         setFragment();
+        isCouponShow = false;
+        i = 2;
 
     }
 
@@ -42,20 +52,35 @@ public class CartActivity extends AppCompatActivity {
 
 
     public void showCouponFragment() {
-        if (fragmentMgr.findFragmentByTag("memberCouponFragment") == null) {
+        if (fragmentMgr.findFragmentByTag("cartCouponFragment") == null) {
             cartCouponFragment = new CartCouponFragment();
             fragmentMgr.beginTransaction()
-                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_bottom)
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
                     .add(R.id.FrameLayout_Cart, cartCouponFragment, "cartCouponFragment")
                     .addToBackStack("")
                     .commit();
+            i = 3;
+        } else {
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
+                    .show(cartCouponFragment)
+                    .commit();
         }
+        isCouponShow = true;
     }
 
     @Override
     public void onBackPressed() {
-        if (fragmentMgr.getBackStackEntryCount() < 2) finish();
-        else fragmentMgr.popBackStack();
+        if (isCouponShow) {
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_bottom)
+                    .hide(cartCouponFragment)
+                    .commit();
+            isCouponShow = false;
+        } else {
+            if (fragmentMgr.getBackStackEntryCount() < i) finish();
+            else fragmentMgr.popBackStack();
+        }
     }
 
 }

@@ -23,7 +23,9 @@ import android.widget.Toast;
 import com.example.iot_project.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +51,9 @@ public class CartAllProductFragment extends Fragment {
     private CartActivity cartActivity;
     private CheckBox checkBoxSelectAll;
     private List<Fragment> fragmentList;
+    private Map<String, Map<String, Object>> outsideMap;
+    private int subTotal, allSum;
+    private boolean isSelectAll;
 
     public CartAllProductFragment() {}
 
@@ -82,18 +87,23 @@ public class CartAllProductFragment extends Fragment {
         RelativeLayoutCoupon = (RelativeLayout)view.findViewById(R.id.RelativeLayout_cart_coupon);
         checkBoxSelectAll = (CheckBox)view.findViewById(R.id.checkBox_cart_selectAll);
         fragmentList = new ArrayList<>();
+        outsideMap = new HashMap<>();
+        subTotal = 0;
+        allSum = 0;
 
         checkBoxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                for (Fragment f : fragmentList) {
-                    ((CartItemBodyFragment)f).setCheckBox_1(b);
+                if (isSelectAll || b) {
+                    for (Fragment f : fragmentList) {
+                        ((CartItemBodyFragment) f).setCheckBox_1(b);
+                    }
                 }
             }
         });
 
-        textViewTotal.setText("123465");
-        int sum = 100;
+        textViewTotal.setText("0");
+        int sum = 0;
         textViewCheckout.setText("去買單(" + sum +")");
 
         RelativeLayoutCoupon.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +180,46 @@ public class CartAllProductFragment extends Fragment {
         fragmentTrans.commit();
 
     }
+
+    public void setTotalAmount(String totalAmount, String allSum) {
+
+    }
+
+    public void setOutSideMap(Map insideMap) {
+        this.outsideMap.put(insideMap.get("id").toString(), insideMap);
+        Log.d("cart", "outsideMap = " + outsideMap);
+        subTotal();
+    }
+
+    // id = String
+    // price = String
+    // sum = int
+    // checkBoxFlag = Boolean
+    // isExist = Boolean
+    public void subTotal() {
+        subTotal = 0;
+        allSum = 0;
+        isSelectAll = true;
+        outsideMap.forEach((id, insideMap) -> {
+            // 如果存在且被選擇 subTotal += 價格*數量
+            if ((boolean)insideMap.get("isExist")) {
+                if ((boolean)insideMap.get("checkBoxFlag")) {
+                    int price = Integer.parseInt(insideMap.get("price").toString());
+                    int sum = (int) insideMap.get("sum");
+                    subTotal += price * sum;
+                    allSum += sum;
+                } else {
+                    // 有存在的未勾選 等於"未全選"
+                    isSelectAll = false;
+                }
+            }
+        });
+        checkBoxSelectAll.setChecked(isSelectAll);
+        textViewTotal.setText("" + subTotal);
+        textViewCheckout.setText("去買單(" + allSum +")");
+    }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
