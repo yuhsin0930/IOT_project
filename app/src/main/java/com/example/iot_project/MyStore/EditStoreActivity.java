@@ -101,6 +101,9 @@ public class EditStoreActivity extends AppCompatActivity {
                         button_sellerStoreInfo_finish.setEnabled(true);
                         sellerStoreName = s.toString();
                     }
+                }else{
+                    Toast.makeText(EditStoreActivity.this, "商場名稱不得為空", Toast.LENGTH_SHORT).show();
+                    button_sellerStoreInfo_finish.setEnabled(false);
                 }
             }
         });
@@ -113,6 +116,8 @@ public class EditStoreActivity extends AppCompatActivity {
                 //   賣場照片 (storePicture) = sellerStorePic
                 //   賣場名稱(storeName) = sellerStoreName
                 //------------------------------------------------------------------------------
+                Intent intent = new Intent(EditStoreActivity.this,MyStoreActivity.class);
+                startActivity(intent);
             }
         });
     }
