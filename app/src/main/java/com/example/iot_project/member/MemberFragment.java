@@ -37,20 +37,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.Main.MainActivity;
-import com.example.iot_project.MyStoreActivity;
+import com.example.iot_project.MyStore.MyStoreActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.SellerRegister.BecomeSellerActivity;
 import com.example.iot_project.Cart.CartActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Map;
 
 public class MemberFragment extends Fragment implements View.OnClickListener{
 

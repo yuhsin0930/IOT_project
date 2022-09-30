@@ -2,12 +2,15 @@ package com.example.iot_project.SellerRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,11 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.DBHelper;
-import com.example.iot_project.MyStoreActivity;
+import com.example.iot_project.MyStore.MyStoreActivity;
 import com.example.iot_project.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +44,7 @@ public class BankAccountActivity extends AppCompatActivity {
     private String bankAccountName;
 
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +133,12 @@ public class BankAccountActivity extends AppCompatActivity {
         editTextBankAccount_bankAccountName.setText(bankAccountName);
         editTextBankAccount_bankAccountNumber.setText(bankAccountNum);
         //------------------------------------------------------------------------------------------
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.headshot);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] sellerStorePic = baos.toByteArray();
+        //------------------------------------------------------------------------------------------
         buttonBankAccount_finish = (Button)findViewById(R.id.button_bankAccount_finish);
         buttonBankAccount_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +207,7 @@ public class BankAccountActivity extends AppCompatActivity {
 //                                int seller_id = sellerCursor.getInt(sellerCursor.getColumnIndexOrThrow("seller_id"));
                                 String sCountry = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sCountry"));
                                 String sName = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sName"));
+                                byte[] storePicture = sellerStorePic;
                                 String sBirthday = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sBirthday"));
                                 String IDNumber = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("IDNumber"));
                                 String sCity = sellerCursor.getString(sellerCursor.getColumnIndexOrThrow("sCity"));
@@ -211,6 +223,8 @@ public class BankAccountActivity extends AppCompatActivity {
 //                                sellerInfoMap.put("seller_id",seller_id);
                                 sellerInfoMap.put("sCountry",sCountry);
                                 sellerInfoMap.put("sName",sName);
+                                sellerInfoMap.put("storePicture",storePicture);   // 9/30 更新賣場預設照片
+                                sellerInfoMap.put("storeName",sName+"的賣場");     // 9/30 更新賣場預設名稱
                                 sellerInfoMap.put("sBirthday",sBirthday);
                                 sellerInfoMap.put("IDNumber",IDNumber);
                                 sellerInfoMap.put("sCity",sCity);
@@ -271,6 +285,7 @@ public class BankAccountActivity extends AppCompatActivity {
         //    銀行帳戶        bankNumber       15
         //    銀行戶名        bankAccount      16
         //    賣家申請狀態     sState           17
+
 //        將會員賣家Id統一(seller_id=member_id)
 //        member_id : getSharedPreferenced("LoginInformation",Mode.Private) key: "member_id"
 

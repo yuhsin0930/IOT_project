@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PictureFragment#newInstance} factory method to
@@ -72,7 +74,7 @@ public class PictureFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_picture, container, false);
         NewProductActivity newProductActivity = (NewProductActivity)getActivity();
 
-        imageViewPic = (ImageView)v.findViewById(R.id.imageView_Picture);
+        imageViewPic = (ImageView)v.findViewById(R.id.imageView_newproductPicture);
 
         DBHelper dbHelper = new DBHelper(newProductActivity);
         SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();

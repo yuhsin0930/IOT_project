@@ -64,10 +64,10 @@ public class ShippingFeeActivity extends AppCompatActivity {
         textViewFamilyMart = (TextView) findViewById(R.id.textView_familyMart);
         textViewBlackCat = (TextView)findViewById(R.id.textView_blackCat);
         textViewPostOffice = (TextView)findViewById(R.id.textView_postOffice);
-        textViewSeven.setText("NT$ ");
-        textViewFamilyMart.setText("NT$ ");
-        textViewBlackCat.setText("NT$ ");
-        textViewPostOffice.setText("NT$ ");
+        textViewSeven.setText("不適用");
+        textViewFamilyMart.setText("不適用");
+        textViewBlackCat.setText("不適用");
+        textViewPostOffice.setText("不適用");
 
         textViewSevenFee = (TextView)findViewById(R.id.textView_sevenFee);
         textViewFamilyMartFee = (TextView)findViewById(R.id.textView_familyMartFee);

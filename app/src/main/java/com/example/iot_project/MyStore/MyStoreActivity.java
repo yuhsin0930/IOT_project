@@ -1,4 +1,4 @@
-package com.example.iot_project;
+package com.example.iot_project.MyStore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.iot_project.DBHelper;
 import com.example.iot_project.MyProduct.MyProductActivity;
+import com.example.iot_project.R;
 import com.example.iot_project.salesRecord.PaymentActivity;
 import com.example.iot_project.salesRecord.SalesRecordActivity;
 import com.example.iot_project.sellerStore.SellerStoreActivity;
@@ -50,7 +52,8 @@ public class MyStoreActivity extends AppCompatActivity {
         button_myStore_editStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MyStoreActivity.this, EditStoreActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -103,9 +106,9 @@ public class MyStoreActivity extends AppCompatActivity {
 }
 
 
-// -----------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 //  以下是予馨的願望
-//  存取現在登入賣家的 商場照片 、 商場名稱 、賣家帳號
-//  存取現在登入賣家的 "待出貨" 商品數量
-//  存取現在登入賣家的 "不成立" 商品數量
-//  存取現在登入賣家的 "退貨/退款" 商品數量
+//  存取現在登入賣家(member_id)的 商場照片(storePicture) 、 賣場名稱(storeName) 、賣家帳號(account_name)
+//  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "待出貨" 商品數量
+//  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "不成立" 商品數量
+//  存取現在登入賣家(member_id) 訂單狀態(orderStatus) =  "退貨"&"退款" 商品數量

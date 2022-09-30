@@ -7,14 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MyProduct.ProductViolationFragment">
 
-    <ListView
-        android:id="@+id/product_violation_listView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productViolation_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DFDAD7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

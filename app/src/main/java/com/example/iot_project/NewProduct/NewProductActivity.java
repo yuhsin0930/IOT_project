@@ -87,6 +87,8 @@ public class NewProductActivity extends AppCompatActivity {
         String productName = sp.getString("productName", "");
         editTextNewProduct_Name.setText(productName);
         editTextNewProduct_Name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
+
+        textViewNewProduct_NameLength.setText(String.valueOf(productName.length()));
         editTextNewProduct_Name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,9 +103,14 @@ public class NewProductActivity extends AppCompatActivity {
                 NewProductName =  s.toString();
                 NewProductNameLength = String.valueOf(NewProductName.length());
                 sp.edit().putString("productName",NewProductName).commit();
+                textViewNewProduct_NameLength.setText(NewProductNameLength);
             }
         });
-        textViewNewProduct_NameLength.setText(NewProductNameLength);
+
+        //------------------------------------------------------------------------------------------
+        inventory = getIntent().getIntExtra("inventory",0);
+        Log.d("main","inventory = "+inventory);
+        textViewNewProduct_Inventory.setText(String.valueOf(inventory));
 
         //------------------------------------------------------------------------------------------
         String  describeLength = sp.getString("DescribeWordNum","0");
@@ -117,8 +124,7 @@ public class NewProductActivity extends AppCompatActivity {
         textViewNewProduct_describeLength.setText(describeLength);
         //------------------------------------------------------------------------------------------------
 
-        //------------------------------------------------------------------------------------------
-
+        //-----------------------------------------------------------------------------------------
         FragManager = getSupportFragmentManager();
         dbHelper = new DBHelper(NewProductActivity.this);
 //        DBHelper dbHelper = new DBHelper(NewProductActivity.this);
@@ -484,7 +490,14 @@ public class NewProductActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelper.close();
 
+        SQLiteDatabase newproductDataBase = dbHelper.getWritableDatabase();
+        newproductDataBase.execSQL("delete from goods");
+        newproductDataBase.execSQL("delete from goodsType");
+        newproductDataBase.execSQL("delete from goodsNorm");
+        newproductDataBase.execSQL("delete from goodsPic");
+        dbHelper.close();
+        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+        sp.edit().clear();
     }
 }

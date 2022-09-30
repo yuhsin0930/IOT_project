@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.iot_project.MyStoreActivity;
+import com.example.iot_project.MyStore.MyStoreActivity;
 import com.example.iot_project.NewProduct.NewProductActivity;
 import com.example.iot_project.R;
 import com.google.android.material.tabs.TabLayout;

@@ -3,6 +3,8 @@ package com.example.iot_project.MyProduct;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.iot_project.R;
+import com.example.iot_project.salesRecord.OrderInvalidRecyclerAdapter;
+import com.example.iot_project.salesRecord.SalesRecordActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +36,9 @@ public class ProductLaunchedAlreadyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ListView ProductLaunchAlready_listView;
+    private LinearLayoutManager productLayoutManager;
+    private RecyclerView recyclerViewLaunchedAlready;
+    private LaunchedAlreadyRecyclerAdapter ProductRecyclerAdapter;
 
     public ProductLaunchedAlreadyFragment() {
         // Required empty public constructor
@@ -64,7 +76,26 @@ public class ProductLaunchedAlreadyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_product_launched_already, container, false);
-
+        MyProductActivity myProductActivity = (MyProductActivity)getActivity();
+        List<Map<String,Object>> productList = new ArrayList<>();
+        Map<String,Object> productMap = new HashMap<>();
+        for(int i=0;i<10;i++){
+            productMap.put("productName","耳機");
+            productMap.put("productInventory",2000);
+            productMap.put("productPrice",200);
+            productMap.put("productSoldAmount",199);
+            productMap.put("productState","已上架");
+            productList.add(productMap);
+        }
+        //      set the LayoutManager and Adapter of RecuclerView
+//      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
+//      LinearLayoutManager.VERTICAL 直向
+        productLayoutManager = new LinearLayoutManager(myProductActivity,LinearLayoutManager
+                .VERTICAL,false);
+        recyclerViewLaunchedAlready = (RecyclerView)v.findViewById(R.id.ProductLaunchAlready_RecyclerView);
+        recyclerViewLaunchedAlready.setLayoutManager(productLayoutManager);
+        ProductRecyclerAdapter = new LaunchedAlreadyRecyclerAdapter(myProductActivity,productList);
+        recyclerViewLaunchedAlready.setAdapter(ProductRecyclerAdapter);
         return v;
     }
 }
