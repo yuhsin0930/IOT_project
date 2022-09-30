@@ -490,7 +490,14 @@ public class NewProductActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelper.close();
 
+        SQLiteDatabase newproductDataBase = dbHelper.getWritableDatabase();
+        newproductDataBase.execSQL("delete from goods");
+        newproductDataBase.execSQL("delete from goodsType");
+        newproductDataBase.execSQL("delete from goodsNorm");
+        newproductDataBase.execSQL("delete from goodsPic");
+        dbHelper.close();
+        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+        sp.edit().clear();
     }
 }
