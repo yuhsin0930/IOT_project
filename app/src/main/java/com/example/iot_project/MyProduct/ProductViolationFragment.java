@@ -3,12 +3,19 @@ package com.example.iot_project.MyProduct;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.iot_project.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,9 @@ public class ProductViolationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private LinearLayoutManager productLayoutManager;
+    private RecyclerView recyclerViewViolation;
+    private ViolationRecyclerAdapter ProductRecyclerAdapter;
 
     public ProductViolationFragment() {
         // Required empty public constructor
@@ -61,6 +71,27 @@ public class ProductViolationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_violation, container, false);
+        View v = inflater.inflate(R.layout.fragment_product_violation, container, false);
+        MyProductActivity myProductActivity = (MyProductActivity)getActivity();
+        List<Map<String,Object>> productList = new ArrayList<>();
+        Map<String,Object> productMap = new HashMap<>();
+        for(int i=0;i<10;i++){
+            productMap.put("productName","耳機");
+            productMap.put("productInventory",2000);
+            productMap.put("productPrice",200);
+            productMap.put("productSoldAmount",199);
+            productMap.put("productState","已上架");
+            productList.add(productMap);
+        }
+        //      set the LayoutManager and Adapter of RecuclerView
+//      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
+//      LinearLayoutManager.VERTICAL 直向
+        productLayoutManager = new LinearLayoutManager(myProductActivity,LinearLayoutManager
+                .VERTICAL,false);
+        recyclerViewViolation = (RecyclerView)v.findViewById(R.id.productViolation_RecyclerView);
+        recyclerViewViolation.setLayoutManager(productLayoutManager);
+        ProductRecyclerAdapter = new ViolationRecyclerAdapter(myProductActivity,productList);
+        recyclerViewViolation.setAdapter(ProductRecyclerAdapter);
+        return v;
     }
 }

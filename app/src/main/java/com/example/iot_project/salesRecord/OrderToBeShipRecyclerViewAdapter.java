@@ -86,7 +86,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                 public void onClick(View v) {
                     //----------------------------------------------------------------------------------
                     //  這裡有予馨的小小心願
-                    //  將訂單編號為 orderNum 的訂單狀態改成"已出貨"
+                    //  將訂單編號(orders_id)為orderNum 的訂單狀態 (orderStatus) 改成"已出貨"
                 }
             });
 
@@ -121,8 +121,8 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                             }else{
                                 //----------------------------------------------------------------------------------
                                 //  這裡有予馨的小小心願
-                                //  將訂單編號為 orderNum 的訂單狀態改成"已取消"
-                                //  將取消原因 CancelReason 存到 orderNum 訂單中
+                                //  將訂單編號(orders_id)為orderNum 的訂單狀態(orderStatus) 改成 "不成立"
+                                //  將不成立原因 (invalidReason) 存到 訂單編號(orders_id)為orderNum 的訂單中
                                 //--------------------------------------------------------------------------
                                 CancelOrderDlg.dismiss();
                             }

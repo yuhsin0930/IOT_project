@@ -1,9 +1,5 @@
-package com.example.iot_project.NewProduct;
+package com.example.iot_project.MyProduct;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,19 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PictureFragment#newInstance} factory method to
+ * Use the {@link EditProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PictureFragment extends Fragment {
+public class EditProductFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,10 +25,8 @@ public class PictureFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private byte[] goodsPicture;
-    private ImageView imageViewPic;
 
-    public PictureFragment() {
+    public EditProductFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +36,11 @@ public class PictureFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PictureFragment.
+     * @return A new instance of fragment EditProductFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PictureFragment newInstance(String param1, String param2) {
-        PictureFragment fragment = new PictureFragment();
+    public static EditProductFragment newInstance(String param1, String param2) {
+        EditProductFragment fragment = new EditProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,22 +61,6 @@ public class PictureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_picture, container, false);
-        NewProductActivity newProductActivity = (NewProductActivity)getActivity();
-
-        imageViewPic = (ImageView)v.findViewById(R.id.imageView_newproductPicture);
-
-        DBHelper dbHelper = new DBHelper(newProductActivity);
-        SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
-        Cursor picCursor = picdataBase.rawQuery(" SELECT * FROM goodsPic WHERE fragPic = '"+mParam2+"';", null);
-        if(picCursor.getCount()>0) {
-            picCursor.moveToFirst();
-            goodsPicture = picCursor.getBlob(picCursor.getColumnIndexOrThrow("goodsPicture"));
-        }
-        Bitmap bm = BitmapFactory.decodeByteArray(goodsPicture,0,goodsPicture.length);
-        imageViewPic.setImageBitmap(bm);
-        picdataBase.close();
-        dbHelper.close();
-        return v;
+        return inflater.inflate(R.layout.fragment_edit_product, container, false);
     }
 }
