@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.iot_project.Main.LogoutActivity;
 import com.example.iot_project.Member;
 import com.example.iot_project.R;
+import com.example.iot_project.Seller;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

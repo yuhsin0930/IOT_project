@@ -31,6 +31,7 @@ import com.example.iot_project.Admin.AdminLoginActivity;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.Member;
 import com.example.iot_project.R;
+import com.example.iot_project.Seller;
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.Cart.CartActivity;
@@ -70,18 +71,13 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private BottomNavigationView bottomNavigationView;
     private NavigationBarView.OnItemSelectedListener bottmNaviListener;
-    private DatabaseReference dataRef;
-    private ValueEventListener ordersListener;
-    private Map<String,Object> mapdata;
-    private List<Map<String, Object>> listData;
-    private int countforList;
-    private int countfororder;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 //      To hide Action Bar
         ActionBar actionbar = getSupportActionBar();

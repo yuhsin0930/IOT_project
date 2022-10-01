@@ -302,7 +302,7 @@ public class BankAccountActivity extends AppCompatActivity {
 //      取得  Firebase 資料庫 (GET網址)
         DatabaseReference dataref = database.getReference();
 //      上傳賣家資料至 seller 資料表，每個賣家會有unique key，但是id與自己本來的會員資料相同
-        dataref.child("seller").push().setValue(map);
+        dataref.child("seller").child(member_id).setValue(map);
     }
     private void setWindow() {
         getSupportActionBar().hide();

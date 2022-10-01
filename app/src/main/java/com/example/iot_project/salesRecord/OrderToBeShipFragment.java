@@ -124,7 +124,7 @@ public class OrderToBeShipFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //-------------------------------------------------------------------------------------------------
-// 以下是予馨的願望: [392行 listData 就是所有資料的List，每一筆資料存成Map，還沒建欄位所以我先註解拉]
+// 以下是予馨的願望: [384行 listData 就是所有資料的List，每一筆資料存成Map，還沒建欄位所以我先註解拉]
 // 從 orders 資料表 存取目前登入賣家(seller_id)  訂單狀態(orderStatus) = "待出貨" 的所有訂單資訊
 
 // 訂單中所有商品的
@@ -155,7 +155,6 @@ public class OrderToBeShipFragment extends Fragment {
 ////      ------------------------------------------------------------------------
 ////        String seller_id = spData.getString("member_id", "");
 //        ordersListener = dataRef.child("orders").orderByChild("seller_id").equalTo(seller_id).addValueEventListener(new ValueEventListener() {
-//            private String ordersID;
 //
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -187,10 +186,12 @@ public class OrderToBeShipFragment extends Fragment {
 //                        String pickupName = ordersMap.get("pickupName").toString();
 //                        Log.d("main", "pickupName=" + pickupName);
 //                        mapdata.put("pickupName", pickupName);
+
 //                        // 付款方式(payway)
 //                        String payway = ordersMap.get("payway").toString();
 //                        Log.d("main", "payway=" + payway);
 //                        mapdata.put("payway", payway);
+
 //                        // 收件地址(pickupPlace)
 //                        String pickupPlace = ordersMap.get("pickupPlace").toString();
 //                        Log.d("main", "pickupPlace=" + pickupPlace);
@@ -204,15 +205,17 @@ public class OrderToBeShipFragment extends Fragment {
 //                        // 取件時間(pickupTime)
 //                        String pickupTime = ordersMap.get("pickupTime").toString();
 //                        Log.d("main", "pickupTime=" + pickupTime);
-//                        mapdata.put("payTime", payTime);
+//                        mapdata.put("pickupTime", pickupTime);
 //
 //                        // 訂單成立時間 (createTime)
 //                        String createTime = ordersMap.get("createTime").toString();
 //                        Log.d("main", "createTime=" + createTime);
 //                        mapdata.put("createTime", createTime);
+
 ////                      mapdata : 儲存從 orders 資料表 存取目前登入賣家(seller_id)  訂單狀態(orderStatus) = "待出貨"  等相關欄位
 //                        String pickupWayid = ordersMap.get("pickupWay_id").toString();
 //                        mapdata.put("pickupWay_id",pickupWayid);
+
 ////                      儲存不同筆資料的Map到List
 //                        listData.add(mapdata);
 //                        Log.d("main", "listData=" + listData);
@@ -259,23 +262,16 @@ public class OrderToBeShipFragment extends Fragment {
 //////                                    ---------------------------------------------
 //                                String account_name = account.getAccount_name();
 //                                Log.d("main", "account_name=" + account_name);
-////                                mapdata.put("account_name",account_name);
+
 //
 //                                listData.get(countforList).put("account_name", account_name);
 //                                countforList++;
 //                                Log.d("main", "listData=" + listData);
 //                            }
 //                        });
-////                        Task<DataSnapshot> q2 = dataRef.child("sum").orderByChild("orders_id").equalTo("123123").get();
-////                        Tasks.whenAllSuccess(q1).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
-////                            @Override
-////                            public void onSuccess(List<Object> objects) {
-////                                Log.d("main", "objects=" + objects);
-////                            }
-////                        });
-////                        countfororder = 0;
-////                        ordersID = listData.get(countforList).get("orders_id").toString();
-////                        Log.d("main","ordersID="+ordersID);
+
+
+
 //                        Log.d("main", "orders_id=" + orders_id);
 //                        dataRef.child("sum").orderByChild("orders_id").equalTo(orders_id).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
 //                            @Override
@@ -293,9 +289,7 @@ public class OrderToBeShipFragment extends Fragment {
 //                                    Log.d("main", "orderid =" + orderid);
 //                                    Log.d("main", "goods_id=" + goods_id);
 //                                    Log.d("main", "Sum=" + Sum);
-////                                    mapdata.put("goods_id",goods_id);
-////                                    mapdata.put("sum",Sum);
-////                                    countfororder++;
+
 //
 //                                    for (int i = 0; i < listData.size(); i++) {
 //                                        String ordersidCheck = listData.get(i).get("orders_id").toString();
@@ -317,7 +311,7 @@ public class OrderToBeShipFragment extends Fragment {
 //                                            Log.d("main", "goodsid=" + goodsid);
 //                                            String goods_name = goodsMap.get("goods_name").toString();
 //                                            Log.d("main", "goods_name=" + goods_name);
-////                                            mapdata.put("goods_name",goods_name);
+
 //
 //                                            for (int i = 0; i < listData.size(); i++) {
 //                                                String goodsidCheck = listData.get(i).get("goods_id").toString();
@@ -342,7 +336,7 @@ public class OrderToBeShipFragment extends Fragment {
 ////                                                        Log.d("main", "priceData=" + priceData);
 //                                                        Long price = (Long) priceData;
 //                                                        Log.d("main", "price=" + price);
-////                                                        mapdata.put("price",price);
+
 //                                                        for (int i = 0; i < listData.size(); i++) {
 //                                                            String goodsNameCheck = listData.get(i).get("goods_name").toString();
 //                                                            if (goodsNameCheck.equals(goodsName)) {
@@ -353,9 +347,7 @@ public class OrderToBeShipFragment extends Fragment {
 //                                                        Log.d("main", "listData=" + listData);
 //
 //                                                    }
-////                                                    Map<String, Object> goodsDataMap = (Map<String, Object>) goodsData;
-////                                                    int price = (int) goodsDataMap.get("price");
-////                                                    Log.d("main", "price=" + price);
+
 //
 //                                                }
 //
@@ -392,8 +384,7 @@ public class OrderToBeShipFragment extends Fragment {
 ////                                                        listData
 ////                                                        在這裡的 listData 就是最終資料
 ////                                                        --------------------------------------------
-////                                                        mapdata.put("goodsPicture",goodsPicture);
-////                                                        Log.d("main","mapdata="+mapdata);
+
 //                                                    }
 ////                                                    Map<String, Object> goodsPicMap = (Map<String, Object>) goodsPic;
 //
@@ -432,6 +423,14 @@ public class OrderToBeShipFragment extends Fragment {
 //            }
 //        });
 
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+//      移除Fragment時，一並移除FireBase存取資料的監聽
+        dataRef.removeEventListener(ordersListener);
     }
 }
 
