@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -223,7 +227,8 @@ public class BankAccountActivity extends AppCompatActivity {
 //                                sellerInfoMap.put("seller_id",seller_id);
                                 sellerInfoMap.put("sCountry",sCountry);
                                 sellerInfoMap.put("sName",sName);
-                                sellerInfoMap.put("storePicture",storePicture);   // 9/30 更新賣場預設照片
+                                String storePictureBase64 =Base64.encodeToString(storePicture, Base64.DEFAULT);
+                                sellerInfoMap.put("storePicture",storePictureBase64);   // 9/30 更新賣場預設照片
                                 sellerInfoMap.put("storeName",sName+"的賣場");     // 9/30 更新賣場預設名稱
                                 sellerInfoMap.put("sBirthday",sBirthday);
                                 sellerInfoMap.put("IDNumber",IDNumber);
@@ -237,6 +242,15 @@ public class BankAccountActivity extends AppCompatActivity {
                                 sellerInfoMap.put("bankNumber",bankNumber);
                                 sellerInfoMap.put("bankAccount",bankAccount);
                                 sellerInfoMap.put("sState",sState);
+                                //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                                ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                                //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                                DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                                //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                                String createTime = NowTime.format(dateTimeFormat);
+
+                                sellerInfoMap.put("createTime",createTime);
+
                                 Log.d("main","SellerInfoMap = "+sellerInfoMap.toString());
                                 sellerCursor.moveToNext();
                             }

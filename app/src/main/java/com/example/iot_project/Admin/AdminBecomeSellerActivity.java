@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.iot_project.R;
 import com.example.iot_project.Seller;
@@ -27,6 +28,7 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
     private DatabaseReference dataref;
     private ValueEventListener sellerListener;
     private ListView ListViewBecomeSeller;
+    private TextView textViewNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
 //        member/seller_id/is_seller/ : true
 //
 //        seller/key/sState : 不通過
+        textViewNumber = (TextView) findViewById(R.id.textView_admin_seller_apply_number);
 
         ListViewBecomeSeller = (ListView) findViewById(R.id.listView_admin_become_seller_id);
         //      製作表格 id 與 對應表格的帳戶名稱
@@ -59,7 +62,8 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
         List<Map<String, Object>> ListData = new ArrayList<Map<String, Object>>();
 
 //         從reference為起點下去撈會員資料
-        sellerListener = dataref.orderByKey().equalTo("審核中").addValueEventListener(new ValueEventListener() { //每次資料更新都會監聽
+        sellerListener = dataref.orderByChild("sState").equalTo("審核中").addValueEventListener(new ValueEventListener() {
+            private long sellerNumber; //每次資料更新都會監聽
 
             private String dataKey;
 
@@ -68,8 +72,8 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
                 //怕更新List會有重複資料，所以如果ListData已經有資料要清掉，不然List會一直add上去
                 if (ListData.isEmpty() == false) ListData.clear();
                 //   取得申請成為賣家人數 = 幾個 Children
-//                memberNumber = snapshot.getChildrenCount();
-//                textViewMemberNum.setText(String.valueOf(memberNumber));
+                sellerNumber = snapshot.getChildrenCount();
+                textViewNumber.setText(String.valueOf(sellerNumber));
 //                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
 //                    textViewMemberDataCount.setText(String.valueOf(memberNumber));
 //                }
@@ -97,10 +101,10 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
                             ListData.add(map);
 //                          Log.d("main","ListData()="+ListData);
 
-                            SimpleAdapter adpter = new SimpleAdapter(AdminBecomeSellerActivity.this, ListData, R.layout.listview_admin_member
-                                    , new String[]{"account_name", ID,"createTime"}
-                                    , new int[]{R.id.textView_admin_member_account, R.id.textView_admin_member_id
-                                    ,R.id.textView_admin_member_createTime});
+                            SimpleAdapter adpter = new SimpleAdapter(AdminBecomeSellerActivity.this, ListData, R.layout.listview_admin_become_seller
+                                    , new String[]{account, ID,"createTime"}
+                                    , new int[]{R.id.textView_admin_becomeseller_account, R.id.textView_admin_becomeseller_id
+                                    ,R.id.textView_admin_becomeseller_createTime});
                             adpter.notifyDataSetChanged();
                             ListViewBecomeSeller.setAdapter(adpter);
 

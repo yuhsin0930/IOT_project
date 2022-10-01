@@ -76,7 +76,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/textView_admin_member_id"
+                    android:id="@+id/textView_admin_becomeseller_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -99,7 +99,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/textView_admin_member_account"
+                    android:id="@+id/textView_admin_becomeseller_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

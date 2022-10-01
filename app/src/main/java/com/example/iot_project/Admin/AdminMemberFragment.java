@@ -195,8 +195,8 @@ public class AdminMemberFragment extends Fragment {
 
                             SimpleAdapter adpter = new SimpleAdapter(getContext(), ListData, R.layout.listview_admin_member
                                     , new String[]{"account_name", ID,"createTime"}
-                                    , new int[]{R.id.textView_admin_member_account, R.id.textView_admin_member_id
-                                    ,R.id.textView_admin_member_createTime});
+                                    , new int[]{R.id.textView_admin_becomeseller_account, R.id.textView_admin_becomeseller_id
+                                    ,R.id.textView_admin_becomeseller_createTime});
                             adpter.notifyDataSetChanged();
                             ListViewMember.setAdapter(adpter);
 
