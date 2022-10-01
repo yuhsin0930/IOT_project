@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:gravity="left"
-                    android:text="帳號建立時間 :"
+                    android:text="申請時間 :"
                     android:textSize="20sp" />
 
                 <TextView

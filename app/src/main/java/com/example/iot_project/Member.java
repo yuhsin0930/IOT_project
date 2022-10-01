@@ -1,4 +1,4 @@
-package com.example.iot_project.Admin;
+package com.example.iot_project;
 
 import java.util.HashMap;
 import java.util.Map;

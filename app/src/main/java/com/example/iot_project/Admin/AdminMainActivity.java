@@ -1,15 +1,12 @@
 package com.example.iot_project.Admin;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.iot_project.Main.LogoutActivity;
-import com.example.iot_project.Main.MainActivity;
+import com.example.iot_project.Member;
 import com.example.iot_project.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -109,31 +106,11 @@ public class AdminMainActivity extends AppCompatActivity {
                 case R.id.seller_management://進入賣家管理頁面
                     fragTag = "adminFrag-S";
                     AdminFrag = AdminSellerFrag;
-//                    fragTransit = fragmentManager.beginTransaction();
-//                    //      fragment要顯示的元件id , 物件 , fragment對應的tag
-//                    Frag = fragmentManager.findFragmentByTag("adminFrag-S");
-//                    if (Frag.isAdded()) {
-//                        fragTransit.replace(R.id.frameLayout_admin_main, AdminSellerFrag, "adminFrag-S");
-//                    } else {
-//                        fragTransit.add(R.id.frameLayout_admin_main, AdminSellerFrag, "adminFrag-S");
-//                    }
-//
-//                    fragTransit.commit();
                     break;
                 case R.id.item_management://進入商品管理頁面
 
                     fragTag = "adminFrag-P";
                     AdminFrag = AdminProductFrag;
-//                    fragTransit = fragmentManager.beginTransaction();
-//                    //      fragment要顯示的元件id , 物件 , fragment對應的tag
-//                    Frag = fragmentManager.findFragmentByTag("adminFrag-P");
-//                    if (Frag.isAdded()) {
-//                        fragTransit.replace(R.id.frameLayout_admin_main, AdminProductFrag, "adminFrag-P");
-//                    } else {
-//                        fragTransit.add(R.id.frameLayout_admin_main, AdminProductFrag, "adminFrag-P");
-//                    }
-//
-//                    fragTransit.commit();
                     break;
                 case R.id.admin_logout://登出管理者頁面
                     Intent intentlogout = new Intent(AdminMainActivity.this, LogoutActivity.class);
@@ -158,6 +135,7 @@ public class AdminMainActivity extends AppCompatActivity {
             return false;
         }
     }
+
 
     //  取得FireBase資料並轉成 List<Map<String,Object>> 方便放到 RecyclerView
     public void DownloadDataFromFireBase(String reference) {

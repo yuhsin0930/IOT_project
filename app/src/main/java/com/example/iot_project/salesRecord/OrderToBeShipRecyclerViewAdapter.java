@@ -16,7 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iot_project.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
     private final List<Map<String, Object>> myOrderList;
     private final LayoutInflater myLayoutInflater;
     private String orderNum;
+    private DatabaseReference dataRef;
 
     //  1. 資料送進來
     public OrderToBeShipRecyclerViewAdapter(Context context, List<Map<String, Object>> orderList){
@@ -66,6 +70,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
         private ImageView imageButton_cancelOrderDlg_cancel;
         private EditText editText_CancelOrder_reason;
         private Button button_cancelOrderDlg_ok;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,6 +129,20 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                                 //  將訂單編號(orders_id)為orderNum 的訂單狀態(orderStatus) 改成 "不成立"
                                 //  將不成立原因 (invalidReason) 存到 訂單編號(orders_id)為orderNum 的訂單中
                                 //--------------------------------------------------------------------------
+//                              取得FireBase服務
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                              進入orders資料表
+                                dataRef = database.getReference("orders");
+//                              製作需要更新的資料 : 訂單狀態(orderStatus) 改成 "不成立"
+                                Map<String,Object> mapStatus = new HashMap<>();
+                                mapStatus.put("orderStatus","不成立");
+//                              update :  訂單編號(orders_id)為orderNum 的訂單狀態(orderStatus) 改成 "不成立"
+                                dataRef.child(orderNum).updateChildren(mapStatus);
+//                              update :  不成立原因 (invalidReason) 存到 訂單編號(orders_id)為orderNum 的訂單中
+                                Map<String,Object> mapReason = new HashMap<>();
+                                String cancelReason = editText_CancelOrder_reason.getText().toString();
+                                mapReason.put("invalidReason",cancelReason);
+                                dataRef.child(orderNum).updateChildren(mapReason);
                                 CancelOrderDlg.dismiss();
                             }
                         }

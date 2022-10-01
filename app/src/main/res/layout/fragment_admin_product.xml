@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView_admin_p_number"
+                    android:id="@+id/textView_admin_seller_apply_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
