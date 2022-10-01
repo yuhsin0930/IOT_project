@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -26,10 +28,17 @@ import android.widget.Toast;
 
 import com.example.iot_project.DBHelper;
 import com.example.iot_project.R;
+import com.example.iot_project.Seller;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditStoreActivity extends AppCompatActivity {
 
@@ -41,6 +50,7 @@ public class EditStoreActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     byte[] sellerStorePic;
     private String sellerStoreName="";
+    private Map<String, Object> SellerMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,10 +141,40 @@ public class EditStoreActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
     }
-}
 
-//-------------------------------------------------------------------------------------------------
-//  以下是予馨的願望
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //-------------------------------------------------------------------------------------------------
+//  以下是予馨的願望 [171 列的Map即匯集所有結果]
 //  存取現在登入賣家(member_id)
 //  sellerStorePic = 商場照片(storePicture)
 //  sellerStoreName = 賣場名稱(storeName)
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference dataRef = database.getReference();
+//        SharedPreferences spData = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+//        String seller_id = spData.getString("member_id", "");
+////      用Map 儲存結果資料:
+//        SellerMap = new HashMap<String,Object>();
+////      存取現在登入賣家(member_id)的 商場照片(storePicture) 、 賣場名稱(storeName) 、
+//        dataRef.child("seller").child(seller_id).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+//            @Override
+//            public void onSuccess(DataSnapshot dataSnapshot) {
+//                Seller seller = dataSnapshot.getValue(Seller.class);
+//                String storeName = seller.getStoreName();
+//                Log.d("main","storeName="+storeName);
+//                String storePicture = seller.getStorePicture();
+//                Log.d("main","storePicture="+storePicture);
+//                SellerMap.put("storeName",storeName);
+//                SellerMap.put("storePicture",storePicture);
+////                -------------------------------------------------
+////                SellerMap
+////                最終完整的資料結果在這個區塊的SellerMap
+////                ------------------------------------------------
+//
+//                Log.d("main","SellerMap="+SellerMap);
+//            }
+//        });
+    }
+}
+

@@ -294,8 +294,8 @@ public class BankAccountActivity extends AppCompatActivity {
         Log.d("main","member_id="+member_id);
 
         map.put("seller_id",member_id);
-        map.put("storeName","");
-        map.put("storePicture","");
+//        map.put("storeName","");
+//        map.put("storePicture","");
 
 //      使用 Firebase 服務
         FirebaseDatabase database = FirebaseDatabase.getInstance();
