@@ -90,7 +90,7 @@ public class AdminSellerFragment extends Fragment {
         String reference = "seller";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         dataref = database.getReference(reference);
-        sellerCountListener = dataref.orderByKey().addValueEventListener(new ValueEventListener() {
+        sellerCountListener = dataref.orderByChild("sState").equalTo("通過").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long NumberOfSeller = snapshot.getChildrenCount();

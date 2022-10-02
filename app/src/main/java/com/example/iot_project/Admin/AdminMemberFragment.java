@@ -107,10 +107,10 @@ public class AdminMemberFragment extends Fragment {
         // Inflate the layout for this fragment
         View memberView = inflater.inflate(R.layout.fragment_admin_member, container, false);
         ListViewMember = (ListView) memberView.findViewById(R.id.listView_admin_menber);//會員資料
-        textViewMemberNum = (TextView) memberView.findViewById(R.id.textView_admin_seller_apply_number);//會員數量
+        textViewMemberNum = (TextView) memberView.findViewById(R.id.textView_admin_p_number);//會員數量
         textViewMemberDataCount = (TextView) memberView.findViewById(R.id.textView_admin_p_data);//會員資料搜尋結果筆數
-        editTextSearch = (EditText) memberView.findViewById(R.id.editText_admin_p_search);//搜尋會員資料
-        buttonSearch = (ImageButton) memberView.findViewById(R.id.imageButton_admin_p_search);//搜尋按鈕
+//        editTextSearch = (EditText) memberView.findViewById(R.id.editText_admin_p_search);//搜尋會員資料
+//        buttonSearch = (ImageButton) memberView.findViewById(R.id.imageButton_admin_p_search);//搜尋按鈕
         return memberView;
     }
 
@@ -161,9 +161,9 @@ public class AdminMemberFragment extends Fragment {
                 //   取得會員人數 = 幾個 Children
                 memberNumber = snapshot.getChildrenCount();
                 textViewMemberNum.setText(String.valueOf(memberNumber));
-                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
+//                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
                     textViewMemberDataCount.setText(String.valueOf(memberNumber));
-                }
+//                }
                 Log.d("main","snapshot.getValue()="+snapshot.getValue());
                 for (DataSnapshot data : snapshot.getChildren()) {
                     dataKey = data.getKey();

@@ -94,7 +94,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
 
         private Fragment Frag;
-        private String fragTag;
+        private String fragTag="";
         private Fragment AdminFrag;
 
         @Override
@@ -119,20 +119,21 @@ public class AdminMainActivity extends AppCompatActivity {
                     break;
             }
 
-            //開始Transaction
-            FragmentTransaction fragTransit = fragmentManager.beginTransaction();
-            //      fragment要顯示的元件id , 物件 , fragment對應的tag
-            Frag = fragmentManager.findFragmentByTag(fragTag);
-            if(Frag==null){
-                fragTransit.add(R.id.frameLayout_admin_main, AdminFrag, fragTag);
-            }else{
-                if (Frag.isAdded()) {
-                    fragTransit.replace(R.id.frameLayout_admin_main, AdminFrag, fragTag);
+            if(!fragTag.equals("")){
+                //開始Transaction
+                FragmentTransaction fragTransit = fragmentManager.beginTransaction();
+                //      fragment要顯示的元件id , 物件 , fragment對應的tag
+                Frag = fragmentManager.findFragmentByTag(fragTag);
+                if(Frag==null){
+                    fragTransit.add(R.id.frameLayout_admin_main, AdminFrag, fragTag);
+                }else{
+                    if (Frag.isAdded()) {
+                        fragTransit.replace(R.id.frameLayout_admin_main, AdminFrag, fragTag);
+                    }
                 }
+                fragTransit.commit();
             }
 
-
-            fragTransit.commit();
             return false;
         }
     }

@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -25,36 +28,40 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminProductActivity extends AppCompatActivity {
+public class ProductControlActivity extends AppCompatActivity {
 
-    private Button buttonDelete;
+    private DatabaseReference dataref;
     private ImageView imageViewProduct;
-    private EditText editTextViewType,editTextPrice;
+    private EditText editTextViewType;
+    private EditText editTextPrice;
+    private Button buttonDisagree,buttonAgree;
     private String seller_id;
-    private Button buttonDelete2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_product);
+        setContentView(R.layout.activity_product_control);
+
+//       get widget
+         imageViewProduct = (ImageView) findViewById(R.id.imageView_admin_sellerproduct_id);
+         editTextViewType = (EditText) findViewById(R.id.editText_admin_sellerproduct_type);
+         editTextPrice = (EditText) findViewById(R.id.editText_admin_sellerproduct_price);
 
         //       顯示返回鍵
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        //       get widget
-        imageViewProduct = (ImageView) findViewById(R.id.imageView_admin_product_id);
-        editTextViewType = (EditText) findViewById(R.id.editText_admin_product_type);
-        editTextPrice = (EditText) findViewById(R.id.editText_admin_product_price);
-
         Intent intent = getIntent();
 //      取得商品id
-        String goods_id = intent.getStringExtra("goods_Id");
+        String goods_id = intent.getStringExtra("goods_id");
 //        取得商品名稱
         String goods_name = intent.getStringExtra("goods_name");
 
@@ -65,7 +72,7 @@ public class AdminProductActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         Log.d("main", "database=" + database);
 //      使用  reference 節點進入FireBase
-        DatabaseReference dataref = database.getReference();
+        dataref = database.getReference();
         Log.d("main", "dataref=" + dataref);
 
         //        取得商品照片
@@ -171,25 +178,23 @@ public class AdminProductActivity extends AppCompatActivity {
             }
         });
 
-        //       下架商品
-        buttonDelete = (Button) findViewById(R.id.button_admin_product_delete);
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
+        //       不通過直接刪除新增商品申請
+        buttonDisagree = (Button) findViewById(R.id.button_admin_sellerproduct_disagree);
+        buttonDisagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder altbuilder = new AlertDialog.Builder(AdminProductActivity.this);
+                AlertDialog.Builder altbuilder = new AlertDialog.Builder(ProductControlActivity.this);
 
-                altbuilder.setTitle("下架賣家商品");
-                altbuilder.setMessage("請確認是否下架賣家商品?");
+                altbuilder.setTitle("刪除賣家商品上架申請");
+                altbuilder.setMessage("請確認是否刪除申請?");
                 altbuilder.setIcon(android.R.drawable.ic_dialog_alert);
                 altbuilder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference dataRef = database.getReference();
-                        Map<String,Object>map = new HashMap<>();
-                        map.put("gState","已下架");
-                        dataRef.child("goods").child(goods_id).updateChildren(map);
+                        dataRef.child("goods").child(goods_id).removeValue();//delete此申請
                         onBackPressed();//關掉此activity
                     }
                 });
@@ -204,46 +209,30 @@ public class AdminProductActivity extends AppCompatActivity {
 
             }
         });
-
-        //       標示商品已違規商品
-        buttonDelete2 = (Button) findViewById(R.id.button_admin_product_delete2);
-        buttonDelete2.setOnClickListener(new View.OnClickListener() {
+//       新增商品申請通過 :
+//        goods/key/gState : 通過
+        buttonAgree = (Button) findViewById(R.id.button_admin_sellerproduct_agree);
+        buttonAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder altbuilder = new AlertDialog.Builder(AdminProductActivity.this);
-
-                altbuilder.setTitle("賣家商品列為違規");
-                altbuilder.setMessage("請確認是否標註賣家商品已違規?");
-                altbuilder.setIcon(android.R.drawable.ic_dialog_alert);
-                altbuilder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference dataRef = database.getReference();
-                        Map<String,Object>map = new HashMap<>();
-                        map.put("gState","已違規");
-                        dataRef.child("goods").child(goods_id).updateChildren(map);
-                        onBackPressed();//關掉此activity
-                    }
-                });
-
-                altbuilder.setNegativeButton("否", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                altbuilder.show();
-
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference dataRef = database.getReference();
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("gState","通過");
+                //                    String createTime = picCursor.getString(picCursor.getColumnIndexOrThrow("createTime"));
+                //      新增建立時間
+                //      1. 取得台灣時區(Asia/Taipei)的目前日期時間
+                ZonedDateTime NowTime = ZonedDateTime.now(ZoneId.of("Asia/Taipei"));
+                //      2. 設定日期時間格式 : "uuuu-MM-dd HH:mm:ss" = "2022-09-20 20:27:17"
+                DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+                //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
+                String createTime = NowTime.format(dateTimeFormat);
+                map.put("createTime",createTime); //更新createTime為上架時間
+                dataRef.child("goods").child(goods_id).updateChildren(map);
+                onBackPressed();//關掉此activity
             }
         });
-
-
-
-
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==android.R.id.home){ //開啟返回鍵

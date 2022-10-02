@@ -18,33 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText_admin_p_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/button_corner"
-                android:ems="10"
-
-                android:hint="搜尋"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="10dp"
-
-                android:textSize="20sp" />
-
-            <ImageButton
-                android:id="@+id/imageButton_admin_p_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="4"
-                android:src="@drawable/outline_search_black_20"
-                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -73,7 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView_admin_seller_apply_number"
+                    android:id="@+id/textView_admin_p_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"

@@ -4,9 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -39,12 +43,8 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("成為賣家申請審核");
 
-//        seller/key/sState : 通過
-//        seller/key/seller_id
-//        member/seller_id/is_seller/ : true
-//
-//        seller/key/sState : 不通過
-        textViewNumber = (TextView) findViewById(R.id.textView_admin_seller_apply_number);
+
+        textViewNumber = (TextView) findViewById(R.id.textView_admin_p_number);
 
         ListViewBecomeSeller = (ListView) findViewById(R.id.listView_admin_become_seller_id);
         //      製作表格 id 與 對應表格的帳戶名稱
@@ -127,30 +127,28 @@ public class AdminBecomeSellerActivity extends AppCompatActivity {
             }
         });
 
-//        ListViewMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Map<String, Object> item = (Map<String, Object>) parent.getItemAtPosition(position);
-//                Log.d("main","item="+item);
-//                Intent intent = new Intent(activity, AdminMemberActivity.class);
-//                for(Object key: item.keySet().toArray()){
-//                    String mapKey = key.toString();
-//                    Object mapValue = item.get(mapKey);
-//                    Log.d("main","mapKey[mapValue]="+mapKey+" "+mapValue);
-//                    if(mapKey.equals("is_seller")){
-//                        Boolean is_seller = (Boolean) mapValue;
-//                        intent.putExtra(mapKey,is_seller);
-//                    }else if(!mapKey.equals("picture")){
-//                        String StringData = mapValue.toString();
-//                        intent.putExtra(mapKey,StringData);
-//                    }else{
-//                        String PicData = mapValue.toString();
-//                        sp.edit().putString(mapKey,PicData).commit();
-//                    }
-//                }
-//                startActivity(intent);
-//            }
-//        });
+        ListViewBecomeSeller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> item = (Map<String, Object>) parent.getItemAtPosition(position);
+                Log.d("main","item="+item);
+                Intent intent = new Intent(AdminBecomeSellerActivity.this, BecomeSellerControlActivity.class);
+                for(Object key: item.keySet().toArray()){
+                    String mapKey = key.toString();
+                    Object mapValue = item.get(mapKey);
+                    Log.d("main","mapKey[mapValue]="+mapKey+" "+mapValue);
+                    if(!mapKey.equals("storePicture")&& mapValue!=null){
+                        String StringData = mapValue.toString();
+                        intent.putExtra(mapKey,StringData);
+                    }else{
+                        SharedPreferences sp = getSharedPreferences("AdminContent", MODE_PRIVATE);
+                        String PicData = mapValue.toString();
+                        sp.edit().putString(mapKey,PicData).commit();
+                    }
+                }
+                startActivity(intent);
+            }
+        });
 
     }
 

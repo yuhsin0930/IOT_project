@@ -120,43 +120,44 @@ public class LoginActivity extends AppCompatActivity {
                     //      確認帳號密碼是否建立
                     membershipCheck = false;
                     //      搜尋 帳號 密碼 是否已存在Firebase資料庫，且密碼與對應的帳號密碼相同，則會員登入成功
-
-                    dataref.orderByChild("account_name").equalTo(account).addListenerForSingleValueEvent(new ValueEventListener() {
-                    //      這裡用 addListenerForSingleValueEvent 只監聽一次, 不登入狀態改密碼會出現"帳號或密碼錯誤"的吐司
-
+//                    orderByKey 效率比 orderByChild 快
+                    dataref.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("login", "snapshot.exists() = " + snapshot.exists());
-                            Log.d("login", "snapshot.getValue() = " + snapshot.getValue());
-                            if (snapshot.exists()) {
-                                for(DataSnapshot member : snapshot.getChildren()){
-                                    String Id = member.getKey();
-                                    Log.d("login","Id="+Id);
-                                    Map<String,String> memberData = (Map<String,String>)member.getValue();
-                                    String account_pwd = memberData.get("password");
-//                                    Log.d("main","memberData.get(\"password\")="+memberData.get("password"));
-
-                                    if (password.equals(account_pwd)) {
-                                        membershipCheck = true;
-                                        String picture= memberData.get("picture");
-                                        SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-                                        sp.edit()
-                                                .putBoolean("is_login", membershipCheck)
-                                                .putString("member_id",Id)
-                                                .putString("account_name",account)
-                                                .putString("picture",picture)
-                                                .commit();
-                                        Log.d("login","[LoginInformation]sp.getall()"+sp.getAll());
-                                        Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
-                                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
-                                    }
+                            //      這裡用 addListenerForSingleValueEvent 只監聽一次, 不登入狀態改密碼會出現"帳號或密碼錯誤"的吐司
+                            for(DataSnapshot data :snapshot.getChildren()){
+                                if(membershipCheck){
+                                    break;
                                 }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
+                                String key = data.getKey();
+                                dataref.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String Id = snapshot.getKey().toString();
+                                        Member memberdata =snapshot.getValue(Member.class);
+                                        if(memberdata.getAccount_name().equals(account) && memberdata.getPassword().equals(password)){
+                                            membershipCheck = true;
+                                            String picture= memberdata.getPicture();
+                                            SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
+                                            sp.edit()
+                                                    .putBoolean("is_login", membershipCheck)
+                                                    .putString("member_id",Id)
+                                                    .putString("account_name",account)
+                                                    .putString("picture",picture)
+                                                    .commit();
+                                            Log.d("login","[LoginInformation]sp.getall()"+sp.getAll());
+                                            Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
+                                            intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         }
 
@@ -165,6 +166,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    if(membershipCheck == false){
+                        Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(LoginActivity.this, "請輸入完整帳號密碼", Toast.LENGTH_SHORT).show();
                 }

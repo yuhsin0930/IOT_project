@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminProductActivity">
-
+    tools:context=".Admin.ProductControlActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout20"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout18_"
+        android:layout_width="391dp"
+        android:layout_height="603dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
@@ -37,7 +36,7 @@
                 app:cardCornerRadius="35dp">
 
                 <ImageView
-                    android:id="@+id/imageView_admin_product_id"
+                    android:id="@+id/imageView_admin_sellerproduct_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -59,7 +58,7 @@
                 android:text="賣家Id :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_id"
+                android:id="@+id/editText_admin_sellerproduct_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,10 +78,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="商品上架時間 :" />
+                android:text="商品建立時間 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_createTime"
+                android:id="@+id/editText_admin_sellerproduct_createTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.8"
@@ -105,7 +104,7 @@
                 android:text="商品名稱:" />
 
             <EditText
-                android:id="@+id/editText_admin_product_productname"
+                android:id="@+id/editText_admin_sellerproduct_productname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -128,7 +127,7 @@
                 android:text="商品描述 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_info"
+                android:id="@+id/editText_admin_sellerproduct_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -151,7 +150,7 @@
                 android:text="包裹長寬高 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_volume"
+                android:id="@+id/editText_admin_sellerproduct_volume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
@@ -174,7 +173,7 @@
                 android:text="庫存量 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_inventory"
+                android:id="@+id/editText_admin_sellerproduct_inventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -197,7 +196,7 @@
                 android:text="7-11 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_711"
+                android:id="@+id/editText_admin_sellerproduct_711"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
@@ -214,13 +213,12 @@
                 android:text="全家 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_familymart"
+                android:id="@+id/editText_admin_sellerproduct_familymart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="5"
-                android:inputType="textPersonName"
-                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
@@ -237,7 +235,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/editText_admin_product_postoffice"
+                android:id="@+id/editText_admin_sellerproduct_postoffice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -255,13 +253,12 @@
                 android:text="黑貓宅急便 : " />
 
             <EditText
-                android:id="@+id/editText_admin_product_blackcat"
+                android:id="@+id/editText_admin_sellerproduct_blackcat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="5"
-                android:inputType="textPersonName"
-                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
@@ -278,7 +275,7 @@
                 android:text="分類  :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_type"
+                android:id="@+id/editText_admin_sellerproduct_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
@@ -302,7 +299,7 @@
                 android:text="商品價格  :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_price"
+                android:id="@+id/editText_admin_sellerproduct_price"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -314,31 +311,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"/>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_admin_product_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="下架商品"
-        app:layout_constraintEnd_toStartOf="@+id/button_admin_product_delete2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
-
-    <Button
-        android:id="@+id/button_admin_product_delete2"
+        android:id="@+id/button_admin_sellerproduct_disagree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="商品已違規"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_admin_product_delete"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
+        android:layout_marginEnd="16dp"
+        android:text="不通過"
+        app:layout_constraintEnd_toStartOf="@+id/button_admin_sellerproduct_agree"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18_" />
 
+    <Button
+        android:id="@+id/button_admin_sellerproduct_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="通過"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_admin_sellerproduct_disagree"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18_" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -254,6 +254,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         } else { //未登入
+
+//           關閉觸發 navigationView 的 Button
+            imageButtonMember.setVisibility(View.INVISIBLE);
 //          顯示首頁下方的兩個登入註冊按鈕
             linearLayout.setVisibility(View.VISIBLE);
 

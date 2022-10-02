@@ -23,6 +23,7 @@ public class Seller {
     private String seller_id;
     private String storeName;
     private String storePicture;
+    private String createTime;
 
     public Seller() {
     }
@@ -95,6 +96,10 @@ public class Seller {
         return storePicture;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
     public Map<String,Object> ToMap(){
 
         Map<String,Object> map = new HashMap<>();
@@ -114,6 +119,7 @@ public class Seller {
         map.put("seller_id",seller_id);
         map.put("storeName",storeName);
         map.put("storePicture",storePicture);
+        map.put("createTime",createTime);
         return map;
 
     }
