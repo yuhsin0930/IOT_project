@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -263,7 +264,7 @@ public class NewProductActivity extends AppCompatActivity {
                 Map<String, Object> GoodInfoMap = new HashMap<>();
                 goodCursor.moveToFirst();
                 while(!goodCursor.isAfterLast()) {
-                    int goods_id = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("goods_id"));
+//                    int goods_id = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("goods_id"));
                     String gName = goodCursor.getString(goodCursor.getColumnIndexOrThrow("gName"));
                     String info = goodCursor.getString(goodCursor.getColumnIndexOrThrow("info"));
                     int packageLength = goodCursor.getInt(goodCursor.getColumnIndexOrThrow("packageWidth"));
@@ -289,9 +290,9 @@ public class NewProductActivity extends AppCompatActivity {
                     String createTime = NowTime.format(dateTimeFormat);
 
                     Log.d("createTime","createTime="+createTime); // UTC時間需要從Android Studio建立時間
-                    GoodInfoMap.put("goods_id",goods_id);
+//                    GoodInfoMap.put("goods_id",goods_id); // firebase 會自己創id
                     GoodInfoMap.put("seller_id",seller_id);
-                    GoodInfoMap.put("gName",gName);
+                    GoodInfoMap.put("goods_name",gName);
                     GoodInfoMap.put("info",info);
                     GoodInfoMap.put("packageLength",packageLength);
                     GoodInfoMap.put("packageWidth",packageWidth);
@@ -343,7 +344,7 @@ public class NewProductActivity extends AppCompatActivity {
                     DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
                     //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
                     String createTime = NowTime.format(dateTimeFormat);
-                    GoodTypeInfoMap.put("goodsType_id",goodsType_id);
+//                    GoodTypeInfoMap.put("goodsType_id",goodsType_id);// firebase 會自己創id
                     GoodTypeInfoMap.put("seller_id",seller_id);
                     GoodTypeInfoMap.put("goods_name",goods_name);
                     GoodTypeInfoMap.put("fragType",fragType);
@@ -390,7 +391,7 @@ public class NewProductActivity extends AppCompatActivity {
                     //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
                     String createTime = NowTime.format(dateTimeFormat);
 
-                    GoodNormInfoMap.put("goodsNorm_id",goodsNorm_id);
+//                    GoodNormInfoMap.put("goodsNorm_id",goodsNorm_id);// firebase 會自己創id
                     GoodNormInfoMap.put("seller_id",seller_id);
                     GoodNormInfoMap.put("goods_name",goods_name);
                     GoodNormInfoMap.put("fragNum",fragNum);
@@ -423,7 +424,7 @@ public class NewProductActivity extends AppCompatActivity {
                     int goodsPicture_id = picCursor.getInt(picCursor.getColumnIndexOrThrow("goodsPicture_id"));
                     String goods_name = picCursor.getString(picCursor.getColumnIndexOrThrow("goods_name"));
                     String fragPic = picCursor.getString(picCursor.getColumnIndexOrThrow("fragPic"));
-                    byte[] goodsPicture = picCursor.getBlob(picCursor.getColumnIndexOrThrow("goodsPicture"));
+                    byte[] goodsPic= picCursor.getBlob(picCursor.getColumnIndexOrThrow("goodsPicture"));
                     int count = picCursor.getInt(picCursor.getColumnIndexOrThrow("count"));
 //                    String createTime = picCursor.getString(picCursor.getColumnIndexOrThrow("createTime"));
                     //      新增建立時間
@@ -434,13 +435,15 @@ public class NewProductActivity extends AppCompatActivity {
                     //      3. 將目前日期時間格式化，ex: 2022-09-20 20:27:17
                     String createTime = NowTime.format(dateTimeFormat);
 
-                    PictureInfoMap.put("goodsPicture_id",goodsPicture_id);
+                    String goodsPicture = Base64.encodeToString(goodsPic, Base64.DEFAULT);
+//                    PictureInfoMap.put("goodsPicture_id",goodsPicture_id);// firebase 會自己創id
                     PictureInfoMap.put("seller_id",seller_id);
                     PictureInfoMap.put("goods_name",goods_name);
                     PictureInfoMap.put("fragPic",fragPic);
                     PictureInfoMap.put("goodsPicture",goodsPicture);
                     PictureInfoMap.put("count",count);
                     PictureInfoMap.put("createTime",createTime);
+
 //                  upload data to FireBase
                     MapUploadToFireBase(PictureInfoMap,"goodsPic");
 

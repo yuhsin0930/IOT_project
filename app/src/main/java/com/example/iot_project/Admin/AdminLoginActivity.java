@@ -52,7 +52,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                     String adminAccount = editTextAdminAccount.getText().toString();
                     String adminPassword = editTextAdminPassword.getText().toString();
 
-                    dataref.addValueEventListener(new ValueEventListener() {
+                    dataref.orderByKey().addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                            Log.d("main", "snapshot=" + snapshot);

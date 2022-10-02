@@ -1,14 +1,23 @@
 package com.example.iot_project.Admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.iot_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,11 @@ public class AdminSellerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button ButtonBecomeSeller,ButtonSellerReturn,ButtonSellerProduct;
+    private Intent intent;
+    private ValueEventListener sellerCountListener;
+    private DatabaseReference dataref;
+    private TextView TextViewSellerNumber;
 
     public AdminSellerFragment() {
         // Required empty public constructor
@@ -61,6 +75,63 @@ public class AdminSellerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_seller, container, false);
+        View SellerView = inflater.inflate(R.layout.fragment_admin_seller, container, false);
+        TextViewSellerNumber = (TextView) SellerView.findViewById(R.id.textView_admin_seller_number);
+        ButtonBecomeSeller = (Button) SellerView.findViewById(R.id.button_admin_seller_apply);
+        ButtonSellerReturn = (Button) SellerView.findViewById(R.id.button_admin_seller_return);
+        ButtonSellerProduct = (Button) SellerView.findViewById(R.id.button_admin_seller_product);
+        return SellerView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//       取得賣家人數
+        String reference = "seller";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        dataref = database.getReference(reference);
+        sellerCountListener = dataref.orderByChild("sState").equalTo("通過").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long NumberOfSeller = snapshot.getChildrenCount();
+                TextViewSellerNumber.setText(String.valueOf(NumberOfSeller));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//      前往賣家申請審核畫面
+        ButtonBecomeSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(),AdminBecomeSellerActivity.class);
+                startActivity(intent);
+            }
+        });
+//      前往賣家退貨審核畫面
+        ButtonSellerReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(),AdminSellerReturnActivity.class);
+                startActivity(intent);
+            }
+        });
+//      前往賣家商品上架審核畫面
+        ButtonSellerProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(),AdminSellerProductActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        dataref.removeEventListener(sellerCountListener);
     }
 }

@@ -7,15 +7,16 @@
     tools:context=".Admin.AdminMemberActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout18"
+        android:layout_width="406dp"
+        android:layout_height="655dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
-        android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_admin_becomeseller_disagree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -51,7 +52,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView130"
+                android:id="@+id/textView130_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,7 +60,7 @@
                 android:text="會員Id :" />
 
             <EditText
-                android:id="@+id/editText_admin_member_id"
+                android:id="@+id/editText_admin_becomeseller_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,10 +84,10 @@
                 android:text="帳號建立時間 :" />
 
             <EditText
-                android:id="@+id/editText_admin_createTime"
+                android:id="@+id/editText_admin_becomeseller_createTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.8"
                 android:width="100dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -107,10 +108,10 @@
                 android:text="會員姓名 :" />
 
             <EditText
-                android:id="@+id/editText_admin_name"
+                android:id="@+id/editText_admin_becomeseller_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:width="100dp"
                 android:ems="8"
                 android:inputType="textPersonName"
@@ -131,10 +132,10 @@
                 android:text="會員帳號 :" />
 
             <EditText
-                android:id="@+id/editText_admin_account_name"
+                android:id="@+id/editText_admin_store_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:width="100dp"
                 android:ems="8"
                 android:inputType="textPersonName"
@@ -155,10 +156,10 @@
                 android:text="密碼 :" />
 
             <EditText
-                android:id="@+id/editText_admin_password"
+                android:id="@+id/editText_admin_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:width="100dp"
                 android:ems="8"
                 android:inputType="textPersonName"
@@ -206,7 +207,7 @@
                 android:id="@+id/editText_admin_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:width="100dp"
                 android:ems="8"
                 android:inputType="textPersonName"
@@ -230,7 +231,7 @@
                 android:id="@+id/editText_admin_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:width="100dp"
                 android:ems="8"
                 android:inputType="textPersonName"
@@ -254,7 +255,7 @@
                 android:id="@+id/editText_admin_bankAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.6"
                 android:width="100dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -279,7 +280,7 @@
                 android:id="@+id/editText_admin_bankNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.7"
                 android:ems="8"
                 android:inputType="textPersonName"
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
@@ -302,7 +303,7 @@
                 android:id="@+id/editText_admin_is_seller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:width="100dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -310,4 +311,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_admin_becomeseller_disagree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:text="刪除帳號"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
 </androidx.constraintlayout.widget.ConstraintLayout>

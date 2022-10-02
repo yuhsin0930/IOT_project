@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminProductActivity">
-
+    tools:context=".Admin.BecomeSellerControlActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout20"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout18"
+        android:layout_width="406dp"
+        android:layout_height="655dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_admin_becomeseller_disagree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +37,7 @@
                 app:cardCornerRadius="35dp">
 
                 <ImageView
-                    android:id="@+id/imageView_admin_product_id"
+                    android:id="@+id/imageView_admin_becomeseller_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -59,7 +59,7 @@
                 android:text="賣家Id :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_id"
+                android:id="@+id/editText_admin_becomeseller_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,10 +79,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="商品上架時間 :" />
+                android:text="帳號建立時間 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_createTime"
+                android:id="@+id/editText_admin_becomeseller_createTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.8"
@@ -102,10 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="商品名稱:" />
+                android:text="會員姓名 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_productname"
+                android:id="@+id/editText_admin_becomeseller_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -125,10 +125,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="商品描述 :" />
+                android:text="賣場名稱 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_info"
+                android:id="@+id/editText_admin_store_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -148,10 +148,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="包裹長寬高 :" />
+                android:text="國籍 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_volume"
+                android:id="@+id/editText_admin_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
@@ -171,10 +171,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="庫存量 :" />
+                android:text="身分證字號 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_inventory"
+                android:id="@+id/editText_admin_becomseller_IDnumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -194,31 +194,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="7-11 :" />
+                android:text="生日 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_711"
+                android:id="@+id/editText_admin_becomeseller_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:width="100dp"
-                android:ems="2"
-                android:inputType="textPersonName"
-                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="全家 :" />
-
-            <EditText
-                android:id="@+id/editText_admin_product_familymart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="5"
+                android:ems="8"
                 android:inputType="textPersonName"
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
         </LinearLayout>
@@ -233,11 +217,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="郵局  :"
+                android:text="城市 :"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/editText_admin_product_postoffice"
+                android:id="@+id/editText_admin_becomeseller_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -248,20 +232,19 @@
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
             <TextView
-                android:id="@+id/textView130"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="黑貓宅急便 : " />
+                android:text="行政區 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_blackcat"
+                android:id="@+id/editText_admin_becomeseller_county"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:ems="5"
-                android:inputType="textPersonName"
-                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                android:gravity="center"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
@@ -273,12 +256,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:gravity="left"
-                android:text="分類  :" />
+                android:text="銀行帳號名稱 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_type"
+                android:id="@+id/editText_admin_becomeselelr_bankAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
@@ -296,13 +279,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
+                android:layout_weight="1"
                 android:width="100dp"
                 android:gravity="center|left"
-                android:text="商品價格  :" />
+                android:text="銀行帳號 :" />
 
             <EditText
-                android:id="@+id/editText_admin_product_price"
+                android:id="@+id/editText_admin_becomeselelr_bankNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -314,31 +297,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="銀行戶名 :" />
+
+            <EditText
+                android:id="@+id/editText_admin_becomeselelr_accountname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:width="100dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_admin_product_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="下架商品"
-        app:layout_constraintEnd_toStartOf="@+id/button_admin_product_delete2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
-
-    <Button
-        android:id="@+id/button_admin_product_delete2"
+        android:id="@+id/button_admin_becomeseller_disagree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="商品已違規"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_admin_product_delete"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
+        android:layout_marginEnd="16dp"
+        android:text="不通過"
+        app:layout_constraintEnd_toStartOf="@+id/button_admin_becomeseller_agree"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
 
+    <Button
+        android:id="@+id/button_admin_becomeseller_agree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="24dp"
+        android:text="通過"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_admin_becomeseller_disagree"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

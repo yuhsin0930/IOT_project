@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.iot_project" >
+    package="com.example.iot_project">
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <!--
  Required only if your app needs to access images or photos
@@ -34,25 +34,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IOT_project"
         tools:ignore="Instantiatable"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".Admin.ProductControlActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity
+            android:name=".Admin.BecomeSellerControlActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".MyStore.EditStoreActivity"
             android:exported="false" />
         <activity
-            android:name=".EditProductActivity"
+            android:name=".MyProduct.EditProductActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
-            android:exported="false" />
+            android:name=".Admin.AdminSellerProductActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Admin.AdminSellerReturnActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".Admin.AdminBecomeSellerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Admin.AdminProductActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Admin.AdminSellerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Admin.AdminMemberActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Admin.AdminMainActivity"
             android:exported="false"
@@ -145,7 +165,7 @@
             android:exported="false" />
         <activity
             android:name=".Main.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

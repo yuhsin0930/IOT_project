@@ -17,11 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.example.iot_project.Main.LogoutActivity;
+import com.example.iot_project.Member;
 import com.example.iot_project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,6 +59,7 @@ public class AdminMemberFragment extends Fragment {
     private long memberNumber;
     private ValueEventListener memberListener;
     private DatabaseReference dataref;
+    private ImageView imageViewMember;
 
 
     public AdminMemberFragment() {
@@ -107,8 +109,8 @@ public class AdminMemberFragment extends Fragment {
         ListViewMember = (ListView) memberView.findViewById(R.id.listView_admin_menber);//會員資料
         textViewMemberNum = (TextView) memberView.findViewById(R.id.textView_admin_p_number);//會員數量
         textViewMemberDataCount = (TextView) memberView.findViewById(R.id.textView_admin_p_data);//會員資料搜尋結果筆數
-        editTextSearch = (EditText) memberView.findViewById(R.id.editText_admin_p_search);//搜尋會員資料
-        buttonSearch = (ImageButton) memberView.findViewById(R.id.imageButton_admin_p_search);//搜尋按鈕
+//        editTextSearch = (EditText) memberView.findViewById(R.id.editText_admin_p_search);//搜尋會員資料
+//        buttonSearch = (ImageButton) memberView.findViewById(R.id.imageButton_admin_p_search);//搜尋按鈕
         return memberView;
     }
 
@@ -148,7 +150,7 @@ public class AdminMemberFragment extends Fragment {
         List<Map<String, Object>> ListData = new ArrayList<Map<String, Object>>();
 
 //         從reference為起點下去撈會員資料
-        memberListener=dataref.addValueEventListener(new ValueEventListener() { //每次資料更新都會監聽
+        memberListener = dataref.orderByKey().addValueEventListener(new ValueEventListener() { //每次資料更新都會監聽
 
             private String dataKey;
 
@@ -159,17 +161,20 @@ public class AdminMemberFragment extends Fragment {
                 //   取得會員人數 = 幾個 Children
                 memberNumber = snapshot.getChildrenCount();
                 textViewMemberNum.setText(String.valueOf(memberNumber));
-                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
+//                if (editTextSearch.length() == 0) { //如果沒有執行搜尋，搜尋結果等於會員數量
                     textViewMemberDataCount.setText(String.valueOf(memberNumber));
-                }
-//                Log.d("main","snapshot.getValue()="+snapshot.getValue());
+//                }
+                Log.d("main","snapshot.getValue()="+snapshot.getValue());
                 for (DataSnapshot data : snapshot.getChildren()) {
                     dataKey = data.getKey();
+                    Log.d("main","dataKey="+dataKey);
                     dataref.child(dataKey).addListenerForSingleValueEvent(new ValueEventListener() { //只監聽一次
                         private Map<String, Object> map;
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String memberKey = snapshot.getKey();
+                            Log.d("main","memberKey="+memberKey);
                             if (reference.equals("member")) {
                                 Member memberdata = snapshot.getValue(Member.class);
 //                                Log.d("main","Member.ToMap()="+memberdata.ToMap());
@@ -183,12 +188,15 @@ public class AdminMemberFragment extends Fragment {
 ////                                Log.d("main","ListData.size()="+ListData.size());
 //                            }
 
-                            map.put(ID, dataKey);
+                            map.put(ID, memberKey);
+                            Log.d("main", "map=" + map);
                             ListData.add(map);
-//                            Log.d("main", "map=" + map);
-//                            Log.d("main","ListData()="+ListData);
-                            SimpleAdapter adpter = new SimpleAdapter(getContext(), ListData, R.layout.listview_admin_member,
-                                    new String[]{"account_name", ID}, new int[]{R.id.textView_admin_member_account, R.id.textView_admin_member_id});
+//                          Log.d("main","ListData()="+ListData);
+
+                            SimpleAdapter adpter = new SimpleAdapter(getContext(), ListData, R.layout.listview_admin_member
+                                    , new String[]{"account_name", ID,"createTime"}
+                                    , new int[]{R.id.textView_admin_becomeseller_account, R.id.textView_admin_becomeseller_id
+                                    ,R.id.textView_admin_becomeseller_createTime});
                             adpter.notifyDataSetChanged();
                             ListViewMember.setAdapter(adpter);
 

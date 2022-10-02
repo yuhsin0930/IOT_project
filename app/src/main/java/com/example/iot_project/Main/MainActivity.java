@@ -1,7 +1,6 @@
 package com.example.iot_project.Main;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -12,14 +11,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,19 +28,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iot_project.Admin.AdminLoginActivity;
-import com.example.iot_project.Admin.Member;
 import com.example.iot_project.LoginActivity;
+import com.example.iot_project.Member;
 import com.example.iot_project.R;
-import com.example.iot_project.SellerRegister.BecomeSellerActivity;
+import com.example.iot_project.Seller;
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
 import com.example.iot_project.Cart.CartActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,11 +72,12 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private NavigationBarView.OnItemSelectedListener bottmNaviListener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_main);
+
 
 //      To hide Action Bar
         ActionBar actionbar = getSupportActionBar();
@@ -109,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) headerView.findViewById(R.id.imageView_id);
 //      會員登入時會建立 SharedPreferences "LoginInformation"，這時"picture"會存有圖片
         SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
-        String base64Pic =sp.getString("picture","").toString();
+        String base64Pic = sp.getString("picture", "").toString();
 //      當"picture"沒有圖片時，base64Pic會是""
-        if(base64Pic.equals("")){
+        if (base64Pic.equals("")) {
             imageView.setImageResource(R.drawable.pearls);
-        }else { //當"picture"存有圖片時，轉回bitmap，存到側拉選單的會員照片
+        } else { //當"picture"存有圖片時，轉回bitmap，存到側拉選單的會員照片
             byte[] decodedString = Base64.decode(base64Pic, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             Drawable d = new BitmapDrawable(getResources(), decodedByte);
@@ -254,6 +254,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         } else { //未登入
+
+//           關閉觸發 navigationView 的 Button
+            imageButtonMember.setVisibility(View.INVISIBLE);
 //          顯示首頁下方的兩個登入註冊按鈕
             linearLayout.setVisibility(View.VISIBLE);
 
@@ -279,12 +282,12 @@ public class MainActivity extends AppCompatActivity {
 //
 
 //        2. bottom navigation 顯示登入註冊按鈕
-            bottmNaviListener=new NavigationBarView.OnItemSelectedListener() {
+            bottmNaviListener = new NavigationBarView.OnItemSelectedListener() {
                 private Intent intent;
 
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.menu_eroll:
                             intent = new Intent(MainActivity.this, RegisterActivity.class);
                             startActivity(intent);
