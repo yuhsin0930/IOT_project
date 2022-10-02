@@ -1,5 +1,6 @@
 package com.example.iot_project.Cart;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,7 +28,7 @@ import java.util.Map;
  * Use the {@link CartCouponAndShippingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartCouponAndShippingFragment extends Fragment implements View.OnClickListener{
+public class CartCouponAndShippingFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -153,10 +155,32 @@ public class CartCouponAndShippingFragment extends Fragment implements View.OnCl
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener() {
-        view_cart_coupon1.setOnClickListener(this);
-        view_cart_coupon2.setOnClickListener(this);
-        imageViewDown.setOnClickListener(this);
+        view_cart_coupon1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    cartActivity.onBackPressed();
+                return true;
+            }
+        });
+        view_cart_coupon2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    cartActivity.onBackPressed();
+                return true;
+            }
+        });
+        imageViewDown.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    cartActivity.onBackPressed();
+                return true;
+            }
+        });
     }
 
     public void deleteFragment(String tag) {
@@ -167,11 +191,6 @@ public class CartCouponAndShippingFragment extends Fragment implements View.OnCl
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         cartActivity = (CartActivity)getActivity();
-    }
-
-    @Override
-    public void onClick(View view) {
-        cartActivity.onBackPressed();
     }
 
 }
