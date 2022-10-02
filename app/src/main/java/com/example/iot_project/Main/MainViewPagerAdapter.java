@@ -6,12 +6,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainViewPagerAdapter extends FragmentStateAdapter {
     private final List<Fragment> Listfrag;
     private Fragment fragment;
+    private DatabaseReference dataRef;
+    private long count;
+    private List<String> typeList;
+    private int itemcount;
 
     public MainViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);//每次開啟都會建立一次，從背景回來也會進入
@@ -24,7 +36,7 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
     }
 
     @Override
-    public int getItemCount() {//傳回 Fragment 數量
+    public int getItemCount() { //傳回Fragment 數量
         return 4;
     }
 

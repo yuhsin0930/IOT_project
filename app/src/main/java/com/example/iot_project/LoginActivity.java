@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private String account, password;
     private boolean membershipCheck;
     private InputMethodManager keyboard;
+    private int count;
 
 
     @Override
@@ -103,6 +104,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
+            private long ChildrenCount;
+
             @Override
             public void onClick(View view) {
 
@@ -119,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                     DatabaseReference dataref = database.getReference("member");
                     //      確認帳號密碼是否建立
                     membershipCheck = false;
+                    count = 0;
                     //      搜尋 帳號 密碼 是否已存在Firebase資料庫，且密碼與對應的帳號密碼相同，則會員登入成功
 //                    orderByKey 效率比 orderByChild 快
                     dataref.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,11 +130,13 @@ public class LoginActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             //      這裡用 addListenerForSingleValueEvent 只監聽一次, 不登入狀態改密碼會出現"帳號或密碼錯誤"的吐司
                             for(DataSnapshot data :snapshot.getChildren()){
+                                ChildrenCount = snapshot.getChildrenCount();
+                                Log.d("main","snapshot.getChildrenCount()="+snapshot.getChildrenCount());
                                 if(membershipCheck){
                                     break;
                                 }
                                 String key = data.getKey();
-                                dataref.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                dataref.child(key).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         String Id = snapshot.getKey().toString();
@@ -150,6 +156,13 @@ public class LoginActivity extends AppCompatActivity {
                                             intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
+                                        }else {
+                                            count++;
+                                            Log.d("main","count="+count);
+
+                                            if(count == ChildrenCount){
+                                                Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                     }
 
@@ -158,6 +171,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                     }
                                 });
+
+
+
+
                             }
                         }
 
@@ -167,9 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-                    if(membershipCheck == false){
-                        Toast.makeText(LoginActivity.this, "帳號或密碼錯誤", Toast.LENGTH_SHORT).show();
-                    }
+
                 } else {
                     Toast.makeText(LoginActivity.this, "請輸入完整帳號密碼", Toast.LENGTH_SHORT).show();
                 }

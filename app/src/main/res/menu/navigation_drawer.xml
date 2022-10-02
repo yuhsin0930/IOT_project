@@ -8,6 +8,11 @@
             android:checked="true"
             android:icon="@drawable/profile_1"
             android:title="會員中心" />
+<!--        <item-->
+<!--            android:id="@+id/menu_main_home"-->
+<!--            android:checked="true"-->
+<!--            android:icon="@drawable/home_48px"-->
+<!--            android:title="首頁" />-->
     </group>
     <group
         android:id="@+id/group2"
