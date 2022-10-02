@@ -100,7 +100,7 @@ public class CartItemBodyFragment extends Fragment {
         insideMap = new HashMap<>();
         textViewGoodsSum.setText(String.valueOf(sum));
         checkBoxFlag = false;
-        price = "10";
+        price = "40";
         textViewGoodsPrice.setText(price);
 
 
@@ -123,7 +123,6 @@ public class CartItemBodyFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkBoxFlag = isChecked;
-                Log.d("cart", "checkBoxFlag = " + checkBoxFlag);
                 makeAndSendInsideMap();
             }
         });
@@ -212,9 +211,6 @@ public class CartItemBodyFragment extends Fragment {
             }
         });
 
-       Log.d("cart", "checkBoxFlag = " + checkBoxFlag);
-
-
         makeAndSendInsideMap();
         return view;
     }
@@ -245,7 +241,6 @@ public class CartItemBodyFragment extends Fragment {
         insideMap.put("sum", sum);
         insideMap.put("checkBoxFlag", checkBoxFlag);
         insideMap.put("isExist", isExist);
-        Log.d("cart", "insideMap = " + insideMap);
         cartAllProductFragment.setOutSideMap(insideMap);
     }
 

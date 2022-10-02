@@ -3,21 +3,15 @@ package com.example.iot_project.Cart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import com.example.iot_project.R;
-import com.example.iot_project.member.MemberCouponFragment;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
     private FragmentManager fragmentMgr;
     private CartFragment cartFragment;
-    private CartCouponFragment cartCouponFragment;
+    private CartCouponAndShippingFragment cartCouponAndShippingFragment;
     private boolean isCouponShow;
     private int i;
 
@@ -50,20 +44,32 @@ public class CartActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void newCouponFragment() {
+        if (fragmentMgr.findFragmentByTag("cartCouponFragment") == null) {
+            cartCouponAndShippingFragment = new CartCouponAndShippingFragment();
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
+                    .add(R.id.FrameLayout_Cart, cartCouponAndShippingFragment, "cartCouponFragment")
+                    .addToBackStack("")
+                    .hide(cartCouponAndShippingFragment)
+                    .commit();
+            i = 3;
+        }
+    }
 
     public void showCouponFragment() {
         if (fragmentMgr.findFragmentByTag("cartCouponFragment") == null) {
-            cartCouponFragment = new CartCouponFragment();
+            cartCouponAndShippingFragment = new CartCouponAndShippingFragment();
             fragmentMgr.beginTransaction()
                     .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
-                    .add(R.id.FrameLayout_Cart, cartCouponFragment, "cartCouponFragment")
+                    .add(R.id.FrameLayout_Cart, cartCouponAndShippingFragment, "cartCouponFragment")
                     .addToBackStack("")
                     .commit();
             i = 3;
         } else {
             fragmentMgr.beginTransaction()
                     .setCustomAnimations(R.anim.trans_in_from_botton, R.anim.no_anim)
-                    .show(cartCouponFragment)
+                    .show(cartCouponAndShippingFragment)
                     .commit();
         }
         isCouponShow = true;
@@ -74,7 +80,7 @@ public class CartActivity extends AppCompatActivity {
         if (isCouponShow) {
             fragmentMgr.beginTransaction()
                     .setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_bottom)
-                    .hide(cartCouponFragment)
+                    .hide(cartCouponAndShippingFragment)
                     .commit();
             isCouponShow = false;
         } else {
