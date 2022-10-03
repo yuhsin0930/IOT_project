@@ -118,6 +118,9 @@ public class OrderShippedFragment extends Fragment {
         // 商品售價(price)
         // 購買數量(sum資料表中的sum欄位)
         // 第一張圖片(goodsPicture)
+
+        //    *****  商品規格(goodsNorm.norm)  10/3更新     ******
+
 // 取件人姓名(pickupName)
 // 買家帳號(account_name)
 // 付款方式(payway)

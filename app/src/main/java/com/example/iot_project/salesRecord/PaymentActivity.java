@@ -28,4 +28,19 @@ public class PaymentActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
     }
+
+    //---------------------------------------------------------------------------------------------
+//    取出此賣家(seller_id) 訂單狀態(orderStatus)="已完成"的所有訂單編號(orders_id)
+//    以及訂單中的買家帳號(member_id)
+//    以及訂單中所有商品的
+//      商品名稱(goods.goods_name)
+//      商品規格(goodsNorm.norm)
+//      商品售價(goodsNorm.price)
+//      購買數量(sum資料表中的sum欄位)
+//    付款方式(payway)
+//    付款時間(payTime)
+//    出貨時間(shippingTime)
+//    訂單成立時間(createTime)
+
+
 }
