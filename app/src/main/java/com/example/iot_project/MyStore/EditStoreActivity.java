@@ -125,6 +125,7 @@ public class EditStoreActivity extends AppCompatActivity {
                 //   更新此賣家的
                 //   賣場照片 (storePicture) = sellerStorePic
                 //   賣場名稱(storeName) = sellerStoreName
+
                 //------------------------------------------------------------------------------
                 Intent intent = new Intent(EditStoreActivity.this,MyStoreActivity.class);
                 startActivity(intent);

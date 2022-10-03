@@ -2,8 +2,6 @@ package com.example.iot_project.salesRecord;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +31,6 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
     private final LayoutInflater myLayoutInflater;
     private String orderNum;
     private DatabaseReference dataRef;
-    int totalPrice = 0;
-    int allProductNum=0;
 
     //  1. 資料送進來
     public OrderToBeShipRecyclerViewAdapter(Context context, List<Map<String, Object>> orderList){
@@ -76,7 +72,6 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
         private Button button_cancelOrderDlg_ok;
 
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //    6. 監聽哪個item被按
@@ -97,15 +92,6 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                     //----------------------------------------------------------------------------------
                     //  這裡有予馨的小小心願
                     //  將訂單編號(orders_id)為orderNum 的訂單狀態 (orderStatus) 改成"已出貨"
-//                    取得FireBase服務
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                              進入orders資料表
-                    dataRef = database.getReference("orders");
-//                              製作需要更新的資料 : 訂單狀態(orderStatus) 改成 "已出貨"
-                    Map<String,Object> mapStatus = new HashMap<>();
-                    mapStatus.put("orderStatus","已出貨");
-//                              update :  訂單編號(orders_id)為orderNum 的訂單狀態(orderStatus) 改成 "已出貨"
-                    dataRef.child(orderNum).updateChildren(mapStatus);
                 }
             });
 
@@ -168,10 +154,10 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    ((SalesRecordActivity)itemView.getContext()).orderToBeShipDetail(myOrderList.get(position),allProductNum,totalPrice);
+                    ((SalesRecordActivity)itemView.getContext()).orderToBeShipDetail(myOrderList.get(position));
                 }
             });
-            
+
         }
     }
 
@@ -179,26 +165,12 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
     @Override
     public void onBindViewHolder(@NonNull OrderToBeShipRecyclerViewAdapter.ViewHolder holder, int position) {
         Map<String, Object> data = myOrderList.get(position);
-        orderNum = data.get("orders_id").toString(); //訂單編號
-        String productName = data.get("goods_name").toString(); //商品名稱
-        int productPrice = (int)data.get("price"); //商品售價
-        int productNum = (int)data.get("sum"); //商品數量
-        allProductNum = myOrderList.size();
-        byte[] goodsPicture = (byte[]) data.get("goodsPicture"); //商品照片
-
-
-        for(int i=0;i<myOrderList.size();i++){
-            Map<String, Object> ordermap = myOrderList.get(i);
-            totalPrice += (int)ordermap.get("price");
-        }
-        String pickupName = data.get("pickupName").toString();  //取件人姓名
-        String payWay = data.get("payway").toString(); //付款方式
-        String pickupPlace = data.get("pickupPlace").toString(); //取貨地址
-        String payTime = data.get("payTime").toString(); //付款時間
-        String pickupTime = data.get("pickupTime").toString(); //取件時間
-        String createTime = data.get("createTime").toString(); // 訂單成立時間
-        String pickupWay = data.get("pName").toString();  //取件方式
-        String account_name = data.get("account_name").toString(); // 買家帳號
+        orderNum = data.get("orderNum").toString();
+        String productName = data.get("productName").toString();
+        int productNum = (int)data.get("productNum");
+        int productPrice = (int)data.get("productPrice");
+        int allProductNum = (int)data.get("allProductNum");
+        int totalPrice = (int)data.get("totalPrice");
 
         holder.textViewTobeship_orderNum.setText(orderNum);
         holder.textViewTobeship_productName.setText(productName);
@@ -206,9 +178,6 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
         holder.textViewTobeship_productPrice.setText(String.valueOf(productPrice));
         holder.textViewTobeship_totalProductNum.setText(String.valueOf(allProductNum));
         holder.textViewTobeship_totalPrice.setText(String.valueOf(totalPrice));
-
-        Bitmap bm = BitmapFactory.decodeByteArray(goodsPicture,0,goodsPicture.length);
-        holder.imageView_tobeship_Pic.setImageBitmap(bm);
 
     }
 
@@ -223,4 +192,3 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
 
 
 }
-

@@ -230,5 +230,3 @@ public class MyStoreActivity extends AppCompatActivity {
         dataRef.removeEventListener(ordersEventListner);
     }
 }
-
-

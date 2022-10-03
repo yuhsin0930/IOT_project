@@ -70,26 +70,14 @@ public class SalesRecordActivity extends AppCompatActivity {
 
     }
 
-    public void orderToBeShipDetail(Map<String,Object> orderMap,int allProductNum,int totalPrice){
+    public void orderToBeShipDetail(Map<String,Object> orderMap){
         Map<String, Object> data = orderMap;
-        String orderNum = data.get("orders_id").toString(); //訂單編號
-        String productName = data.get("goods_name").toString(); //商品名稱
-        int productPrice = (int)data.get("price"); //商品售價
-        int productNum = (int)data.get("sum"); //商品數量
-        byte[] goodsPicture = (byte[]) data.get("goodsPicture"); //商品照片
-
-        String account_name = data.get("account_name").toString(); // 買家帳號
-        String pickupName = data.get("pickupName").toString();  //取件人姓名
-        String payWay = data.get("payway").toString(); //付款方式
-        String payTime = data.get("payTime").toString(); //付款時間
-        String pickupWay = data.get("pName").toString();  //取件方式
-        String pickupTime = data.get("pickupTime").toString(); //取件時間
-        String pickupPlace = data.get("pickupPlace").toString(); //取貨地址
-        String createTime = data.get("createTime").toString(); // 訂單成立時間
-
-
-
-
+        String orderNum = data.get("orderNum").toString();
+        String productName = data.get("productName").toString();
+        int productNum = (int)data.get("productNum");
+        int productPrice = (int)data.get("productPrice");
+        int allProductNum = (int)data.get("allProductNum");
+        int totalPrice = (int)data.get("totalPrice");
         ArrayList<String> orderList = new ArrayList<>();
         orderList.add(orderNum);
         orderList.add(productName);
@@ -97,19 +85,6 @@ public class SalesRecordActivity extends AppCompatActivity {
         orderList.add(String.valueOf(productPrice));
         orderList.add(String.valueOf(allProductNum));
         orderList.add(String.valueOf(totalPrice));
-        orderList.add(String.valueOf(goodsPicture));
-        orderList.add(account_name);
-        orderList.add(pickupName);
-        orderList.add(payWay);
-        orderList.add(payTime);
-        orderList.add(pickupWay);
-        orderList.add(pickupTime);
-        orderList.add(pickupPlace);
-        orderList.add(createTime);
-
-
-
-
 
         FragManager = getSupportFragmentManager();
         fragTransit = FragManager.beginTransaction();
@@ -137,7 +112,6 @@ public class SalesRecordActivity extends AppCompatActivity {
 
 
 }
-
 
 
 
