@@ -66,12 +66,14 @@ public class NewProductActivity extends AppCompatActivity {
     int inventory;
     private PictureFragment PicFrag;
     private DBHelper dbHelper;
+    private String productName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
         setWindow();
+        dbHelper = new DBHelper(NewProductActivity.this);
 
         SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
         textViewNewProduct_NameLength = (TextView)findViewById(R.id.textView_newProduct_NameLength);
@@ -85,7 +87,7 @@ public class NewProductActivity extends AppCompatActivity {
         editTextNewProduct_Name = (EditText)findViewById(R.id.editTextText_newProduct_Name);
         //------------------------------------------------------------------------------------------
         NewProductNameLength=sp.getString("productNameLength","0");
-        String productName = sp.getString("productName", "");
+        productName = sp.getString("productName", "");
         editTextNewProduct_Name.setText(productName);
         editTextNewProduct_Name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
 
@@ -109,8 +111,9 @@ public class NewProductActivity extends AppCompatActivity {
         });
 
         //------------------------------------------------------------------------------------------
-        inventory = getIntent().getIntExtra("inventory",0);
-        Log.d("main","inventory = "+inventory);
+//        inventory = getIntent().getIntExtra("inventory",0);
+//        Log.d("main","inventory = "+inventory);
+        inventory = sp.getInt("inventory",0);
         textViewNewProduct_Inventory.setText(String.valueOf(inventory));
 
         //------------------------------------------------------------------------------------------
@@ -127,8 +130,6 @@ public class NewProductActivity extends AppCompatActivity {
 
         //-----------------------------------------------------------------------------------------
         FragManager = getSupportFragmentManager();
-        dbHelper = new DBHelper(NewProductActivity.this);
-//        DBHelper dbHelper = new DBHelper(NewProductActivity.this);
         SQLiteDatabase picdataBase = dbHelper.getWritableDatabase();
         Cursor picCursor = picdataBase.rawQuery(" SELECT * FROM goodsPic WHERE goods_name = '"+productName+"';", null);
         if(picCursor.getCount()!=0){
@@ -451,7 +452,15 @@ public class NewProductActivity extends AppCompatActivity {
                     picCursor.moveToNext();
                 }
                 newProductDatabase.close();
-//                dbHelper.close();
+
+                SQLiteDatabase newproductDataBase = dbHelper.getWritableDatabase();
+                newproductDataBase.execSQL("DELETE FROM goods");
+                newproductDataBase.execSQL("DELETE FROM goodsType");
+                newproductDataBase.execSQL("DELETE FROM goodsNorm");
+                newproductDataBase.execSQL("DELETE FROM goodsPic");
+                newproductDataBase.close();
+                SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+                sp.edit().clear().commit();
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
                 startActivity(intent);
 
@@ -460,14 +469,6 @@ public class NewProductActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        inventory = getIntent().getIntExtra("inventory",0);
-        Log.d("main","inventory = "+inventory);
-        textViewNewProduct_Inventory.setText(String.valueOf(inventory));
-    }
 
     private void setWindow() {
         getSupportActionBar().hide();
@@ -493,14 +494,9 @@ public class NewProductActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        SQLiteDatabase newproductDataBase = dbHelper.getWritableDatabase();
-        newproductDataBase.execSQL("delete from goods");
-        newproductDataBase.execSQL("delete from goodsType");
-        newproductDataBase.execSQL("delete from goodsNorm");
-        newproductDataBase.execSQL("delete from goodsPic");
         dbHelper.close();
-        SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
-        sp.edit().clear();
+
     }
+
+
 }
