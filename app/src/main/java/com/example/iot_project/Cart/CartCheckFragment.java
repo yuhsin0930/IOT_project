@@ -1,16 +1,22 @@
 package com.example.iot_project.Cart;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iot_project.R;
 
@@ -65,6 +71,7 @@ public class CartCheckFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,13 +87,39 @@ public class CartCheckFragment extends Fragment {
             }
         });
 
-        textViewCheckout.setOnClickListener(new View.OnClickListener() {
+        textViewCheckout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                cartActivity.showDoneFragment();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        textViewCheckout.setBackgroundColor(Color.parseColor("#FF6060"));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Dialog dialogCartBodyDelete = new Dialog(getContext());
+                        dialogCartBodyDelete.setContentView(R.layout.dialog_cart_check);
+                        TextView textViewYes = (TextView) dialogCartBodyDelete.findViewById(R.id.textView_dialog_cart_body_yes);
+                        TextView textViewCancel = (TextView) dialogCartBodyDelete.findViewById(R.id.textView_dialog_cart_body_cancel);
+                        textViewCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogCartBodyDelete.dismiss();
+                            }
+                        });
+                        textViewYes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                cartActivity.showDoneFragment();
+                                Toast.makeText(getContext(), "恭喜，完成訂單!", Toast.LENGTH_SHORT).show();
+                                dialogCartBodyDelete.dismiss();
+                            }
+                        });
+                        dialogCartBodyDelete.show();
+                        dialogCartBodyDelete.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        break;
+                }
+                return true;
             }
         });
-
 
         return view;
     }

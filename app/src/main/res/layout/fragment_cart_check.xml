@@ -11,20 +11,19 @@
     <RelativeLayout
         android:id="@+id/RelaitiveLayout_bar"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="#FFFFFF"
+        android:layout_height="50dp"
+        android:background="@color/Mycolor_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ImageView_Cart_back"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="56dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginHorizontal="16dp"
-            app:srcCompat="@drawable/orangebackarrow" />
+            app:srcCompat="@drawable/outline_arrow_back_white_48" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,11 +31,27 @@
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="56dp"
             android:text="結帳"
+            android:textColor="@color/white"
             android:textSize="22dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:background="@drawable/cart_view_color_8up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RelaitiveLayout_bar" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:background="@drawable/cart_view_color_8"
+        app:layout_constraintBottom_toTopOf="@id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

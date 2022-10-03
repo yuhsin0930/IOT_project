@@ -5,13 +5,13 @@
     android:id="@+id/frameLayout_shoppingCartAllProduct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F1F1"
     tools:context=".Cart.CartAllProductFragment">
 
     <ScrollView
         android:id="@+id/scrollView6"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#F1F1F1"
         app:layout_constraintBottom_toTopOf="@+id/linaerLayout_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -55,45 +55,45 @@
                 android:id="@+id/imageView2"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="12dp"
                 android:alpha="0.6"
-                android:src="@drawable/outline_local_activity_black_18" />
+                android:src="@drawable/outline_local_activity_black_18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView_greenpoint"
                 android:layout_width="11dp"
                 android:layout_height="11dp"
-                android:layout_marginBottom="-10dp"
                 android:layout_marginStart="-5dp"
+                android:layout_marginBottom="-10dp"
                 android:src="@drawable/greenpoint"
-                app:layout_constraintStart_toEndOf="@id/imageView_redpoint"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/imageView2"
-                android:visibility="gone" />
+                app:layout_constraintStart_toEndOf="@id/imageView_redpoint" />
 
             <ImageView
                 android:id="@+id/imageView_redpoint"
                 android:layout_width="11dp"
                 android:layout_height="11dp"
-                android:src="@drawable/redpoint"
                 android:layout_marginStart="-8dp"
                 android:layout_marginBottom="-10dp"
-                app:layout_constraintStart_toEndOf="@id/imageView2"
+                android:src="@drawable/redpoint"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/imageView2"
-                android:visibility="gone" />
+                app:layout_constraintStart_toEndOf="@id/imageView2" />
 
             <TextView
                 android:id="@+id/textView137"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageView2"
                 android:layout_marginStart="10dp"
                 android:text="優惠券"
-                android:textColor="@color/font_color" />
+                android:textColor="@color/font_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
@@ -173,7 +173,7 @@
                 android:layout_height="50dp"
                 android:background="@color/Mycolor_1"
                 android:gravity="center"
-                android:paddingHorizontal="14dp"
+                android:paddingHorizontal="24dp"
                 android:text="去買單 (0)"
                 android:textColor="@color/white"
                 android:textStyle="bold"
