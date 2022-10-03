@@ -12,8 +12,10 @@ public class CartActivity extends AppCompatActivity {
     private FragmentManager fragmentMgr;
     private CartFragment cartFragment;
     private CartCouponAndShippingFragment cartCouponAndShippingFragment;
-    private boolean isCouponShow;
+    private boolean isCouponShow, isDoneShow;
     private int i;
+    private CartCheckFragment cartCheckFragment;
+    private CartDoneFragment cartDoneFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class CartActivity extends AppCompatActivity {
         setWindow();
         setFragment();
         isCouponShow = false;
+        isDoneShow = false;
         i = 2;
 
     }
@@ -75,8 +78,33 @@ public class CartActivity extends AppCompatActivity {
         isCouponShow = true;
     }
 
+    public void showCheckFragment() {
+            cartCheckFragment = new CartCheckFragment();
+            fragmentMgr.beginTransaction()
+                    .setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_right)
+                    .add(R.id.FrameLayout_Cart, cartCheckFragment, "cartCheckFragment")
+                    .addToBackStack("")
+                    .commit();
+
+    }
+
+    public void showDoneFragment() {
+        cartDoneFragment = new CartDoneFragment();
+        fragmentMgr.beginTransaction()
+                .setCustomAnimations(R.anim.trans_in_from_right, R.anim.no_anim, R.anim.no_anim, R.anim.trans_out_to_right)
+                .add(R.id.FrameLayout_Cart, cartDoneFragment, "cartDoneFragment")
+                .addToBackStack("")
+                .commit();
+        isDoneShow = true;
+
+    }
+
     @Override
     public void onBackPressed() {
+
+        if (isDoneShow) finish();
+
+
         if (isCouponShow) {
             fragmentMgr.beginTransaction()
                     .setCustomAnimations(R.anim.no_anim, R.anim.trans_out_to_bottom)

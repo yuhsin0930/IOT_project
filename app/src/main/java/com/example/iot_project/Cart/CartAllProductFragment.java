@@ -373,7 +373,7 @@ public class CartAllProductFragment extends Fragment {
                         if (allSum < 1) {
                             Toast.makeText(getContext(), "請至少選取一項商品", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "去買單", Toast.LENGTH_SHORT).show();
+                            cartActivity.showCheckFragment();
                         }
                         break;
                 }
