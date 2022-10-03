@@ -21,15 +21,19 @@
         <entry key="..\:/2022Q1/Android/project/IOT_project/app/src/main/res/layout/sales_record_shipped_pagers.xml" value="0.3536458333333333" />
         <entry key="..\:/2022Q1/Android/project/IOT_project/app/src/main/res/layout/sales_record_to_be_shipped_pagers.xml" value="0.3536458333333333" />
         <entry key="..\:/2022Q1/Android/project/IOT_project/app/src/main/res/layout/to_be_shipped_pagers.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable-v24/cart_view_color_8top.xml" value="0.164" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1355" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/cart_allproduct_textview_border_shipping.xml" value="0.164" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/cart_coupon_background_corner.xml" value="0.164" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/cart_view_color_8.xml" value="0.164" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/cart_view_color_8up.xml" value="0.164" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/checkbox_border.xml" value="0.1535" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/dialog_background_corner.xml" value="0.1355" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/dialog_cart_background_corner.xml" value="0.1535" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/drawable/member_mypic_shape.xml" value="0.1065" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_bank_account.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_become_seller.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_cart.xml" value="0.10364583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_main.xml" value="0.1935185185185185" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_member.xml" value="0.25" />
@@ -39,15 +43,32 @@
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/activity_seller_store.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/cardview_goods.xml" value="0.14629629629629629" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/cardview_member_goods.xml" value="0.4" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/cardview_member_orders.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/checkbox_cart.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/content_logout.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/county_listview_items.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/delete_product_dialog.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_become_seller_now.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_cart_check.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_cart_itembody_delete.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_check.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_register.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_register_save.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/dialog_success_become_seller.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_admin_member.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_admin_product.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_admin_seller.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart.xml" value="0.264" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_all_product.xml" value="0.4" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_check.xml" value="0.264" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_check_card.xml" value="0.4" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_coupon.xml" value="0.264" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_coupon_item.xml" value="0.4" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_done.xml" value="0.264" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_free_shipping_item.xml" value="0.4" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_item_body.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_item_footer.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_cart_item_head.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_listview.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.4" />
         <entry key="..\:/Users/Saul/Desktop/IOT_20220308/ANDROID/IOT_project/app/src/main/res/layout/fragment_member_coupon.xml" value="0.24114583333333334" />
@@ -73,7 +94,6 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_choose_citizen.xml" value="0.175" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_choose_seller_area.xml" value="0.3390625" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_choose_seller_county.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_edit_store.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_main.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_member.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/activity_my_product.xml" value="0.3536458333333333" />
@@ -95,10 +115,8 @@
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/cardview_member_orders.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_buy_again.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_member.xml" value="0.190625" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_member_orders_detailed_item.xml" value="0.178125" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_new_picture.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_completed.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_detail.xml" value="0.5" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_return.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_order_shipped.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/YUHSIN/Desktop/Android/project/IOT_project/app/src/main/res/layout/fragment_picture.xml" value="0.1828125" />

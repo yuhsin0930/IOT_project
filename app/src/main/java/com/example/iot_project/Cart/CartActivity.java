@@ -1,6 +1,7 @@
 package com.example.iot_project.Cart;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -32,10 +33,10 @@ public class CartActivity extends AppCompatActivity {
 
     private void setWindow() {
         getSupportActionBar().hide();                   // 隱藏ActionBar
-        getWindow().setStatusBarColor(0xffffffff);      // 最上面StatusBar白色底
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.Mycolor_1));      // 最上面StatusBar白色底
         getWindow().setNavigationBarColor(0xaaffffff);  // 最下面NavigationBar白色底
         getWindow().getDecorView()                      // 上面字設黑 | 下面虛擬按鈕深色
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
     private void setFragment() {
@@ -102,7 +103,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (isDoneShow) finish();
+//        if (isDoneShow) finish();
 
 
         if (isCouponShow) {
