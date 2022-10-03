@@ -28,10 +28,10 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
     public MainViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);//每次開啟都會建立一次，從背景回來也會進入
         Listfrag = new ArrayList<>();
-        Listfrag.add(new MainTab1Fragment());
-        Listfrag.add(new MainTab2Fragment());
-        Listfrag.add(new MainTab3Fragment());
-        Listfrag.add(new MainTab4Fragment());
+        Listfrag.add(MainTab1Fragment.newInstance("美食伴手禮",""));
+        Listfrag.add(MainTab1Fragment.newInstance("最新商品",""));
+        Listfrag.add(MainTab1Fragment.newInstance("熱賣商品",""));
+        Listfrag.add(MainTab1Fragment.newInstance("文創商品",""));
 
     }
 

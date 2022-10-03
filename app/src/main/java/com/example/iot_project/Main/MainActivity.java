@@ -20,6 +20,7 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import com.example.iot_project.Admin.AdminLoginActivity;
 import com.example.iot_project.LoginActivity;
 import com.example.iot_project.Member;
 import com.example.iot_project.R;
+import com.example.iot_project.SearchResultsActivity;
 import com.example.iot_project.Seller;
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private BottomNavigationView bottomNavigationView;
     private NavigationBarView.OnItemSelectedListener bottmNaviListener;
+    private ImageButton imageButtonSearch;
+    private EditText editTextSearch;
 
 
     @Override
@@ -140,20 +144,33 @@ public class MainActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("Tab 1");
+                        tab.setText("美食伴手禮");
                         break;
                     case 1:
-                        tab.setText("Tab 2");
+                        tab.setText("最新商品");
                         break;
                     case 2:
-                        tab.setText("Tab 3");
+                        tab.setText("熱賣商品");
                         break;
                     case 3:
-                        tab.setText("Tab 4");
+                        tab.setText("文創商品");
                         break;
                 }
             }
         }).attach();
+
+//      imageButton Search 搜尋功能
+        editTextSearch = (EditText) findViewById(R.id.editText_main_search);
+        imageButtonSearch = (ImageButton) findViewById(R.id.imageButton_main_search);
+        imageButtonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchStr = editTextSearch.getText().toString();
+                Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+                intent.putExtra("keyword",searchStr);
+                startActivity(intent);
+            }
+        });
 
 //      set button with Login status
         setButton(isLogin());
