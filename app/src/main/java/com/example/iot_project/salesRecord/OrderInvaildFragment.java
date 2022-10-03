@@ -422,11 +422,11 @@ public class OrderInvaildFragment extends Fragment {
     }
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        //      移除Fragment時，一並移除FireBase存取資料的監聽
-        dataRef.removeEventListener(ordersListener);
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        //      移除Fragment時，一並移除FireBase存取資料的監聽
+//        dataRef.removeEventListener(ordersListener);
+//    }
 }
 

@@ -140,6 +140,8 @@ public class SetPriceActivity extends AppCompatActivity {
                 dbHelper.close();
                 Intent intent = new Intent(SetPriceActivity.this, NewProductActivity.class);
                 intent.putExtra("inventory",inventory);
+                SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
+                sp.edit().putInt("inventory",inventory).commit();
                 startActivity(intent);
             }
         });
