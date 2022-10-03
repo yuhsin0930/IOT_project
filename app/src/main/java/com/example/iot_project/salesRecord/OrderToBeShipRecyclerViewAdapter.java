@@ -101,7 +101,7 @@ public class OrderToBeShipRecyclerViewAdapter extends RecyclerView.Adapter<Order
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 //                              進入orders資料表
                     dataRef = database.getReference("orders");
-//                              製作需要更新的資料 : 訂單狀態(orderStatus) 改成 "不成立"
+//                              製作需要更新的資料 : 訂單狀態(orderStatus) 改成 "已出貨"
                     Map<String,Object> mapStatus = new HashMap<>();
                     mapStatus.put("orderStatus","已出貨");
 //                              update :  訂單編號(orders_id)為orderNum 的訂單狀態(orderStatus) 改成 "已出貨"

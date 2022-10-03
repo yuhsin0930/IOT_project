@@ -94,31 +94,7 @@ public class OrderToBeShipFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_order_to_be_ship, container, false);
-
-//        List<Map<String, Object>> orderList = new ArrayList<>();
-//        Map<String, Object> orderMap = new HashMap<>();
-//        for (int i = 0; i < 5; i++) {
-//
-//            orderMap.put("orderNum", "F123456789");
-//            orderMap.put("productName", "耳機");
-//            orderMap.put("productNum", 2);
-//            orderMap.put("productPrice", 200);
-//            orderMap.put("allProductNum", 2);
-//            orderMap.put("totalPrice", 400);
-//            orderList.add(orderMap);
-//        }
-
         recyclerViewOrderToBeShip = (RecyclerView) v.findViewById(R.id.orderToBeShip_recycleView);
-//      set the LayoutManager and Adapter of RecuclerView
-//      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
-//      LinearLayoutManager.VERTICAL 直向
-
-//        salesLayoutManager = new LinearLayoutManager(salesRecordActivity, LinearLayoutManager
-//                .VERTICAL, false);
-//        recyclerViewOrderToBeShip = (RecyclerView) v.findViewById(R.id.orderToBeShip_recycleView);
-//        recyclerViewOrderToBeShip.setLayoutManager(salesLayoutManager);
-//        OrderRecyclerAdapter = new OrderToBeShipRecyclerViewAdapter(salesRecordActivity, listData);
-//        recyclerViewOrderToBeShip.setAdapter(OrderRecyclerAdapter);
         return v;
     }
 
@@ -392,6 +368,10 @@ public class OrderToBeShipFragment extends Fragment {
 //                                                        ----------------------------------------------
 //                                                        listData
 //                                                        在這裡的 listData 就是最終資料
+
+                                                        //      set the LayoutManager and Adapter of RecuclerView
+                                                        //      LinearLayoutManager : reverseLayout = false，會按資料順序顯示，true則反轉資料顯示順序
+                                                        //      LinearLayoutManager.VERTICAL 直向
 
                                                         salesLayoutManager = new LinearLayoutManager(salesRecordActivity, LinearLayoutManager
                                                                 .VERTICAL, false);
