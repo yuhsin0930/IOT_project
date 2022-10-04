@@ -115,8 +115,8 @@
 
                 <ImageButton
                     android:id="@+id/imageButton_main_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_weight="0.2"
                     android:backgroundTint="@color/Mycolor_4"
