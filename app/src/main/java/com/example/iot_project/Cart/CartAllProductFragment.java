@@ -1,7 +1,10 @@
 package com.example.iot_project.Cart;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -24,6 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.iot_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +60,9 @@ public class CartAllProductFragment extends Fragment {
     private boolean hasCouponChoose, hasShippingChoose;
     private AlphaAnimation alphaAnimation;
     private double discount_MCL = 1;
+    private DatabaseReference fireRef;
+    private ValueEventListener fireListener;
+    private List<Map<String, String>> fireList;
 
     public CartAllProductFragment() {}
 
@@ -300,45 +311,196 @@ public class CartAllProductFragment extends Fragment {
     // 模擬訂單
     public void makeCard() {
 
-        // 預計用訂單單號創 屬於這個買家選取 再以賣家分組
-        fragmentTrans = fragmentMgr.beginTransaction();
-        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 0);
-        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 0);
-        fragmentTrans.commit();
+        /*
+            購物車實現構思
 
-        for (int i = 0; i < 2; i++) {
+            一進這頁這方法，就搜尋以下
+
+            "SELECT goods_id, sum FROM sum WHERE member_id = 'SP中的ID' AND order_id != null;
+            取出商品id 與 數量  這裡可能會有好幾組
+
+            "SELECT * FROM goods WHERE goods_id = '商品id';"
+
+            現在有 "商品資訊???" "商品id" "商品賣家" "商品勾選數量" 就可以做出購物車的樣子了
+            主要要先做出一種可以forLoop的型態
+            先判斷相同賣家就共用head跟footer
+            在將Map(包含預計購買數量)丟進子fragment
+            用這數值賦予子fragment中的變數真實意義
+
+            %%%%%%%% 再用賣家id去找 賣場名稱 在 "SELECT storeName FROM seller WHERE seller_id = xxxx"
+            %%%%%%%% 價格在 goodsNorm 怕是總數浮動價子fragment在搜 "SELECT storeName FROM goodsNorm WHERE goodsNorm_id = goods_id"
+
+            將以上搜尋的Map加入Map.put("sum", sum)放進List做以下Loop
+            List<MAP<String, Object>> list = new ArrayList()<>;
+
+
+            list.add(map);
+
+            while (list.size > 0) {
+
+                int seller_idTemp = list.get(0).get("seller_id");    // 將第一位的賣家取出當參考
+
+                fragmentTrans = fragmentMgr.beginTransaction();
+                cartItemHeadFragment = CartItemHeadFragment.newInstance(seller_idTemp);
+                fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "" + seller_idTemp);
+                fragmentTrans.commit();
+
+
+
+                fragmentTrans = fragmentMgr.beginTransaction();
+                for (int i = 0; i < list.size; i++) {
+                    Map map = (Map)list.get(i);
+                    if (map.get("seller_id") == seller_idTemp) {
+                        cartItemBodyFragment = CartItemBodyFragment.newInstance(map);
+                        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, map.get("goods_id").toString);
+                        fragmentList.add(cartItemBodyFragment); // ?? 再看看有需要嗎
+                        list.remove(i--);
+                    }
+                }
+                fragmentTrans.commit();
+
+
+
+                fragmentTrans = fragmentMgr.beginTransaction();
+                cartItemFooterFragment = new CartItemFooterFragment();
+                fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "" + seller_idTemp);
+                fragmentTrans.commit();
+
+            }
+
+         */
+
+
+/*
+        // 商品在 NewProductActivity 第305行存入
+        GoodInfoMap.put("seller_id",seller_id);
+        GoodInfoMap.put("goods_name",gName);
+        GoodInfoMap.put("info",info);
+        GoodInfoMap.put("packageLength",packageLength);
+        GoodInfoMap.put("packageWidth",packageWidth);
+        GoodInfoMap.put("packageHeight",packageHeight);
+        GoodInfoMap.put("inventory",productNum);
+        GoodInfoMap.put("seven",seven);
+        GoodInfoMap.put("familyMart",familyMart);
+        GoodInfoMap.put("postOffice",postOffice);
+        GoodInfoMap.put("blackCat",blackCat);
+        GoodInfoMap.put("sevenFee",sevenFee);
+        GoodInfoMap.put("familyMartFee",familyMartFee);
+        GoodInfoMap.put("postOfficeFee",postOfficeFee);
+        GoodInfoMap.put("blackCatFee",blackCatFee);
+        GoodInfoMap.put("gState",gState);
+        GoodInfoMap.put("createTime",createTime);
+*/
+
+        SharedPreferences sp = cartActivity.getSharedPreferences("LoginInformation", MODE_PRIVATE);
+        String memberId = sp.getString("member_id", "0");
+
+        // 真實這段要只搜member選過的商品
+
+        // 先假設試試這買家加入了全站商品
+        fireList = new ArrayList<>();
+        FirebaseDatabase firebase = FirebaseDatabase.getInstance();
+        fireRef = firebase.getReference("goods");
+        fireListener = fireRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot goods : snapshot.getChildren()) {
+                        String goodsKey = goods.getKey();                                       // 商品id
+                        Log.d("cart", "goods.getValue() = " + goods.getValue());
+                        Map<String, String> goodsMap = (Map<String, String>) goods.getValue();  // 商品Map
+                        goodsMap.put("goodsKey", goodsKey);
+                        Log.d("cart", "goodsMap = " + goodsMap);
+                        fireList.add(goodsMap);
+                    }
+                    makeFragmentByFirebase(fireList);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        // 預計用訂單單號創 屬於這個買家選取 再以賣家分組
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 0);
+//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 0);
+//        fragmentTrans.commit();
+//
+//        for (int i = 0; i < 2; i++) {
+//            fragmentTrans = fragmentMgr.beginTransaction();
+//            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
+//            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
+//            fragmentTrans.commit();
+//            fragmentList.add(cartItemBodyFragment);
+//        }
+//
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        cartItemFooterFragment = new CartItemFooterFragment();
+//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 0);
+//        fragmentTrans.commit();
+//
+//// ------------------------------------------- 模擬兩張訂單
+//
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 1);
+//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 1);
+//        fragmentTrans.commit();
+//
+//        for (int i = 2; i < 4; i++) {
+//            fragmentTrans = fragmentMgr.beginTransaction();
+//            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
+//            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
+//            fragmentTrans.commit();
+//            fragmentList.add(cartItemBodyFragment);
+//        }
+//
+//        fragmentTrans = fragmentMgr.beginTransaction();
+//        cartItemFooterFragment = new CartItemFooterFragment();
+//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 1);
+//        fragmentTrans.commit();
+
+    }
+
+    private void makeFragmentByFirebase(List fireList) {
+        while (fireList.size() > 0) {
+            String seller_idTemp = ((Map) fireList.get(0)).get("seller_id").toString(); // 將第一位的賣家取出當參考
+
             fragmentTrans = fragmentMgr.beginTransaction();
-            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
-            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
+            cartItemHeadFragment = CartItemHeadFragment.newInstance(seller_idTemp);
+            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, seller_idTemp);
             fragmentTrans.commit();
-            fragmentList.add(cartItemBodyFragment);
-        }
 
-        fragmentTrans = fragmentMgr.beginTransaction();
-        cartItemFooterFragment = new CartItemFooterFragment();
-        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 0);
-        fragmentTrans.commit();
-
-// ------------------------------------------- 模擬兩張訂單
-
-        fragmentTrans = fragmentMgr.beginTransaction();
-        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 1);
-        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 1);
-        fragmentTrans.commit();
-
-        for (int i = 2; i < 4; i++) {
             fragmentTrans = fragmentMgr.beginTransaction();
-            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
-            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
+            for (int i = 0; i < fireList.size(); i++) {
+                Map map = (Map)fireList.get(i);
+                if (map.get("seller_id").toString().equals(seller_idTemp)) {
+                    cartItemBodyFragment = CartItemBodyFragment.newInstance((HashMap)map);
+                    fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, map.get("goodsKey").toString());
+                    fragmentList.add(cartItemBodyFragment); // ?? 再看看有需要嗎
+                    fireList.remove(i--);
+                }
+            }
             fragmentTrans.commit();
-            fragmentList.add(cartItemBodyFragment);
+
+            fragmentTrans = fragmentMgr.beginTransaction();
+            cartItemFooterFragment = new CartItemFooterFragment();
+            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "" + seller_idTemp);
+            fragmentTrans.commit();
         }
-
-        fragmentTrans = fragmentMgr.beginTransaction();
-        cartItemFooterFragment = new CartItemFooterFragment();
-        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 1);
-        fragmentTrans.commit();
-
     }
 
     @SuppressLint("ClickableViewAccessibility")

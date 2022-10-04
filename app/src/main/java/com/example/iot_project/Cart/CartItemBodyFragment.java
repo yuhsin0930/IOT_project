@@ -3,10 +3,14 @@ package com.example.iot_project.Cart;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,7 +22,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iot_project.Main.MainRecyclerAdapter;
 import com.example.iot_project.R;
+import com.example.iot_project.Seller;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,13 +58,15 @@ public class CartItemBodyFragment extends Fragment {
     private CartAllProductFragment cartAllProductFragment;
     private ImageView imageViewPicture;
     private TextView textViewGoodsName;
+    private Map hashMap;
+    private DatabaseReference fireRef;
 
     public CartItemBodyFragment() {}
 
-    public static CartItemBodyFragment newInstance(String tag) {
+    public static CartItemBodyFragment newInstance(HashMap goodMap) {
         CartItemBodyFragment fragment = new CartItemBodyFragment();
         Bundle args = new Bundle();
-        args.putString("tag", tag);
+        args.putSerializable("goodMap", goodMap);
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,14 +110,105 @@ public class CartItemBodyFragment extends Fragment {
 
 
         isExist = true;
-        tag = getArguments().getString("tag");
+//        tag = getArguments().getString("tag");
+        hashMap = (HashMap) getArguments().getSerializable("goodMap");
+
+//
+//        //seller.storeName 取出賣場名稱
+//        dataRef.child("seller").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.d("goodsList", "[4]goodsList=" + goodsList);
+//
+//                for (DataSnapshot d : snapshot.getChildren()) {
+//                    Seller sellerData = d.getValue(Seller.class);
+//                    String Id = sellerData.getSeller_id();
+//
+//                    if(goodsMap.get("storeName")!=null) break;
+//                    if (Id.equals(seller_id)) {
+//                        String storeName = sellerData.getStoreName();
+//                        goodsMap.put("storeName", storeName);
+//                        Log.d("main", "storeName=" + storeName);
+//
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        //(goods.goods_name && goods.seller_id)
+//        //goodsNorm.price
+//        dataRef.child("goodsNorm").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot d2 : snapshot.getChildren()) {
+//                    Log.d("main","[d2]snapshot.getChildrenCount="+snapshot.getChildrenCount());
+//                    Map<String, Object> goodsNormData = (HashMap<String, Object>) d2.getValue();
+//                    String name = goodsNormData.get("goods_name").toString();
+//                    String sellerId = goodsNormData.get("seller_id").toString();
+//
+//                    if(goodsMap.get("price")!=null) break;
+//
+//                    if (sellerId.equals(seller_id) && name.equals(goods_name)) {
+//                        String price = goodsNormData.get("price").toString();
+//                        goodsMap.put("price", price);
+//                        Log.d("main", "price=" + price);
+//                        break;
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+        //goodsPic.goodsPicture
+        FirebaseDatabase firebase = FirebaseDatabase.getInstance();
+        fireRef = firebase.getReference("goodsPic");
+        Log.d("cart", "ccccccccccccccccccccccccccc");
+        fireRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("cart", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+                for (DataSnapshot d3 : snapshot.getChildren()) {
+                    Log.d("main","[d3]snapshot.getChildrenCount="+snapshot.getChildrenCount());
+                    Map<String, Object> goodsPicData = (HashMap<String, Object>) d3.getValue();
+                    String name = goodsPicData.get("goods_name").toString();
+                    String sellerId = goodsPicData.get("seller_id").toString();
+//                    if(goodsMap.get("goodsPicture")!=null) break;
+                    if (sellerId.equals(hashMap.get("seller_id").toString()) && name.equals(hashMap.get("goods_name").toString())) {
+                        Log.d("cart", "aaaaaaaaaaaaaaaaaaaaaa");
+                        String goodsPicture = goodsPicData.get("goodsPicture").toString();
+                        byte[] decodedString = Base64.decode(goodsPicture, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        imageViewPicture.setImageBitmap(decodedByte);
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+
+
+
+
         sum = 1;
         insideMap = new HashMap<>();
         textViewGoodsSum.setText(String.valueOf(sum));
         checkBoxFlag = false;
         price = "40";
-        textViewGoodsPrice.setText(price);
 
+        textViewGoodsPrice.setText(price);
 
         imageViewPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,7 +317,7 @@ public class CartItemBodyFragment extends Fragment {
             }
         });
 
-        makeAndSendInsideMap();
+//        makeAndSendInsideMap();
         return view;
     }
 
