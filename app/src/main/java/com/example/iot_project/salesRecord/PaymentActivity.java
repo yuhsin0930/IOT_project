@@ -29,6 +29,7 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         setWindow();
+        onBackPressed();
         imageView_payment_back = (ImageView)findViewById(R.id.imageView_payment_back);
         listView_payment = (ListView) findViewById(R.id.listView_payment);
         List<Map<String,Object>> paymentList= new ArrayList<>();
@@ -61,6 +62,10 @@ public class PaymentActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 
     //---------------------------------------------------------------------------------------------

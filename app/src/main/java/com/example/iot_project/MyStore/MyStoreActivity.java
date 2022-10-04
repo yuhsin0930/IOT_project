@@ -19,6 +19,7 @@ import com.example.iot_project.Member;
 import com.example.iot_project.MyProduct.MyProductActivity;
 import com.example.iot_project.R;
 import com.example.iot_project.Seller;
+import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.salesRecord.PaymentActivity;
 import com.example.iot_project.salesRecord.SalesRecordActivity;
 import com.example.iot_project.sellerStore.SellerStoreActivity;
@@ -45,12 +46,14 @@ public class MyStoreActivity extends AppCompatActivity {
     private DatabaseReference dataRef;
     private ValueEventListener ordersEventListner;
     private Map<String, Object> SellerMap;
+    private TextView textView_memberCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_store);
         setWindow();
+        onBackPressed();
         imageView_myPicture = (ImageView) findViewById(R.id.imageView_myStore_picture);
         textViewMyStore_name = (TextView) findViewById(R.id.textView_myStore_name);
         textViewMyStore_account = (TextView) findViewById(R.id.textView_myStore_account);
@@ -61,6 +64,7 @@ public class MyStoreActivity extends AppCompatActivity {
         textViewMyStore_myProduct = (TextView) findViewById(R.id.textView_myStore_myProduct);
         textViewMyStore_payment = (TextView) findViewById(R.id.textView_myStore_payment);
         textView_myStore_checkStore = (TextView) findViewById(R.id.textView_myStore_checkStore);
+        textView_memberCenter = (TextView)findViewById(R.id.textView_memberCenter);
 
         button_myStore_editStore = (Button) findViewById(R.id.button_myStore_editStore);
 
@@ -109,6 +113,14 @@ public class MyStoreActivity extends AppCompatActivity {
             }
         });
 
+        textView_memberCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyStoreActivity.this, MemberActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void setWindow() {
@@ -120,6 +132,10 @@ public class MyStoreActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 
     @Override
@@ -223,10 +239,11 @@ public class MyStoreActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //      移除Activity時，一並移除FireBase存取資料的監聽
-        dataRef.removeEventListener(ordersEventListner);
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        //      移除Activity時，一並移除FireBase存取資料的監聽
+//        dataRef.removeEventListener(ordersEventListner);
+//    }
+
 }
