@@ -475,7 +475,6 @@ public class NewProductActivity extends AppCompatActivity {
                     sp.edit().clear().commit();
                     Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
                     startActivity(intent);
-
                 }
             }
 
