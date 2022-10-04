@@ -459,6 +459,7 @@ public class NewProductActivity extends AppCompatActivity {
                 newproductDataBase.execSQL("DELETE FROM goodsNorm");
                 newproductDataBase.execSQL("DELETE FROM goodsPic");
                 newproductDataBase.close();
+                dbHelper.close();
                 SharedPreferences sp = getSharedPreferences("newProduct",MODE_PRIVATE);
                 sp.edit().clear().commit();
                 Intent intent = new Intent(NewProductActivity.this, MyProductActivity.class);
@@ -490,13 +491,5 @@ public class NewProductActivity extends AppCompatActivity {
 //        dataref.child("user").push().child("member").setValue(fireMap); // nested structur is hard to query
         dataref.child(tableName).push().setValue(map);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dbHelper.close();
-
-    }
-
 
 }
