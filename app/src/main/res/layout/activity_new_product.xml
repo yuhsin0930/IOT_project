@@ -157,7 +157,7 @@
 
                 <TextView
                     android:id="@+id/textView_newProduct_Describe"
-                    android:layout_width="30dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
@@ -189,7 +189,7 @@
 
                 <TextView
                     android:id="@+id/textView_newProduct_Classification"
-                    android:layout_width="30dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
@@ -285,7 +285,7 @@
 
                 <TextView
                     android:id="@+id/textView_newProduct_shippiingFee"
-                    android:layout_width="30dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
