@@ -37,6 +37,9 @@ public class AdminProductActivity extends AppCompatActivity {
     private EditText editTextViewType,editTextPrice;
     private String seller_id;
     private Button buttonDelete2;
+    private EditText editTextProductId;
+    private EditText editTextCreateTime,editTextProductName,editTextInfor,editTextVolume;
+    private EditText editTextInventory,editText711,editTextFamilymart,editTextPostoffice,editTextBlackCat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +56,71 @@ public class AdminProductActivity extends AppCompatActivity {
         editTextPrice = (EditText) findViewById(R.id.editText_admin_product_price);
 
         Intent intent = getIntent();
+        String goods_id =intent.getStringExtra("goods_Id");
+        seller_id =intent.getStringExtra("seller_id");
+        String goods_name =intent.getStringExtra("goods_name");
+        String info =intent.getStringExtra("info");
+
+        String  packageWidth =intent.getStringExtra("packageWidth");
+        String  packageLength =intent.getStringExtra("packageLength");
+        String  packageHeight =intent.getStringExtra("packageHeight");
+
+        String inventory =intent.getStringExtra("inventory");
+        String seven =intent.getStringExtra("seven");
+        String familyMart  =intent.getStringExtra("familyMart");
+        String postOffice =intent.getStringExtra("postOffice");
+        String blackCat  =intent.getStringExtra("blackCat");
+
+        String createTime =intent.getStringExtra("createTime");
+
+//      取得editText元件
+        editTextProductId = (EditText) findViewById(R.id.editText_admin_product_id);
+        editTextCreateTime = (EditText) findViewById(R.id.editText_admin_product_createTime);
+        editTextProductName = (EditText) findViewById(R.id.editText_admin_product_productname);
+        editTextInfor = (EditText) findViewById(R.id.editText_admin_product_info);
+        editTextVolume = (EditText) findViewById(R.id.editText_admin_product_volume);
+        editTextInventory = (EditText) findViewById(R.id.editText_admin_product_inventory);
+        editText711 = (EditText) findViewById(R.id.editText_admin_product_711);
+        editTextFamilymart = (EditText) findViewById(R.id.editText_admin_product_familymart);
+        editTextPostoffice = (EditText) findViewById(R.id.editText_admin_product_postoffice);
+        editTextBlackCat = (EditText) findViewById(R.id.editText_admin_product_blackcat);
+
+
+
+//      editText 放入對應的會員資料
+        editTextProductId.setText(goods_id);
+        editTextCreateTime.setText(createTime);
+        editTextProductName.setText(goods_name);
+        editTextInfor.setText(info);
+        editTextVolume.setText(packageLength+"*");
+        editTextVolume.append(packageWidth+"*");
+        editTextVolume.append(packageHeight+"(長*寬*高)");
+
+        editTextInventory.setText(inventory);
+        editText711.setText(isDelivery(seven));
+        editTextFamilymart.setText(isDelivery(familyMart));
+        editTextPostoffice.setText(isDelivery(postOffice));
+        editTextBlackCat.setText(isDelivery(blackCat));
+
+
+//       disable ediText
+        editTextProductId.setEnabled(false);
+        editTextCreateTime.setEnabled(false);
+        editTextProductName.setEnabled(false);
+        editTextInfor.setEnabled(false);
+        editTextVolume.setEnabled(false);
+        editTextInventory.setEnabled(false);
+        editText711.setEnabled(false);
+        editTextFamilymart.setEnabled(false);
+        editTextPostoffice.setEnabled(false);
+        editTextBlackCat.setEnabled(false);
+        editTextViewType.setEnabled(false);
+        editTextPrice.setEnabled(false);
+
 //      取得商品id
-        String goods_id = intent.getStringExtra("goods_Id");
+//        String goods_id = intent.getStringExtra("goods_Id");
 //        取得商品名稱
-        String goods_name = intent.getStringExtra("goods_name");
+//        String goods_name = intent.getStringExtra("goods_name");
 
 //        取得賣家ID
         seller_id = intent.getStringExtra("seller_id");
@@ -250,5 +314,18 @@ public class AdminProductActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String isDelivery(String deliveryWay){
+        String str="";
+        switch (deliveryWay){
+            case "0":
+                str="不適用";
+                break;
+            case "1":
+                str="適用";
+                break;
+        }
+        return str;
     }
 }

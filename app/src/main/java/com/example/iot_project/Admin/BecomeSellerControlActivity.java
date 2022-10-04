@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.iot_project.R;
@@ -25,13 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class BecomeSellerControlActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Button buttonDisagree;
     private Button buttonAgree;
+    private EditText editTextSellerId,editTextCreateTime,editTextName,editTextStoreName,editTextCountry;
+    private EditText editTextIDNumber,editTextBirthday,editTextCity,editTextCounty,editTextBankAccount,editTextBankNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,62 @@ public class BecomeSellerControlActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         //      取得圖片以外的會員資料
         Intent intent = getIntent();
+
+        String seller_id =intent.getStringExtra("seller_Id");
+        String storeName =intent.getStringExtra("storeName");
+        String sCountry =intent.getStringExtra("sCountry");
+        String sName =intent.getStringExtra("sName");
+        String sBirthday =intent.getStringExtra("sBirthday");
+        String IDNumber =intent.getStringExtra("IDNumber");
+        String sCity =intent.getStringExtra("sCity");
+        String district =intent.getStringExtra("district");
+//        String sState =intent.getStringExtra("sState");
+        String bankNumber =intent.getStringExtra("bankNumber");
+        String bankAccount =intent.getStringExtra("bankAccount");
+        String createTime =intent.getStringExtra("createTime");
+
+//      取得editText元件
+        editTextSellerId = (EditText) findViewById(R.id.editText_admin_member_id);
+        editTextCreateTime = (EditText) findViewById(R.id.editText_admin_member_createTime);
+        editTextName = (EditText) findViewById(R.id.editText_admin_member_name);
+        editTextStoreName = (EditText) findViewById(R.id.editText_admin_member_accountname);
+        editTextCountry = (EditText) findViewById(R.id.editText_admin_member_password);
+
+        editTextIDNumber = (EditText) findViewById(R.id.editText_admin_becomseller_IDnumber);
+        editTextBirthday = (EditText) findViewById(R.id.editText_admin_becomeseller_birthday);
+        editTextCity = (EditText) findViewById(R.id.editText_admin_becomeseller_city);
+        editTextCounty = (EditText) findViewById(R.id.editText_admin_becomeseller_county);
+        editTextBankAccount = (EditText) findViewById(R.id.editText_admin_becomeselelr_bankAccount);
+        editTextBankNumber = (EditText) findViewById(R.id.editText_admin_becomeselelr_bankNumber);
+
+
+//      editText 放入對應的會員資料
+        editTextSellerId.setText(seller_id);
+        editTextCreateTime.setText(createTime);
+        editTextName.setText(sName);
+        editTextStoreName.setText(storeName);
+        editTextCountry.setText(sCountry);
+
+        editTextIDNumber.setText(IDNumber);
+        editTextBirthday.setText(sBirthday);
+        editTextCity.setText(sCity);
+        editTextCounty.setText(district);
+        editTextBankNumber.setText(bankNumber);
+        editTextBankAccount.setText(bankAccount);
+
+//       disable ediText
+        editTextSellerId.setEnabled(false);
+        editTextCreateTime.setEnabled(false);
+        editTextName.setEnabled(false);
+        editTextStoreName.setEnabled(false);
+        editTextCountry.setEnabled(false);
+
+        editTextIDNumber.setEnabled(false);
+        editTextBirthday.setEnabled(false);
+        editTextBankNumber.setEnabled(false);
+        editTextBankAccount.setEnabled(false);
+        editTextCity.setEnabled(false);
+        editTextCounty.setEnabled(false);
 
 //      由SharedPreference取得會員圖片base64字串並轉換成Bitmap
         SharedPreferences sp = getSharedPreferences("AdminContent", MODE_PRIVATE);
@@ -56,14 +114,14 @@ public class BecomeSellerControlActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView_admin_becomeseller_id);
         imageView.setImageBitmap(decodedByte);
 
-        String sName = intent.getStringExtra("sName");
+//        String sName = intent.getStringExtra("sName");
         String title = "會員 " + sName + " 的申請詳細資料";
         actionbar.setTitle(title);
 
         String seller_Id = intent.getStringExtra("seller_Id").toString();
 
 //       不通過直接刪除賣家申請
-        buttonDisagree = (Button) findViewById(R.id.button_admin_becomeseller_disagree);
+        buttonDisagree = (Button) findViewById(R.id.button_admin_member_disagree);
         buttonDisagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

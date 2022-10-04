@@ -44,6 +44,9 @@ public class ProductControlActivity extends AppCompatActivity {
     private EditText editTextPrice;
     private Button buttonDisagree,buttonAgree;
     private String seller_id;
+    private EditText editTextProductId;
+    private EditText editTextCreateTime,editTextProductName,editTextInfor,editTextVolume;
+    private EditText editTextInventory,editText711,editTextFamilymart,editTextPostoffice,editTextBlackCat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +63,76 @@ public class ProductControlActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
+
+        String goods_id =intent.getStringExtra("goods_id");
+        seller_id =intent.getStringExtra("seller_id");
+        String goods_name =intent.getStringExtra("goods_name");
+        String info =intent.getStringExtra("info");
+
+        String  packageWidth =intent.getStringExtra("packageWidth");
+        String  packageLength =intent.getStringExtra("packageLength");
+        String  packageHeight =intent.getStringExtra("packageHeight");
+
+        String inventory =intent.getStringExtra("inventory");
+        String seven =intent.getStringExtra("seven");
+        String familyMart  =intent.getStringExtra("familyMart");
+        String postOffice =intent.getStringExtra("postOffice");
+        String blackCat  =intent.getStringExtra("blackCat");
+
+        String createTime =intent.getStringExtra("createTime");
+
+//      取得editText元件
+        editTextProductId = (EditText) findViewById(R.id.editText_admin_sellerproduct_id);
+        editTextCreateTime = (EditText) findViewById(R.id.editText_admin_sellerproduct_createTime);
+        editTextProductName = (EditText) findViewById(R.id.editText_admin_sellerproduct_productname);
+        editTextInfor = (EditText) findViewById(R.id.editText_admin_sellerproduct_info);
+        editTextVolume = (EditText) findViewById(R.id.editText_admin_sellerproduct_volume);
+        editTextInventory = (EditText) findViewById(R.id.editText_admin_sellerproduct_inventory);
+        editText711 = (EditText) findViewById(R.id.editText_admin_sellerproduct_711);
+        editTextFamilymart = (EditText) findViewById(R.id.editText_admin_sellerproduct_familymart);
+        editTextPostoffice = (EditText) findViewById(R.id.editText_admin_sellerproduct_postoffice);
+        editTextBlackCat = (EditText) findViewById(R.id.editText_admin_sellerproduct_blackcat);
+
+
+
+//      editText 放入對應的會員資料
+        editTextProductId.setText(goods_id);
+        editTextCreateTime.setText(createTime);
+        editTextProductName.setText(goods_name);
+        editTextInfor.setText(info);
+        editTextVolume.setText(packageLength+"*");
+        editTextVolume.append(packageWidth+"*");
+        editTextVolume.append(packageHeight+"(長*寬*高)");
+
+        editTextInventory.setText(inventory);
+        editText711.setText(isDelivery(seven));
+        editTextFamilymart.setText(isDelivery(familyMart));
+        editTextPostoffice.setText(isDelivery(postOffice));
+        editTextBlackCat.setText(isDelivery(blackCat));
+
+
+//       disable ediText
+        editTextProductId.setEnabled(false);
+        editTextCreateTime.setEnabled(false);
+        editTextProductName.setEnabled(false);
+        editTextInfor.setEnabled(false);
+        editTextVolume.setEnabled(false);
+        editTextInventory.setEnabled(false);
+        editText711.setEnabled(false);
+        editTextFamilymart.setEnabled(false);
+        editTextPostoffice.setEnabled(false);
+        editTextBlackCat.setEnabled(false);
+        editTextPrice.setEnabled(false);
+        editTextViewType.setEnabled(false);
+
+
 //      取得商品id
-        String goods_id = intent.getStringExtra("goods_id");
+//        String goods_id = intent.getStringExtra("goods_id");
 //        取得商品名稱
-        String goods_name = intent.getStringExtra("goods_name");
+//        String goods_name = intent.getStringExtra("goods_name");
 
 //        取得賣家ID
-        seller_id = intent.getStringExtra("seller_id");
+//        seller_id = intent.getStringExtra("seller_id");
 
         //      使用 FireBase 服務
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -239,5 +305,18 @@ public class ProductControlActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String isDelivery(String deliveryWay){
+        String str="";
+        switch (deliveryWay){
+            case "0":
+                str="不適用";
+                break;
+            case "1":
+                str="適用";
+                break;
+        }
+        return str;
     }
 }

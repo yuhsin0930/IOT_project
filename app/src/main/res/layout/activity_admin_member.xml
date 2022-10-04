@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_admin_becomeseller_disagree"
+        app:layout_constraintBottom_toTopOf="@+id/button_admin_member_disagree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -60,7 +60,7 @@
                 android:text="會員Id :" />
 
             <EditText
-                android:id="@+id/editText_admin_becomeseller_id"
+                android:id="@+id/editText_admin_member_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -84,7 +84,7 @@
                 android:text="帳號建立時間 :" />
 
             <EditText
-                android:id="@+id/editText_admin_becomeseller_createTime"
+                android:id="@+id/editText_admin_member_createTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.8"
@@ -108,7 +108,7 @@
                 android:text="會員姓名 :" />
 
             <EditText
-                android:id="@+id/editText_admin_becomeseller_name"
+                android:id="@+id/editText_admin_member_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -132,7 +132,7 @@
                 android:text="會員帳號 :" />
 
             <EditText
-                android:id="@+id/editText_admin_store_name"
+                android:id="@+id/editText_admin_member_accountname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -156,13 +156,13 @@
                 android:text="密碼 :" />
 
             <EditText
-                android:id="@+id/editText_admin_country"
+                android:id="@+id/editText_admin_member_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:width="100dp"
                 android:ems="8"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
         </LinearLayout>
 
@@ -180,7 +180,7 @@
                 android:text=" Email :" />
 
             <EditText
-                android:id="@+id/editText_admin_email"
+                android:id="@+id/editText_admin_member_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -204,7 +204,7 @@
                 android:text="生日 :" />
 
             <EditText
-                android:id="@+id/editText_admin_birthday"
+                android:id="@+id/editText_admin_member_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
@@ -228,7 +228,7 @@
                 android:text="連絡電話 :" />
 
             <EditText
-                android:id="@+id/editText_admin_phone"
+                android:id="@+id/editText_admin_member_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -252,7 +252,7 @@
                 android:text="銀行帳號名稱 :" />
 
             <EditText
-                android:id="@+id/editText_admin_bankAccount"
+                android:id="@+id/editText_admin_member_bankAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
@@ -277,7 +277,7 @@
                 android:text="銀行帳號 :" />
 
             <EditText
-                android:id="@+id/editText_admin_bankNumber"
+                android:id="@+id/editText_admin_member_bankNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -300,7 +300,7 @@
                 android:text="是否為賣家身分 :" />
 
             <EditText
-                android:id="@+id/editText_admin_is_seller"
+                android:id="@+id/editText_admin_member_is_seller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -313,7 +313,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_admin_becomeseller_disagree"
+        android:id="@+id/button_admin_member_disagree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
