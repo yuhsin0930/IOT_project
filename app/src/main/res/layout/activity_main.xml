@@ -20,7 +20,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout_main_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout_main_id">
@@ -30,30 +30,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout_main_bottom"
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_main_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigationView_id"
+                style="@style/Theme.MaterialComponents.DayNight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottom_navigationView_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Theme.MaterialComponents.DayNight"
-                    app:menu="@menu/bottom_navigation_menu"/>
+                app:menu="@menu/bottom_navigation_menu" />
 
 
-            </LinearLayout>
-
-        </FrameLayout>
+        </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout_main_id"
@@ -162,6 +162,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/navigation_drawer" />
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

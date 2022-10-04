@@ -3,6 +3,8 @@ package com.example.iot_project.Cart;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,12 @@ public class CartDoneFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
+    private FragmentManager fragmentMgr;
+    private FragmentTransaction fragmentTrans;
+    private CartDoneItemHeadFragment cartDoneItemHeadFragment;
+    private CartCheckItemBodyFragment cartCheckItemBodyFragment;
+    private CartDoneItemFooterFragment cartDoneItemFooterFragment;
 
     public CartDoneFragment() {
         // Required empty public constructor
@@ -60,7 +68,79 @@ public class CartDoneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart_done, container, false);
+        view = inflater.inflate(R.layout.fragment_cart_done, container, false);
+
+
+
+        fragmentMgr = getParentFragmentManager();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartDoneItemHeadFragment = new CartDoneItemHeadFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartDoneItemHeadFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();            // 或許能共用
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartDoneItemFooterFragment = new CartDoneItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartDoneItemFooterFragment, "cartDoneItemFooterFragment");
+        fragmentTrans.commit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+        fragmentMgr = getParentFragmentManager();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartDoneItemHeadFragment = new CartDoneItemHeadFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartDoneItemHeadFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();            // 或許能共用
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartCheckItemBodyFragment, "cartDoneItemHeadFragment");
+        fragmentTrans.commit();
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartDoneItemFooterFragment = new CartDoneItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_done_forFragment, cartDoneItemFooterFragment, "cartDoneItemFooterFragment");
+        fragmentTrans.commit();
+
+
+        return view;
     }
 }

@@ -234,8 +234,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (login) {//已登入
 //          不顯示首頁下方的兩個登入註冊按鈕
-            linearLayout.setVisibility(View.INVISIBLE);
+//            linearLayout.setVisibility(View.INVISIBLE);
+            linearLayout.setVisibility(View.GONE);
 
+            linearLayout.setVisibility(View.INVISIBLE);
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED); //開啟NavigationView
             TextView textViewNavAccount = (TextView) headerView.findViewById(R.id.textView_main_nav_account);
             SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);

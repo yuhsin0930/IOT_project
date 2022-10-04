@@ -9,12 +9,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,13 @@ public class CartCheckFragment extends Fragment {
     private ImageView imageViewBack;
     private TextView textViewCheckout;
     private CartActivity cartActivity;
+    private LinearLayout LinearLayoutForFragment;
+    private FragmentManager fragmentMgr;
+    private FragmentTransaction fragmentTrans;
+    private CartCheckItemHeadFragment cartCheckItemHeadFragment;
+    private CartCheckItemBodyFragment cartCheckItemBodyFragment;
+    private CartCheckItemFooterFragment cartCheckItemFooterFragment;
+
 
     public CartCheckFragment() {
         // Required empty public constructor
@@ -75,11 +85,12 @@ public class CartCheckFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         view = inflater.inflate(R.layout.fragment_cart_check, container, false);
+
         imageViewBack = (ImageView)view.findViewById(R.id.ImageView_Cart_back);
         textViewCheckout = (TextView)view.findViewById(R.id.textView_cart_checkout);
+        LinearLayoutForFragment = (LinearLayout) view.findViewById(R.id.LinearLayout_check_forFragment);
+
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,11 +126,58 @@ public class CartCheckFragment extends Fragment {
                         });
                         dialogCartBodyDelete.show();
                         dialogCartBodyDelete.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        textViewCheckout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Mycolor_1));
                         break;
                 }
                 return true;
             }
         });
+
+
+        fragmentMgr = getParentFragmentManager();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemHeadFragment = new CartCheckItemHeadFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemHeadFragment, "cartCheckItemHeadFragment");
+        fragmentTrans.commit();
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemBodyFragment, "cartCheckItemBodyFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemBodyFragment, "cartCheckItemBodyFragment");
+        fragmentTrans.commit();
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemFooterFragment = new CartCheckItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemFooterFragment, "cartCheckItemFooterFragment");
+        fragmentTrans.commit();
+
+
+
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemHeadFragment = new CartCheckItemHeadFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemHeadFragment, "cartCheckItemHeadFragment");
+        fragmentTrans.commit();
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemBodyFragment, "cartCheckItemBodyFragment");
+        fragmentTrans.commit();
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemBodyFragment = new CartCheckItemBodyFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemBodyFragment, "cartCheckItemBodyFragment");
+        fragmentTrans.commit();
+
+        fragmentTrans = fragmentMgr.beginTransaction();
+        cartCheckItemFooterFragment = new CartCheckItemFooterFragment();
+        fragmentTrans.add(R.id.LinearLayout_check_forFragment, cartCheckItemFooterFragment, "cartCheckItemFooterFragment");
+        fragmentTrans.commit();
+
+
+
 
         return view;
     }

@@ -37,7 +37,24 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#F1F1F1"
+        app:layout_constraintTop_toBottomOf="@id/RelaitiveLayout_bar">
+
+        <LinearLayout
+            android:id="@+id/LinearLayout_check_forFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <View
+        android:id="@+id/view5"
         android:layout_width="0dp"
         android:layout_height="12dp"
         android:background="@drawable/cart_view_color_8up"
@@ -46,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/RelaitiveLayout_bar" />
 
     <View
+        android:id="@+id/view4"
         android:layout_width="0dp"
         android:layout_height="12dp"
         android:background="@drawable/cart_view_color_8"
@@ -110,7 +128,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
