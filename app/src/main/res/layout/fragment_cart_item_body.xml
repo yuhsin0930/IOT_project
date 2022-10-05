@@ -60,7 +60,7 @@
                     android:background="@drawable/cart_goods_type"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="4dp"
-                    android:text="粉色"
+                    android:text="1入"
                     android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -251,7 +251,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             // 註冊模式時製作Map，使用內建照片轉Base64存入
             String encodedImage = "";
             try {
-                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cat2);
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.cat6);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, baos); // bm is the bitmap object
                 byte[] b = baos.toByteArray();
@@ -541,7 +541,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     if (password_1.length() == 0) {
                         textViewPasswordWarn_1.setText("");
                         submitFlag[1] = false;
-                    } else if (password_1.length() > 5 && password_1.length() < 13 && password_1.matches("^([0-9]*[a-zA-Z][0-9]*)$")){
+                    } else if (password_1.length() > 5 && password_1.length() < 13 && password_1.matches("^([0-9a-zA-Z]*[a-zA-Z][0-9a-zA-Z]*)$")) {
                         textViewPasswordWarn_1.setText("");
                         submitFlag[1] = true;
                     } else {
