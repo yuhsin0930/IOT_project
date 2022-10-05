@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:layout_marginTop="2dp"
+    android:layout_marginBottom="1dp"
     android:background="@color/white"
     tools:context=".Cart.CartItemHeadFragment">
 
@@ -22,7 +23,7 @@
             android:id="@+id/imageView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:alpha="0.5"
             android:src="@drawable/outline_storefront_black_18"
             app:layout_constraintBottom_toBottomOf="parent"

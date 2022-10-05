@@ -58,15 +58,15 @@ public class CartItemBodyFragment extends Fragment {
     private CartAllProductFragment cartAllProductFragment;
     private ImageView imageViewPicture;
     private TextView textViewGoodsName;
-    private Map hashMap;
-    private DatabaseReference fireRef;
+    private Map goodsMap;
+    private String goodsKey;
 
     public CartItemBodyFragment() {}
 
-    public static CartItemBodyFragment newInstance(HashMap goodMap) {
+    public static CartItemBodyFragment newInstance(HashMap goodsMap) {
         CartItemBodyFragment fragment = new CartItemBodyFragment();
         Bundle args = new Bundle();
-        args.putSerializable("goodMap", goodMap);
+        args.putSerializable("goodsMap", goodsMap);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,6 +97,7 @@ public class CartItemBodyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cart_item_body, container, false);
+        goodsMap = (Map) getArguments().getSerializable("goodsMap");
 
         textViewMinus = (TextView)view.findViewById(R.id.textView_cart_body_minus);
         textViewAdd = (TextView)view.findViewById(R.id.textView_cart_body_add);
@@ -109,88 +110,47 @@ public class CartItemBodyFragment extends Fragment {
         imageViewPicture = (ImageView)view.findViewById(R.id.imageView_cardview_member_orders_picture);
 
 
-        isExist = true;
-//        tag = getArguments().getString("tag");
-        hashMap = (HashMap) getArguments().getSerializable("goodMap");
+        // 取出商品名稱
+        textViewGoodsName.setText(goodsMap.get("goods_name").toString());
 
-//
-//        //seller.storeName 取出賣場名稱
-//        dataRef.child("seller").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Log.d("goodsList", "[4]goodsList=" + goodsList);
-//
-//                for (DataSnapshot d : snapshot.getChildren()) {
-//                    Seller sellerData = d.getValue(Seller.class);
-//                    String Id = sellerData.getSeller_id();
-//
-//                    if(goodsMap.get("storeName")!=null) break;
-//                    if (Id.equals(seller_id)) {
-//                        String storeName = sellerData.getStoreName();
-//                        goodsMap.put("storeName", storeName);
-//                        Log.d("main", "storeName=" + storeName);
-//
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//        //(goods.goods_name && goods.seller_id)
-//        //goodsNorm.price
-//        dataRef.child("goodsNorm").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot d2 : snapshot.getChildren()) {
-//                    Log.d("main","[d2]snapshot.getChildrenCount="+snapshot.getChildrenCount());
-//                    Map<String, Object> goodsNormData = (HashMap<String, Object>) d2.getValue();
-//                    String name = goodsNormData.get("goods_name").toString();
-//                    String sellerId = goodsNormData.get("seller_id").toString();
-//
-//                    if(goodsMap.get("price")!=null) break;
-//
-//                    if (sellerId.equals(seller_id) && name.equals(goods_name)) {
-//                        String price = goodsNormData.get("price").toString();
-//                        goodsMap.put("price", price);
-//                        Log.d("main", "price=" + price);
-//                        break;
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-        //goodsPic.goodsPicture
-        FirebaseDatabase firebase = FirebaseDatabase.getInstance();
-        fireRef = firebase.getReference("goodsPic");
-        Log.d("cart", "ccccccccccccccccccccccccccc");
-        fireRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+
+        // 取出商品價格
+        FirebaseDatabase.getInstance().getReference("goodsNorm").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("cart", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-                for (DataSnapshot d3 : snapshot.getChildren()) {
-                    Log.d("main","[d3]snapshot.getChildrenCount="+snapshot.getChildrenCount());
-                    Map<String, Object> goodsPicData = (HashMap<String, Object>) d3.getValue();
-                    String name = goodsPicData.get("goods_name").toString();
-                    String sellerId = goodsPicData.get("seller_id").toString();
-//                    if(goodsMap.get("goodsPicture")!=null) break;
-                    if (sellerId.equals(hashMap.get("seller_id").toString()) && name.equals(hashMap.get("goods_name").toString())) {
-                        Log.d("cart", "aaaaaaaaaaaaaaaaaaaaaa");
-                        String goodsPicture = goodsPicData.get("goodsPicture").toString();
-                        byte[] decodedString = Base64.decode(goodsPicture, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        imageViewPicture.setImageBitmap(decodedByte);
-                        break;
+                if (snapshot.exists()) {
+                    for (DataSnapshot goodsNormTable : snapshot.getChildren()) {
+                        Map<String, Object> goodsNormMap = (HashMap<String, Object>) goodsNormTable.getValue();
+                        String goods_name = goodsNormMap.get("goods_name").toString();
+                        String seller_id = goodsNormMap.get("seller_id").toString();
+                        if (seller_id.equals(goodsMap.get("seller_id").toString()) && goods_name.equals(goodsMap.get("goods_name").toString())) {
+                            String price = goodsNormMap.get("price").toString();
+                            setTextViewGoodsPrice(price);
+                            break;
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+        // 取出商品照片
+        FirebaseDatabase.getInstance().getReference("goodsPic").orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot goodsPicTable : snapshot.getChildren()) {
+                        Map<String, Object> goodsPicMap = (HashMap<String, Object>) goodsPicTable.getValue();
+                        String name = goodsPicMap.get("goods_name").toString();
+                        String sellerId = goodsPicMap.get("seller_id").toString();
+                        if (sellerId.equals(goodsMap.get("seller_id").toString()) && name.equals(goodsMap.get("goods_name").toString())) {
+                            String goodsPicture = goodsPicMap.get("goodsPicture").toString();
+                            byte[] decodedString = Base64.decode(goodsPicture, Base64.DEFAULT);
+                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            imageViewPicture.setImageBitmap(decodedByte);
+                            break;
+                        }
                     }
                 }
             }
@@ -199,16 +159,13 @@ public class CartItemBodyFragment extends Fragment {
         });
 
 
-
-
-
         sum = 1;
         insideMap = new HashMap<>();
         textViewGoodsSum.setText(String.valueOf(sum));
         checkBoxFlag = false;
-        price = "40";
+        isExist = true;
+        goodsKey = goodsMap.get("goodsKey").toString();
 
-        textViewGoodsPrice.setText(price);
 
         imageViewPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,7 +215,7 @@ public class CartItemBodyFragment extends Fragment {
                     textViewYes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Fragment f = getParentFragmentManager().findFragmentByTag(tag);
+                            Fragment f = getParentFragmentManager().findFragmentByTag(goodsKey);
                             cartActivity.getSupportFragmentManager().beginTransaction().remove((CartItemBodyFragment)f).commit();
                             isExist = false;
                             makeAndSendInsideMap();
@@ -279,7 +236,7 @@ public class CartItemBodyFragment extends Fragment {
         textViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment f = getParentFragmentManager().findFragmentByTag(getArguments().getString("tag"));
+                Fragment f = getParentFragmentManager().findFragmentByTag(goodsKey);
                 cartActivity.getSupportFragmentManager().beginTransaction().remove((CartItemBodyFragment)f).commit();
                 isExist = false;
                 makeAndSendInsideMap();
@@ -317,8 +274,13 @@ public class CartItemBodyFragment extends Fragment {
             }
         });
 
-//        makeAndSendInsideMap();
+        makeAndSendInsideMap();
         return view;
+    }
+
+    private void setTextViewGoodsPrice(String price) {
+        this.price = price;
+        textViewGoodsPrice.setText(this.price);
     }
 
     public void setCheckBox_1(Boolean b) {
@@ -342,7 +304,7 @@ public class CartItemBodyFragment extends Fragment {
 
     // 每個監聽都呼叫此方法
     private void makeAndSendInsideMap() {
-        insideMap.put("id", tag);
+        insideMap.put("id", goodsKey);
         insideMap.put("price", price);
         insideMap.put("sum", sum);
         insideMap.put("checkBoxFlag", checkBoxFlag);

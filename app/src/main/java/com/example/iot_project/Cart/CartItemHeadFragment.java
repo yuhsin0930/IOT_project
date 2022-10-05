@@ -1,5 +1,6 @@
 package com.example.iot_project.Cart;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +31,7 @@ import java.util.Map;
 public class CartItemHeadFragment extends Fragment {
 
     private View view;
-    private boolean b1, b2;
+    private boolean isDeleteOpen;
     private String tag;
     private TextView textViewShowDelete;
     private String seller_id;
@@ -36,6 +39,9 @@ public class CartItemHeadFragment extends Fragment {
     private DatabaseReference fireRef;
     private ValueEventListener fireListener;
     private String sellerName;
+    private List<String> keyList;
+    private CartAllProductFragment cartAllProductFragment;
+    private CartActivity cartActivity;
 
 
     public CartItemHeadFragment() {}
@@ -62,12 +68,12 @@ public class CartItemHeadFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_cart_item_head, container, false);
         textViewShowDelete = (TextView)view.findViewById(R.id.textView_cart_head_showdelete);
         textViewSeller = (TextView)view.findViewById(R.id.textView_cart_head_seller);
+        keyList = cartAllProductFragment.getGoodsKeyFormKeyMap(seller_id);
 
+        // 設定賣場名稱
         // "SELECT storeName FROM seller WHERE seller_id = seller_id"
-        FirebaseDatabase firebase = FirebaseDatabase.getInstance();
-        fireRef = firebase.getReference("seller");
-        //orderByChild???
-        fireListener = fireRef.orderByKey().equalTo(seller_id).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance()
+                .getReference("seller").orderByKey().equalTo(seller_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -81,88 +87,27 @@ public class CartItemHeadFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-
-//        textViewSeller.setText(seller_id);
-
-
-
-
-        b1 = true;
-        b2 = true;
+        // 將同賣家商品，顯示側滑刪除鍵
+        isDeleteOpen = false;
         textViewShowDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("cart", tag);
-
-
-
-
-                if (tag.equals("cartItemHeadFragment0")) {
-
-                    Fragment f = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment0");
-                    if (f != null) {
-                        if (b1 == true) {
-                            ((CartItemBodyFragment)f).setIsDeleteShow(b1);
-                            b1 = false;
-                        } else {
-                            ((CartItemBodyFragment)f).setIsDeleteShow(b1);
-                            b1 = true;
-                        }
-                    }
-
-
-                    Fragment f2 = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment1");
-                    if (f2 != null) {
-                        if (b2 == true) {
-                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
-                            b2 = false;
-                        } else {
-                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
-                            b2 = true;
-                        }
-                    }
+                isDeleteOpen = isDeleteOpen ? false : true;
+                for (int i = 0; i < keyList.size(); i++) {
+                    Fragment f = getParentFragmentManager().findFragmentByTag(keyList.get(i).toString());     // findFragmentByTag(goodsKey)
+                    if (f != null) ((CartItemBodyFragment)f).setIsDeleteShow(isDeleteOpen);
                 }
-
-
-
-
-
-
-
-
-                if (tag.equals("cartItemHeadFragment1")) {
-
-                    Fragment f = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment2");
-                    if (f != null) {
-                        if (b1 == true) {
-                            ((CartItemBodyFragment) f).setIsDeleteShow(b1);
-                            b1 = false;
-                        } else {
-                            ((CartItemBodyFragment) f).setIsDeleteShow(b1);
-                            b1 = true;
-                        }
-                    }
-
-                    Fragment f2 = getParentFragmentManager().findFragmentByTag("cartItemBodyFragment3");
-                    if (f2 != null) {
-                        if (b2 == true) {
-                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
-                            b2 = false;
-                        } else {
-                            ((CartItemBodyFragment) f2).setIsDeleteShow(b2);
-                            b2 = true;
-                        }
-                    }
-                }
-
-
-
-
-
             }
         });
 
         return view;
     }
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        cartActivity = (CartActivity)getActivity();
+        cartAllProductFragment = (CartAllProductFragment)getParentFragmentManager().findFragmentByTag("f0");
+    }
 }

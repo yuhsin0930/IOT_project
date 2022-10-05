@@ -798,7 +798,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDetach() {
         super.onDetach();
-        fireRef.removeEventListener(fireListener);
+        if (isLoggedIn) fireRef.removeEventListener(fireListener);
         Log.d("register", "onDetach()");
     }
 

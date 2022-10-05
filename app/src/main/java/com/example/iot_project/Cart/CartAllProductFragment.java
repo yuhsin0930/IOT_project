@@ -63,6 +63,7 @@ public class CartAllProductFragment extends Fragment {
     private DatabaseReference fireRef;
     private ValueEventListener fireListener;
     private List<Map<String, String>> fireList;
+    private Map<String, List<String>> keyMap;
 
     public CartAllProductFragment() {}
 
@@ -327,46 +328,11 @@ public class CartAllProductFragment extends Fragment {
             在將Map(包含預計購買數量)丟進子fragment
             用這數值賦予子fragment中的變數真實意義
 
-            %%%%%%%% 再用賣家id去找 賣場名稱 在 "SELECT storeName FROM seller WHERE seller_id = xxxx"
-            %%%%%%%% 價格在 goodsNorm 怕是總數浮動價子fragment在搜 "SELECT storeName FROM goodsNorm WHERE goodsNorm_id = goods_id"
+            %%%%%%%% 再用賣家id去找 賣場名稱 在 "SELECT storeName FROM seller WHERE seller_id = seller_id"
+            %%%%%%%% 價格在 goodsNorm 怕是總數浮動價子fragment在搜 "SELECT price FROM goodsNorm WHERE goodsNorm_id = goods_id"
 
-            將以上搜尋的Map加入Map.put("sum", sum)放進List做以下Loop
-            List<MAP<String, Object>> list = new ArrayList()<>;
+            將以上搜尋的Map加入Map.put("sum", sum)放進List做Loop
 
-
-            list.add(map);
-
-            while (list.size > 0) {
-
-                int seller_idTemp = list.get(0).get("seller_id");    // 將第一位的賣家取出當參考
-
-                fragmentTrans = fragmentMgr.beginTransaction();
-                cartItemHeadFragment = CartItemHeadFragment.newInstance(seller_idTemp);
-                fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "" + seller_idTemp);
-                fragmentTrans.commit();
-
-
-
-                fragmentTrans = fragmentMgr.beginTransaction();
-                for (int i = 0; i < list.size; i++) {
-                    Map map = (Map)list.get(i);
-                    if (map.get("seller_id") == seller_idTemp) {
-                        cartItemBodyFragment = CartItemBodyFragment.newInstance(map);
-                        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, map.get("goods_id").toString);
-                        fragmentList.add(cartItemBodyFragment); // ?? 再看看有需要嗎
-                        list.remove(i--);
-                    }
-                }
-                fragmentTrans.commit();
-
-
-
-                fragmentTrans = fragmentMgr.beginTransaction();
-                cartItemFooterFragment = new CartItemFooterFragment();
-                fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "" + seller_idTemp);
-                fragmentTrans.commit();
-
-            }
 
          */
 
@@ -407,11 +373,11 @@ public class CartAllProductFragment extends Fragment {
                 if (snapshot.exists()) {
                     for (DataSnapshot goods : snapshot.getChildren()) {
                         String goodsKey = goods.getKey();                                       // 商品id
-                        Log.d("cart", "goods.getValue() = " + goods.getValue());
                         Map<String, String> goodsMap = (Map<String, String>) goods.getValue();  // 商品Map
-                        goodsMap.put("goodsKey", goodsKey);
-                        Log.d("cart", "goodsMap = " + goodsMap);
-                        fireList.add(goodsMap);
+                        if (goodsMap.get("gState").equals("通過")) {
+                            goodsMap.put("goodsKey", goodsKey);
+                            fireList.add(goodsMap);
+                        }
                     }
                     makeFragmentByFirebase(fireList);
                 }
@@ -420,62 +386,11 @@ public class CartAllProductFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        // 預計用訂單單號創 屬於這個買家選取 再以賣家分組
-//        fragmentTrans = fragmentMgr.beginTransaction();
-//        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 0);
-//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 0);
-//        fragmentTrans.commit();
-//
-//        for (int i = 0; i < 2; i++) {
-//            fragmentTrans = fragmentMgr.beginTransaction();
-//            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
-//            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
-//            fragmentTrans.commit();
-//            fragmentList.add(cartItemBodyFragment);
-//        }
-//
-//        fragmentTrans = fragmentMgr.beginTransaction();
-//        cartItemFooterFragment = new CartItemFooterFragment();
-//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 0);
-//        fragmentTrans.commit();
-//
-//// ------------------------------------------- 模擬兩張訂單
-//
-//        fragmentTrans = fragmentMgr.beginTransaction();
-//        cartItemHeadFragment = CartItemHeadFragment.newInstance("cartItemHeadFragment" + 1);
-//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, "cartItemHeadFragment" + 1);
-//        fragmentTrans.commit();
-//
-//        for (int i = 2; i < 4; i++) {
-//            fragmentTrans = fragmentMgr.beginTransaction();
-//            cartItemBodyFragment = CartItemBodyFragment.newInstance("cartItemBodyFragment" + i);
-//            fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, "cartItemBodyFragment" + i);
-//            fragmentTrans.commit();
-//            fragmentList.add(cartItemBodyFragment);
-//        }
-//
-//        fragmentTrans = fragmentMgr.beginTransaction();
-//        cartItemFooterFragment = new CartItemFooterFragment();
-//        fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "cartItemFooterFragment" + 1);
-//        fragmentTrans.commit();
-
     }
 
     private void makeFragmentByFirebase(List fireList) {
+        keyMap = new HashMap<>();   // Map<String, List<String>> keyMap;
+
         while (fireList.size() > 0) {
             String seller_idTemp = ((Map) fireList.get(0)).get("seller_id").toString(); // 將第一位的賣家取出當參考
 
@@ -484,6 +399,7 @@ public class CartAllProductFragment extends Fragment {
             fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemHeadFragment, seller_idTemp);
             fragmentTrans.commit();
 
+            List<String> keyList = new ArrayList<>();
             fragmentTrans = fragmentMgr.beginTransaction();
             for (int i = 0; i < fireList.size(); i++) {
                 Map map = (Map)fireList.get(i);
@@ -491,16 +407,22 @@ public class CartAllProductFragment extends Fragment {
                     cartItemBodyFragment = CartItemBodyFragment.newInstance((HashMap)map);
                     fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemBodyFragment, map.get("goodsKey").toString());
                     fragmentList.add(cartItemBodyFragment); // ?? 再看看有需要嗎
+                    keyList.add(map.get("goodsKey").toString());     // 將單一賣家的所有goodsKey放進keyList 之後再放進Map
                     fireList.remove(i--);
                 }
             }
             fragmentTrans.commit();
+            keyMap.put(seller_idTemp, keyList); // 做一個Map給將來的Head取用，完成"編輯"刪除全開
 
             fragmentTrans = fragmentMgr.beginTransaction();
             cartItemFooterFragment = new CartItemFooterFragment();
             fragmentTrans.add(R.id.LinearLayout_allproduct, cartItemFooterFragment, "" + seller_idTemp);
             fragmentTrans.commit();
         }
+    }
+
+    public List getGoodsKeyFormKeyMap(String seller_id) {
+        return this.keyMap.get(seller_id);
     }
 
     @SuppressLint("ClickableViewAccessibility")

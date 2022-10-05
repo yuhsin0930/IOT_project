@@ -40,12 +40,11 @@
 
             <TextView
                 android:id="@+id/textView_car_body_goodsName"
-                android:layout_width="wrap_content"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="10dp"
-                android:singleLine="true"
-                android:text="【台灣現貨】BST-12 (送收納盒) 女生通用新款馬卡龍安卓蘋果三代華為小米入耳式運動有線耳機" />
+                android:singleLine="true" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
