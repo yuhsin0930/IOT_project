@@ -140,8 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         String Id = snapshot.getKey().toString();
-                                        Member memberdata =snapshot.getValue(Member.class);
-                                        if(memberdata.getAccount_name().equals(account) && memberdata.getPassword().equals(password)){
+                                        Member memberdata = snapshot.getValue(Member.class);
+                                        if(memberdata.getAccount_name().equals(account) && memberdata.getPassword().equals(password)) {
                                             membershipCheck = true;
                                             String picture= memberdata.getPicture();
                                             SharedPreferences sp = getSharedPreferences("LoginInformation", MODE_PRIVATE);
@@ -201,6 +201,13 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextAccount.clearFocus();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        password = "";
+        editTextPassword.setText("");
     }
 
 }
