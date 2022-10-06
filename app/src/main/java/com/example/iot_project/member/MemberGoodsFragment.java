@@ -38,8 +38,36 @@ public class MemberGoodsFragment extends Fragment {
 
         findView();
         setData();
+
+
+/*
+        預計是
+        switch(barName) {
+            這裡改變firebase的搜尋條件
+            可能是製作部分關鍵字餵給makeListByFirebase
+            或是每個case內都寫一組完整的firebase
+        }
+
+        // "SELECT goods_id FORM memberGoods WHERE member_id = 我的id AND favorite = 1;"      // 喜歡
+        // "SELECT goods_id FORM memberGoods WHERE member_id = 我的id AND bought = 1;"        // 買過
+        // "SELECT goods_id FORM memberGoods WHERE member_id = 我的id ORDER BY createTime;"   // 看過 (依照日期排序)
+
+        // "SELECT (goods_name, seller_id, soldQuantity) FORM goods WHERE goods_id = 上面搜出的商品id;"        // 由商品id 搜出 [品名] 賣家ID [售出量]
+        // "SELECT sCity FORM seller WHERE seller_id = 上面搜出的賣家id;"                                      // 由賣家id 搜出 [sCity]
+        // "SELECT goodsPicture FORM goodsPic WHERE seller_id = 上面搜出的賣家id AND goods_name = 商品名稱;"   // 由賣家ID + 品名 = [圖片]
+
+         // "SELECT price FORM goodsNorm WHERE seller_id = 上面搜出的賣家id;"                                   // 由商品id 搜出 [價格]
+
+
+
+
+
+        製成List後放入適配器
+*/
+
         setAdapter();
         setListener();
+
 
         return view;
     }

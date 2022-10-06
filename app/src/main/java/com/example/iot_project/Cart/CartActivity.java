@@ -103,7 +103,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-//        if (isDoneShow) finish();
+        if (isDoneShow) finish();
 
 
         if (isCouponShow) {

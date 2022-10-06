@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.iot_project.R;
 
@@ -34,7 +35,7 @@ public class MemberGoodsRecyclerViewAdapter extends RecyclerView.Adapter<MemberG
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewPicture = (ImageView)itemView.findViewById(R.id.imageView_goods_pic);
-//            imageViewPicture.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), R.drawable.goods_demo));
+//            imageViewPicture.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), R.drawable.cat3));
             itemView.setOnClickListener(this);
         }
 

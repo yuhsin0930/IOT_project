@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,16 +21,12 @@ import android.widget.Toast;
 
 import com.example.iot_project.member.MemberActivity;
 import com.example.iot_project.register.RegisterActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import com.example.iot_project.Main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -60,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         imageViewEyes = (ImageView) findViewById(R.id.imageView_login_eyes);
         imageViewBack = (ImageView) findViewById(R.id.imageView_login_back);
-        buttonLogin = (Button) findViewById(R.id.button_login_login);
+        buttonLogin = (Button) findViewById(R.id.button_done);
         textViewRegister = (TextView) findViewById(R.id.textView_login_register);
         textViewForget = (TextView) findViewById(R.id.textView_login_forget);
         editTextPassword = (EditText) findViewById(R.id.editText_login_password);

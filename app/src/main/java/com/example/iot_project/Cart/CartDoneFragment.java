@@ -1,7 +1,9 @@
 package com.example.iot_project.Cart;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.iot_project.R;
 
@@ -33,6 +36,8 @@ public class CartDoneFragment extends Fragment {
     private CartDoneItemHeadFragment cartDoneItemHeadFragment;
     private CartCheckItemBodyFragment cartCheckItemBodyFragment;
     private CartDoneItemFooterFragment cartDoneItemFooterFragment;
+    private Button buttonDone;
+    private CartActivity cartActivity;
 
     public CartDoneFragment() {
         // Required empty public constructor
@@ -69,6 +74,15 @@ public class CartDoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cart_done, container, false);
+
+        buttonDone = (Button)view.findViewById(R.id.button_done);
+        buttonDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cartActivity.onBackPressed();
+            }
+        });
+
 
 
 
@@ -143,4 +157,11 @@ public class CartDoneFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        cartActivity = (CartActivity)getActivity();
+    }
+
 }

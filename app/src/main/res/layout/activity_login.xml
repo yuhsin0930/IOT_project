@@ -159,7 +159,7 @@
                 android:background="#33000000" />
 
             <Button
-                android:id="@+id/button_login_login"
+                android:id="@+id/button_done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
